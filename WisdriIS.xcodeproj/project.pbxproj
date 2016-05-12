@@ -294,7 +294,6 @@
 		385C1DD91CE4BC9200F8E393 /* WISSystemNetworkOperationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISSystemNetworkOperationDelegate.h; sourceTree = "<group>"; };
 		385C1DDA1CE4BC9200F8E393 /* WISNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISNetworkService.h; sourceTree = "<group>"; };
 		385C1DDB1CE4BC9200F8E393 /* WISNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WISNetworkService.m; sourceTree = "<group>"; };
-		385C1DDC1CE4BC9200F8E393 /* WISNetworkServiceMisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISNetworkServiceMisc.h; sourceTree = "<group>"; };
 		385C1DDE1CE4BC9200F8E393 /* WISPushNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotificationService.swift; sourceTree = "<group>"; };
 		385C1E071CE4BD2700F8E393 /* InspectionColoredTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionColoredTitleCell.swift; sourceTree = "<group>"; };
 		385C1E081CE4BD2700F8E393 /* InspectionColoredTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionColoredTitleCell.xib; sourceTree = "<group>"; };
@@ -684,7 +683,6 @@
 				385C1DD61CE4BC9200F8E393 /* NetworkServiceProtocols */,
 				385C1DDA1CE4BC9200F8E393 /* WISNetworkService.h */,
 				385C1DDB1CE4BC9200F8E393 /* WISNetworkService.m */,
-				385C1DDC1CE4BC9200F8E393 /* WISNetworkServiceMisc.h */,
 			);
 			path = WISNetworkService;
 			sourceTree = "<group>";
