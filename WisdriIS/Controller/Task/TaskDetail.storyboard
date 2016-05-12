@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vbg-AU-9sc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="rgH-qR-e25">
+            <objects>
+                <navigationController id="Vbg-AU-9sc" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PPP-gp-nj3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="SBb-pL-HoP" kind="relationship" relationship="rootViewController" id="asb-nS-xE5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GL9-iL-UlN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-210" y="681"/>
+        </scene>
+        <!--Task Detail View Controller-->
+        <scene sceneID="N4P-Nb-8hF">
+            <objects>
+                <viewController storyboardIdentifier="TaskDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="SBb-pL-HoP" customClass="TaskDetailViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nsp-oL-gii"/>
+                        <viewControllerLayoutGuide type="bottom" id="23I-vq-sja"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GSA-ea-a8F">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oYE-qv-yIY">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oYE-qv-yIY" firstAttribute="top" secondItem="Nsp-oL-gii" secondAttribute="bottom" id="E6h-Av-Th9"/>
+                            <constraint firstItem="oYE-qv-yIY" firstAttribute="bottom" secondItem="23I-vq-sja" secondAttribute="top" id="PfW-o0-LVr"/>
+                            <constraint firstItem="oYE-qv-yIY" firstAttribute="leading" secondItem="GSA-ea-a8F" secondAttribute="leading" id="wT3-Mf-MS5"/>
+                            <constraint firstAttribute="trailing" secondItem="oYE-qv-yIY" secondAttribute="trailing" id="zvT-Xh-Da0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ucC-lh-zpw">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" image="icon_more" id="zAG-tK-hiT">
+                            <connections>
+                                <action selector="createNewOperation:" destination="SBb-pL-HoP" id="pK7-vQ-lBN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="taskDetailTableView" destination="oYE-qv-yIY" id="CGB-lG-gYq"/>
+                        <segue destination="Whb-Ka-dQQ" kind="show" identifier="ratingTask" id="vWc-Hx-s9O"/>
+                        <segue destination="AN8-u1-yTB" kind="show" identifier="pickUser" id="lJP-Go-bEQ"/>
+                        <segue destination="O8U-EB-FqP" kind="show" identifier="submitQuickPlanOperation" id="dMP-Ql-pMc"/>
+                        <segue destination="1Pa-6Y-ok5" kind="show" identifier="modifyPlanOperation" id="jku-7X-D8B"/>
+                        <segue destination="UYd-Do-GFw" kind="show" identifier="remarkTask" id="4FG-ci-1g7"/>
+                        <segue destination="Ga7-x7-HF9" kind="show" identifier="approveOperation" id="fki-JM-arz"/>
+                        <segue destination="V5z-NI-ynq" kind="show" identifier="recheckOperation" id="ZSu-IK-xmN"/>
+                        <segue destination="r15-8s-1dX" kind="show" identifier="submitPlanOperation" id="k1U-OX-nas"/>
+                        <segue destination="QJr-18-bDd" kind="show" identifier="assignUser" id="kqm-uB-hSJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4bi-YE-bTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="534" y="681"/>
+        </scene>
+        <!--PickUserViewController-->
+        <scene sceneID="gF9-aC-G48">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PickUser" referencedIdentifier="PickUserViewController" id="AN8-u1-yTB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Og8-Io-3A7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1193.5" y="356"/>
+        </scene>
+        <!--RatingViewController-->
+        <scene sceneID="CxX-93-qrs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Rating" referencedIdentifier="RatingViewController" id="Whb-Ka-dQQ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJa-WZ-XZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1077.5" y="925"/>
+        </scene>
+        <!--SubmitPlanViewController-->
+        <scene sceneID="xNU-lF-ji9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SubmitPlan" referencedIdentifier="SubmitPlanViewController" id="O8U-EB-FqP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7X1-KL-rvY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402.5" y="816"/>
+        </scene>
+        <!--ModifyPlanViewController-->
+        <scene sceneID="Oe1-47-jn7">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ModifyPlan" referencedIdentifier="ModifyPlanViewController" id="1Pa-6Y-ok5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QwT-qA-XqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402" y="925"/>
+        </scene>
+        <!--RemarkViewController-->
+        <scene sceneID="LTK-Gi-dkY">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Remark" referencedIdentifier="RemarkViewController" id="UYd-Do-GFw" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CzL-AB-nf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1088" y="267"/>
+        </scene>
+        <!--SubmitPlanViewController-->
+        <scene sceneID="gfx-xE-PbX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SubmitPlan" referencedIdentifier="SubmitPlanViewController" id="r15-8s-1dX" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MMa-27-GPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402.5" y="525"/>
+        </scene>
+        <!--ModifyPlanViewController-->
+        <scene sceneID="MlM-aZ-zP8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ModifyPlan" referencedIdentifier="ModifyPlanViewController" id="Ga7-x7-HF9" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bgd-Sa-Taz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402.5" y="623"/>
+        </scene>
+        <!--ModifyPlanViewController-->
+        <scene sceneID="bzf-Mh-aOq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ModifyPlan" referencedIdentifier="ModifyPlanViewController" id="V5z-NI-ynq" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zy6-NB-ALR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1402.5" y="723"/>
+        </scene>
+        <!--PickUserViewController-->
+        <scene sceneID="F9a-T6-joI">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PickUser" referencedIdentifier="PickUserViewController" id="QJr-18-bDd" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M4z-q9-DON" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1251.5" y="442"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon_more" width="20" height="4"/>
+    </resources>
+</document>

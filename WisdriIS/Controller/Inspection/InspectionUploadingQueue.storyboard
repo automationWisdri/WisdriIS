@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="yEi-VS-7nh">
+            <objects>
+                <navigationController id="uUW-CG-HVf" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hd4-eP-YzH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="be9-QP-Nz7" kind="relationship" relationship="rootViewController" id="JFy-iF-7vN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qD5-oK-dvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="26" y="208"/>
+        </scene>
+        <!--Inspection Uploading Queue View Controller-->
+        <scene sceneID="MkY-uR-JnH">
+            <objects>
+                <viewController storyboardIdentifier="InspectionUploadingQueueViewController" id="be9-QP-Nz7" userLabel="Inspection Uploading Queue View Controller" customClass="InspectionUploadingQueueViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Koc-xA-3Cr"/>
+                        <viewControllerLayoutGuide type="bottom" id="OqC-T9-ZZJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DS2-2i-ajC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BDF-TX-wAd" userLabel="InspectionUploadingQueueTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BDF-TX-wAd" firstAttribute="top" secondItem="DS2-2i-ajC" secondAttribute="topMargin" id="3MP-HF-cnq"/>
+                            <constraint firstItem="OqC-T9-ZZJ" firstAttribute="top" secondItem="BDF-TX-wAd" secondAttribute="bottom" id="7gC-fu-llw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BDF-TX-wAd" secondAttribute="trailing" constant="-20" id="fsU-m5-4PH"/>
+                            <constraint firstItem="BDF-TX-wAd" firstAttribute="leading" secondItem="DS2-2i-ajC" secondAttribute="leadingMargin" constant="-20" id="iVc-rZ-e2r"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="yqm-MK-eo1"/>
+                    <connections>
+                        <outlet property="inspectionUploadingQueueTableView" destination="BDF-TX-wAd" id="Rqi-DH-mWW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="22q-gf-sv6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="748" y="206"/>
+        </scene>
+    </scenes>
+</document>

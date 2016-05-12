@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hFr-xj-wCK">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="eIp-wq-lyS">
+            <objects>
+                <navigationController id="hFr-xj-wCK" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qzY-AQ-Vor">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xS2-gX-gSa" kind="relationship" relationship="rootViewController" id="97f-Cl-Phc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i13-07-yBU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-198" y="282"/>
+        </scene>
+        <!--Pick User View Controller-->
+        <scene sceneID="V65-n0-Pdh">
+            <objects>
+                <viewController storyboardIdentifier="PickUserViewController" id="xS2-gX-gSa" customClass="PickUserViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZAN-YN-3kC"/>
+                        <viewControllerLayoutGuide type="bottom" id="kis-BG-fDe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7FS-D7-po3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PB2-kO-Prd">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="PB2-kO-Prd" secondAttribute="trailing" id="CKd-4l-zuq"/>
+                            <constraint firstItem="PB2-kO-Prd" firstAttribute="top" secondItem="ZAN-YN-3kC" secondAttribute="bottom" id="OUw-iI-gK3"/>
+                            <constraint firstItem="PB2-kO-Prd" firstAttribute="leading" secondItem="7FS-D7-po3" secondAttribute="leading" id="a4m-eP-NbN"/>
+                            <constraint firstItem="PB2-kO-Prd" firstAttribute="bottom" secondItem="kis-BG-fDe" secondAttribute="top" id="z7l-BJ-dYy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="HbT-l5-rai">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="7Gs-tK-jA0">
+                            <connections>
+                                <action selector="doneAction:" destination="xS2-gX-gSa" id="b41-gC-jQV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pickUserTableView" destination="PB2-kO-Prd" id="Ci3-7Q-4yj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="agR-qu-ATs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="531" y="282"/>
+        </scene>
+    </scenes>
+</document>

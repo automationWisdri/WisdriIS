@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskDescriptionCell" rowHeight="200" id="KGk-i7-Jjw" customClass="TaskDescriptionCell" customModule="WisdriIS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="419" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="419" height="200"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Fop-fw-cWS">
+                        <rect key="frame" x="0.0" y="88" width="419" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="fqX-9f-l0L"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="QOj-G3-WH8">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 hours ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0q5-TQ-Epc" userLabel="Time Label">
+                        <rect key="frame" x="20" y="174" width="141" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="141" id="LVQ-df-ZlE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="bWE-8Y-iR2" customClass="FeedTextView" customModule="WisdriIS" customModuleProvider="target">
+                        <rect key="frame" x="16" y="38" width="392" height="42"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                    </textView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工艺段：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-mH-Jy7" userLabel="Annotation Label">
+                        <rect key="frame" x="20" y="13" width="60" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="gMa-Ut-ejR"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8L-ux-7Dq" userLabel="Name Label">
+                        <rect key="frame" x="85" y="13" width="100" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="DMI-F2-mwN"/>
+                            <constraint firstAttribute="height" constant="18" id="K1f-ih-QHJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uq8-FR-kHh" customClass="TaskMediaView" customModule="WisdriIS" customModuleProvider="target">
+                        <rect key="frame" x="368" y="13" width="40" height="40"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="7So-A6-jr9"/>
+                            <constraint firstAttribute="width" constant="40" id="HAD-Uh-taS"/>
+                        </constraints>
+                    </view>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAH-ek-HKo">
+                        <rect key="frame" x="20" y="38" width="37" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="0q5-TQ-Epc" secondAttribute="bottom" constant="1" id="1Bh-Ol-FEe"/>
+                    <constraint firstAttribute="trailing" secondItem="Fop-fw-cWS" secondAttribute="trailing" id="3B7-dq-Cq3"/>
+                    <constraint firstItem="uq8-FR-kHh" firstAttribute="trailing" secondItem="bWE-8Y-iR2" secondAttribute="trailing" id="4dF-KK-Mao"/>
+                    <constraint firstItem="t8L-ux-7Dq" firstAttribute="top" secondItem="wgH-mH-Jy7" secondAttribute="top" id="5kF-pL-gwI"/>
+                    <constraint firstItem="wgH-mH-Jy7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="61q-7x-5p5"/>
+                    <constraint firstItem="0q5-TQ-Epc" firstAttribute="top" secondItem="Fop-fw-cWS" secondAttribute="bottom" constant="6" id="6Dp-1h-KFn"/>
+                    <constraint firstItem="KAH-ek-HKo" firstAttribute="leading" secondItem="wgH-mH-Jy7" secondAttribute="leading" id="BSD-bd-36V"/>
+                    <constraint firstItem="bWE-8Y-iR2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="FBf-fA-QoZ"/>
+                    <constraint firstItem="Fop-fw-cWS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="G3O-F5-55J"/>
+                    <constraint firstItem="t8L-ux-7Dq" firstAttribute="leading" secondItem="wgH-mH-Jy7" secondAttribute="trailing" constant="5" id="GA5-cq-cco"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KAH-ek-HKo" secondAttribute="trailing" constant="15" id="PZR-sW-EIX"/>
+                    <constraint firstItem="uq8-FR-kHh" firstAttribute="top" secondItem="t8L-ux-7Dq" secondAttribute="top" id="SxB-s2-eiS"/>
+                    <constraint firstItem="KAH-ek-HKo" firstAttribute="top" secondItem="bWE-8Y-iR2" secondAttribute="top" id="aF8-Pi-mGL"/>
+                    <constraint firstItem="bWE-8Y-iR2" firstAttribute="top" secondItem="t8L-ux-7Dq" secondAttribute="bottom" constant="7" id="dmW-vb-SFv"/>
+                    <constraint firstItem="Fop-fw-cWS" firstAttribute="top" secondItem="bWE-8Y-iR2" secondAttribute="bottom" constant="8" symbolic="YES" id="fKa-ZA-Rot"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bWE-8Y-iR2" secondAttribute="trailing" constant="3" id="qvT-fh-60w"/>
+                    <constraint firstItem="wgH-mH-Jy7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="rVE-na-RoQ"/>
+                    <constraint firstItem="0q5-TQ-Epc" firstAttribute="leading" secondItem="wgH-mH-Jy7" secondAttribute="leading" id="zvZ-qQ-mKT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="mediaView" destination="uq8-FR-kHh" id="iv7-G9-bqX"/>
+                <outlet property="sectionNameLabel" destination="t8L-ux-7Dq" id="W4n-kR-elC"/>
+                <outlet property="taskDescriptionTextView" destination="bWE-8Y-iR2" id="cNg-Ac-6bf"/>
+                <outlet property="taskImageCollectionView" destination="Fop-fw-cWS" id="MCh-HT-SyJ"/>
+                <outlet property="taskTimeLabel" destination="0q5-TQ-Epc" id="m0N-lr-X3P"/>
+            </connections>
+            <point key="canvasLocation" x="271.5" y="331"/>
+        </tableViewCell>
+    </objects>
+</document>

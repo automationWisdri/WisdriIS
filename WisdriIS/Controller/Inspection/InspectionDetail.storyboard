@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="tYT-xT-vFB">
+            <objects>
+                <navigationController id="yJ1-gQ-JMS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GEj-ue-ccq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="eyy-UV-Xh0" kind="relationship" relationship="rootViewController" id="RyA-2C-ge9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6SX-IG-4oU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1572" y="339"/>
+        </scene>
+        <!--Inspection Detail View Controller-->
+        <scene sceneID="Ars-tG-xOB">
+            <objects>
+                <viewController storyboardIdentifier="InspectionDetailViewController" id="eyy-UV-Xh0" customClass="InspectionDetailViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H6B-N2-4ZV"/>
+                        <viewControllerLayoutGuide type="bottom" id="j5v-ik-UKm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h6E-jm-YP4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mWP-sr-qPg">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mWP-sr-qPg" firstAttribute="top" secondItem="h6E-jm-YP4" secondAttribute="topMargin" id="TBb-sQ-lsK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mWP-sr-qPg" secondAttribute="trailing" constant="-20" id="XLy-8Z-SCr"/>
+                            <constraint firstItem="j5v-ik-UKm" firstAttribute="top" secondItem="mWP-sr-qPg" secondAttribute="bottom" id="fO5-Wh-iNF"/>
+                            <constraint firstItem="mWP-sr-qPg" firstAttribute="leading" secondItem="h6E-jm-YP4" secondAttribute="leadingMargin" constant="-20" id="vjn-wf-WqO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ei0-d1-WAl"/>
+                    <connections>
+                        <outlet property="inspectionDetailTableView" destination="mWP-sr-qPg" id="xDY-WL-KSK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s7B-2u-t2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-887" y="339"/>
+        </scene>
+    </scenes>
+</document>

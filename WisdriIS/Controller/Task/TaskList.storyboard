@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="QPg-4v-PEl">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Task List View Controller-->
+        <scene sceneID="Rgi-2W-O6E">
+            <objects>
+                <viewController storyboardIdentifier="TaskListViewController" id="VIY-by-SDs" userLabel="Task List View Controller" customClass="TaskListViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="G9j-go-xw3"/>
+                        <viewControllerLayoutGuide type="bottom" id="QRk-IZ-TxE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hv0-RA-IIf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SzC-uU-c54">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SzC-uU-c54" firstAttribute="top" secondItem="hv0-RA-IIf" secondAttribute="top" id="1ph-ge-9Ki"/>
+                            <constraint firstAttribute="bottom" secondItem="SzC-uU-c54" secondAttribute="bottom" id="bqB-Wq-yn2"/>
+                            <constraint firstItem="SzC-uU-c54" firstAttribute="leading" secondItem="hv0-RA-IIf" secondAttribute="leading" id="gYt-VT-1v0"/>
+                            <constraint firstAttribute="trailing" secondItem="SzC-uU-c54" secondAttribute="trailing" id="msf-Zw-GDl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Task List" id="JSu-zR-6nX"/>
+                    <connections>
+                        <outlet property="taskTableView" destination="SzC-uU-c54" id="x5N-N7-etD"/>
+                        <segue destination="Pwb-Pv-k1c" kind="show" identifier="showTaskDetail" id="SZj-T8-1qO">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TtU-qq-inU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1503" y="-674"/>
+        </scene>
+        <!--TaskDetailViewController-->
+        <scene sceneID="OG6-dp-6m7">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TaskDetail" referencedIdentifier="TaskDetailViewController" id="Pwb-Pv-k1c" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q05-if-aZG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2094" y="-674"/>
+        </scene>
+        <!--Task-->
+        <scene sceneID="sCt-UI-hmX">
+            <objects>
+                <navigationController id="QPg-4v-PEl" userLabel="Task" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Task" image="icon_feeds" id="EHn-ba-BPd" userLabel="Task">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon_feeds_active"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3cr-wJ-kAq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="VIY-by-SDs" kind="relationship" relationship="rootViewController" id="mmM-7V-pwc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YXK-dz-thZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="731" y="-674"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon_feeds" width="30" height="30"/>
+        <image name="icon_feeds_active" width="30" height="30"/>
+    </resources>
+</document>

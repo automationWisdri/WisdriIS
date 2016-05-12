@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k0N-3n-NYh">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="M8i-f1-BX7">
+            <objects>
+                <navigationController id="k0N-3n-NYh" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SjL-qj-rZF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Nqa-pC-c8D" kind="relationship" relationship="rootViewController" id="3tY-si-Pgf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HV6-8O-Akh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-126" y="255"/>
+        </scene>
+        <!--Profile Info View Controller-->
+        <scene sceneID="Lz1-Ix-ZTa">
+            <objects>
+                <viewController storyboardIdentifier="ProfileInfoViewController" id="Nqa-pC-c8D" customClass="ProfileInfoViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Tf-T1-85b"/>
+                        <viewControllerLayoutGuide type="bottom" id="vgV-oQ-yWe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C2v-ZB-kby">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IcA-gp-hu7" customClass="TPKeyboardAvoidingTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="DTb-4C-bs4">
+                                    <rect key="frame" x="0.0" y="64" width="600" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="请根据提示要求，修改个人信息。" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BK2-dJ-b2e">
+                                            <rect key="frame" x="20" y="20" width="560" height="60"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="BK2-dJ-b2e" secondAttribute="trailing" constant="20" id="No7-Ep-gWm"/>
+                                        <constraint firstItem="BK2-dJ-b2e" firstAttribute="leading" secondItem="DTb-4C-bs4" secondAttribute="leading" constant="20" id="Qyk-Oh-eRr"/>
+                                        <constraint firstItem="BK2-dJ-b2e" firstAttribute="top" secondItem="DTb-4C-bs4" secondAttribute="top" constant="20" id="o5Q-wy-qFz"/>
+                                        <constraint firstAttribute="bottom" secondItem="BK2-dJ-b2e" secondAttribute="bottom" constant="20" id="x1d-7a-HGk"/>
+                                    </constraints>
+                                </view>
+                                <connections>
+                                    <outlet property="dataSource" destination="Nqa-pC-c8D" id="U7e-Af-RfV"/>
+                                    <outlet property="delegate" destination="Nqa-pC-c8D" id="yaZ-Li-cIQ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IcA-gp-hu7" firstAttribute="leading" secondItem="C2v-ZB-kby" secondAttribute="leading" id="3Zo-I0-7MS"/>
+                            <constraint firstItem="vgV-oQ-yWe" firstAttribute="top" secondItem="IcA-gp-hu7" secondAttribute="bottom" id="7MS-1D-Brb"/>
+                            <constraint firstItem="IcA-gp-hu7" firstAttribute="top" secondItem="6Tf-T1-85b" secondAttribute="bottom" constant="-64" id="bfJ-ob-QEK"/>
+                            <constraint firstAttribute="trailing" secondItem="IcA-gp-hu7" secondAttribute="trailing" id="vUj-EI-sCC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GsE-qW-iBe"/>
+                    <connections>
+                        <outlet property="introTextView" destination="BK2-dJ-b2e" id="UqW-YV-rQr"/>
+                        <outlet property="introView" destination="DTb-4C-bs4" id="F9Z-mt-iEH"/>
+                        <outlet property="profileInfoTableView" destination="IcA-gp-hu7" id="lrM-0V-WDz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rkl-2o-9iE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="592" y="255"/>
+        </scene>
+    </scenes>
+</document>

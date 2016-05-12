@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InspectionDeviceTypeInfoCell" rowHeight="70" id="RoZ-nE-Kxf" customClass="InspectionDeviceTypeInfoCell" customModule="WisdriIS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RoZ-nE-Kxf" id="cJo-6A-Pd2">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ZD-IX-BSG" userLabel="Annotation Label">
+                        <rect key="frame" x="18" y="9" width="75" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Circle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf9-Fo-rbE" userLabel="Annotation Label">
+                        <rect key="frame" x="18" y="43" width="75" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Inspection Circle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sh0-QY-Q1K" userLabel="Annotation Info Label">
+                        <rect key="frame" x="102" y="43" width="210" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Type Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKT-H6-904" userLabel="Annotation Info Label">
+                        <rect key="frame" x="102" y="9" width="210" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Sh0-QY-Q1K" firstAttribute="trailing" secondItem="cJo-6A-Pd2" secondAttribute="trailingMargin" id="K5O-hL-Hcc"/>
+                    <constraint firstItem="Cf9-Fo-rbE" firstAttribute="leading" secondItem="cJo-6A-Pd2" secondAttribute="leadingMargin" constant="10" id="UM4-bc-dxu"/>
+                    <constraint firstItem="TKT-H6-904" firstAttribute="trailing" secondItem="cJo-6A-Pd2" secondAttribute="trailingMargin" id="XdD-XY-owu"/>
+                    <constraint firstItem="5ZD-IX-BSG" firstAttribute="leading" secondItem="cJo-6A-Pd2" secondAttribute="leadingMargin" constant="10" id="nzk-oH-odg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="deviceTypeNameLabel" destination="TKT-H6-904" id="xvx-qP-W87"/>
+                <outlet property="deviceTypeNameTitleLabel" destination="5ZD-IX-BSG" id="SN2-Mk-XhY"/>
+                <outlet property="insepctionCycleLabel" destination="Sh0-QY-Q1K" id="HVN-08-U4U"/>
+                <outlet property="insepctionCycleTitleLabel" destination="Cf9-Fo-rbE" id="Mi8-gG-R4N"/>
+            </connections>
+            <point key="canvasLocation" x="217" y="191"/>
+        </tableViewCell>
+    </objects>
+</document>
