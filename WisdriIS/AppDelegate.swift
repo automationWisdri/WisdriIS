@@ -121,17 +121,14 @@ extension AppDelegate: WISNetworkingDelegate {
             SVProgressHUD.setDefaultMaskType(.None)
             switch status {
             case WISNetworkReachabilityStatus.ReachableViaWWAN.rawValue:
-                // SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via WWAN"), maskType: .None)
                 SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via WWAN"))
                 break
                 
             case WISNetworkReachabilityStatus.ReachableViaWiFi.rawValue:
-                // SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via Wi-Fi"), maskType: .None)
                 SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via Wi-Fi"))
                 break
                 
             case WISNetworkReachabilityStatus.NotReachable.rawValue:
-                // SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Not Reachable"), maskType: .None)
                 SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Not Reachable"))
                 break
                 
