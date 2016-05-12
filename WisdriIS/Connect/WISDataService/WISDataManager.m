@@ -655,7 +655,6 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 }
 
 - (NSURLSessionDataTask *) updateCurrentUserDetailInformationWithCompletionHandler:(WISSystemOperationHandler)handler {
-    
     NSDictionary * updateParams = nil;
     NSURLSessionDataTask * dataTask = nil;
     
