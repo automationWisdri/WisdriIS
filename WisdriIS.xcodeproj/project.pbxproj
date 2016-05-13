@@ -361,7 +361,6 @@
 		9F7C4BB11C888F6100652CDF /* TaskDetailDoubleInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailDoubleInfoCell.swift; path = View/Task/TaskDetailDoubleInfoCell.swift; sourceTree = "<group>"; };
 		9F7C4BB31C8924F400652CDF /* TaskDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TaskDetail.storyboard; sourceTree = "<group>"; };
 		9F7C4BB61C8D56D000652CDF /* TaskMediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaView.swift; sourceTree = "<group>"; };
-		9F7C4BB71C8D56D000652CDF /* TaskDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDescriptionView.swift; sourceTree = "<group>"; };
 		9F7C4BBC1C8D6D1B00652CDF /* TaskDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDescriptionCell.swift; sourceTree = "<group>"; };
 		9F7C4BBD1C8D6D1B00652CDF /* TaskDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDescriptionCell.xib; sourceTree = "<group>"; };
 		9F7C4BC11C8E6B4100652CDF /* MediaPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MediaPreview.storyboard; sourceTree = "<group>"; };
@@ -946,7 +945,6 @@
 			isa = PBXGroup;
 			children = (
 				9F7C4BB61C8D56D000652CDF /* TaskMediaView.swift */,
-				9F7C4BB71C8D56D000652CDF /* TaskDescriptionView.swift */,
 				9F7C4BBC1C8D6D1B00652CDF /* TaskDescriptionCell.swift */,
 				9F7C4BBD1C8D6D1B00652CDF /* TaskDescriptionCell.xib */,
 			);
