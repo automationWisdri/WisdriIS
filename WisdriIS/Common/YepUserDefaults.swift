@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
 
 let v1AccessTokenKey = "v1AccessToken"
 let userIDKey = "userID"
@@ -189,9 +189,9 @@ class YepUserDefaults {
         return Listenable<String?>(nickname) { nickname in
             defaults.setObject(nickname, forKey: nicknameKey)
 
-            guard let realm = try? Realm() else {
-                return
-            }
+//            guard let realm = try? Realm() else {
+//                return
+//            }
 
 //            if let
 //                nickname = nickname,
@@ -210,9 +210,9 @@ class YepUserDefaults {
         return Listenable<String?>(introduction) { introduction in
             defaults.setObject(introduction, forKey: introductionKey)
 
-            guard let realm = try? Realm() else {
-                return
-            }
+//            guard let realm = try? Realm() else {
+//                return
+//            }
 
 //            if let
 //                introduction = introduction,
@@ -231,9 +231,9 @@ class YepUserDefaults {
         return Listenable<String?>(avatarURLString) { avatarURLString in
             defaults.setObject(avatarURLString, forKey: avatarURLStringKey)
 
-            guard let realm = try? Realm() else {
-                return
-            }
+//            guard let realm = try? Realm() else {
+//                return
+//            }
 
 //            if let
 //                avatarURLString = avatarURLString,
@@ -252,9 +252,9 @@ class YepUserDefaults {
         return Listenable<String?>(badge) { badge in
             defaults.setObject(badge, forKey: badgeKey)
 
-            guard let realm = try? Realm() else {
-                return
-            }
+//            guard let realm = try? Realm() else {
+//                return
+//            }
 
 //            if let
 //                badge = badge,
