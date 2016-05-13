@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-// import JGProgressHUD
 
 class TaskDetailViewController: BaseViewController {
     
@@ -21,9 +20,6 @@ class TaskDetailViewController: BaseViewController {
     private let taskDescriptionCellID = "TaskDescriptionCell"
     private let taskPlanCellID = "TaskPlanCell"
     private let taskStateCellID = "TaskStateCell"
-    
-//    private var testCell: TaskDescriptionCell?
-    // private let hud = JGProgressHUD(style: JGProgressHUDStyle.Dark)
     
     var wisTask: WISMaintenanceTask?
     var imagesInfo = [String : WISFileInfo]()
@@ -248,7 +244,6 @@ class TaskDetailViewController: BaseViewController {
         
         taskDetailTableView.delegate = self
         taskDetailTableView.dataSource = self
-        // hud.showInView(self.view)
         
         taskDetailTableView.registerNib(UINib(nibName: taskDetailSingleInfoCellID, bundle: nil), forCellReuseIdentifier: taskDetailSingleInfoCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskDetailDoubleInfoCellID, bundle: nil), forCellReuseIdentifier: taskDetailDoubleInfoCellID)
@@ -272,7 +267,7 @@ class TaskDetailViewController: BaseViewController {
     
     func getTaskDetail() {
         // 获取任务详情
-//        SVProgressHUD.show()
+        SVProgressHUD.show()
         
         WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(wisTask?.taskID) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completedWithNoError {
@@ -298,10 +293,9 @@ class TaskDetailViewController: BaseViewController {
                     
                 }
                 
-//                SVProgressHUD.dismiss()
+                SVProgressHUD.dismiss()
                 
                 self.taskDetailTableView.reloadData()
-                //                self.hud.dismiss()
                 
             } else {
                 

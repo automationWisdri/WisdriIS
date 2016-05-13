@@ -84,6 +84,7 @@ func taskStateImage(state: String) -> UIImage {
 
 func errorCode(error: NSError) {
     
+    SVProgressHUD.setDefaultMaskType(.None)
     guard let errorCode = WISErrorCode(rawValue: error.code) else {
         SVProgressHUD.showErrorWithStatus("内部错误")
         return
@@ -114,7 +115,6 @@ func errorCode(error: NSError) {
         SVProgressHUD.showErrorWithStatus("未知错误")
         return
     }
-
 }
 
 func configureStateText(state: String) -> String {

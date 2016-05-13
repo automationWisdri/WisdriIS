@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 import Ruler
 
 class ContactsViewController: BaseViewController {
@@ -33,7 +32,7 @@ class ContactsViewController: BaseViewController {
 //    private lazy var friends = normalFriends()
 //    private var filteredFriends: Results<User>?
 
-    private var realmNotificationToken: NotificationToken?
+//    private var realmNotificationToken: NotificationToken?
     private let tableRowCount = 10
 
 //    private lazy var noContactsFooterView: InfoView = InfoView(NSLocalizedString("No friends yet.\nTry discover or add some.", comment: ""))

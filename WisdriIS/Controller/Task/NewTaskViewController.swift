@@ -11,7 +11,6 @@ import CoreLocation
 import MobileCoreServices
 import Photos
 import Proposer
-import RealmSwift
 import Kingfisher
 import MapKit
 import SVProgressHUD

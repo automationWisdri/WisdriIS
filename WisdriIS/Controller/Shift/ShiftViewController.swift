@@ -93,6 +93,8 @@ class ShiftViewController: UIViewController {
                 
                 self.noRecords = self.clockRecords.isEmpty
                 self.shiftTableView.reloadData()
+            } else {
+                errorCode(error)
             }
         }
     }
