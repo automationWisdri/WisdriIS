@@ -51,20 +51,20 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 /// 以下method暂不开放给使用者
 ///
 // 保存图片 (本地／服务器)
-- (void) storeImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
+- (NSURLSessionUploadTask *) storeImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
       uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
             completionHandler:(WISSystemOperationHandler)handler;
 
 
 
 // 获取图片(本地／服务器)
-- (void) obtainImageWithImagesInfo:(NSDictionary<NSString *, WISFileInfo *> *)imagesInfo
+- (NSURLSessionDownloadTask *) obtainImageWithImagesInfo:(NSDictionary<NSString *, WISFileInfo *> *)imagesInfo
          downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                  completionHandler:(WISSystemOperationHandler)handler;
 
 
 // 上传图片 (至服务器)
-//- (void) uploadImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
+//- (NSURLSessionUploadTask *) uploadImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
 //             progressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
 //             completionHandler:(WISSystemDataTransmissionHandler)handler;
 
@@ -3230,11 +3230,11 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 
 #pragma mark - Image Operations for APP interface
 
-- (void) storeImageOfUserWithUserName:(NSString *)userName
+- (NSURLSessionUploadTask *) storeImageOfUserWithUserName:(NSString *)userName
                                images:(NSDictionary<NSString *,UIImage *> *)images
               uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                     completionHandler:(WISSystemOperationHandler)handler {
-    [self storeImageWithImages:images
+    return [self storeImageWithImages:images
      /// PROGRESS
      uploadProgressIndicator:progress
      /// COMPLETION HANDLER
@@ -3267,11 +3267,11 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 }
 
 
-- (void) obtainImageOfUserWithUserName:(NSString *)userName
+- (NSURLSessionDownloadTask *) obtainImageOfUserWithUserName:(NSString *)userName
                             imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
              downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                      completionHandler:(WISSystemOperationHandler)handler {
-    [self obtainImageWithImagesInfo:imagesInfo
+    return [self obtainImageWithImagesInfo:imagesInfo
      /// PROGRESS
           downloadProgressIndicator:progress
      /// COMPLETION HANDLER
@@ -3279,11 +3279,12 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 }
 
 
-- (void) storeImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
+- (NSURLSessionUploadTask *) storeImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
                                         images:(NSDictionary<NSString *,UIImage *> *)images
                        uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                              completionHandler:(WISSystemOperationHandler)handler {
-    [self storeImageWithImages:images
+    
+    return [self storeImageWithImages:images
      /// PROGRESS
      uploadProgressIndicator:progress
      /// COMPLETION HANDLER
@@ -3310,11 +3311,12 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 }
 
 
-- (void) obtainImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
+- (NSURLSessionDownloadTask *) obtainImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
                                      imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
                       downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                               completionHandler:(WISSystemOperationHandler)handler {
-    [self obtainImageWithImagesInfo:imagesInfo
+    
+    return [self obtainImageWithImagesInfo:imagesInfo
      /// PROGRESS
      downloadProgressIndicator:progress
      /// COMPLETION HANDLER
@@ -3325,13 +3327,16 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 #pragma mark - File/Data Transmission and Operation
 
 // 保存图片 (本地／远端服务器)
-- (void) storeImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
+- (NSURLSessionUploadTask *) storeImageWithImages:(NSDictionary<NSString *, UIImage *> *)images
       uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
             completionHandler:(WISSystemOperationHandler)handler {
+    
+    NSURLSessionUploadTask *uploadTask = nil;
+    
     if (images.count > 0) {
         [[[WISFileStoreManager defaultManager]downloadImageStore]setImages:images];
         
-        [self uploadImageWithImages:images
+        uploadTask = [self uploadImageWithImages:images
          /// PROGRESS
          progressIndicator:^(NSProgress *transmissionProgress) {
              progress(transmissionProgress);
@@ -3342,13 +3347,16 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
              handler(completedWithNoError, error, classNameOfReceivedDataAsString, receivedData);
          }];
     }
+    return uploadTask;
 }
 
 
 // 获取图片 (本地／远端服务器)
-- (void) obtainImageWithImagesInfo:(NSDictionary<NSString *, WISFileInfo *> *)imagesInfo
+- (NSURLSessionDownloadTask *) obtainImageWithImagesInfo:(NSDictionary<NSString *, WISFileInfo *> *)imagesInfo
          downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
                  completionHandler:(WISSystemOperationHandler)handler {
+    
+    NSURLSessionDownloadTask *downloadTask = nil;
     
     NSArray<NSString *> *requiredImagesName = [imagesInfo allKeys];
     NSArray<NSString *> *imagesNameNotContainedInLocalStore =
@@ -3369,7 +3377,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
             [requiredImagesRemoteLocation addObject:imagesInfo[imageName].fileRemoteLocation];
         }
         
-        [self downloadImageWithImageLocations:requiredImagesRemoteLocation
+        downloadTask = [self downloadImageWithImageLocations:requiredImagesRemoteLocation
          /// PROGRESS
          //progressIndicator:^(NSProgress *transmissionProgress) {
          progressIndicator:progress
@@ -3386,6 +3394,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
              handler(completedWithNoError, error, NSStringFromClass([requiredImages class]), requiredImages);
          }];
     }
+    return downloadTask;
 }
 
 
