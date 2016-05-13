@@ -8,7 +8,6 @@ def pods
     pod 'FXBlurView', '~> 1.6.4'
     pod 'SVProgressHUD', '~> 2.0.3'
     pod 'MJRefresh', '~> 3.1.0'
-    pod 'Navi'
     pod 'KeyboardMan', '~> 0.6.0'
     pod 'Ruler', '~> 0.7.0'
     pod 'Proposer'
