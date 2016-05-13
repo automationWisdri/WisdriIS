@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Navi
+//import Navi
 
 typealias CancelableTask = (cancel: Bool) -> Void
 
