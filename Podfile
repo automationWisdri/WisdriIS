@@ -14,7 +14,7 @@ def pods
     pod 'Proposer'
     pod 'TPKeyboardAvoiding'
     pod 'PagingMenuController'
-    pod ’CVCalendar', '~> 1.2.9'
+    pod 'CVCalendar', '~> 1.2.9'
     pod 'SwiftDate'
     pod 'AFNetworking', '~> 3.0'
     pod 'Cosmos'
