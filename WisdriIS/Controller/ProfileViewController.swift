@@ -9,7 +9,7 @@
 import UIKit
 import TPKeyboardAvoiding
 import Proposer
-import Navi
+//import Navi
 import SVProgressHUD
 
 class ProfileViewController: BaseViewController {
@@ -99,7 +99,7 @@ class ProfileViewController: BaseViewController {
             print("avatarURLString: \(avatarURLString)")
 
             let avatarSize = YepConfig.editProfileAvatarSize()
-            let avatarStyle: AvatarStyle = .RoundedRectangle(size: CGSize(width: avatarSize, height: avatarSize), cornerRadius: avatarSize * 0.5, borderWidth: 0)
+//            let avatarStyle: AvatarStyle = .RoundedRectangle(size: CGSize(width: avatarSize, height: avatarSize), cornerRadius: avatarSize * 0.5, borderWidth: 0)
             
             var imagesInfo = [String : WISFileInfo]()
             
