@@ -8,7 +8,7 @@
 
 import UIKit
 import MJRefresh
-import KVOController
+//import KVOController
 
 class WISRefreshHeader: MJRefreshHeader {
     var loadingView:UIActivityIndicatorView?
@@ -49,16 +49,18 @@ class WISRefreshHeader: MJRefreshHeader {
         self.arrowImage = UIImageView(image: UIImage.imageUsedTemplateMode("ic_arrow_downward"))
         self.addSubview(self.arrowImage!)
         
-        self.KVOController.observe(WISColor.sharedInstance, keyPath: "style", options: [.Initial,.New]) {[weak self] (nav, color, change) -> Void in
-            if WISColor.sharedInstance.style == WISColor.WISColorStyleDefault {
-                self?.loadingView?.activityIndicatorViewStyle = .Gray
-                self?.arrowImage?.tintColor = UIColor.grayColor()
-            }
-            else{
-                self?.loadingView?.activityIndicatorViewStyle = .White
-                self?.arrowImage?.tintColor = UIColor.grayColor()
-            }
-        }
+//        self.KVOController.observe(WISColor.sharedInstance, keyPath: "style", options: [.Initial,.New]) {[weak self] (nav, color, change) -> Void in
+//            if WISColor.sharedInstance.style == WISColor.WISColorStyleDefault {
+//                self?.loadingView?.activityIndicatorViewStyle = .Gray
+//                self?.arrowImage?.tintColor = UIColor.grayColor()
+//            }
+//            else{
+//                self?.loadingView?.activityIndicatorViewStyle = .White
+//                self?.arrowImage?.tintColor = UIColor.grayColor()
+//            }
+//        }
+        self.loadingView?.activityIndicatorViewStyle = .Gray
+        self.arrowImage?.tintColor = UIColor.grayColor()
         
     }
     

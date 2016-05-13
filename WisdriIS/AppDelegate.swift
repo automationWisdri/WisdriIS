@@ -21,31 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.backgroundColor = UIColor.yepBackgroundColor()
         self.window?.makeKeyAndVisible()
         
-        let testViewController = LoginViewController()
-        self.window?.rootViewController = testViewController
-        
-//        UINavigationBar.appearance().barTintColor = WISColor.colors.wis_logoColor
-//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-//        startMainStory()
-        
-//        #if DEBUG
-//            let fpsLabel = V2FPSLabel(frame: CGRectMake(15, SCREEN_HEIGHT-40, 55, 20));
-//            self.window?.addSubview(fpsLabel);
-//        #else
-//        #endif
+        let loginViewController = LoginViewController()
+        self.window?.rootViewController = loginViewController
         
         SVProgressHUD.setForegroundColor(UIColor(white: 1, alpha: 1))
         SVProgressHUD.setBackgroundColor(UIColor(white: 0.15, alpha: 0.85))
         SVProgressHUD.setDefaultStyle(.Custom)
         SVProgressHUD.setMinimumDismissTimeInterval(1.5)
         SVProgressHUD.setDefaultMaskType(.Clear)
+        SVProgressHUD.setDefaultAnimationType(.Native)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didDisappearProgressHUD), name: SVProgressHUDDidDisappearNotification, object: nil)
         
         WISDataManager.sharedInstance().networkingDelegate = self
-        
-//        Fabric.with([Crashlytics.self])
+
         return true
     }
     
@@ -58,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func didDisappearProgressHUD() {
         SVProgressHUD.setDefaultMaskType(.Clear)
     }
-    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -81,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
     
     // MARK: - 远程通知(推送)回调
     

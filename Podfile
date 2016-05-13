@@ -3,9 +3,6 @@ use_frameworks!
 
 def pods
     pod 'SnapKit', '~> 0.18.0'
-    pod 'Kingfisher', '~> 1.9.1'
-    pod 'KVOController', '~> 1.0.3'
-    pod 'FXBlurView', '~> 1.6.4'
     pod 'SVProgressHUD', '~> 2.0.3'
     pod 'MJRefresh', '~> 3.1.0'
     pod 'KeyboardMan', '~> 0.6.0'

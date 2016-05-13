@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 import MonkeyKing
-import Kingfisher
+//import Kingfisher
 import Ruler
 
 let mediaPreviewWindow = UIWindow(frame: UIScreen.mainScreen().bounds)

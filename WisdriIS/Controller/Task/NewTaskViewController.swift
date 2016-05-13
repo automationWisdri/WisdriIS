@@ -11,7 +11,7 @@ import CoreLocation
 import MobileCoreServices
 import Photos
 import Proposer
-import Kingfisher
+//import Kingfisher
 import MapKit
 import SVProgressHUD
 

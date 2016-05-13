@@ -8,7 +8,7 @@
 
 import UIKit
 import MJRefresh
-import KVOController
+//import KVOController
 
 class WISRefreshFooter: MJRefreshAutoFooter {
 
@@ -65,17 +65,18 @@ class WISRefreshFooter: MJRefreshAutoFooter {
         
         self.noMoreDataStateString = "没有更多数据了"
         
-        self.KVOController.observe(WISColor.sharedInstance, keyPath: "style", options: [.Initial,.New]) {[weak self] (nav, color, change) -> Void in
-            if WISColor.sharedInstance.style == WISColor.WISColorStyleDefault {
-                self?.loadingView?.activityIndicatorViewStyle = .Gray
-                self?.stateLabel!.textColor = UIColor(white: 0, alpha: 0.3)
-            }
-            else{
-                self?.loadingView?.activityIndicatorViewStyle = .White
-                self?.stateLabel!.textColor = UIColor(white: 1, alpha: 0.3)
-            }
-        }
-        
+//        self.KVOController.observe(WISColor.sharedInstance, keyPath: "style", options: [.Initial,.New]) {[weak self] (nav, color, change) -> Void in
+//            if WISColor.sharedInstance.style == WISColor.WISColorStyleDefault {
+//                self?.loadingView?.activityIndicatorViewStyle = .Gray
+//                self?.stateLabel!.textColor = UIColor(white: 0, alpha: 0.3)
+//            }
+//            else{
+//                self?.loadingView?.activityIndicatorViewStyle = .White
+//                self?.stateLabel!.textColor = UIColor(white: 1, alpha: 0.3)
+//            }
+//        }
+        self.loadingView?.activityIndicatorViewStyle = .Gray
+        self.stateLabel!.textColor = UIColor(white: 0, alpha: 0.3)
     }
     
     /**

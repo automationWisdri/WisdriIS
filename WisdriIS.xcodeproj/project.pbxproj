@@ -438,7 +438,6 @@
 		9FEF50011C78A99E001A7644 /* WISSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISSettings.swift; sourceTree = "<group>"; };
 		9FEF500D1C78A9B7001A7644 /* Request+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Extension.swift"; sourceTree = "<group>"; };
 		9FEF500E1C78A9B7001A7644 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		9FEF500F1C78A9B7001A7644 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		9FEF50171C78B1F0001A7644 /* Dark.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Dark.bundle; sourceTree = "<group>"; };
 		9FEF50181C78B1F0001A7644 /* Light.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Light.bundle; sourceTree = "<group>"; };
@@ -1153,7 +1152,6 @@
 				9FEF500D1C78A9B7001A7644 /* Request+Extension.swift */,
 				9FEF500E1C78A9B7001A7644 /* UIImage+Extension.swift */,
 				9F801ABE1C8681B300F64265 /* UIImage+Yep.swift */,
-				9FEF500F1C78A9B7001A7644 /* UIImageView+Extension.swift */,
 				9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */,
 				9F801ABC1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift */,
 				9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */,
