@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WISMaintenanceTaskRating : NSObject
+@interface WISMaintenanceTaskRating : NSObject<NSCopying, NSCoding>
 
 @property (readwrite) NSInteger totalScore;
 @property (readwrite) NSInteger attitudeScore;

@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MaintenanceTaskType) {
 //};
 
 @class WISMaintenanceTaskState;
-@interface WISMaintenanceTask : NSObject <NSCopying>
+@interface WISMaintenanceTask : NSObject <NSCopying, NSCoding>
 
 ///
 @property (readwrite, strong) NSString *taskID;

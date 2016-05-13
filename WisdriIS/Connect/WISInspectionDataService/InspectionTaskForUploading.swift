@@ -107,7 +107,6 @@ class InspectionTaskForUploading: NSObject, NSCoding {
             return false
         }
     }
-
 }
 
 
