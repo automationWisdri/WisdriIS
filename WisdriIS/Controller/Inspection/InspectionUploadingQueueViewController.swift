@@ -116,12 +116,14 @@ class InspectionUploadingQueueViewController: BaseViewController {
             if cell!.inspectionDeviceID == stateChangedInspectionTaskDeviceID  {
                 switch state {
                 case .UploadingCompleted:
-                    inspectionUploadingQueueTableView.setEditing(true, animated: true)
-                    
-                    inspectionUploadingQueueTableView.beginUpdates()
-                    inspectionUploadingQueueTableView.deleteRowsAtIndexPaths([NSIndexPath.init(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
-                    inspectionUploadingQueueTableView.endUpdates()
-                    inspectionUploadingQueueTableView.setEditing(false, animated: true)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.inspectionUploadingQueueTableView.setEditing(true, animated: true)
+                        
+                        self.inspectionUploadingQueueTableView.beginUpdates()
+                        self.inspectionUploadingQueueTableView.deleteRowsAtIndexPaths([NSIndexPath.init(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
+                        self.inspectionUploadingQueueTableView.endUpdates()
+                        self.inspectionUploadingQueueTableView.setEditing(false, animated: true)
+                    }
                     break
                     
                 default:
