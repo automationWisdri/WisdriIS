@@ -12,7 +12,6 @@ class OperationTypeCell: UITableViewCell {
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         makeUI()
     }
 
@@ -52,7 +51,6 @@ class OperationTypeCell: UITableViewCell {
     }
 
     func makeUI() {
-
         contentView.addSubview(colorTitleLabel)
         colorTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -63,12 +61,11 @@ class OperationTypeCell: UITableViewCell {
     }
 }
 
+
 class OperationTypesView: UIView {
-    
+    // var validOperations = currentTask!.validOperations
 
-    let validOperations = currentTask!.validOperations
-
-    var totalHeight: CGFloat = 60 * CGFloat(currentTaskOperations.count)
+    var totalHeight: CGFloat? // = 60 * CGFloat(currentTaskOperations.count)
 
     lazy var containerView: UIView = {
         let view = UIView()
@@ -115,7 +112,10 @@ class OperationTypesView: UIView {
     func showInView(view: UIView) {
 
         frame = view.bounds
-
+        dispatch_async(dispatch_get_main_queue()){
+            self.tableView.reloadData()
+        }
+        
         view.addSubview(self)
 
         layoutIfNeeded()
@@ -142,7 +142,7 @@ class OperationTypesView: UIView {
         UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseIn, animations: {[weak self]  _ in
 
             if let strongSelf = self {
-                strongSelf.tableViewBottomConstraint?.constant = strongSelf.totalHeight
+                strongSelf.tableViewBottomConstraint?.constant = strongSelf.totalHeight!
             }
 
             self?.layoutIfNeeded()
@@ -164,10 +164,9 @@ class OperationTypesView: UIView {
             self?.containerView.alpha = 0
 
             if let strongSelf = self {
-                strongSelf.tableViewBottomConstraint?.constant = strongSelf.totalHeight
+                strongSelf.tableViewBottomConstraint?.constant = strongSelf.totalHeight!
             }
-
-
+            
             self?.layoutIfNeeded()
 
         }, completion: {[weak self]  finished in
@@ -179,26 +178,28 @@ class OperationTypesView: UIView {
         }
     }
 
-    var isFirstTimeBeenAddAsSubview = true
+    /// because task states may change when taskDetailViewController reappear after operations, you have to update pop up menu all the time
+    /// 2016.05.14
+    // var isFirstTimeBeenAddAsSubview = true
 
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
+//        if isFirstTimeBeenAddAsSubview {
+//            isFirstTimeBeenAddAsSubview = false
 
-        if isFirstTimeBeenAddAsSubview {
-            isFirstTimeBeenAddAsSubview = false
-
-            makeUI()
-
-            let tap = UITapGestureRecognizer(target: self, action: #selector(OperationTypesView.hide))
-            containerView.addGestureRecognizer(tap)
-
-            tap.cancelsTouchesInView = true
-            tap.delegate = self
-        }
+        makeUI()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(OperationTypesView.hide))
+        containerView.addGestureRecognizer(tap)
+        
+        tap.cancelsTouchesInView = true
+        tap.delegate = self
+        
+//         }
     }
 
     func makeUI() {
-
+        totalHeight = 60 * CGFloat(currentTaskOperations.count)
+        
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -222,11 +223,11 @@ class OperationTypesView: UIView {
 
         let tableViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|[tableView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
 
-        let tableViewBottomConstraint = NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: containerView, attribute: .Bottom, multiplier: 1.0, constant: self.totalHeight)
+        let tableViewBottomConstraint = NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: containerView, attribute: .Bottom, multiplier: 1.0, constant: self.totalHeight!)
 
         self.tableViewBottomConstraint = tableViewBottomConstraint
 
-        let tableViewHeightConstraint = NSLayoutConstraint(item: tableView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.totalHeight)
+        let tableViewHeightConstraint = NSLayoutConstraint(item: tableView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.totalHeight!)
 
         NSLayoutConstraint.activateConstraints(tableViewConstraintsH)
         NSLayoutConstraint.activateConstraints([tableViewBottomConstraint, tableViewHeightConstraint])
@@ -327,7 +328,6 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
 
 //            let cell = tableView.dequeueReusableCellWithIdentifier("ConversationMoreColorTitleCell") as! ConversationMoreColorTitleCell
             let cell = tableView.dequeueReusableCellWithIdentifier("OperationTypeCell") as! OperationTypeCell
-
             cell.colorTitleLabel.text = currentTaskOperations[indexPath.row].operationName
             cell.colorTitleLabelTextColor = UIColor.yepTintColor()
             cell.colorTitleLabelFontStyle = .Light
@@ -337,7 +337,6 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
         default:
 
             let cell = tableView.dequeueReusableCellWithIdentifier("OperationTypeCell") as! OperationTypeCell
-
             cell.colorTitleLabel.text = currentTaskOperations[indexPath.row].operationName
             cell.colorTitleLabelTextColor = UIColor.yepTintColor()
             cell.colorTitleLabelFontStyle = .Light
