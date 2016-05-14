@@ -8,6 +8,7 @@
 
 import UIKit
 import TPKeyboardAvoiding
+import SVProgressHUD
 
 class PasswordViewController: BaseViewController {
     
@@ -48,9 +49,67 @@ class PasswordViewController: BaseViewController {
     
     @objc private func post(sender: UIBarButtonItem) {
         
-//        let cell = passwordTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfilePasswordCell
+        let currentPasswordCell = passwordTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfilePasswordCell
+        let newPasswordCell = passwordTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfilePasswordCell
+        let repeatNewPasswordCell = passwordTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 2, inSection: 0)) as! ProfilePasswordCell
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var currentPassword: String?
+        var newPassword: String?
+        var repeatNewPassword: String?
+        
+        if currentPasswordCell.infoTextField.text?.Length > 0 {
+            currentPassword = currentPasswordCell.infoTextField.text!
+        } else {
+            currentPasswordCell.infoTextField.becomeFirstResponder()
+            return
+        }
+        
+        if newPasswordCell.infoTextField.text?.Length > 0 {
+            newPassword = newPasswordCell.infoTextField.text!
+        } else {
+            newPasswordCell.infoTextField.becomeFirstResponder()
+            return
+        }
+        
+        if repeatNewPasswordCell.infoTextField.text?.Length > 0 {
+            repeatNewPassword = repeatNewPasswordCell.infoTextField.text!
+        } else {
+            repeatNewPasswordCell.infoTextField.becomeFirstResponder()
+            return
+        }
+        
+        // 待完善
+//        if currentPassword != WISDataManager.sharedInstance().currentUser.password? {
+//            SVProgressHUD.showErrorWithStatus("当前密码输入错误")
+//            currentPasswordCell.infoTextField.becomeFirstResponder()
+//            return
+//        }
+        
+        if repeatNewPassword != newPassword {
+            SVProgressHUD.showErrorWithStatus("两次输入的密码不相同")
+            repeatNewPasswordCell.infoTextField.becomeFirstResponder()
+            return
+        } else {
+            SVProgressHUD.showWithStatus("正在提交")
+            WISDataManager.sharedInstance().changePasswordWithCurrentPassword(currentPassword, newPassword: newPassword, compeletionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
+                if completedWithNoError {
+                    SVProgressHUD.showSuccessWithStatus("修改成功\n请重新登录")
+//                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                    // 淡入淡出动画待完善
+                    UIView.animateWithDuration(0.5, delay: 1.5, options: .CurveEaseOut, animations: { [weak self] in
+                        self?.view.alpha = 0
+                        }, completion: { _ in
+                            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                                appDelegate.window?.rootViewController = LoginViewController()
+                            }
+                    })
+                    
+                } else {
+                    errorCode(error)
+                }
+            })
+        }
     }
     
     /*

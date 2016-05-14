@@ -106,6 +106,32 @@ class YepAlert {
             viewController?.presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    class func phoneCall(telNumber telNumber: String, mobileNumber: String, inViewController viewController: UIViewController?, withTelCallAction telCallAction: () -> Void, mobileCallAction: () -> Void, cancelAction: () -> Void) {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            let alertController = UIAlertController(title: "呼叫", message: "请选择号码", preferredStyle: .ActionSheet)
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
+                cancelAction()
+            }
+            alertController.addAction(cancelAction)
+            
+            let telCallAction: UIAlertAction = UIAlertAction(title: telNumber, style: .Default) { action -> Void in
+                telCallAction()
+            }
+            alertController.addAction(telCallAction)
+            
+            let mobileCallAction: UIAlertAction = UIAlertAction(title: mobileNumber, style: .Default) { action -> Void in
+                mobileCallAction()
+            }
+            alertController.addAction(mobileCallAction)
+            
+            viewController?.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+
 
 }
 

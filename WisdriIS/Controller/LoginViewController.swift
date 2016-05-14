@@ -11,12 +11,8 @@ import SVProgressHUD
 import SnapKit
 import KeyboardMan
 
-public typealias LoginSuccessHandel = (String) -> Void
-
 class LoginViewController: UIViewController {
-    
-    var successHandel: LoginSuccessHandel?
-    
+
     var backgroundImageView: UIImageView?
     var frostedView: UIVisualEffectView?
     var userNameTextField: UITextField?
@@ -239,9 +235,15 @@ class LoginViewController: UIViewController {
                 if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                     appDelegate.startMainStory()
                     // 待修改
+                    WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
+                        if !completedWithNoError {
+                            SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
+                        }
+                    })
                     WISUserDefaults.setupSegment()
                     WISUserDefaults.getCurrentUserClockStatus()
                     WISUserDefaults.getWorkShift(NSDate())
+                    
                 }
                 // **
                 // 注册 client ID, 用于Push Notification

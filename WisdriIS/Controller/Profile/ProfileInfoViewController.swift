@@ -8,6 +8,7 @@
 
 import UIKit
 import TPKeyboardAvoiding
+import SVProgressHUD
 
 class ProfileInfoViewController: UIViewController {
 
@@ -35,6 +36,17 @@ class ProfileInfoViewController: UIViewController {
         
         profileInfoTableView.tableHeaderView = introView
         profileInfoTableView.registerNib(UINib(nibName: profileInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: profileInfoCellIdentifier)
+        
+        let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+        let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+        
+        if let telNumber = WISDataManager.sharedInstance().currentUser.telephoneNumber {
+            telCell.infoTextField.text = telNumber
+        }
+        if let mobileNumber = WISDataManager.sharedInstance().currentUser.cellPhoneNumber {
+            mobileCell.infoTextField.text = mobileNumber
+        }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -50,9 +62,42 @@ class ProfileInfoViewController: UIViewController {
     
     @objc private func post(sender: UIBarButtonItem) {
         
-        //        let cell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+        let wisUserForUpdate = WISDataManager.sharedInstance().currentUser
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+        let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+        
+        var telNumber: String?
+        var mobileNumber: String?
+        
+        if telCell.infoTextField.text?.Length > 0 {
+            telNumber = telCell.infoTextField.text!
+            // 格式判断待完善
+            wisUserForUpdate.telephoneNumber = telNumber
+        } else {
+            telCell.infoTextField.becomeFirstResponder()
+            return
+        }
+        
+        if mobileCell.infoTextField.text?.Length > 0 {
+            mobileNumber = mobileCell.infoTextField.text!
+            // 格式判断待完善
+            wisUserForUpdate.cellPhoneNumber = mobileNumber
+        } else {
+            mobileCell.infoTextField.becomeFirstResponder()
+            return
+        }
+        
+        SVProgressHUD.showWithStatus("正在提交")
+        WISDataManager.sharedInstance().submitUserDetailInfoWithNewInfo(wisUserForUpdate!) { (completedWithNoError, error, classNameOfDataAsString, data) in
+            if completedWithNoError {
+                SVProgressHUD.showSuccessWithStatus("修改成功")
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                errorCode(error)
+            }
+        }
+
     }
 
     /*
