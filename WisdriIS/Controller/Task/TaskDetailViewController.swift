@@ -615,14 +615,22 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = cell as? TaskDetailSingleInfoCell else {
                     break
                 }
-                
+                // 个人觉得没必要显示座机，又增加了一次用户点击的操作
+                // Phone Call Alert 有待进一步完善
                 cell.tapToCallAction = {
-                    if let phoneNumber = self.wisTask!.creator.cellPhoneNumber {
-                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
-                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
-//                            print(phoneCallURL)
+                    if let telNumber = self.wisTask!.creator.telephoneNumber, mobileNumber = self.wisTask!.creator.cellPhoneNumber {
+                        YepAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                            let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
+                            }, mobileCallAction: {
+                                let phoneCallURL = NSURL(string: "tel://" + mobileNumber)!
+                                UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, cancelAction: {})
+//                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
+//                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
+////                            print(phoneCallURL)
+//                            UIApplication.sharedApplication().openURL(phoneCallURL)
+//                            }, cancelAction: {})
                     }
                 }
                 
@@ -633,12 +641,21 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 cell.tapToCallAction = {
-                    if let phoneNumber = self.wisTask!.personInCharge.cellPhoneNumber {
-                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
-                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
+                    if let telNumber = self.wisTask!.personInCharge.telephoneNumber, mobileNumber = self.wisTask!.personInCharge.cellPhoneNumber {
+                        YepAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                            let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
+                            }, mobileCallAction: {
+                                let phoneCallURL = NSURL(string: "tel://" + mobileNumber)!
+                                UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, cancelAction: {})
                     }
+//                    if let phoneNumber = self.wisTask!.personInCharge.cellPhoneNumber {
+//                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
+//                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
+//                            UIApplication.sharedApplication().openURL(phoneCallURL)
+//                            }, cancelAction: {})
+//                    }
                 }
                 
             default:
