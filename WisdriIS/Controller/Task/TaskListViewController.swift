@@ -8,6 +8,7 @@
 
 import UIKit
 import MJRefresh
+import SVProgressHUD
 import PagingMenuController
 
 class TaskListViewController: BaseViewController {
@@ -16,6 +17,9 @@ class TaskListViewController: BaseViewController {
     var taskType: MaintenanceTaskType?
 
     var wisTasks = [WISMaintenanceTask]()
+    var currentOperatingCellIndex = -1
+    var currentUpdateCellType:TaskListCellUpdatingType = .DoNothing
+    var updateCellInfoURLSessionTask:NSURLSessionTask?
     
     private let taskListCellID = "TaskListCell"
 
@@ -31,6 +35,10 @@ class TaskListViewController: BaseViewController {
         
         super.viewDidLoad()
 
+        self.updateCellInfoURLSessionTask = nil
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.networkingStatusChanges(_:)), name: WISNetworkStatusChangedNotification, object: nil)
+        
         taskTableView.delegate = self
         taskTableView.dataSource = self
 
@@ -44,7 +52,8 @@ class TaskListViewController: BaseViewController {
         taskTableView.tableFooterView = UIView()
 //        taskTableView.addSubview(buttonView)
         
-        
+        // for test
+        print("Task List View Controller did load!")
         
         self.taskTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.refresh()
@@ -77,9 +86,14 @@ class TaskListViewController: BaseViewController {
 //        }
         
         getTaskList(taskType!)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateCellInTaskList()
         
-        
-        
+        // for test
+        print("Task List View Controller will appear!")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -87,11 +101,8 @@ class TaskListViewController: BaseViewController {
     }
     
     func getTaskList(taskType: MaintenanceTaskType) {
-        
         WISDataManager.sharedInstance().updateMaintenanceTaskBriefInfoWithTaskTypeID(taskType) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
-
             if completedWithNoError {
-                
                 let tasks: Array<WISMaintenanceTask> = updatedData as! Array<WISMaintenanceTask>
                 self.wisTasks.removeAll()
 
@@ -100,19 +111,98 @@ class TaskListViewController: BaseViewController {
                 }
                 
                 self.taskTableView.mj_header.endRefreshing()
-                self.taskTableView.reloadData()
+                self.updateTableViewInfo()
+                
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showSuccessWithStatus("任务列表更新成功!")
 
             } else {
-                
                 errorCode(error)
             }
-            
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: WISNetworkStatusChangedNotification, object: nil)
+    }
+    
+    private func updateTableViewInfo() {
+        self.updateCellInfoURLSessionTask = nil
+        dispatch_async(dispatch_get_main_queue()){
+            self.taskTableView.reloadData()
+        }
+    }
+    
+    private func updateCellInTaskList() {
+        let tableView = self.taskTableView
+        let cellUpdatingType = self.currentUpdateCellType
+        let cellIndex = self.currentOperatingCellIndex
+        
+        guard cellIndex > -1 else {
+            return
+        }
+        
+        guard cellUpdatingType != .DoNothing else {
+            return
+        }
+        
+        switch cellUpdatingType {
+        case .ModifyCellInfo:
+            let task = self.wisTasks[cellIndex].copy() as! WISMaintenanceTask
+            self.updateCellInfoURLSessionTask = WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(task.taskID) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+                if completedWithNoError {
+                    let updatedTask = updatedData as! WISMaintenanceTask
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.taskTableView.beginUpdates()
+                        (self.taskTableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: self.currentOperatingCellIndex, inSection: 0)) as! TaskListCell).bind(updatedTask)
+                        self.taskTableView.endUpdates()
+                        self.updateCellInfoURLSessionTask = nil
+                    }
+                } else {
+                    errorCode(error)
+                }
+            }
+            break
+            
+        case .AddNewCell:
+            getTaskList(taskType!)
+            break
+            
+        case .RemoveCell:
+            self.wisTasks.removeAtIndex(cellIndex)
+            dispatch_async(dispatch_get_main_queue()) {
+                tableView.setEditing(true, animated: true)
+                tableView.beginUpdates()
+                tableView.deleteRowsAtIndexPaths([NSIndexPath.init(forRow: cellIndex, inSection: 0)], withRowAnimation: .Fade)
+                tableView.endUpdates()
+                tableView.setEditing(false, animated: true)
+            }
+            break
+            
+        case .DoNothing: break
+        }
+    
+        self.currentOperatingCellIndex = -1
+        self.currentUpdateCellType = .DoNothing
+    }
+    
+    
+    @objc private func networkingStatusChanges(networkNotification: NSNotification) -> Void {
+        guard self.updateCellInfoURLSessionTask != nil else {
+            return
+        }
+        
+        if (WISDataManager.sharedInstance().networkReachabilityStatus != .NotReachable && WISDataManager.sharedInstance().networkReachabilityStatus != .Unknown) {
+            self.updateCellInfoURLSessionTask!.resume()
+            
+        } else {
+            self.updateCellInfoURLSessionTask!.suspend()
+        }
     }
 }
 
@@ -148,14 +238,17 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
         
-        performSegueWithIdentifier("showTaskDetail", sender: wisTask)
-
+        performSegueWithIdentifier("showTaskDetail", sender: indexPath.row)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showTaskDetail" {
             let vc = segue.destinationViewController as! TaskDetailViewController
-            vc.wisTask = sender as? WISMaintenanceTask
+            vc.indexInList = sender as! Int
+            self.currentOperatingCellIndex = vc.indexInList
+            self.currentUpdateCellType = .DoNothing
+            vc.wisTask = self.wisTasks[vc.indexInList] as WISMaintenanceTask
+            vc.superViewController = self
         }
     }
     
@@ -211,5 +304,12 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
 //            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
 //        }
 //    }
+}
 
+
+enum TaskListCellUpdatingType: String {
+    case DoNothing = "Do Nothing"
+    case ModifyCellInfo = "Modify Cell Info"
+    case AddNewCell = "Add New Cell"
+    case RemoveCell = "Remove Cell"
 }
