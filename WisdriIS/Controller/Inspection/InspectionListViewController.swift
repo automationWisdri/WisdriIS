@@ -284,7 +284,12 @@ class InspectionListViewController : BaseViewController {
                     }
                 }
                 
-                self.inspectionTableView.reloadData()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.inspectionTableView.reloadData()
+                }
+                
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Inspection task list updated successfully", comment: ""))
                 
             } else {
                 switch error.code {
@@ -294,6 +299,7 @@ class InspectionListViewController : BaseViewController {
                     break
                     
                 default:
+                    errorCode(error)
                     break
                 }
             }

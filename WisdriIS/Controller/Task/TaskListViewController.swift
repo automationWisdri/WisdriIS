@@ -114,7 +114,7 @@ class TaskListViewController: BaseViewController {
                 self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus("任务列表更新成功!")
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
 
             } else {
                 errorCode(error)
