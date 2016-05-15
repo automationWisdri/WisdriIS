@@ -174,3 +174,7 @@
 "Maintenance task list  updated successfully" = "维保任务列表更新成功";
 
 "Inspection task list updated successfully" = "点检任务列表更新成功";
+
+"Submitting new maintenance task" = "正在提交新的维保任务";
+
+"New maintenance task submitted successfully" = "新维保任务提交成功";

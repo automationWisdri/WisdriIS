@@ -39,14 +39,15 @@ func ==(lhs: Segment, rhs: Segment) -> Bool {
     return lhs.id == rhs.id
 }
 
+let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNotification"
+
 class NewTaskViewController: BaseViewController {
 
     var preparedSkill: Segment?
 
     weak var feedsViewController: TaskListViewController?
     var getFeedsViewController: (() -> TaskListViewController?)?
-
-
+    
     @IBOutlet private weak var feedWhiteBGView: UIView!
     
     @IBOutlet private weak var messageTextView: UITextView!
@@ -457,85 +458,37 @@ class NewTaskViewController: BaseViewController {
             
             self.dismissViewControllerAnimated(true, completion: nil)
 //            SVProgressHUD.showWithStatus("正在提交")
+            
             // 上传图片
             WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
                 NSLog("Upload progress is %f", progress.fractionCompleted)
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: NSLocalizedString("Submitting new maintenance task", comment: ""))
+                
                 }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
-                if completedWithNoError {
-                    // 图片上传成功，新建任务单
-                    let images: Array<WISFileInfo> = data as! Array<WISFileInfo>
-                    
-                    for image in images {
-                        self.applicationFileInfo[image.fileName] = image
-                    }
-                    
-                    WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSkill?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
-                        if completedWithNoError {
-                            
-                            SVProgressHUD.showSuccessWithStatus("提交成功")
-//                            self.dismissViewControllerAnimated(true, completion: nil)
-                            
-                        } else {
-                            
-                            guard let errorCode = WISErrorCode(rawValue: error.code) else {
-                                SVProgressHUD.showErrorWithStatus("数据错误")
-                                return
-                            }
-                            
-                            switch errorCode {
-                                
-                            case .ErrorCodeResponsedNULLData:
-                                
-                                SVProgressHUD.showErrorWithStatus("提交失败")
-                                
-                            case .ErrorCodeNoCurrentUserInfo:
-                                
-                                SVProgressHUD.showErrorWithStatus("请重新登录")
-                                
-                                if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-                                    appDelegate.window?.rootViewController = LoginViewController()
-                                }
-                                
-                            default:
-                                
-                                SVProgressHUD.showErrorWithStatus("登陆失败")
-                            }
-                        }
-                    })
-                } else {
-                    
-                    guard let errorCode = WISErrorCode(rawValue: error.code) else {
-                        SVProgressHUD.showErrorWithStatus("数据错误")
-                        return
-                    }
-                    
-                    switch errorCode {
+                    if completedWithNoError {
+                        // 图片上传成功，新建任务单
+                        let images: [WISFileInfo] = data as! [WISFileInfo]
                         
-                    case .ErrorCodeResponsedNULLData:
-                        
-                        SVProgressHUD.showErrorWithStatus("提交失败")
-                        
-                    case .ErrorCodeInvalidOperation:
-                        
-                        SVProgressHUD.showErrorWithStatus("数据错误")
-                        
-                    case .ErrorCodeNetworkTransmission:
-                        
-                        SVProgressHUD.showErrorWithStatus("网络异常")
-                        
-                    case .ErrorCodeNoCurrentUserInfo:
-                        
-                        SVProgressHUD.showErrorWithStatus("请重新登录")
-                        
-                        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-                            appDelegate.window?.rootViewController = LoginViewController()
+                        for image in images {
+                            self.applicationFileInfo[image.fileName] = image
                         }
                         
-                    default:
+                        WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSkill?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+                            if completedWithNoError {
+                                SVProgressHUD.setDefaultMaskType(.None)
+                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
+                                NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
+                                // self.dismissViewControllerAnimated(true, completion: nil)
+                                
+                            } else {
+                                errorCode(error)
+                            }
+                        })
                         
-                        SVProgressHUD.showErrorWithStatus("登陆失败")
+                    } else {
+                        errorCode(error)
                     }
-                }
             })
         }
     }

@@ -37,7 +37,9 @@ class TaskListViewController: BaseViewController {
 
         self.updateCellInfoURLSessionTask = nil
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.networkingStatusChanges(_:)), name: WISNetworkStatusChangedNotification, object: nil)
+        // observing notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: WISNetworkStatusChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: NewTaskSubmittedSuccessfullyNotification, object: nil)
         
         taskTableView.delegate = self
         taskTableView.dataSource = self
@@ -58,7 +60,9 @@ class TaskListViewController: BaseViewController {
         self.taskTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.refresh()
             })
-        self.refreshPage()
+        
+        // move updating op to viewWillAppear() 2016.05.15
+        // self.refreshPage()
         
 //        
 //        let footer = WISRefreshFooter(refreshingBlock: {[weak self] () -> Void in
@@ -73,12 +77,12 @@ class TaskListViewController: BaseViewController {
 //        }
     }
     
-    func refreshPage(){
+    func refreshPage() {
         self.taskTableView.mj_header.beginRefreshing();
 //        WISSettings.sharedInstance[kHomeTab] = tab
     }
     
-    func refresh(){
+    func refresh() {
         
         //如果有上拉加载更多 正在执行，则取消它
 //        if self.taskTableView.mj_footer.isRefreshing() {
@@ -90,6 +94,8 @@ class TaskListViewController: BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //
+        self.getTaskList(taskType!)
         self.updateCellInTaskList()
         
         // for test
@@ -100,10 +106,10 @@ class TaskListViewController: BaseViewController {
 //        self.refreshPage()
     }
     
-    func getTaskList(taskType: MaintenanceTaskType) {
+    func getTaskList(taskType: MaintenanceTaskType) -> Void {
         WISDataManager.sharedInstance().updateMaintenanceTaskBriefInfoWithTaskTypeID(taskType) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completedWithNoError {
-                let tasks: Array<WISMaintenanceTask> = updatedData as! Array<WISMaintenanceTask>
+                let tasks: [WISMaintenanceTask] = updatedData as! [WISMaintenanceTask]
                 self.wisTasks.removeAll()
 
                 for task in tasks {
@@ -121,6 +127,27 @@ class TaskListViewController: BaseViewController {
             }
         }
     }
+    
+    func handleNotification(notification:NSNotification) -> Void {
+        
+        switch notification.name {
+        case WISNetworkStatusChangedNotification:
+            // networkingStatusChanges()
+            break
+            
+        case NewTaskSubmittedSuccessfullyNotification:
+            getTaskList(taskType!)
+            // beacause of the mechanism of asynchronous networking accessing , the following code always executs before wisTask being updated.
+            // it works imperfect. 2016.05.15
+            dispatch_async(dispatch_get_main_queue()){
+                self.taskTableView.scrollToRowAtIndexPath(NSIndexPath.init(forRow: self.wisTasks.count - 1, inSection: 0), atScrollPosition: .Top, animated: true)
+            }
+            break
+            
+        default:
+            break
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -129,6 +156,7 @@ class TaskListViewController: BaseViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: WISNetworkStatusChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NewTaskSubmittedSuccessfullyNotification, object: nil)
     }
     
     private func updateTableViewInfo() {
@@ -192,7 +220,7 @@ class TaskListViewController: BaseViewController {
     }
     
     
-    @objc private func networkingStatusChanges(networkNotification: NSNotification) -> Void {
+    @objc private func networkingStatusChanges() -> Void {
         guard self.updateCellInfoURLSessionTask != nil else {
             return
         }
