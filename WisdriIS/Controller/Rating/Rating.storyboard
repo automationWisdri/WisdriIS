@@ -36,7 +36,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7he-lJ-mPt">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K6-ed-ngC" customClass="CosmosView" customModule="WisdriIS" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K6-ed-ngC" customClass="CosmosView" customModule="Cosmos">
                                         <rect key="frame" x="15" y="36" width="270" height="47"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="270" id="R6e-9i-C8o"/>
@@ -115,7 +115,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tpL-zF-EmJ" customClass="CosmosView" customModule="WisdriIS" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tpL-zF-EmJ" customClass="CosmosView" customModule="Cosmos">
                                         <rect key="frame" x="15" y="307" width="270" height="47"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="270" id="5BR-8i-36n"/>
@@ -149,7 +149,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKw-cT-X6O" customClass="CosmosView" customModule="WisdriIS" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RKw-cT-X6O" customClass="CosmosView" customModule="Cosmos">
                                         <rect key="frame" x="15" y="390" width="270" height="47"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="47" id="teG-F0-f0g"/>
@@ -183,7 +183,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="ky7-rk-NQY" customClass="CosmosView" customModule="WisdriIS" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="ky7-rk-NQY" customClass="CosmosView" customModule="Cosmos">
                                         <rect key="frame" x="15" y="473" width="270" height="47"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="47" id="MTk-yd-yb7"/>
