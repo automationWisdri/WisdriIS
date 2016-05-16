@@ -94,8 +94,7 @@ class TaskListViewController: BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //
-        self.getTaskList(taskType!)
+
         self.updateCellInTaskList()
         
         // for test
@@ -103,6 +102,9 @@ class TaskListViewController: BaseViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        //
+        self.getTaskList(taskType!)
 //        self.refreshPage()
     }
     

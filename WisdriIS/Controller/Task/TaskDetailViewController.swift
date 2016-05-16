@@ -266,7 +266,11 @@ class TaskDetailViewController: BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        getTaskDetail()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+         getTaskDetail()
     }
     
     override func didReceiveMemoryWarning() {
