@@ -93,6 +93,8 @@ class NewTaskViewController: BaseViewController {
             messageTextView.textColor = newValue ? UIColor.blackColor() : UIColor.lightGrayColor()
         }
     }
+    
+    var prefersHideStatuseBar = false
 
     private lazy var postButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: NSLocalizedString("Post", comment: ""), style: .Plain, target: self, action: #selector(NewTaskViewController.post(_:)))
@@ -259,6 +261,10 @@ class NewTaskViewController: BaseViewController {
         mediaCollectionViewHeightConstraint.constant = 80
     }
 
+    override func prefersStatusBarHidden() -> Bool {
+        return self.prefersHideStatuseBar
+    }
+    
     // MARK: UI
 
     override func viewDidLayoutSubviews() {
