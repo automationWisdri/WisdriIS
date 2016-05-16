@@ -270,6 +270,7 @@ typedef void (^WISInspectionTaskOperationHandler)(BOOL completedWithNoError, NSE
 @property (readonly, nonatomic, assign) WISNetworkReachabilityStatus networkReachabilityStatus;
 
 @property (readonly) WISUser *currentUser;
+@property (readonly) NSString *networkRequestToken;
 
 /// 角色对照表
 @property (readonly) NSArray<NSString *> const *roleCodes;

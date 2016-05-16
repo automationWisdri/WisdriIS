@@ -77,39 +77,40 @@ class PasswordViewController: BaseViewController {
             repeatNewPasswordCell.infoTextField.becomeFirstResponder()
             return
         }
+
+        guard currentPassword == WISDataManager.sharedInstance().networkRequestToken else {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showErrorWithStatus("当前密码输入错误")
+            currentPasswordCell.infoTextField.becomeFirstResponder()
+            return
+        }
         
-        // 待完善
-//        if currentPassword != WISDataManager.sharedInstance().currentUser.password? {
-//            SVProgressHUD.showErrorWithStatus("当前密码输入错误")
-//            currentPasswordCell.infoTextField.becomeFirstResponder()
-//            return
-//        }
-        
-        if repeatNewPassword != newPassword {
+        guard repeatNewPassword == newPassword else {
+            SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showErrorWithStatus("两次输入的密码不相同")
             repeatNewPasswordCell.infoTextField.becomeFirstResponder()
             return
-        } else {
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().changePasswordWithCurrentPassword(currentPassword, newPassword: newPassword, compeletionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
-                if completedWithNoError {
-                    SVProgressHUD.showSuccessWithStatus("修改成功\n请重新登录")
-//                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                    // 淡入淡出动画待完善
-                    UIView.animateWithDuration(0.5, delay: 1.5, options: .CurveEaseOut, animations: { [weak self] in
-                        self?.view.alpha = 0
-                        }, completion: { _ in
-                            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-                                appDelegate.window?.rootViewController = LoginViewController()
-                            }
-                    })
-                    
-                } else {
-                    errorCode(error)
-                }
-            })
         }
+
+        SVProgressHUD.showWithStatus("正在提交")
+        WISDataManager.sharedInstance().changePasswordWithCurrentPassword(currentPassword, newPassword: newPassword, compeletionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
+            if completedWithNoError {
+                SVProgressHUD.showSuccessWithStatus("修改成功\n请重新登录")
+                //                    self.navigationController?.popViewControllerAnimated(true)
+                
+                // 淡入淡出动画待完善
+                UIView.animateWithDuration(0.5, delay: 1.5, options: .CurveEaseOut, animations: { [weak self] in
+                    self?.view.alpha = 0
+                    }, completion: { _ in
+                        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                            appDelegate.window?.rootViewController = LoginViewController()
+                        }
+                })
+                
+            } else {
+                errorCode(error)
+            }
+        })
     }
     
     /*

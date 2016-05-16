@@ -214,7 +214,7 @@
         case UpdateCurrentUserDetailInfo:
             // ** fall-through **
         case SubmitCurrentUserDetailInfo:
-            // ** fall-through **
+            break;
         case SubmitUserClientID:
             [path appendFormat:@"%@OS=%@&ID=%@", @"?", uriSettings[0], uriSettings[1]];
             break;
