@@ -178,3 +178,7 @@
 "Submitting new maintenance task" = "正在提交新的维保任务";
 
 "New maintenance task submitted successfully" = "新维保任务提交成功";
+
+"Updating maintenance task list" = "更新维保任务列表";
+
+"Updating inspection task list" = "更新点检任务列表";

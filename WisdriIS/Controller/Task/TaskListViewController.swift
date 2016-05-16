@@ -109,6 +109,9 @@ class TaskListViewController: BaseViewController {
     }
     
     func getTaskList(taskType: MaintenanceTaskType) -> Void {
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
+        
         WISDataManager.sharedInstance().updateMaintenanceTaskBriefInfoWithTaskTypeID(taskType) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completedWithNoError {
                 let tasks: [WISMaintenanceTask] = updatedData as! [WISMaintenanceTask]

@@ -170,12 +170,12 @@ class ModifyPlanViewController: BaseViewController {
         case "approveOperation":
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
-                    
+                    SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus("提交成功")
-                    self.navigationController?.popViewControllerAnimated(true)
+                    // self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    
                     errorCode(error)
                 }
             }
@@ -184,12 +184,12 @@ class ModifyPlanViewController: BaseViewController {
         case "recheckOperation":
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
-                    
+                    SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus("提交成功")
-                    self.navigationController?.popViewControllerAnimated(true)
+                    // self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    
                     errorCode(error)
                 }
             }
@@ -198,18 +198,19 @@ class ModifyPlanViewController: BaseViewController {
         case "modifyPlanOperation":
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "修改维保方案", operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
-                    
+                    SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus("修改成功")
                     self.navigationController?.popViewControllerAnimated(true)
+                    // self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    
                     errorCode(error)
                 }
             }
             break
             
         default:
+            SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showErrorWithStatus("提交失败")
             break
         }

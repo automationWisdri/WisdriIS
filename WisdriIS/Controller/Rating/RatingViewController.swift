@@ -130,11 +130,12 @@ class RatingViewController: BaseViewController {
         
         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "评价", operationType: MaintenanceTaskOperationType.Confirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: wisTaskRating) { (completedWithNoError, error) in
             if completedWithNoError {
-                
+                SVProgressHUD.setDefaultMaskType(.None)
                 SVProgressHUD.showSuccessWithStatus("评价成功")
                 
-                let destinationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 3] as! TaskHomeViewController
-                self.navigationController?.popToViewController(destinationVC, animated: true)
+//                let destinationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 3] as! TaskHomeViewController
+//                self.navigationController?.popToViewController(destinationVC, animated: true)
+                self.navigationController?.popToRootViewControllerAnimated(true)
             } else {
                 
                 errorCode(error)
