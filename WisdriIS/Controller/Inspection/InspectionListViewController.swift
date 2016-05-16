@@ -266,6 +266,9 @@ class InspectionListViewController : BaseViewController {
     }
     
     func loadInspectionTaskList() {
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating inspection task list", comment: ""))
+        
         WISDataManager.sharedInstance().updateInspectionsInfoWithCompletionHandler { (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
