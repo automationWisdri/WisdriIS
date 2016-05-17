@@ -98,16 +98,16 @@ extension InspectionPopoverMenuController: UITableViewDataSource, UITableViewDel
             cell.accessoryType = .None
             cell.selectedBackgroundView?.backgroundColor = UIColor.blueColor()
             
-            cell.imageView!.snp_makeConstraints{ (make) -> Void in
-                make.centerY.equalTo(cell.contentView)
-                make.left.equalTo(cell.contentView).offset(15)
-                make.width.height.equalTo(25)
-            }
-            
-            cell.textLabel!.snp_makeConstraints{ (make) -> Void in
-                make.centerY.equalTo(cell.contentView)
-                make.left.equalTo(cell.contentView).offset(55)
-            }
+//            cell.imageView!.snp_makeConstraints{ (make) -> Void in
+//                make.centerY.equalTo(cell.contentView)
+//                make.left.equalTo(cell.contentView).offset(15)
+//                make.width.height.equalTo(25)
+//            }
+//            
+//            cell.textLabel!.snp_makeConstraints{ (make) -> Void in
+//                make.centerY.equalTo(cell.contentView)
+//                make.left.equalTo(cell.contentView).offset(55)
+//            }
             
             return cell
             
@@ -123,16 +123,16 @@ extension InspectionPopoverMenuController: UITableViewDataSource, UITableViewDel
             cell.accessoryType = .None
             cell.selectedBackgroundView?.backgroundColor = UIColor.blueColor()
             
-            cell.imageView!.snp_makeConstraints{ (make) -> Void in
-                make.centerY.equalTo(cell.contentView)
-                make.left.equalTo(cell.contentView).offset(12)
-                make.width.height.equalTo(32)
-            }
-            
-            cell.textLabel!.snp_makeConstraints{ (make) -> Void in
-                make.centerY.equalTo(cell.contentView)
-                make.left.equalTo(cell.contentView).offset(55)
-            }
+//            cell.imageView!.snp_makeConstraints{ (make) -> Void in
+//                make.centerY.equalTo(cell.contentView)
+//                make.left.equalTo(cell.contentView).offset(12)
+//                make.width.height.equalTo(32)
+//            }
+//            
+//            cell.textLabel!.snp_makeConstraints{ (make) -> Void in
+//                make.centerY.equalTo(cell.contentView)
+//                make.left.equalTo(cell.contentView).offset(55)
+//            }
             
             return cell
             

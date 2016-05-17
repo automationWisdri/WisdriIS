@@ -88,6 +88,10 @@
 
 "Take Photo" = "拍照";
 
+"Name" = "姓名";
+
+"About" = "关于";
+
 // 点检新增内容
 "Inspection" = "点检";
 
@@ -125,7 +129,6 @@
 "Company" = "公司";
 
 "Process Segment" = "工艺段";
-
 
 "Remark" = "备注";
 

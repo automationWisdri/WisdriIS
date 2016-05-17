@@ -99,6 +99,8 @@
 		9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F681C7EF35100D1298C /* TaskListViewController.swift */; };
 		9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */; };
 		9F169F731C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */; };
+		9F1FA1E21CEB019E001A2F61 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E01CEB019E001A2F61 /* About.storyboard */; };
+		9F1FA1E31CEB019E001A2F61 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */; };
 		9F2A53211C9AA92D001BE6F6 /* TaskListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */; };
 		9F2A53231C9AA96B001BE6F6 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */; };
 		9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */; };
@@ -325,6 +327,8 @@
 		9F169F681C7EF35100D1298C /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListViewController.swift; path = WisdriIS/Controller/Task/TaskListViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailViewController.swift; path = WisdriIS/Controller/Task/TaskDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+WISAutomaticHeightCell.swift"; sourceTree = "<group>"; };
+		9F1FA1E01CEB019E001A2F61 /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = About.storyboard; path = About/About.storyboard; sourceTree = "<group>"; };
+		9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = About/AboutViewController.swift; sourceTree = "<group>"; };
 		9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskListCell.xib; path = View/Task/TaskListCell.xib; sourceTree = "<group>"; };
 		9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCell.swift; path = View/Task/TaskListCell.swift; sourceTree = "<group>"; };
 		9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WISRefreshFooter.swift; path = View/Common/WISRefreshFooter.swift; sourceTree = "<group>"; };
@@ -803,6 +807,15 @@
 			path = View/InfoView;
 			sourceTree = "<group>";
 		};
+		9F1FA1DF1CEB00B9001A2F61 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				9F1FA1E01CEB019E001A2F61 /* About.storyboard */,
+				9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		9F2A532A1C9F8E74001BE6F6 /* TaskOperation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1103,6 +1116,7 @@
 		9FEF4FF21C7756E3001A7644 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9F1FA1DF1CEB00B9001A2F61 /* About */,
 				385C1E461CE4BDCD00F8E393 /* Inspection */,
 				9F055BA41CD8F88A0077184B /* Shift */,
 				9F055B9A1CD73B530077184B /* Profile */,
@@ -1285,6 +1299,7 @@
 				9F801ABB1C867EC600F64265 /* PhotoCell.xib in Resources */,
 				9F6436DC1CAA0C93007909BE /* PickUser.storyboard in Resources */,
 				385C1E361CE4BD2700F8E393 /* InspectionListCell.xib in Resources */,
+				9F1FA1E21CEB019E001A2F61 /* About.storyboard in Resources */,
 				9F801AB51C867D8D00F64265 /* PickPhotos.storyboard in Resources */,
 				385C1E511CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard in Resources */,
 				9F7C4BC91C8E6E1300652CDF /* MediaViewCell.xib in Resources */,
@@ -1466,6 +1481,7 @@
 				9F4B21641C7C313000D15B8E /* WISSpacingLabel.swift in Sources */,
 				385C1DFA1CE4BC9200F8E393 /* WISDataManager.m in Sources */,
 				9F055D341CE4584D0077184B /* WISRefreshHeader.swift in Sources */,
+				9F1FA1E31CEB019E001A2F61 /* AboutViewController.swift in Sources */,
 				9F7C4BBE1C8D6D1B00652CDF /* TaskDescriptionCell.swift in Sources */,
 				385C1DE91CE4BC9200F8E393 /* WISCompany.m in Sources */,
 				385C1DFD1CE4BC9200F8E393 /* InspectionTaskForUploading.swift in Sources */,

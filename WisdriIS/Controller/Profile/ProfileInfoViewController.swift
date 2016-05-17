@@ -37,16 +37,32 @@ class ProfileInfoViewController: UIViewController {
         profileInfoTableView.tableHeaderView = introView
         profileInfoTableView.registerNib(UINib(nibName: profileInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: profileInfoCellIdentifier)
         
-        let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
-        let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+        switch segueIdentifier! {
+            
+        case "editUserName":
+            
+            let nameCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+
+            if let fullName = WISDataManager.sharedInstance().currentUser.fullName {
+                nameCell.infoTextField.text = fullName
+            }
+            
+        case "editPhone":
         
-        if let telNumber = WISDataManager.sharedInstance().currentUser.telephoneNumber {
-            telCell.infoTextField.text = telNumber
-        }
-        if let mobileNumber = WISDataManager.sharedInstance().currentUser.cellPhoneNumber {
-            mobileCell.infoTextField.text = mobileNumber
-        }
+            let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+            let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+            
+            if let telNumber = WISDataManager.sharedInstance().currentUser.telephoneNumber {
+                telCell.infoTextField.text = telNumber
+            }
+            if let mobileNumber = WISDataManager.sharedInstance().currentUser.cellPhoneNumber {
+                mobileCell.infoTextField.text = mobileNumber
+            }
         
+        default:
+            break
+        }
+    
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -64,27 +80,50 @@ class ProfileInfoViewController: UIViewController {
         
         let wisUserForUpdate = WISDataManager.sharedInstance().currentUser
         
-        let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
-        let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+        switch segueIdentifier! {
         
-        var telNumber: String?
-        var mobileNumber: String?
-        
-        if telCell.infoTextField.text?.Length > 0 {
-            telNumber = telCell.infoTextField.text!
-            // 格式判断待完善
-            wisUserForUpdate.telephoneNumber = telNumber
-        } else {
-            telCell.infoTextField.becomeFirstResponder()
-            return
-        }
-        
-        if mobileCell.infoTextField.text?.Length > 0 {
-            mobileNumber = mobileCell.infoTextField.text!
-            // 格式判断待完善
-            wisUserForUpdate.cellPhoneNumber = mobileNumber
-        } else {
-            mobileCell.infoTextField.becomeFirstResponder()
+        case "editPhone":
+                
+            let telCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+            let mobileCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 1, inSection: 0)) as! ProfileInfoCell
+            
+            var telNumber: String?
+            var mobileNumber: String?
+            
+            if telCell.infoTextField.text?.Length > 0 {
+                telNumber = telCell.infoTextField.text!
+                // 格式判断待完善
+                wisUserForUpdate.telephoneNumber = telNumber
+            } else {
+                telCell.infoTextField.becomeFirstResponder()
+                return
+            }
+            
+            if mobileCell.infoTextField.text?.Length > 0 {
+                mobileNumber = mobileCell.infoTextField.text!
+                // 格式判断待完善
+                wisUserForUpdate.cellPhoneNumber = mobileNumber
+            } else {
+                mobileCell.infoTextField.becomeFirstResponder()
+                return
+            }
+            
+        case "editUserName":
+            
+            let nameCell = profileInfoTableView.cellForRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as! ProfileInfoCell
+            
+            var fullName: String?
+            
+            if nameCell.infoTextField.text?.Length > 0 {
+                fullName = nameCell.infoTextField.text!
+                // 格式判断待完善
+                wisUserForUpdate.fullName = fullName
+            } else {
+                nameCell.infoTextField.becomeFirstResponder()
+                return
+            }
+            
+        default:
             return
         }
         
@@ -140,6 +179,7 @@ extension ProfileInfoViewController: UITableViewDataSource, UITableViewDelegate 
         case "editUserName":
         
             let cell = tableView.dequeueReusableCellWithIdentifier(profileInfoCellIdentifier) as! ProfileInfoCell
+            cell.annotationLabel.text = "用户姓名"
             cell.infoTextField.placeholder = "请填入用户姓名"
             return cell
         
