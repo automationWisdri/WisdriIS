@@ -9,14 +9,10 @@
 import UIKit
 import TPKeyboardAvoiding
 import Proposer
-//import Navi
 import SVProgressHUD
+import Navi
 
 class ProfileViewController: BaseViewController {
-
-    struct Notification {
-        static let Logout = "LogoutNotification"
-    }
 
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var avatarImageViewWidthConstraint: NSLayoutConstraint!
@@ -41,25 +37,9 @@ class ProfileViewController: BaseViewController {
     private let profileLessInfoCellIdentifier = "ProfileLessInfoCell"
     private let profileColoredTitleCellIdentifier = "ProfileColoredTitleCell"
     
-    var currentUser = WISDataManager.sharedInstance().currentUser
-
-    private var introduction: String {
-        return YepUserDefaults.introduction.value ?? NSLocalizedString("No Introduction yet.", comment: "")
-    }
-
-    private let introAttributes = [NSFontAttributeName: YepConfig.EditProfile.introFont]
-
-    private struct Listener {
-        static let Title = "EditProfileLessInfoCell.Title"
-        static let Mobile = "EditProfileLessInfoCell.Mobile"
-        static let Password = "EditProfileLessInfoCell.Password"
-        static let About = "EditProfileLessInfoCell.About"
-    }
+    private var currentUser: WISUser!
 
     deinit {
-//        YepUserDefaults.nickname.removeListenerWithName(Listener.Nickname)
-//        YepUserDefaults.introduction.removeListenerWithName(Listener.Introduction)
-//        YepUserDefaults.badge.removeListenerWithName(Listener.Badge)
 
         editProfileTableView?.delegate = nil
 
@@ -73,12 +53,8 @@ class ProfileViewController: BaseViewController {
 
         let avatarSize = YepConfig.editProfileAvatarSize()
         avatarImageViewWidthConstraint.constant = avatarSize
-
-//        let scanButton = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(ProfileViewController.scan(_:)))
-//        scanButton.image = UIImage(named: "CodeScan.bundle/device_scan.png")
-//        navigationItem.leftBarButtonItem = scanButton
-//        updateAvatar() {}
-
+        updateAvatar() {}
+        
         mobileLabel.text = currentUser?.fullName
 
         editProfileTableView.registerNib(UINib(nibName: profileLessInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: profileLessInfoCellIdentifier)
@@ -94,36 +70,47 @@ class ProfileViewController: BaseViewController {
     // MARK: Actions
 
     private func updateAvatar(completion:() -> Void) {
-        if let avatarURLString = YepUserDefaults.avatarURLString.value {
 
-            print("avatarURLString: \(avatarURLString)")
-
-            let avatarSize = YepConfig.editProfileAvatarSize()
-//            let avatarStyle: AvatarStyle = .RoundedRectangle(size: CGSize(width: avatarSize, height: avatarSize), cornerRadius: avatarSize * 0.5, borderWidth: 0)
+        currentUser = WISDataManager.sharedInstance().currentUser
+        
+        let avatarSize = YepConfig.editProfileAvatarSize()
+        
+        var imagesInfo = [String : WISFileInfo]()
+        
+        guard currentUser.imagesInfo.count > 0 else {
+            self.avatarImageView.image = UIImage(named: "default_avatar_60")
+            return
+        }
+        
+        for item : AnyObject in currentUser.imagesInfo.allKeys {
+            imagesInfo[item as! String] = currentUser.imagesInfo.objectForKey(item) as? WISFileInfo
+        }
+        
+        WISDataManager.sharedInstance().obtainImageOfUserWithUserName(currentUser.userName, imagesInfo: imagesInfo, downloadProgressIndicator: { progress in
             
-            var imagesInfo = [String : WISFileInfo]()
-            
-            for item : AnyObject in currentUser.imagesInfo.allKeys {
-                imagesInfo[item as! String] = currentUser.imagesInfo.objectForKey(item) as? WISFileInfo
-            }
-            
-//            let plainAvatar = PlainAvatar(avatarURLString: avatarURLString, avatarStyle: avatarStyle)
-//            avatarImageView.navi_setAvatar(plainAvatar, withFadeTransitionDuration: avatarFadeTransitionDuration)
-            WISDataManager.sharedInstance().obtainImageOfUserWithUserName(currentUser.userName, imagesInfo: imagesInfo, downloadProgressIndicator: { progress in
-                //
-                }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
-//                    avatarImageView = 
+            }) { (completedWithNoError, error, classNameOfDataAsString, data) in
+                if completedWithNoError {
                     // 图片获取成功
                     let imagesDictionary = data as! Dictionary<String, UIImage>
                     
-//                    UIView.transitionWithView(self, duration: imageFadeTransitionDuration, options: .TransitionCrossDissolve, animations: { () -> Void in
-//                        self.image = imagesDictionary[file.fileName]
-//                        }, completion: nil)
-//                    avatarImageView = imagesDictionary[currentUser.imagesInfo]
-            })
-            
-            completion()
+                    UIView.transitionWithView(self.avatarImageView, duration: imageFadeTransitionDuration, options: .TransitionCrossDissolve, animations: {
+                        if let avatarOriginalImage = imagesDictionary.first?.1,
+                            let avatarResizeImage = avatarOriginalImage.navi_resizeToSize(CGSize(width: avatarSize, height: avatarSize), withInterpolationQuality: CGInterpolationQuality.Default),
+                            let avatarRoundImage = avatarResizeImage.navi_roundWithCornerRadius(avatarSize * 0.5, borderWidth: 0) {
+                            self.avatarImageView.image = avatarRoundImage
+                        } else {
+                            self.avatarImageView.image = UIImage(named: "default_avatar_60")
+                        }
+                        }, completion: { _ in
+                            
+                    })
+                    
+                } else {
+                    self.avatarImageView.image = UIImage(named: "default_avatar_60")
+                }
         }
+        
+        completion()
     }
 
     @IBAction private func changeAvatar(sender: UITapGestureRecognizer) {
@@ -184,14 +171,6 @@ class ProfileViewController: BaseViewController {
             self?.imagePicker.hidesBarsOnTap = false
         }
     }
-
-//    @objc private func saveIntroduction(sender: UIBarButtonItem) {
-//
-//        let introductionCellIndexPath = NSIndexPath(forRow: InfoRow.Intro.rawValue, inSection: Section.Info.rawValue)
-//        if let introductionCell = editProfileTableView.cellForRowAtIndexPath(introductionCellIndexPath) as? EditProfileMoreInfoCell {
-//            introductionCell.infoTextView.resignFirstResponder()
-//        }
-//    }
     
     @objc private func scan(sender: UIBarButtonItem) {
         
@@ -266,18 +245,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.infoLabel.text = NSLocalizedString("None", comment: "")
                     cell.selectionStyle = .None
                 } else {
-                    cell.infoLabel.text = currentUser.roleName //+ "炼钢厂－1＃炉－炉长"
-                    cell.selectionStyle = .Default
+                    cell.infoLabel.text = currentUser.roleName
+                    cell.selectionStyle = .None
                 }
                 
-                cell.accessoryImageView.hidden = false
-                
-//                if let
-//                    myUserID = YepUserDefaults.userID.value,
-//                    realm = try? Realm(),
-//                    me = userWithUserID(myUserID, inRealm: realm) {
-//                        username = me.username
-//                }
+                cell.accessoryImageView.hidden = true
 
                 return cell
 
@@ -288,18 +260,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.annotationLabel.text = NSLocalizedString("Phone Number", comment: "")
                 if currentUser.cellPhoneNumber == nil || currentUser.cellPhoneNumber.isEmpty {
                     cell.infoLabel.text = NSLocalizedString("None", comment: "")
-                    cell.selectionStyle = .None
                 } else {
                     cell.infoLabel.text = currentUser.cellPhoneNumber
-                    cell.selectionStyle = .Default
                 }
+                cell.selectionStyle = .Default
                 cell.accessoryImageView.hidden = false
-
-//                YepUserDefaults.nickname.bindAndFireListener(Listener.Nickname) { [weak cell] nickname in
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        cell?.infoLabel.text = nickname
-//                    }
-//                }
 
                 return cell
 
@@ -311,43 +276,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.infoLabel.hidden = true
                 cell.accessoryImageView.hidden = false
                 cell.selectionStyle = .Default
-//                YepUserDefaults.introduction.bindAndFireListener(Listener.Introduction) { [weak cell] introduction in
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        cell?.infoTextView.text = introduction ?? NSLocalizedString("Introduce yourself here.", comment: "")
-//                    }
-//                }
-
-//                cell.infoTextViewIsDirtyAction = { [weak self] isDirty in
-//                    self?.navigationItem.rightBarButtonItem = self?.doneButton
-//                    self?.doneButton.enabled = isDirty
-//                }
-//
-//                cell.infoTextViewDidEndEditingAction = { [weak self] newIntroduction in
-//                    self?.doneButton.enabled = false
-//
-//                    if let oldIntroduction = YepUserDefaults.introduction.value {
-//                        if oldIntroduction == newIntroduction {
-//                            return
-//                        }
-//                    }
-
-//                    YepHUD.showActivityIndicator()
-
-//                    updateMyselfWithInfo(["introduction": newIntroduction], failureHandler: { (reason, errorMessage) in
-//                        defaultFailureHandler(reason, errorMessage: errorMessage)
-//
-//                        YepHUD.hideActivityIndicator()
-//
-//                    }, completion: { success in
-//                        dispatch_async(dispatch_get_main_queue()) {
-//                            YepUserDefaults.introduction.value = newIntroduction
-//
-//                            self?.editProfileTableView.reloadData()
-//                        }
-//
-//                        YepHUD.hideActivityIndicator()
-//                    })
-//                }
 
                 return cell
                 
@@ -382,7 +310,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.annotationLabel.text = "关于"
                 cell.infoLabel.hidden = true
                 cell.accessoryImageView.hidden = false
-                cell.selectionStyle = .Default
+                cell.selectionStyle = .None
                 
                 return cell
                 
@@ -486,12 +414,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case Section.LogOut.rawValue:
 
             YepAlert.confirmOrCancel(title: NSLocalizedString("Notice", comment: ""), message: NSLocalizedString("Do you want to logout?", comment: ""), confirmTitle: NSLocalizedString("Yes", comment: ""), cancelTitle: NSLocalizedString("Cancel", comment: ""), inViewController: self, withConfirmAction: { () -> Void in
-
-//                unregisterThirdPartyPush()
-
-//                cleanRealmAndCaches()
-
-                YepUserDefaults.cleanAllUserDefaults()
                 
 //                WISDataManager.sharedInstance().clearCacheOfImages()
 
@@ -521,33 +443,41 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         activityIndicator.startAnimating()
 
         let image = image.largestCenteredSquareImage().resizeToTargetSize(YepConfig.avatarMaxSize())
-        let imageData = UIImageJPEGRepresentation(image, YepConfig.avatarCompressionQuality())
+//        let imageData = UIImageJPEGRepresentation(image, YepConfig.avatarCompressionQuality())
 
-        if let imageData = imageData {
-/*
-            updateAvatarWithImageData(imageData, failureHandler: { (reason, errorMessage) in
+        var images = [String : UIImage]()
+        
+        let imageName = currentUser.userName + "_avatar"
+        
+        images[imageName] = image
+        
+        WISDataManager.sharedInstance().storeImageOfUserWithUserName(currentUser.userName, images: images, uploadProgressIndicator: { (progress) in
+            NSLog("Upload progress is %f", progress.fractionCompleted)
+            }) { (completedWithNoError, error, classNameOfDataAsString, data) in
+                if completedWithNoError {
+                    // 图片上传成功
+                    let images: [WISFileInfo] = data as! [WISFileInfo]
+                    
+                    let imagesInfo = NSMutableDictionary()
+                    imagesInfo.setValue(images.first, forKey: imageName)
 
-                defaultFailureHandler(reason, errorMessage: errorMessage)
-
-                dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                    self?.activityIndicator.stopAnimating()
-                }
-                
-            }, completion: { newAvatarURLString in
-                dispatch_async(dispatch_get_main_queue()) {
-
-                    YepUserDefaults.avatarURLString.value = newAvatarURLString
-
-                    print("newAvatarURLString: \(newAvatarURLString)")
-
-                    self.updateAvatar() {
-                        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                            self?.activityIndicator.stopAnimating()
+                    let newWISUser = self.currentUser.copy() as! WISUser
+                    newWISUser.imagesInfo = imagesInfo
+                    
+                    WISDataManager.sharedInstance().submitUserDetailInfoWithNewInfo(newWISUser, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
+                        if completedWithNoError {
+                            self.updateAvatar() {
+                                dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                                    self?.activityIndicator.stopAnimating()
+                                }
+                            }
+                        } else {
+                            errorCode(error)
                         }
-                    }
+                    })
+                } else {
+                    errorCode(error)
                 }
-            })
- */
         }
     }
 }

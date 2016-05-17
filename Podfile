@@ -14,6 +14,7 @@ def pods
     pod 'SwiftDate'
     pod 'AFNetworking', '~> 3.0'
     pod 'Cosmos'
+    pod 'Navi'
 end
 
 target 'WisdriIS' do

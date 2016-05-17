@@ -232,18 +232,18 @@ class LoginViewController: UIViewController {
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
                 SVProgressHUD.showSuccessWithStatus("登陆成功")
+                // 待修改
+                WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
+                    if !completedWithNoError {
+                        SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
+                    }
+                })
+                WISUserDefaults.setupSegment()
+                WISUserDefaults.getCurrentUserClockStatus()
+                WISUserDefaults.getWorkShift(NSDate())
+                
                 if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                     appDelegate.startMainStory()
-                    // 待修改
-                    WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
-                        if !completedWithNoError {
-                            SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
-                        }
-                    })
-                    WISUserDefaults.setupSegment()
-                    WISUserDefaults.getCurrentUserClockStatus()
-                    WISUserDefaults.getWorkShift(NSDate())
-                    
                 }
                 // **
                 // 注册 client ID, 用于Push Notification
@@ -253,7 +253,7 @@ class LoginViewController: UIViewController {
                 } else {
                     WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
                 }
-                SVProgressHUD.dismiss()
+                
             } else {
                 
                 guard let errorCode = WISErrorCode(rawValue: error.code) else {
