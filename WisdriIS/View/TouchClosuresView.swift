@@ -1,9 +1,9 @@
 //
 //  TouchClosuresView.swift
-//  Yep
+//  WisdriIS
 //
-//  Created by nixzhu on 15/10/13.
-//  Copyright © 2015年 Catch Inc. All rights reserved.
+//  Created by Allen on 3/10/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit

@@ -1,14 +1,14 @@
 //
-//  FeedTextView.swift
-//  Yep
+//  TaskTextView.swift
+//  WisdriIS
 //
-//  Created by nixzhu on 15/10/16.
-//  Copyright © 2015年 Catch Inc. All rights reserved.
+//  Created by Allen on 3/10/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
 
-class FeedTextView: UITextView {
+class TaskTextView: UITextView {
     
     override func canBecomeFirstResponder() -> Bool {
         return false

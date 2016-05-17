@@ -40,7 +40,7 @@ class TaskMediaCell: UICollectionViewCell {
     func configureWithFileInfo(file: WISFileInfo) {
 
         imageView.yep_showActivityIndicatorWhenLoading = true
-        imageView.yep_setImageOfAttachment(file, withSize: feedAttachmentImageSize)
+        imageView.yep_setImageOfAttachment(file)
         deleteImageView.hidden = true
         
     }

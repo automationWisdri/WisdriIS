@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGB-GB-50R">
-                        <rect key="frame" x="15" y="8" width="100" height="21"/>
+                        <rect key="frame" x="20" y="8" width="100" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="US0-eY-cp3"/>
                             <constraint firstAttribute="width" constant="100" id="ZJp-aP-psG"/>
@@ -25,7 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="起：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QU4-dH-bun">
-                        <rect key="frame" x="15" y="34" width="24" height="18"/>
+                        <rect key="frame" x="20" y="34" width="24" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="0Bp-S9-h2J"/>
                             <constraint firstAttribute="width" constant="24" id="NVk-FX-oWl"/>
@@ -45,7 +45,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCa-Md-ugd">
-                        <rect key="frame" x="39" y="34" width="102" height="18"/>
+                        <rect key="frame" x="44" y="34" width="102" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="BXj-3m-SiV"/>
                             <constraint firstAttribute="width" constant="102" id="a1s-ma-fea"/>
@@ -84,7 +84,7 @@
                     <constraint firstItem="tGB-GB-50R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="MrT-Tv-VeW"/>
                     <constraint firstItem="yMu-q8-yXQ" firstAttribute="leading" secondItem="K1y-hd-ak8" secondAttribute="trailing" id="bUa-Ro-KTB"/>
                     <constraint firstAttribute="bottom" secondItem="QU4-dH-bun" secondAttribute="bottom" constant="8" id="fN1-GM-QhW"/>
-                    <constraint firstItem="tGB-GB-50R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="g1X-zU-qq5"/>
+                    <constraint firstItem="tGB-GB-50R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="g1X-zU-qq5"/>
                     <constraint firstAttribute="trailing" secondItem="jh9-bJ-Uh6" secondAttribute="trailing" constant="15" id="ggE-1u-Mke"/>
                     <constraint firstItem="K1y-hd-ak8" firstAttribute="top" secondItem="QU4-dH-bun" secondAttribute="top" id="j9m-M0-P0D"/>
                     <constraint firstItem="QU4-dH-bun" firstAttribute="leading" secondItem="tGB-GB-50R" secondAttribute="leading" id="ynX-rW-Q5d"/>

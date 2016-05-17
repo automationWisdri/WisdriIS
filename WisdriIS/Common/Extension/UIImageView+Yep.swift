@@ -76,11 +76,8 @@ extension UIImageView {
         objc_setAssociatedObject(self, &attachmentURLKey, URL, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
-    func yep_setImageOfAttachment(file: WISFileInfo, withSize size: CGSize) {
+    func yep_setImageOfAttachment(file: WISFileInfo) {
 
-//        guard let attachmentURL = NSURL(string: attachment.URLString) else {
-//            return
-//        }
 
         let showActivityIndicatorWhenLoading = yep_showActivityIndicatorWhenLoading
         var activityIndicator: UIActivityIndicatorView? = nil
@@ -91,22 +88,6 @@ extension UIImageView {
             activityIndicator?.startAnimating()
         }
 
-//        yep_setAttachmentURL(attachmentURL)
-
-//        ImageCache.sharedInstance.imageOfAttachment(attachment, withMinSideLength: size.width, completion: { [weak self] (url, image, cacheType) in
-//
-//            guard let strongSelf = self, yep_attachmentURL = strongSelf.yep_attachmentURL where yep_attachmentURL == url else {
-//                return
-//            }
-//
-//            if cacheType != .Memory {
-//                UIView.transitionWithView(strongSelf, duration: imageFadeTransitionDuration, options: .TransitionCrossDissolve, animations: { () -> Void in
-//                    strongSelf.image = image
-//                }, completion: nil)
-//
-//            } else {
-//                strongSelf.image = image
-//            }
         var imagesInfo = [String : WISFileInfo]()
         imagesInfo[file.fileName] = file
         
@@ -122,17 +103,11 @@ extension UIImageView {
                     UIView.transitionWithView(self, duration: imageFadeTransitionDuration, options: .TransitionCrossDissolve, animations: { () -> Void in
                         self.image = imagesDictionary[file.fileName]
                     }, completion: nil)
-                    
-//                    print(file.fileName)
-//                    self.image = imagesDictionary[file.fileName]
+
                     activityIndicator?.stopAnimating()
                 }
         })
 
-        
-//
-//            //println("imageOfAttachment cacheType: \(cacheType)")
-//        })
     }
 }
 

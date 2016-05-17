@@ -447,7 +447,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
         var images = [String : UIImage]()
         
-        let imageName = currentUser.userName + "_avatar"
+        let imageName = currentUser.userName + "_avatar_" + String(image.hashValue)
         
         images[imageName] = image
         

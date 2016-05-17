@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RMp-iG-fde" id="Thh-uT-hVK">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0R-gC-KP9" userLabel="Annotation Label">
@@ -25,23 +25,23 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCg-sv-weL" userLabel="Annotation Info Label">
-                        <rect key="frame" x="83" y="13" width="80" height="18"/>
+                        <rect key="frame" x="83" y="13" width="70" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="vCe-fx-kgv"/>
+                            <constraint firstAttribute="width" constant="70" id="vCe-fx-kgv"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-v8-uux" userLabel="Info Label">
-                        <rect key="frame" x="180" y="13" width="130" height="18"/>
+                        <rect key="frame" x="158" y="13" width="152" height="18"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="d4I-v8-uux" firstAttribute="leading" secondItem="FCg-sv-weL" secondAttribute="trailing" constant="17" id="0Bs-69-UG5"/>
+                    <constraint firstItem="d4I-v8-uux" firstAttribute="leading" secondItem="FCg-sv-weL" secondAttribute="trailing" constant="5" id="0Bs-69-UG5"/>
                     <constraint firstAttribute="trailingMargin" secondItem="d4I-v8-uux" secondAttribute="trailing" constant="2" id="B25-PD-DKv"/>
                     <constraint firstItem="c0R-gC-KP9" firstAttribute="leading" secondItem="Thh-uT-hVK" secondAttribute="leadingMargin" constant="10" id="Jhz-c6-8LG"/>
                     <constraint firstItem="FCg-sv-weL" firstAttribute="baseline" secondItem="c0R-gC-KP9" secondAttribute="baseline" id="UAN-V2-cgG"/>

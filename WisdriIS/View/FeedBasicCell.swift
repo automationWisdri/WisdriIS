@@ -54,8 +54,8 @@ class FeedBasicCell: UITableViewCell {
 //        return button
 //    }()
 
-    lazy var messageTextView: FeedTextView = {
-        let textView = FeedTextView()
+    lazy var messageTextView: TaskTextView = {
+        let textView = TaskTextView()
         textView.textColor = UIColor.yepMessageColor()
         textView.font = UIFont.feedMessageFont()
         textView.textContainer.lineFragmentPadding = 0

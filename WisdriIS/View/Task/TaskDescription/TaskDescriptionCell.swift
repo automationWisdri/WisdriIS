@@ -11,19 +11,12 @@ import UIKit
 class TaskDescriptionCell: UITableViewCell {
 
     @IBOutlet weak var sectionNameLabel: UILabel!
-    @IBOutlet weak var taskDescriptionTextView: FeedTextView!
+    @IBOutlet weak var taskDescriptionTextView: TaskTextView!
     @IBOutlet weak var taskImageCollectionView: UICollectionView!
     @IBOutlet weak var taskTimeLabel: UILabel!
     @IBOutlet weak var mediaView: TaskMediaView!
     
     let taskMediaCellID = "TaskMediaCell"
-    
-//    private let images: [UIImage] = [UIImage(named: "32.jpg")!, UIImage(named: "profile-bg.jpg")!, UIImage(named: "login-bg-iphone-6.jpg")!, UIImage(named: "Cover3")!]
-//    private var images = [UIImage]() {
-//        didSet {
-//            taskImageCollectionView.reloadData()
-//        }
-//    }
     
     private var fileInfo = [WISFileInfo]()
     

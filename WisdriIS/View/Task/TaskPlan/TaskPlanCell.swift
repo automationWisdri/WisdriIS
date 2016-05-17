@@ -12,9 +12,9 @@ class TaskPlanCell: UITableViewCell {
 
     @IBOutlet weak var planImageCollectionView: UICollectionView!
     @IBOutlet weak var annotationLabel: UILabel!
-    @IBOutlet weak var planDescriptionTextView: FeedTextView!
+    @IBOutlet weak var planDescriptionTextView: TaskTextView!
     @IBOutlet weak var estimatedDateLabel: UILabel!
-    @IBOutlet weak var relevantUserTextView: FeedTextView!
+    @IBOutlet weak var relevantUserTextView: TaskTextView!
     
     let taskMediaCellID = "TaskMediaCell"
     
