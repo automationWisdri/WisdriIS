@@ -217,7 +217,6 @@ class ModifyPlanViewController: BaseViewController {
     }
 
     @objc private func tapToPickUser(sender: UITapGestureRecognizer) {
-        
         performSegueWithIdentifier("pickUser", sender: nil)
     }
 
@@ -265,7 +264,6 @@ extension ModifyPlanViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaCellID, forIndexPath: indexPath) as! TaskMediaCell
         
         if wisFileInfos.count != 0 {
@@ -285,7 +283,6 @@ extension ModifyPlanViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TaskMediaCell
         
         let transitionView = cell.imageView

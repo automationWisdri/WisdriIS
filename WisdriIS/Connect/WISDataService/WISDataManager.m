@@ -3333,20 +3333,25 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
     
     NSURLSessionUploadTask *uploadTask = nil;
     
-    if (images.count > 0) {
-        [[[WISFileStoreManager defaultManager]downloadImageStore]setImages:images];
-        
-        uploadTask = [self uploadImageWithImages:images
-         /// PROGRESS
-         progressIndicator:^(NSProgress *transmissionProgress) {
-             progress(transmissionProgress);
-             
-         }
-         /// COMPLETION HANDLER
-         completionHandler:^(BOOL completedWithNoError, NSError *error, NSString *classNameOfReceivedDataAsString, id receivedData) {
-             handler(completedWithNoError, error, classNameOfReceivedDataAsString, receivedData);
-         }];
+    if (images) {
+        if (images.count <= 0) {
+            progress([NSProgress progressWithTotalUnitCount:0]);
+            handler(true, nil, NSStringFromClass([NSArray class]), [NSArray array]);
+            
+        } else {
+            [[[WISFileStoreManager defaultManager]downloadImageStore]setImages:images];
+            uploadTask = [self uploadImageWithImages:images
+             /// PROGRESS
+            progressIndicator:^(NSProgress *transmissionProgress) {
+                progress(transmissionProgress);
+            }
+            /// COMPLETION HANDLER
+            completionHandler:^(BOOL completedWithNoError, NSError *error, NSString *classNameOfReceivedDataAsString, id receivedData) {
+                handler(completedWithNoError, error, classNameOfReceivedDataAsString, receivedData);
+            }];
+        }
     }
+
     return uploadTask;
 }
 
@@ -3366,11 +3371,10 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
         NSDictionary<NSString *, UIImage *> *requiredImages = nil;
         requiredImages = [[[WISFileStoreManager defaultManager]downloadImageStore]imagesForImagesName:requiredImagesName];
         
-        progress(nil);
+        progress([NSProgress progressWithTotalUnitCount:0]);
         handler(YES, nil, NSStringFromClass([requiredImages class]), requiredImages);
     
     } else {
-        
         NSMutableArray<NSString *> *requiredImagesRemoteLocation = [NSMutableArray array];
         
         for (NSString *imageName in imagesNameNotContainedInLocalStore) {
@@ -3388,7 +3392,6 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
              if (receivedData) {
                  [[[WISFileStoreManager defaultManager]downloadImageStore]setImages:(NSDictionary<NSString *, UIImage *> *)receivedData];
              }
-             
              requiredImages = [[[WISFileStoreManager defaultManager]downloadImageStore]imagesForImagesName:requiredImagesName];
              
              handler(completedWithNoError, error, NSStringFromClass([requiredImages class]), requiredImages);
@@ -3946,7 +3949,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
     
     
     // ***** maintenance plan information *****
-    if (operationType != SubmitMaintenancePlan && operationType != Approve && operationType != Continue && operationType != Modify) {
+    if (operationType != SubmitMaintenancePlan && operationType != StartFastProcedure && operationType != Approve && operationType != Continue && operationType != Modify) {
         [operationParam setValue:[NSNull null] forKey:@"Plan"];
         
     } else {
