@@ -84,13 +84,18 @@ class NewTaskViewController: BaseViewController {
     private var isNeverInputMessage = true
     private var isDirty = false {
         willSet {
-            postButton.enabled = newValue
-
             if !newValue && isNeverInputMessage {
                 messageTextView.text = infoAboutThisFeed
             }
 
             messageTextView.textColor = newValue ? UIColor.blackColor() : UIColor.lightGrayColor()
+        }
+        didSet {
+            if pickedSkill != nil {
+                if pickedSkill?.id != "0" {
+                    postButton.enabled = self.isDirty
+                }
+            }
         }
     }
     
@@ -175,6 +180,15 @@ class NewTaskViewController: BaseViewController {
         willSet {
             pickedSkillLabel.text = newValue?.name
             choosePromptLabel.hidden = (newValue != nil)
+        }
+        didSet {
+            if pickedSkill != nil {
+                if pickedSkill?.id != "0" {
+                    postButton.enabled = self.isDirty
+                }
+            } else {
+                postButton.enabled = false
+            }
         }
     }
     
