@@ -186,3 +186,15 @@
 "Updating maintenance task list" = "更新维保任务列表";
 
 "Updating inspection task list" = "更新点检任务列表";
+
+"Updating relevant user list" = "更新人员列表";
+
+"Relevant user list updating successfully" = "人员列表更新成功";
+
+"Submitting in progress" = "正在提交";
+
+"Task has been passed to " = "任务已转给：";
+
+"Wrong Operation" = "错误操作";
+
+"One and only one user should be seleceted" = "必须选择 1 名用户";

@@ -14,81 +14,58 @@ class PickUserViewController: UIViewController {
     @IBOutlet weak var pickUserTableView: UITableView!
     
     @IBAction func doneAction(sender: AnyObject) {
-        
         selectedUser.removeAll()
+        let selectedRow = pickUserTableView.indexPathsForSelectedRows
         
-        let selectedRow = pickUserTableView.indexPathsForSelectedRows!
-        
-        for selectedPath in selectedRow {
-            selectedUser.append(relevantUser[selectedPath.section + selectedPath.row])
+        if selectedRow != nil {
+            for selectedPath in selectedRow! {
+                selectedUser.append(relevantUser[selectedPath.section + selectedPath.row])
+            }
         }
         
         switch segueIdentifier! {
-        
         case "pickUserForSubmitPlan":
-            
-//            currentTask?.maintenancePlan.participants.addObjectsFromArray(selectedUser)
+            // currentTask?.maintenancePlan.participants.addObjectsFromArray(selectedUser)
 
             // 跳转回维保方案页面，将选择的用户返回给页面的 taskParticipants 对象
             let destinationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 2] as! SubmitPlanViewController
             destinationVC.taskParticipants = selectedUser
             self.navigationController?.popToViewController(destinationVC, animated: true)
+            break
             
         case "pickUserForModifyPlan":
-            
             let destinationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 2] as! ModifyPlanViewController
             destinationVC.taskParticipants = selectedUser
             self.navigationController?.popToViewController(destinationVC, animated: true)
+            break
             
-        case "pickUserForPassOperation":
-            
+        case "pickUserForPassOperation", "assignUserForPassOperation":
             guard selectedUser.count == 1 else {
 //                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                YepAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
+                // YepAlert.Sorry(message: "必须选择 1 名用户", inViewController: self)
+                YepAlert.alert(title: NSLocalizedString("Wrong Operation", comment: ""), message: NSLocalizedString("One and only one user should be seleceted", comment: ""), dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: nil)
                 return
             }
             
-            SVProgressHUD.showWithStatus("正在提交")
+            let opType = segueIdentifier! == "pickUserForPassOperation" ? MaintenanceTaskOperationType.PassOn : MaintenanceTaskOperationType.Assign
+            
+            SVProgressHUD.showWithStatus(NSLocalizedString("Submitting in progress", comment: ""))
 //            print(selectedUser[0].userName)
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "转单", operationType: MaintenanceTaskOperationType.PassOn, taskReceiverName: selectedUser[0].userName, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "转单", operationType: opType, taskReceiverName: selectedUser[0].userName, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
-                    let status = "任务已转给：" + self.selectedUser[0].fullName
+                    let status = NSLocalizedString("Task has been passed to ", comment: "") + self.selectedUser[0].fullName
                     SVProgressHUD.showSuccessWithStatus(status)
                     self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    
                     errorCode(error)
                     
                 }
             })
-            
-        case "assignUserForPassOperation":
-            
-            guard selectedUser.count == 1 else {
-//                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                YepAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
-                return
-            }
-            
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "转单", operationType: MaintenanceTaskOperationType.Assign, taskReceiverName: selectedUser[0].userName, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
-                if completedWithNoError {
-                    let status = "任务已转给：" + self.selectedUser[0].fullName
-                    SVProgressHUD.showSuccessWithStatus(status)
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                    
-                } else {
-                    
-                    errorCode(error)
-                    
-                }
-            })
-            
+            break
             
         default:
             return
-            
         }
     }
     
@@ -124,46 +101,49 @@ class PickUserViewController: UIViewController {
         pickUserTableView.setEditing(true, animated: false)
         pickUserTableView.allowsMultipleSelectionDuringEditing = true
         
+        // doAction button should always enabled
+        navigationItem.rightBarButtonItem!.enabled = true
+        
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating relevant user list", comment: ""))
         // 获取任务参与人员，分为工程师和电工
         WISDataManager.sharedInstance().updateRelavantUserInfoWithCompletionHandler { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) in
             if completedWithNoError {
-                
-                let users: Array<WISUser> = updatedData as! Array<WISUser>
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Relevant user list updating successfully", comment: ""))
+                let users = updatedData as! [WISUser]
                 
                 self.engineerUser.removeAll()
                 self.technicianUser.removeAll()
                 self.relevantUser.removeAll()
                 
-                for user in users {
-                    
-                    self.relevantUser.append(user)
-                    
-                    switch user.roleCode {
+                if users.count > 0 {
+                    for user in users {
+                        self.relevantUser.append(user)
                         
-                    case "Engineer":
-                        
-                        self.engineerUser.append(user)
-                        
-                    case "Electrician":
-                        
-                        self.technicianUser.append(user)
-                        
-                    default: break
-                        
+                        switch user.roleCode {
+                        case WISDataManager.sharedInstance().roleCodes[RoleCode.Engineer.rawValue]:
+                            self.engineerUser.append(user)
+                            
+                        case WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue]:
+                            self.technicianUser.append(user)
+                            
+                        default: break
+                        }
                     }
                 }
                 
-                for wisUser in self.relevantUser {
-                    if self.taskParticipantsUsername.contains(wisUser.userName) {
-                        self.navigationItem.rightBarButtonItem?.enabled = true
-                        break
+                if self.relevantUser.count > 0 {
+                    for wisUser in self.relevantUser {
+                        if self.taskParticipantsUsername.contains(wisUser.userName) {
+                            // self.navigationItem.rightBarButtonItem?.enabled = true
+                            break
+                        }
                     }
                 }
                 
                 self.pickUserTableView.reloadData()
                 
                 var indexPath: NSIndexPath
-                
                 for (index, wisUser) in self.engineerUser.enumerate() {
                     if self.taskParticipantsUsername.contains(wisUser.userName) {
                         indexPath = NSIndexPath(forRow: index, inSection: 0)
@@ -179,7 +159,6 @@ class PickUserViewController: UIViewController {
                 }
                 
             } else {
-                
                 errorCode(error)
             }
         }
@@ -353,13 +332,13 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if !navigationItem.rightBarButtonItem!.enabled {
-            navigationItem.rightBarButtonItem!.enabled = true
+            // navigationItem.rightBarButtonItem!.enabled = true
         }
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         if pickUserTableView.indexPathsForSelectedRows == nil || pickUserTableView.indexPathsForSelectedRows!.count == 0 {
-            navigationItem.rightBarButtonItem!.enabled = false
+            // navigationItem.rightBarButtonItem!.enabled = false
         }
     }
 }
