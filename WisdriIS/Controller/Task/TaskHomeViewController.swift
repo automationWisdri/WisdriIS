@@ -43,9 +43,8 @@ class TaskHomeViewController: BaseViewController {
         // for test
         print(WISDataManager.sharedInstance().currentUser.roleCode)
         print(RoleCode.Operator)
-        
-        // Hard code, waiting for optimizing,
-        if WISDataManager.sharedInstance().currentUser.roleCode != "Operator" {
+
+        if WISDataManager.sharedInstance().currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
             self.navigationItem.rightBarButtonItem = nil
         }
         
@@ -64,9 +63,14 @@ class TaskHomeViewController: BaseViewController {
         options.textColor = UIColor.yepGrayColor()
         options.selectedTextColor = UIColor.yepTintColor()
         
-        if currentUser.roleName == "技术主管" || currentUser.roleName == "前方部长" || currentUser.roleName == "厂级负责人" {
+        let roleCodes = WISDataManager.sharedInstance().roleCodes
+        if currentUser.roleCode == roleCodes[RoleCode.TechManager.rawValue]
+            || currentUser.roleCode == roleCodes[RoleCode.FieldManager.rawValue] {
             viewControllers = [taskListForApproval, taskListNormal, taskListNotArchived, taskListArchived]
 //            viewControllers = [taskListForApproval, taskListNormal]
+            options.menuHeight = 40
+        } else if currentUser.roleCode == roleCodes[RoleCode.FactoryManager.rawValue] {
+            viewControllers = [taskListForApproval, taskListNormal]
             options.menuHeight = 40
         } else {
             viewControllers = [taskListNormal]
@@ -74,7 +78,6 @@ class TaskHomeViewController: BaseViewController {
         }
         
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
-        
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
     }
 

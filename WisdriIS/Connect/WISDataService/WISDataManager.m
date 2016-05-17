@@ -102,7 +102,6 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
         
         _networkRequestToken = nil;
         
-        
         _roleCodes = @[@"CTO", @"FactoryManager", @"FactoryMinister", @"DutyManager", @"Engineer", @"Operator", @"Electrician",];
         _roleNameDictionary =  @{_roleCodes[TechManager]:@"技术主管",
                                  _roleCodes[FactoryManager]:@"厂级负责人",

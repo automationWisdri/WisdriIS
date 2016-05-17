@@ -152,7 +152,7 @@ typedef NS_ENUM (NSInteger, RequestResult) {
 /**
  * @brief 由服务器定义的操作请求[包括数据获取请求(Update)操作与数据提交(Operation)请求操作]结果返回值
  */
-typedef NS_ENUM (NSUInteger, RoleCode) {
+typedef NS_ENUM (NSInteger, RoleCode) {
     /// 技术主管
     TechManager = 0,
     /// 厂级负责人
@@ -172,7 +172,7 @@ typedef NS_ENUM (NSUInteger, RoleCode) {
 /**
  * @brief 由服务器定义的操作系统类型
  */
-typedef NS_ENUM(NSUInteger, OperatingSystem) {
+typedef NS_ENUM(NSInteger, OperatingSystem) {
     OSType_Android = 1,
     OSType_iOS = 2,    /// default
 };
