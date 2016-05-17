@@ -30,7 +30,6 @@ class TaskListViewController: BaseViewController {
     
 //    private var buttonView = UIView(frame: CGRect(x: 200, y: 350, width: 50, height: 50))
     
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -223,7 +222,6 @@ class TaskListViewController: BaseViewController {
         self.currentOperatingCellIndex = -1
         self.currentUpdateCellType = .DoNothing
     }
-    
     
     @objc private func networkingStatusChanges() -> Void {
         guard self.updateCellInfoURLSessionTask != nil else {

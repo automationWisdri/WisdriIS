@@ -40,6 +40,15 @@ class TaskHomeViewController: BaseViewController {
         
         var viewControllers = [TaskListViewController]()
         
+        // for test
+        print(WISDataManager.sharedInstance().currentUser.roleCode)
+        print(RoleCode.Operator)
+        
+        // Hard code, waiting for optimizing,
+        if WISDataManager.sharedInstance().currentUser.roleCode != "Operator" {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
         let options = PagingMenuOptions()
 
 //        options.menuItemMargin = 1
@@ -67,7 +76,6 @@ class TaskHomeViewController: BaseViewController {
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
         
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
-        
     }
 
     override func didReceiveMemoryWarning() {

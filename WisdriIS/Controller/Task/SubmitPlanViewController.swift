@@ -223,10 +223,8 @@ class SubmitPlanViewController: BaseViewController {
 //    }
     
     @objc private func post(sender: UIBarButtonItem) {
-        
         SVProgressHUD.showWithStatus("正在提交")
         print(estimateDatePicker.date)
-
         // 上传图片
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
             NSLog("Upload progress is %f", progress.fractionCompleted)
@@ -286,26 +284,24 @@ class SubmitPlanViewController: BaseViewController {
                     case "submitPlanOperation":
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "维保方案", operationType: MaintenanceTaskOperationType.SubmitMaintenancePlan, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
-                        
+                                SVProgressHUD.setDefaultMaskType(.None)
                                 SVProgressHUD.showSuccessWithStatus("提交成功")
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
-                        
                                 errorCode(error)
                             }
                         }
                         break
             
                     case "submitQuickPlanOperation":
-                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "快速维保方案", operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
+                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "快速维保方案", operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
-                        
+                                SVProgressHUD.setDefaultMaskType(.None)
                                 SVProgressHUD.showSuccessWithStatus("提交成功")
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
-                        
                                 errorCode(error)
                             }
                         }
@@ -314,9 +310,13 @@ class SubmitPlanViewController: BaseViewController {
  
             
                     default:
+                        SVProgressHUD.setDefaultMaskType(.None)
                         SVProgressHUD.showErrorWithStatus("提交失败")
                         break
                     }
+                    
+                } else {
+                    errorCode(error)
                 }
             })
     
