@@ -19,11 +19,12 @@ class ProfileViewController: BaseViewController {
 
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
 
-    @IBOutlet private weak var mobileLabel: UILabel!
+    @IBOutlet private weak var roleLabel: UILabel!
 
     @IBOutlet private weak var editProfileTableView: TPKeyboardAvoidingTableView!
     
-    private let editPhoneSegueIdentifiler = "editPhone"
+    private let editPhoneSegueIdentifier = "editPhone"
+    private let editUserNameSegueIdentifier = "editUserName"
 
     private lazy var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
@@ -55,10 +56,16 @@ class ProfileViewController: BaseViewController {
         avatarImageViewWidthConstraint.constant = avatarSize
         updateAvatar() {}
         
-        mobileLabel.text = currentUser?.fullName
+        roleLabel.text = currentUser?.roleName
 
         editProfileTableView.registerNib(UINib(nibName: profileLessInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: profileLessInfoCellIdentifier)
         editProfileTableView.registerNib(UINib(nibName: profileColoredTitleCellIdentifier, bundle: nil), forCellReuseIdentifier: profileColoredTitleCellIdentifier)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        editProfileTableView.reloadData()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -187,7 +194,10 @@ class ProfileViewController: BaseViewController {
         switch identifier {
         case "editPhone":
             let vc = segue.destinationViewController as! ProfileInfoViewController
-            vc.segueIdentifier = self.editPhoneSegueIdentifiler
+            vc.segueIdentifier = self.editPhoneSegueIdentifier
+        case "editUserName":
+            let vc = segue.destinationViewController as! ProfileInfoViewController
+            vc.segueIdentifier = self.editUserNameSegueIdentifier
         default:
             break
         }
@@ -202,8 +212,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     private enum InfoRow: Int {
-        case Title = 0
-        case Mobile
+        case Name = 0
+        case Phone
         case Password
         case Scan
         case About
@@ -236,24 +246,24 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
             switch indexPath.row {
 
-            case InfoRow.Title.rawValue:
+            case InfoRow.Name.rawValue:
 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
 
-                cell.annotationLabel.text = NSLocalizedString("Title", comment: "")
-                if currentUser.roleName == nil || currentUser.roleName.isEmpty {
+                cell.annotationLabel.text = NSLocalizedString("Name", comment: "")
+                if currentUser.fullName == nil || currentUser.fullName.isEmpty {
                     cell.infoLabel.text = NSLocalizedString("None", comment: "")
                     cell.selectionStyle = .None
                 } else {
-                    cell.infoLabel.text = currentUser.roleName
-                    cell.selectionStyle = .None
+                    cell.infoLabel.text = currentUser.fullName
+                    cell.selectionStyle = .Default
                 }
                 
-                cell.accessoryImageView.hidden = true
+                cell.accessoryImageView.hidden = false
 
                 return cell
 
-            case InfoRow.Mobile.rawValue:
+            case InfoRow.Phone.rawValue:
 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
 
@@ -310,7 +320,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.annotationLabel.text = "关于"
                 cell.infoLabel.hidden = true
                 cell.accessoryImageView.hidden = false
-                cell.selectionStyle = .None
+                cell.selectionStyle = .Default
                 
                 return cell
                 
@@ -337,10 +347,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
             switch indexPath.row {
 
-            case InfoRow.Title.rawValue:
+            case InfoRow.Name.rawValue:
                 return 60
 
-            case InfoRow.Mobile.rawValue:
+            case InfoRow.Phone.rawValue:
                 return 60
 
             case InfoRow.Password.rawValue:
@@ -375,12 +385,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case Section.Info.rawValue:
 
             switch indexPath.row {
-                    
+                
+            case InfoRow.Name.rawValue:
+                
+                performSegueWithIdentifier("editUserName", sender: nil)
+                
             case InfoRow.Password.rawValue:
                 
                 performSegueWithIdentifier("editPassword", sender: nil)
 
-            case InfoRow.Mobile.rawValue:
+            case InfoRow.Phone.rawValue:
                 
                 performSegueWithIdentifier("editPhone", sender: nil)
                 
@@ -406,6 +420,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                         
                     })
                 }
+                
+            case InfoRow.About.rawValue:
+                
+                performSegueWithIdentifier("about", sender: nil)
 
             default:
                 break
@@ -472,11 +490,15 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                                 }
                             }
                         } else {
-                            errorCode(error)
+                            SVProgressHUD.showErrorWithStatus("获取用户头像失败")
+                            self.activityIndicator.stopAnimating()
+//                            errorCode(error)
                         }
                     })
                 } else {
-                    errorCode(error)
+                    SVProgressHUD.showErrorWithStatus("上传图片失败")
+                    self.activityIndicator.stopAnimating()
+//                    errorCode(error)
                 }
         }
     }

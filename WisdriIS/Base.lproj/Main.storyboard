@@ -153,17 +153,20 @@
                                                 <outletCollection property="gestureRecognizers" destination="QBB-4D-IKz" appends="YES" id="qzu-pL-VwX"/>
                                             </connections>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_profile_phone" translatesAutoresizingMaskIntoConstraints="NO" id="6sW-0p-p07" userLabel="Phone Image View">
-                                            <rect key="frame" x="227" y="178" width="16" height="24"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon_me_active" translatesAutoresizingMaskIntoConstraints="NO" id="6sW-0p-p07" userLabel="User Image View">
+                                            <rect key="frame" x="237" y="175" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="QNw-ID-KPs"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="186-0235-4812" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5WM-N1-8Kd" userLabel="Mobile Label">
-                                            <rect key="frame" x="251" y="180" width="123" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="人员角色" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5WM-N1-8Kd" userLabel="Role Label">
+                                            <rect key="frame" x="275" y="180" width="88" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTm-Pd-bPY" userLabel="Helper View">
-                                            <rect key="frame" x="227" y="175" width="147" height="30"/>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTm-Pd-bPY" userLabel="Helper View">
+                                            <rect key="frame" x="237" y="175" width="126" height="30"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="ik1-c7-wOe"/>
@@ -177,16 +180,17 @@
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="pTm-Pd-bPY" secondAttribute="centerX" id="125-9g-RIx"/>
                                         <constraint firstItem="pAJ-LI-OqZ" firstAttribute="centerX" secondItem="W1y-yh-5Sw" secondAttribute="centerX" id="1jE-5z-VxO"/>
-                                        <constraint firstItem="6sW-0p-p07" firstAttribute="centerY" secondItem="pTm-Pd-bPY" secondAttribute="centerY" id="5aE-cN-U5r"/>
                                         <constraint firstItem="pTm-Pd-bPY" firstAttribute="top" secondItem="W1y-yh-5Sw" secondAttribute="bottom" constant="30" id="7Sd-dM-Xsm"/>
+                                        <constraint firstItem="5WM-N1-8Kd" firstAttribute="leading" secondItem="6sW-0p-p07" secondAttribute="trailing" constant="8" id="8HK-nH-lfs"/>
                                         <constraint firstItem="pAJ-LI-OqZ" firstAttribute="centerY" secondItem="W1y-yh-5Sw" secondAttribute="centerY" id="FdV-dB-apC"/>
+                                        <constraint firstItem="6sW-0p-p07" firstAttribute="leading" secondItem="pTm-Pd-bPY" secondAttribute="leading" id="NbC-oD-tC8"/>
                                         <constraint firstItem="ssn-wO-qTJ" firstAttribute="centerX" secondItem="W1y-yh-5Sw" secondAttribute="centerX" id="PuC-sN-nYt"/>
                                         <constraint firstItem="5WM-N1-8Kd" firstAttribute="trailing" secondItem="pTm-Pd-bPY" secondAttribute="trailing" id="SyP-bA-cnR"/>
-                                        <constraint firstItem="5WM-N1-8Kd" firstAttribute="centerY" secondItem="6sW-0p-p07" secondAttribute="centerY" id="Yis-Z4-5Kf"/>
                                         <constraint firstAttribute="centerY" secondItem="W1y-yh-5Sw" secondAttribute="centerY" constant="30" id="eeV-bg-xxt"/>
+                                        <constraint firstItem="6sW-0p-p07" firstAttribute="centerY" secondItem="pTm-Pd-bPY" secondAttribute="centerY" id="heq-Ve-dKM"/>
+                                        <constraint firstItem="6sW-0p-p07" firstAttribute="centerY" secondItem="5WM-N1-8Kd" secondAttribute="centerY" id="jB7-1O-jgR"/>
+                                        <constraint firstItem="6sW-0p-p07" firstAttribute="top" secondItem="ssn-wO-qTJ" secondAttribute="bottom" constant="24" id="m62-20-Rdf"/>
                                         <constraint firstAttribute="centerX" secondItem="W1y-yh-5Sw" secondAttribute="centerX" id="oFq-yK-mwV"/>
-                                        <constraint firstItem="6sW-0p-p07" firstAttribute="leading" secondItem="pTm-Pd-bPY" secondAttribute="leading" id="v45-3Q-ulM"/>
-                                        <constraint firstItem="5WM-N1-8Kd" firstAttribute="leading" secondItem="6sW-0p-p07" secondAttribute="trailing" constant="8" id="xWm-GI-eCd"/>
                                         <constraint firstItem="ssn-wO-qTJ" firstAttribute="centerY" secondItem="W1y-yh-5Sw" secondAttribute="centerY" id="ySg-sw-v7B"/>
                                     </constraints>
                                 </view>
@@ -212,9 +216,11 @@
                         <outlet property="avatarImageView" destination="W1y-yh-5Sw" id="s3Z-q9-C2f"/>
                         <outlet property="avatarImageViewWidthConstraint" destination="hzK-oQ-T7F" id="Bza-BF-VRm"/>
                         <outlet property="editProfileTableView" destination="f0i-Ju-Upp" id="dFw-09-CXN"/>
-                        <outlet property="mobileLabel" destination="5WM-N1-8Kd" id="pVz-Rd-ABw"/>
+                        <outlet property="roleLabel" destination="5WM-N1-8Kd" id="Ynw-I2-M8D"/>
                         <segue destination="eWR-rc-qsY" kind="show" identifier="editPassword" id="wLa-uE-GHN"/>
                         <segue destination="jub-ba-ubm" kind="show" identifier="editPhone" id="Aw7-1T-ksW"/>
+                        <segue destination="p2r-rt-ONY" kind="show" identifier="editUserName" id="DRT-8b-lkK"/>
+                        <segue destination="1vF-zx-bLP" kind="show" identifier="about" id="5aR-6F-Y98"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Num-dr-0u1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -232,7 +238,7 @@
                 <viewControllerPlaceholder storyboardName="Password" referencedIdentifier="PasswordViewController" id="eWR-rc-qsY" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NwN-7F-pzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078.5" y="1714"/>
+            <point key="canvasLocation" x="2084.5" y="1528"/>
         </scene>
         <!--Task Home View Controller-->
         <scene sceneID="Uhr-C4-9kM">
@@ -454,7 +460,23 @@
                 <viewControllerPlaceholder storyboardName="ProfileInfo" referencedIdentifier="ProfileInfoViewController" id="jub-ba-ubm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oHw-Z5-Vav" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078.5" y="1836"/>
+            <point key="canvasLocation" x="2086.5" y="1665"/>
+        </scene>
+        <!--ProfileInfoViewController-->
+        <scene sceneID="YiN-rf-Mks">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ProfileInfo" referencedIdentifier="ProfileInfoViewController" id="p2r-rt-ONY" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bEp-0R-2qx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2086.5" y="1770"/>
+        </scene>
+        <!--AboutViewController-->
+        <scene sceneID="vEM-Tl-hbn">
+            <objects>
+                <viewControllerPlaceholder storyboardName="About" referencedIdentifier="AboutViewController" id="1vF-zx-bLP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t7C-25-6UL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2073.5" y="1914"/>
         </scene>
     </scenes>
     <resources>
@@ -466,7 +488,6 @@
         <image name="icon_feeds_active" width="30" height="30"/>
         <image name="icon_me" width="30" height="30"/>
         <image name="icon_me_active" width="30" height="30"/>
-        <image name="icon_profile_phone" width="16" height="24"/>
         <image name="profile_avatar_frame" width="112" height="112"/>
     </resources>
 </document>
