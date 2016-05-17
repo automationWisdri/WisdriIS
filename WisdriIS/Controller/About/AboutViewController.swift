@@ -22,7 +22,8 @@ class AboutViewController: BaseViewController {
     
     @IBOutlet private weak var aboutTableView: UITableView!
     @IBOutlet private weak var aboutTableViewHeightConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var aboutTableViewTopConstraint: NSLayoutConstraint!
+    
     @IBOutlet private weak var copyrightLabel: UILabel!
 
     private let profileLessInfoCellID = "ProfileLessInfoCell"
@@ -30,12 +31,14 @@ class AboutViewController: BaseViewController {
     private let rowHeight: CGFloat = Ruler.iPhoneVertical(50, 60, 60, 60).value
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         title = NSLocalizedString("About", comment: "")
 
-        appLogoImageViewTopConstraint.constant = Ruler.iPhoneVertical(0, 20, 40, 60).value
+        appLogoImageViewTopConstraint.constant = Ruler.iPhoneVertical(10, 30, 50, 70).value
         appNameLabelTopConstraint.constant = Ruler.iPhoneVertical(10, 20, 20, 20).value
+        aboutTableViewTopConstraint.constant = Ruler.iPhoneVertical(130, 180, 260, 315).value
 
         appNameLabel.textColor = UIColor.yepTintColor()
 
@@ -43,6 +46,7 @@ class AboutViewController: BaseViewController {
 
         aboutTableViewHeightConstraint.constant = rowHeight + 1
     }
+
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -101,6 +105,7 @@ extension AboutViewController: UITableViewDataSource, UITableViewDelegate {
                     delay(1.5, work: {
                         WISDataManager.sharedInstance().clearCacheOfImages()
                         SVProgressHUD.dismiss()
+                        self.aboutTableView.reloadData()
                     })
                 }, cancelAction: {})
             
