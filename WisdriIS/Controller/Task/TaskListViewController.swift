@@ -21,6 +21,10 @@ class TaskListViewController: BaseViewController {
     var currentUpdateCellType:TaskListCellUpdatingType = .DoNothing
     var updateCellInfoURLSessionTask:NSURLSessionTask?
     
+    // for task type: NotArchived and Archived
+    let recordNumberInPage:Int = 50
+    var currentPageIndex = 1
+    
     private let taskListCellID = "TaskListCell"
 
 //    var tab: String? = nil
@@ -57,57 +61,87 @@ class TaskListViewController: BaseViewController {
         print("Task List View Controller did load!")
         
         self.taskTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
-            self?.refresh()
+            self?.headerRefresh()
             })
         
         // move updating op to viewWillAppear() 2016.05.15
         // self.refreshPage()
+
+        if self.taskType == MaintenanceTaskType.NotArchived || self.taskType == MaintenanceTaskType.Archived {
+            let footer = WISRefreshFooter(refreshingBlock: {[weak self] () -> Void in
+                self?.footerRefresh()
+                })
+            footer.centerOffset = -4
+            footer.pullingPercent = 10.0
+            self.taskTableView.mj_footer = footer
+        } else {
+            self.taskTableView.mj_footer = nil
+        }
         
-//        
-//        let footer = WISRefreshFooter(refreshingBlock: {[weak self] () -> Void in
-//            self?.getNextPage()
-//            })
-//        footer.centerOffset = -4
-//        self.tableView.mj_footer = footer
-//
+        self.currentPageIndex = 1
+        
 //        self.view.addSubview(self.taskTableView)
 //        self.taskTableView.snp_makeConstraints{ (make) -> Void in
 //            make.top.right.bottom.left.equalTo(self.view)
 //        }
     }
     
-    func refreshPage() {
-        self.taskTableView.mj_header.beginRefreshing();
+    func refreshInitalPage() {
+        self.taskTableView.mj_header.beginRefreshing()
 //        WISSettings.sharedInstance[kHomeTab] = tab
     }
     
-    func refresh() {
-        
+    func loadNextPage() {
+        self.taskTableView.mj_footer.beginRefreshing()
+    }
+    
+    func headerRefresh() {
         //如果有上拉加载更多 正在执行，则取消它
-//        if self.taskTableView.mj_footer.isRefreshing() {
-//            self.taskTableView.mj_footer.endRefreshing()
-//        }
-        
+        if self.taskTableView.mj_footer != nil {
+            if self.taskTableView.mj_footer.isRefreshing() {
+                self.taskTableView.mj_footer.endRefreshing()
+            }
+        }
+        self.currentPageIndex = 1
         getTaskList(taskType!)
     }
     
+    
+    func footerRefresh() {
+        getTaskList(taskType!)
+    }
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
         self.updateCellInTaskList()
         
         // for test
         print("Task List View Controller will appear!")
     }
     
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //
-        self.getTaskList(taskType!)
-//        self.refreshPage()
+        
+        self.currentPageIndex = 1
+        getTaskList(taskType!)
     }
     
+    
     func getTaskList(taskType: MaintenanceTaskType) -> Void {
+        switch taskType {
+        case .ForApproval, .Normal:
+            self.getOnTheGoTaskList(taskType)
+        case .NotArchived, .Archived:
+            self.getFinshedTaskList(taskType, pageIndex: self.currentPageIndex, numberOfRecordsInPage: self.recordNumberInPage)
+        default:
+            break
+        }
+    }
+    
+    
+    func getOnTheGoTaskList(taskType: MaintenanceTaskType) -> Void {
         SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
         
@@ -115,7 +149,6 @@ class TaskListViewController: BaseViewController {
             if completedWithNoError {
                 let tasks: [WISMaintenanceTask] = updatedData as! [WISMaintenanceTask]
                 self.wisTasks.removeAll()
-
                 for task in tasks {
                     self.wisTasks.append(task)
                 }
@@ -132,6 +165,45 @@ class TaskListViewController: BaseViewController {
         }
     }
     
+    
+    func getFinshedTaskList(taskType: MaintenanceTaskType, pageIndex:Int, numberOfRecordsInPage:Int) -> Void {
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
+        
+        WISDataManager.sharedInstance().updateFinishedMaintenanceTaskBriefInfoWithTaskTypeID(taskType, recordNumberInPage: self.recordNumberInPage, pageIndex: self.currentPageIndex) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+            if completedWithNoError {
+                let tasks: [WISMaintenanceTask] = updatedData as! [WISMaintenanceTask]
+                
+                if pageIndex < 2 {
+                    self.wisTasks.removeAll()
+                }
+                
+                for task in tasks {
+                    self.wisTasks.append(task)
+                }
+                
+                self.currentPageIndex += 1
+                
+                if self.taskTableView.mj_header.isRefreshing() {
+                    self.taskTableView.mj_header.endRefreshing()
+                }
+                if self.taskTableView.mj_footer != nil {
+                    if self.taskTableView.mj_footer.isRefreshing() {
+                        self.taskTableView.mj_footer.endRefreshing()
+                    }
+                }
+                self.updateTableViewInfo()
+                
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
+            
+            } else {
+                errorCode(error)
+            }
+        }
+    }
+    
+    
     func handleNotification(notification:NSNotification) -> Void {
         
         switch notification.name {
@@ -140,7 +212,7 @@ class TaskListViewController: BaseViewController {
             break
             
         case NewTaskSubmittedSuccessfullyNotification:
-            getTaskList(taskType!)
+            getOnTheGoTaskList(taskType!)
             // beacause of the mechanism of asynchronous networking accessing , the following code always executs before wisTask being updated.
             // it works imperfect. 2016.05.15
             dispatch_async(dispatch_get_main_queue()){
@@ -202,7 +274,7 @@ class TaskListViewController: BaseViewController {
             break
             
         case .AddNewCell:
-            getTaskList(taskType!)
+            getOnTheGoTaskList(taskType!)
             break
             
         case .RemoveCell:
@@ -246,6 +318,7 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("number of Rows: \(wisTasks.count)")
         return wisTasks.count
     }
     
@@ -257,7 +330,12 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        guard indexPath.row < self.wisTasks.count else {
+            return getCell(tableView, cell: TaskListCell.self, indexPath: NSIndexPath(forRow: self.wisTasks.count - 1, inSection: 0))
+        }
+        
         let cell = getCell(tableView, cell: TaskListCell.self, indexPath: indexPath)
+        print("index of Cell: \(indexPath.row)")
         cell.bind(self.wisTasks[indexPath.row])
         return cell
     }

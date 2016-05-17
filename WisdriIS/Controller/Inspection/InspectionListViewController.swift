@@ -363,6 +363,10 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        guard indexPath.row < WISInsepctionDataManager.sharedInstance().inspectionTasks.count else {
+            return getCell(tableView, cell: InspectionListCell.self, indexPath: NSIndexPath(forRow: WISInsepctionDataManager.sharedInstance().inspectionTasks.count - 1, inSection: 0))
+        }
+        
         let cell = getCell(tableView, cell: InspectionListCell.self, indexPath: indexPath)
         cell.bindData(WISInsepctionDataManager.sharedInstance().inspectionTasks[indexPath.row])
         return cell
