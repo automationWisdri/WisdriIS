@@ -2,8 +2,8 @@
 //  TaskStateCell.swift
 //  WisdriIS
 //
-//  Created by 任韬 on 16/5/6.
-//  Copyright © 2016年 Wisdri. All rights reserved.
+//  Created by Allen on 5/5/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
@@ -14,6 +14,15 @@ class TaskStateCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
+    
+    @IBOutlet weak var startTimeLabelLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var endTimeLabelLeadingConstraint: NSLayoutConstraint!
+    
+    let timeLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(12)]
+    
+    let timeLabelWidth: CGFloat = 106
+    
+    let timeLabelLeadingBase: CGFloat = -4
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,6 +40,25 @@ class TaskStateCell: UITableViewCell {
         statusNameLabel.text = status.state
         startTimeLabel.text = DATE.stringFromDate(status.startTime)
         endTimeLabel.text = DATE.stringFromDate(status.endTime)
+        
+        if let string = startTimeLabel.text {
+            self.startTimeLabelLeadingConstraint.constant = calculateOffset(string)
+        }
+        if let string = endTimeLabel.text {
+            self.endTimeLabelLeadingConstraint.constant = calculateOffset(string)
+        }
+    }
+    
+    func calculateOffset(string: String) -> CGFloat {
+        
+        let rect = string.boundingRectWithSize(CGSize(width: CGFloat(FLT_MAX), height: 18), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: timeLabelTextAttributes, context: nil)
+        
+        let offset = timeLabelWidth - rect.width
+        
+        let leadingConstraint = timeLabelLeadingBase - offset
+        
+        return leadingConstraint
+        
     }
     
 }
