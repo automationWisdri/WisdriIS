@@ -45,13 +45,13 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="y12-cs-ivk" customClass="FeedTextView" customModule="WisdriIS" customModuleProvider="target">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="y12-cs-ivk" customClass="TaskTextView" customModule="WisdriIS" customModuleProvider="target">
                         <rect key="frame" x="20" y="36" width="389" height="42"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                     </textView>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="PHT-ks-yg3" customClass="FeedTextView" customModule="WisdriIS" customModuleProvider="target">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="PHT-ks-yg3" customClass="TaskTextView" customModule="WisdriIS" customModuleProvider="target">
                         <rect key="frame" x="20" y="174" width="389" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="pOe-d5-rVc"/>
