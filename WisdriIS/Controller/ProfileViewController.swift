@@ -400,7 +400,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 
             case InfoRow.Scan.rawValue:
                 
-                self.codeScanNotificationToken = CodeScanViewController.performPresentToCodeScanViewController(self, completion: nil)
+                self.codeScanNotificationToken = CodeScanViewController.performSegueToCodeScanViewController(self, completion: nil)
                 
                 if self.codeScanNotificationToken != nil {
                     WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
@@ -408,10 +408,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                             
                             SVProgressHUD.showWithStatus("打卡成功")
                             currentClockStatus = data as! Int
-                            print(currentClockStatus)
+
                             self.editProfileTableView.reloadData()
-                            SVProgressHUD.dismiss()
-                            
                             
                         } else {
                             

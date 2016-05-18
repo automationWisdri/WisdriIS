@@ -45,17 +45,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 技术主管归档
         view.archiveOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "归档", operationType: MaintenanceTaskOperationType.Archive, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
-                if completedWithNoError {
-                    SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("归档成功")
-                    self?.navigationController?.popViewControllerAnimated(true)
-                    
-                } else {
-                    errorCode(error)
-                }
-            })
+            self?.performSegueWithIdentifier("archiveTask", sender: nil)
         }
         
         // 前方部长转单

@@ -8,7 +8,7 @@
         <!--About View Controller-->
         <scene sceneID="BoP-eo-dVd">
             <objects>
-                <viewController storyboardIdentifier="AboutViewController" automaticallyAdjustsScrollViewInsets="NO" id="B7e-qT-n3V" customClass="AboutViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="B7e-qT-n3V" customClass="AboutViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3gP-F0-Md3"/>
                         <viewControllerLayoutGuide type="bottom" id="DBV-iO-pWY"/>
@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ukn-Rf-ygB">
-                                <rect key="frame" x="0.0" y="269" width="600" height="300"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ukn-Rf-ygB">
+                                <rect key="frame" x="0.0" y="261" width="600" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="9DH-nb-SVb"/>
@@ -28,25 +28,25 @@
                                     <outlet property="delegate" destination="B7e-qT-n3V" id="JJh-7h-AWb"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工业云服务" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STw-iV-6mk">
-                                <rect key="frame" x="225.5" y="179" width="150" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="工业云服务" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STw-iV-6mk">
+                                <rect key="frame" x="243" y="179" width="115" height="28"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 0.5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGt-Mh-BQL">
-                                <rect key="frame" x="264" y="223" width="72.5" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Version 0.5.1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGt-Mh-BQL">
+                                <rect key="frame" x="260" y="215" width="82" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 Wisdri." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHG-mc-O86">
-                                <rect key="frame" x="229" y="577" width="141.5" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Copyright © 2016 Wisdri." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHG-mc-O86">
+                                <rect key="frame" x="229" y="569" width="142" height="15"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                 <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_wisdriis" translatesAutoresizingMaskIntoConstraints="NO" id="gjf-PL-dZm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon_wisdriis" translatesAutoresizingMaskIntoConstraints="NO" id="gjf-PL-dZm">
                                 <rect key="frame" x="240" y="40" width="120" height="120"/>
                             </imageView>
                         </subviews>
@@ -54,20 +54,22 @@
                         <constraints>
                             <constraint firstItem="ukn-Rf-ygB" firstAttribute="leading" secondItem="EZp-Kz-Rn6" secondAttribute="leading" id="1Zp-vD-DIG"/>
                             <constraint firstAttribute="trailing" secondItem="ukn-Rf-ygB" secondAttribute="trailing" id="5gg-zK-zCg"/>
+                            <constraint firstItem="ukn-Rf-ygB" firstAttribute="top" secondItem="YGt-Mh-BQL" secondAttribute="bottom" constant="29" id="8ua-qZ-hpB"/>
                             <constraint firstItem="YGt-Mh-BQL" firstAttribute="centerX" secondItem="STw-iV-6mk" secondAttribute="centerX" id="AiP-6p-eVX"/>
                             <constraint firstItem="YGt-Mh-BQL" firstAttribute="top" secondItem="STw-iV-6mk" secondAttribute="bottom" constant="8" id="GeV-CJ-x86"/>
                             <constraint firstItem="gjf-PL-dZm" firstAttribute="top" secondItem="3gP-F0-Md3" secondAttribute="bottom" constant="20" id="Vkq-1i-06m"/>
+                            <constraint firstItem="rHG-mc-O86" firstAttribute="top" secondItem="ukn-Rf-ygB" secondAttribute="bottom" constant="8" id="Z3f-OC-Mbo"/>
                             <constraint firstAttribute="centerX" secondItem="rHG-mc-O86" secondAttribute="centerX" id="hSy-Fg-9yg"/>
-                            <constraint firstItem="rHG-mc-O86" firstAttribute="top" secondItem="ukn-Rf-ygB" secondAttribute="bottom" constant="8" id="nGz-w4-AF9"/>
                             <constraint firstItem="STw-iV-6mk" firstAttribute="centerX" secondItem="gjf-PL-dZm" secondAttribute="centerX" constant="0.5" id="oa7-44-D2a"/>
-                            <constraint firstItem="ukn-Rf-ygB" firstAttribute="top" secondItem="YGt-Mh-BQL" secondAttribute="bottom" constant="29" id="xPg-7r-wXz"/>
                             <constraint firstAttribute="centerX" secondItem="gjf-PL-dZm" secondAttribute="centerX" id="yZr-p4-Cz5"/>
                             <constraint firstItem="STw-iV-6mk" firstAttribute="top" secondItem="gjf-PL-dZm" secondAttribute="bottom" constant="19" id="zqS-j4-rlV"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="aboutTableView" destination="ukn-Rf-ygB" id="MUW-fB-NIH"/>
                         <outlet property="aboutTableViewHeightConstraint" destination="9DH-nb-SVb" id="HCq-yN-3Bt"/>
+                        <outlet property="aboutTableViewTopConstraint" destination="8ua-qZ-hpB" id="KaX-Um-WJN"/>
                         <outlet property="appLogoImageView" destination="gjf-PL-dZm" id="AW5-AD-adp"/>
                         <outlet property="appLogoImageViewTopConstraint" destination="Vkq-1i-06m" id="09g-hB-T64"/>
                         <outlet property="appNameLabel" destination="STw-iV-6mk" id="647-u7-H7H"/>
