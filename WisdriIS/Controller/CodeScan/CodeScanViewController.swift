@@ -137,6 +137,7 @@ class CodeScanViewController: LBXScanViewController {
         viewController.scanStyle = style
         viewController.superViewController = superViewController
         viewController.prefersHideStatuseBar = false
+        viewController.hidesBottomBarWhenPushed = true
 
         superViewController.navigationController?.pushViewController(viewController, animated: true)
         completion?()
