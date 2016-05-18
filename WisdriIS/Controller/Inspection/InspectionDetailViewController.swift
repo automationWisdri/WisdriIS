@@ -269,6 +269,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             } else {
                 return 0
             }
+            
         case .InspectionOperation:
             return 1
         case .More:
@@ -347,7 +348,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             
         /// Section: Inspection Result
         case .InspectionResult:
-            guard let row = InspectionResultRow(rawValue: indexPath.row) else {
+            guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
                 break
             }
             
@@ -434,7 +435,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             
         /// Section: Inspection Result
         case .InspectionResult:
-            guard let row = InspectionResultRow(rawValue: indexPath.row) else {
+            guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
                 break
             }
             
@@ -491,11 +492,11 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             // cleanRealmAndCaches()
                             // YepUserDefaults.cleanAllUserDefaults()
                             
-                            var indexPath = NSIndexPath(forRow: InspectionResultRow.ResultSelection.rawValue, inSection: Section.InspectionResult.rawValue)
+                            var indexPath = NSIndexPath(forRow: InspectionAddResultRow.ResultSelection.rawValue, inSection: Section.InspectionResult.rawValue)
                             let cellResultSelection = tableView.cellForRowAtIndexPath(indexPath) as! InspectionResultSelectionCell
                             cellResultSelection.bringBackData(&self!.inspectionTask!)
                             
-                            indexPath = NSIndexPath(forRow: InspectionResultRow.PickPhoto.rawValue, inSection: Section.InspectionResult.rawValue)
+                            indexPath = NSIndexPath(forRow: InspectionAddResultRow.PickPhoto.rawValue, inSection: Section.InspectionResult.rawValue)
                             let cellPickPhoto = tableView.cellForRowAtIndexPath(indexPath) as! InspectionPickPhotoCell
                             let images = cellPickPhoto.mediaImages
                             
@@ -508,7 +509,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                                 }
                             }
                             
-                            indexPath = NSIndexPath(forRow: InspectionResultRow.ResultDescription.rawValue, inSection: Section.InspectionResult.rawValue)
+                            indexPath = NSIndexPath(forRow: InspectionAddResultRow.ResultDescription.rawValue, inSection: Section.InspectionResult.rawValue)
                             let cellResultDescription = tableView.cellForRowAtIndexPath(indexPath) as! InspectionResultDescriptionCell
                             cellResultDescription.bringBackData(&self!.inspectionTask!)
                             
@@ -624,7 +625,7 @@ extension InspectionDetailViewController: UIImagePickerControllerDelegate, UINav
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
                     let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
-                                   NSIndexPath.init(forRow: InspectionResultRow.PickPhoto.rawValue,
+                                   NSIndexPath.init(forRow: InspectionAddResultRow.PickPhoto.rawValue,
                                                     inSection: Section.InspectionResult.rawValue)) as! InspectionPickPhotoCell
                     if cell.mediaImages.count <= cell.imageCountUpLimit - 1 {
                         cell.mediaImages.append(image)
@@ -661,9 +662,15 @@ private enum InspectionDeviceTypeRow: Int {
     case DeviceTypeInformation = 1
 }
 
-private enum InspectionResultRow: Int {
+private enum InspectionAddResultRow: Int {
     case ResultSelection = 0
     case PickPhoto = 1
+    case ResultDescription = 2
+}
+
+private enum InspectionPresentResultRow: Int {
+    case Result = 0
+    case PresentPhoto = 1
     case ResultDescription = 2
 }
 
