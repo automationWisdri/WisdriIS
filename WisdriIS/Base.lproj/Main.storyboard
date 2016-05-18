@@ -3,9 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Inspection-->
@@ -372,10 +370,10 @@
             </objects>
             <point key="canvasLocation" x="1551" y="9"/>
         </scene>
-        <!--Inspection List View Controller-->
+        <!--Inspection Home View Controller-->
         <scene sceneID="05E-G5-Ib2">
             <objects>
-                <viewController storyboardIdentifier="InspectionListViewController" id="7hk-GG-AXN" customClass="InspectionListViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InspectionHomeViewController" id="7hk-GG-AXN" userLabel="Inspection Home View Controller" customClass="InspectionHomeViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SGA-ab-XaI"/>
                         <viewControllerLayoutGuide type="bottom" id="a0o-yo-Df0"/>
@@ -384,49 +382,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uRS-k4-xl3" userLabel="Inspection Table View">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6pS-RR-TLh">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <connections>
+                                    <segue destination="rYs-KF-zWM" kind="embed" id="MDc-ct-UMu"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="uRS-k4-xl3" firstAttribute="top" secondItem="o8G-TI-BxD" secondAttribute="topMargin" id="GKy-gv-Odx"/>
-                            <constraint firstItem="uRS-k4-xl3" firstAttribute="bottom" secondItem="o8G-TI-BxD" secondAttribute="bottomMargin" id="PVO-Rc-ZTF"/>
-                            <constraint firstItem="uRS-k4-xl3" firstAttribute="leading" secondItem="o8G-TI-BxD" secondAttribute="leadingMargin" constant="-20" id="TPU-nZ-tTh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uRS-k4-xl3" secondAttribute="trailing" constant="-20" id="vRa-Pj-TWU"/>
+                            <constraint firstItem="6pS-RR-TLh" firstAttribute="leading" secondItem="o8G-TI-BxD" secondAttribute="leading" id="2bP-6p-4AQ"/>
+                            <constraint firstItem="a0o-yo-Df0" firstAttribute="top" secondItem="6pS-RR-TLh" secondAttribute="bottom" id="DNa-0e-lHB"/>
+                            <constraint firstItem="6pS-RR-TLh" firstAttribute="top" secondItem="SGA-ab-XaI" secondAttribute="bottom" id="PjA-10-Xh0"/>
+                            <constraint firstAttribute="trailing" secondItem="6pS-RR-TLh" secondAttribute="trailing" id="Rkm-9K-y0R"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="uRS-k4-xl3"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="GKy-gv-Odx"/>
-                                <exclude reference="PVO-Rc-ZTF"/>
-                                <exclude reference="TPU-nZ-tTh"/>
-                                <exclude reference="vRa-Pj-TWU"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="uRS-k4-xl3"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="GKy-gv-Odx"/>
-                                <include reference="PVO-Rc-ZTF"/>
-                                <include reference="TPU-nZ-tTh"/>
-                                <include reference="vRa-Pj-TWU"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="KIz-fY-9vU"/>
-                    <connections>
-                        <outlet property="inspectionTableView" destination="uRS-k4-xl3" id="KBM-kj-xNE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AZs-2p-mkr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1551" y="689"/>
+        </scene>
+        <!--Inspection Paging Menu View Controller-->
+        <scene sceneID="7gw-GF-ccX">
+            <objects>
+                <viewController id="rYs-KF-zWM" userLabel="Inspection Paging Menu View Controller" customClass="PagingMenuController" customModule="PagingMenuController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VMu-W8-iqv"/>
+                        <viewControllerLayoutGuide type="bottom" id="B31-H2-tyb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PpE-RO-h5z">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0iS-yR-vKB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2289" y="689"/>
         </scene>
         <!--Paging Menu Controller-->
         <scene sceneID="u2u-Gk-vHA">

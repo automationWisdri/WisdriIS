@@ -10,13 +10,7 @@ import UIKit
 
 class InspectionDetailViewBaseCell: UITableViewCell {
     
-    func bindData(model: WISInspectionTask) -> Void {
-        // do nothing
-    }
-    
     func bringBackData(inout model: WISInspectionTask) -> Void {
         
     }
-    
-    
 }

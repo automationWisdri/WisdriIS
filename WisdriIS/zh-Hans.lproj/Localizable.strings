@@ -201,3 +201,29 @@
 "Wrong Operation" = "错误操作";
 
 "One and only one user should be seleceted" = "必须选择 1 名用户";
+
+// after 2016.05.18
+"On the go inspection task" = "当前点检任务";
+
+"Historical inspection task" = "历史点检任务";
+
+"Over due inspection task" = "逾期点检任务";
+
+"Updating on the go inspection task list" = "更新当前点检任务列表";
+
+"Updating historical inspection task list" = "更新当前历史点检任务列表";
+
+"Updating over due inspection task list" = "更新逾期点检任务列表";
+
+"On the go inspection task list updated successfully" = "当前点检任务列表更新成功";
+
+"Historical inspection task list updated successfully" = "历史点检任务列表更新成功";
+
+"Over due inspection task list updated successfully" = "逾期点检任务列表更新成功";
+
+"Inspection Result" = "点检结果";
+
+"Inspection Images" = "点检图片";
+
+
+

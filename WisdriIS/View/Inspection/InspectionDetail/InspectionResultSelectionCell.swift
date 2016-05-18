@@ -9,6 +9,7 @@
 import UIKit
 
 class InspectionResultSelectionCell: InspectionDetailViewBaseCell {
+    static let cellHeight: CGFloat = 140.0
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var inspectionResultTableView: UITableView!
@@ -34,7 +35,7 @@ class InspectionResultSelectionCell: InspectionDetailViewBaseCell {
         // Configure the view for the selected state
     }
     
-    override func bindData(model: WISInspectionTask) {
+    func bindData(model: WISInspectionTask) {
         if model.inspectionResult != .NotSelected {
             inspectionResultTableView.selectRowAtIndexPath(NSIndexPath.init(forRow: model.inspectionResult.rawValue - 1, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.None)
         }

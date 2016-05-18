@@ -44,7 +44,10 @@ class WISInsepctionDataManager {
     var currentUploadingInspectionTask: InspectionTaskForUploading?
     var currentURLSessionTask: NSURLSessionTask?
     
-    var inspectionTasks = [WISInspectionTask]()
+    var onTheGoInspectionTasks = [WISInspectionTask]()
+    var historicalInspectionTasks = [WISInspectionTask]()
+    var overDueInspectionTasks = [WISInspectionTask]()
+    
     var deviceTypes = [String : WISDeviceType]()
     
     var inspectionTasksUploadingQueue = [InspectionTaskForUploading]()
@@ -67,13 +70,21 @@ class WISInsepctionDataManager {
         return false
     }
     
-    func indexOfInspectionTaskInListByDeviceID(deviceID: String) -> Int {
-        guard self.inspectionTasks.count > 0 else {
+    func indexOfInspectionTaskInListByDeviceID(deviceID: String, inspectionTaskType: InspectionTaskType) -> Int {
+        let inspectionTasks: [WISInspectionTask]
+        
+        switch inspectionTaskType {
+        case .OnTheGo: inspectionTasks = self.onTheGoInspectionTasks
+        case .Historical: inspectionTasks = self.historicalInspectionTasks
+        case .OverDue: inspectionTasks = self.overDueInspectionTasks
+        }
+        
+        guard inspectionTasks.count > 0 else {
             return -1
         }
         
-        for index in 0...self.inspectionTasks.count - 1 {
-            if self.inspectionTasks[index].device.deviceID == deviceID {
+        for index in 0...inspectionTasks.count - 1 {
+            if inspectionTasks[index].device.deviceID == deviceID {
                 return index
             }
         }

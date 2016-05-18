@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="e3D-Ya-jmm">
+            <objects>
+                <navigationController id="GlK-sa-gZ1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ks2-Zh-DYk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ap2-BQ-I44" kind="relationship" relationship="rootViewController" id="D1O-X3-mie"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kwq-M4-ZAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-394" y="246"/>
+        </scene>
+        <!--Inspection List View Controller-->
+        <scene sceneID="6aX-jA-iZb">
+            <objects>
+                <viewController storyboardIdentifier="InspectionListViewController" id="ap2-BQ-I44" customClass="InspectionListViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uCt-9C-cB8"/>
+                        <viewControllerLayoutGuide type="bottom" id="vnu-PM-NoA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleAspectFit" id="6OB-g7-tcG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rzf-6K-99g" userLabel="Inspection Table View">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Rzf-6K-99g" firstAttribute="top" secondItem="6OB-g7-tcG" secondAttribute="top" id="QAn-j1-4vD"/>
+                            <constraint firstItem="Rzf-6K-99g" firstAttribute="bottom" secondItem="vnu-PM-NoA" secondAttribute="top" id="WhK-4D-u4s"/>
+                            <constraint firstAttribute="trailing" secondItem="Rzf-6K-99g" secondAttribute="trailing" id="ca9-7x-MWZ"/>
+                            <constraint firstItem="Rzf-6K-99g" firstAttribute="leading" secondItem="6OB-g7-tcG" secondAttribute="leading" id="yhv-rr-34G"/>
+                        </constraints>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Rzf-6K-99g"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="dYb-oE-Ob5"/>
+                    <connections>
+                        <outlet property="inspectionTableView" destination="Rzf-6K-99g" id="ZU6-aA-Brc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9JV-Rp-roQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="246"/>
+        </scene>
+    </scenes>
+</document>

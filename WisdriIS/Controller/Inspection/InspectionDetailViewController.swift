@@ -19,7 +19,7 @@ class InspectionDetailViewController: BaseViewController {
     
     private var codeScanNotificationToken:String?
     
-    var isQRCodeMatched = false
+    var showMoreInformation = false
     var operationEnabled = false
     
     let keyboardMan = KeyboardMan()
@@ -40,6 +40,10 @@ class InspectionDetailViewController: BaseViewController {
     
     private let inspectionResultSelectionCellID = "InspectionResultSelectionCell"
     private let inspectionPickPhotoCellID = "InspectionPickPhotoCell"
+    
+    private let inspectionResultShowSelectionCellID = "InspectionResultShowSelectionCell"
+    private let inspectionShowPhotoCellID = "InspectionShowPhotoCell"
+    
     private let inspectionResultDescriptionCellID = "InspectionResultDescriptionCell"
     
     private let inspectionColoredTitleCellID = "InspectionColoredTitleCell"
@@ -89,6 +93,12 @@ class InspectionDetailViewController: BaseViewController {
                                               forCellReuseIdentifier: inspectionResultSelectionCellID)
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionPickPhotoCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionPickPhotoCellID)
+        
+        inspectionDetailTableView.registerNib(UINib(nibName: inspectionResultShowSelectionCellID, bundle: nil),
+                                              forCellReuseIdentifier: inspectionResultShowSelectionCellID)
+        inspectionDetailTableView.registerNib(UINib(nibName: inspectionShowPhotoCellID, bundle: nil),
+                                              forCellReuseIdentifier: inspectionShowPhotoCellID)
+        
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionResultDescriptionCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionResultDescriptionCellID)
         
@@ -96,7 +106,7 @@ class InspectionDetailViewController: BaseViewController {
                                               forCellReuseIdentifier: inspectionColoredTitleCellID)
         
         #if (arch(x86_64) || arch(i386)) && os(iOS)
-            
+            // ignore
         #else
             /// code below doesn't work 2016.05.09
             keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
@@ -125,7 +135,7 @@ class InspectionDetailViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if isQRCodeMatched {
+        if showMoreInformation {
 //            let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
 //                NSIndexPath.init(
 //                    forRow: InspectionResultRow.ResultSelection.rawValue, inSection: Section.InspectionResult.rawValue)) as UITableViewCell?
@@ -168,7 +178,6 @@ class InspectionDetailViewController: BaseViewController {
     // MARK: - Methods
     
     func getInspectionDetail() -> Void {
-        
         // SVProgressHUD.show()
         //        WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(inspectionTask?.taskID) {
 //            (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
@@ -194,7 +203,7 @@ class InspectionDetailViewController: BaseViewController {
                 YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
-                isQRCodeMatched = false
+                showMoreInformation = false
                 return
             }
             
@@ -202,30 +211,31 @@ class InspectionDetailViewController: BaseViewController {
                 YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("QRCode does not match the device", comment: ""), dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
-                isQRCodeMatched = false
+                showMoreInformation = false
                 return
             }
             
             /// for test purpose
-            isQRCodeMatched = true
+            showMoreInformation = true
             
-            if isQRCodeMatched {
+            if showMoreInformation {
                 self.inspectionDetailTableView.reloadData()
             }
         }
         return
     }
     
-    class func performSegueToInspectionDetailView(superViewController:UIViewController,
+    class func performPushToInspectionDetailView(superViewController:UIViewController,
                                                   inspectionTask:WISInspectionTask,
                                                   index:Int,
-                                                  needToScanCode:Bool, enableOperation:Bool) -> Void {
+                                                  showMoreInformation:Bool, enableOperation:Bool) -> Void {
         
         let board = UIStoryboard.init(name: "InspectionDetail", bundle: NSBundle.mainBundle())
         let viewController = board.instantiateViewControllerWithIdentifier("InspectionDetailViewController") as! InspectionDetailViewController
         viewController.inspectionTask = inspectionTask.copy() as! WISInspectionTask
-        viewController.isQRCodeMatched = !needToScanCode
-        // 需要根据角色来区分是否详细任务信息是否可编辑
+        
+        viewController.showMoreInformation = showMoreInformation
+        // 需要根据角色来区分是否详细任务信息是否可编辑(由SuperViewController决定)
         viewController.operationEnabled = enableOperation
         viewController.superViewController = superViewController
         viewController.indexInList = index
@@ -264,14 +274,14 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             return 2
         case .InspectionResult:
             // in different situation, the return value should change
-            if isQRCodeMatched {
+            if showMoreInformation {
                 return 3
             } else {
                 return 0
             }
             
         case .InspectionOperation:
-            return 1
+            return operationEnabled ? 1 : 0
         case .More:
             return 0
         }
@@ -287,7 +297,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         case .InspectionDevice: return 0.001
         case .InspectionDeviceType: return 0.001//10
         case .InspectionResult: return 0.001//10
-        case .InspectionOperation: if isQRCodeMatched { return 20.0 } else { return 5.0 }
+        case .InspectionOperation: return showMoreInformation ? 20.0 : 5.0
         case .More: return 0.0
         }
     }
@@ -300,7 +310,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         }
         
         switch section {
-        // Section: Equip
+        //／ SECTION: Equip
         case .InspectionDevice:
             guard let row = InspectionDeviceRow(rawValue: indexPath.row) else {
                 break
@@ -326,7 +336,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 return cell
             }
             
-        /// Section: Equip Type
+        /// SECTION: Equip Type
         case .InspectionDeviceType:
             guard let row = InspectionDeviceTypeRow(rawValue: indexPath.row) else {
                 break
@@ -346,31 +356,60 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 return cell
             }
             
-        /// Section: Inspection Result
+        /// SECTION: Inspection Result
         case .InspectionResult:
-            guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
-                break
-            }
-            
-            switch row {
-            case .ResultSelection:
-                let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultSelectionCellID) as! InspectionResultSelectionCell
-                cell.selectionStyle = .None
-                cell.bindData(inspectionTask!)
-                return cell
+            if operationEnabled {
+                guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
+                    break
+                }
                 
-            case .PickPhoto:
-                let cell = tableView.dequeueReusableCellWithIdentifier(inspectionPickPhotoCellID) as! InspectionPickPhotoCell
-                cell.selectionStyle = .None
-                cell.superViewController = self
-                return cell
-
+                switch row {
+                case .ResultSelection:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultSelectionCellID) as! InspectionResultSelectionCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!)
+                    return cell
+                    
+                case .PickPhoto:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionPickPhotoCellID) as! InspectionPickPhotoCell
+                    cell.selectionStyle = .None
+                    cell.superViewController = self
+                    return cell
+                    
+                    
+                case .ResultDescription:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultDescriptionCellID) as! InspectionResultDescriptionCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!, editable: true)
+                    return cell
+                }
                 
-            case .ResultDescription:
-                let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultDescriptionCellID) as! InspectionResultDescriptionCell
-                cell.selectionStyle = .None
-                cell.bindData(inspectionTask!)
-                return cell
+            } else {
+                guard let row = InspectionPresentResultRow(rawValue: indexPath.row) else {
+                    break
+                }
+                
+                switch row {
+                case .Result:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultShowSelectionCellID) as! InspectionResultShowSelectionCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!)
+                    return cell
+                    
+                case .ShowPhoto:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionShowPhotoCellID) as! InspectionShowPhotoCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!)
+                    
+                    return cell
+                    
+                    
+                case .ResultDescription:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultDescriptionCellID) as! InspectionResultDescriptionCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!, editable: false)
+                    return cell
+                }
             }
             
         // Section: Operation
@@ -386,7 +425,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 cell.coloredTitleColor = UIColor.blueColor()
                 cell.coloredTitleLabel.textAlignment = NSTextAlignment.Center
                 cell.coloredTitleLabel.font = UIFont.systemFontOfSize(18.0)
-                if isQRCodeMatched {
+                if showMoreInformation {
                     cell.coloredTitleLabel.text = NSLocalizedString("Submit Inspection Result")
                 } else {
                     cell.coloredTitleLabel.text = NSLocalizedString("Scan QRCode")
@@ -417,9 +456,9 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             }
             
             switch row {
-            case .DeviceInfo: return 70.0
-            case .DeviceBelonging: return 70.0
-            case .DeviceRemark: return 100.0
+            case .DeviceInfo: return InspectionDeviceInfoCell.cellHeight
+            case .DeviceBelonging: return InspectionDeviceBelongingCell.cellHeight
+            case .DeviceRemark: return InspectionDeviceRemarkCell.cellHeight
             }
             
         /// Section: Device Type
@@ -429,20 +468,33 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             }
             
             switch row {
-            case .DeviceTypeInfo: return 70.0
-            case .DeviceTypeInformation: return 120.0
+            case .DeviceTypeInfo: return InspectionDeviceTypeInfoCell.cellHeight
+            case .DeviceTypeInformation: return InspectionDeviceTypeInformationCell.cellHeight
             }
             
         /// Section: Inspection Result
         case .InspectionResult:
-            guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
-                break
-            }
-            
-            switch row {
-            case .ResultSelection: return 140.0
-            case .PickPhoto: return 80.0
-            case .ResultDescription: return 120.0
+            if operationEnabled {
+                guard let row = InspectionAddResultRow(rawValue: indexPath.row) else {
+                    break
+                }
+                
+                switch row {
+                case .ResultSelection: return InspectionResultSelectionCell.cellHeight
+                case .PickPhoto: return InspectionPickPhotoCell.cellHeight
+                case .ResultDescription: return InspectionResultDescriptionCell.cellHeight
+                }
+                
+            } else {
+                guard let row = InspectionPresentResultRow(rawValue: indexPath.row) else {
+                    break
+                }
+                
+                switch row {
+                case .Result: return InspectionResultShowSelectionCell.cellHeight
+                case .ShowPhoto: return InspectionShowPhotoCell.calCellHeight(self.inspectionTask)
+                case .ResultDescription: return InspectionResultDescriptionCell.cellHeight
+                }
             }
             
         // Section: Operation
@@ -452,7 +504,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             }
             
             switch row {
-            case .Action: return 60.0
+            case .Action: return InspectionColoredTitleCell.cellHeight
             }
             
         default:
@@ -480,7 +532,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             switch row {
             case .Action:
                 //／ SUBMIT INSPECTION RESULT
-                if isQRCodeMatched {
+                if showMoreInformation {
                     YepAlert.confirmOrCancel(
                         title: NSLocalizedString("Submit Inspection Result"),
                         message: NSLocalizedString("Do you want to submit inspection result?"),
@@ -531,7 +583,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                                 
                                 withDismissAction: {[weak self] () -> Void in
                                     if self!.indexInList > -1 {
-                                        WISInsepctionDataManager.sharedInstance().inspectionTasks.removeAtIndex(self!.indexInList)
+                                        WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAtIndex(self!.indexInList)
                                     }
                                     self!.navigationController?.popViewControllerAnimated(true)
                             })
@@ -556,61 +608,57 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         }
     }
     
-//
-//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//
-//        guard let section = Section(rawValue: indexPath.section) else {
-//            return
-//        }
-//        
-//        switch section {
-//            
-//        case.TaskDescription:
-//            
-//            guard let cell = cell as? TaskDescriptionCell else {
-//                break
-//            }
-//            
-//            cell.tapMediaAction = { [weak self] transitionView, image, attachments, index in
-//                
-//                guard image != nil else {
-//                    return
-//                }
-//                
-//                let vc = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
-//                
-//                vc.previewMedias = attachments.map({ PreviewMedia.AttachmentType(attachment: $0) })
-//                vc.startIndex = index
-//                
-//                let transitionView = transitionView
-//                let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
-//                vc.previewImageViewInitalFrame = frame
-//                vc.bottomPreviewImage = image
-//                
-//                vc.transitionView = transitionView
-//                
-//                self?.view.endEditing(true)
-//                
-//                delay(0.3, work: { () -> Void in
-//                    transitionView.alpha = 0 // 加 Delay 避免图片闪烁
-//                })
-//                
-//                vc.afterDismissAction = { [weak self] in
-//                    transitionView.alpha = 1
-//                    self?.view.window?.makeKeyAndVisible()
-//                }
-//                
-//                mediaPreviewWindow.rootViewController = vc
-//                mediaPreviewWindow.windowLevel = UIWindowLevelAlert - 1
-//                mediaPreviewWindow.makeKeyAndVisible()
-//            }
-//            break
-//        default:
-//            break
-//        }
-//    }
-//    
-//
+
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let section = Section(rawValue: indexPath.section) else {
+            return
+        }
+        
+        switch section {
+        case .InspectionResult:
+            guard let cell = cell as? InspectionShowPhotoCell else {
+                break
+            }
+            
+            cell.tapMediaAction = { [weak self] transitionView, image, imageFileInfos, index in
+                guard image != nil else {
+                    return
+                }
+                
+                let viewController = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
+                
+                viewController.previewImages = imageFileInfos
+                viewController.startIndex = index
+                
+                let transitionView = transitionView
+                let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
+                viewController.previewImageViewInitalFrame = frame
+                viewController.bottomPreviewImage = image
+                viewController.transitionView = transitionView
+                
+                self?.view.endEditing(true)
+                
+                delay(0.3, work: { () -> Void in
+                    transitionView.alpha = 0
+                })
+                
+                viewController.afterDismissAction = { [weak self] in
+                    transitionView.alpha = 1
+                    mediaPreviewWindow.hidden = true
+                    self?.view.window?.makeKeyAndVisible()
+                }
+                
+                mediaPreviewWindow.rootViewController = viewController
+                mediaPreviewWindow.makeKeyAndVisible()
+            }
+            break
+            
+        default:
+            break
+        }
+    }
+    
+
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -670,7 +718,7 @@ private enum InspectionAddResultRow: Int {
 
 private enum InspectionPresentResultRow: Int {
     case Result = 0
-    case PresentPhoto = 1
+    case ShowPhoto = 1
     case ResultDescription = 2
 }
 

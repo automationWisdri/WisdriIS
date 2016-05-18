@@ -29,11 +29,11 @@
                     </textView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="CWF-uO-T9G" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" constant="10" id="3Oc-OU-AKm"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="trailing" secondItem="inn-8k-f9K" secondAttribute="trailingMargin" id="BNL-p3-EfC"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" id="Dho-nJ-vvh"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="bottom" secondItem="inn-8k-f9K" secondAttribute="bottomMargin" id="SuY-pc-Udw"/>
                     <constraint firstItem="CWF-uO-T9G" firstAttribute="top" secondItem="inn-8k-f9K" secondAttribute="topMargin" id="VNR-2R-gOJ"/>
+                    <constraint firstItem="CWF-uO-T9G" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" constant="2" id="rx9-op-6GS"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="top" secondItem="CWF-uO-T9G" secondAttribute="bottom" constant="8" id="vW9-Zc-27m"/>
                 </constraints>
             </tableViewCellContentView>

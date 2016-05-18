@@ -44,7 +44,7 @@ class TaskHomeViewController: BaseViewController {
         print(WISDataManager.sharedInstance().currentUser.roleCode)
         print(RoleCode.Operator)
 
-        if WISDataManager.sharedInstance().currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
+        if currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
             self.navigationItem.rightBarButtonItem = nil
         }
         
@@ -70,8 +70,8 @@ class TaskHomeViewController: BaseViewController {
 //            viewControllers = [taskListForApproval, taskListNormal]
             options.menuHeight = 40
         } else if currentUser.roleCode == roleCodes[RoleCode.FactoryManager.rawValue] {
-            viewControllers = [taskListForApproval, taskListNormal]
-            options.menuHeight = 40
+            viewControllers = [taskListForApproval, /*taskListNormal*/]
+            options.menuHeight = 0
         } else {
             viewControllers = [taskListNormal]
             options.menuHeight = 0

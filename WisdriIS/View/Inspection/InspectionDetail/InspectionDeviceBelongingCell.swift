@@ -9,6 +9,7 @@
 import UIKit
 
 class InspectionDeviceBelongingCell:InspectionDetailViewBaseCell {
+    static let cellHeight: CGFloat = 70.0
     
     @IBOutlet weak var deviceCompanyLabel: UILabel!
     @IBOutlet weak var deviceProcessSegmentLabel: UILabel!
@@ -30,8 +31,7 @@ class InspectionDeviceBelongingCell:InspectionDetailViewBaseCell {
         // Configure the view for the selected state
     }
     
-    override func bindData(model: WISInspectionTask) {
-        super.bindData(model)
+    func bindData(model: WISInspectionTask) {
         deviceCompanyLabel.text = model.device.company
         deviceProcessSegmentLabel.text = model.device.processSegment
     }

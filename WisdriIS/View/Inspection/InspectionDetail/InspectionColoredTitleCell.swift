@@ -9,6 +9,7 @@
 import UIKit
 
 class InspectionColoredTitleCell: InspectionDetailViewBaseCell {
+    static let cellHeight: CGFloat = 60.0
     
     var coloredTitleColor: UIColor = UIColor.blueColor() {
         willSet {

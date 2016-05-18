@@ -9,6 +9,7 @@
 import UIKit
 
 class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
+    static let cellHeight: CGFloat = 120.0
     
     @IBOutlet weak var inspectionResultDescriptionTitleLabel: UILabel!
     @IBOutlet weak var inspectionResultDescriptionTextView: UITextView!
@@ -20,7 +21,7 @@ class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
         willSet {
             // postButton.enabled = newValue
             
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && inspectionResultDescriptionTextView.editable {
                 inspectionResultDescriptionTextView.text = infoAboutThisFeed
             }
             inspectionResultDescriptionTextView.textColor = newValue ? UIColor.blackColor() : UIColor.lightGrayColor()
@@ -45,7 +46,8 @@ class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
         // Configure the view for the selected state
     }
     
-    override func bindData(model: WISInspectionTask) {
+    func bindData(model: WISInspectionTask, editable: Bool) {
+        inspectionResultDescriptionTextView.editable = editable
         if inspectionResultDescriptionTextView.editable {
             // inspectionResultDescriptionTextView.text = ""
         } else {
