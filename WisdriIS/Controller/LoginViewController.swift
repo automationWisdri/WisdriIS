@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 import SnapKit
 import KeyboardMan
+import Ruler
 
 class LoginViewController: UIViewController {
 
@@ -41,13 +42,15 @@ class LoginViewController: UIViewController {
         vibrancyView.frame = frostedView!.frame
         frostedView!.contentView.addSubview(vibrancyView)
         
+        let topPartTopConstraint = Ruler.iPhoneVertical(70, 130, 130, 130).value
+        
         let wisLabel = UILabel()
         wisLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 40)!
         wisLabel.text = "WISDRI"
         vibrancyView.contentView.addSubview(wisLabel)
         wisLabel.snp_makeConstraints{ (make) -> Void in
             make.centerX.equalTo(vibrancyView)
-            make.top.equalTo(vibrancyView).offset(130)
+            make.top.equalTo(vibrancyView).offset(topPartTopConstraint)
         }
         
         let wisSummaryLabel = UILabel()
@@ -84,10 +87,13 @@ class LoginViewController: UIViewController {
         
         vibrancyView.contentView.addSubview(self.userNameTextField!)
         
+        let bottomPartTopConstraint = Ruler.iPhoneVertical(100, 125, 200, 280).value
+        let bottomPartWidthConstraint = Ruler.iPhoneVertical(250, 270, 300, 300).value
+        
         self.userNameTextField!.snp_makeConstraints{ (make) -> Void in
-            make.top.equalTo(wisSummaryLabel.snp_bottom).offset(125)
+            make.top.equalTo(wisSummaryLabel.snp_bottom).offset(bottomPartTopConstraint)
             make.centerX.equalTo(vibrancyView)
-            make.width.equalTo(300)
+            make.width.equalTo(bottomPartWidthConstraint)
             make.height.equalTo(38)
         }
 
@@ -118,7 +124,7 @@ class LoginViewController: UIViewController {
         self.passwordTextField!.snp_makeConstraints{ (make) -> Void in
             make.top.equalTo(self.userNameTextField!.snp_bottom).offset(15)
             make.centerX.equalTo(vibrancyView)
-            make.width.equalTo(300)
+            make.width.equalTo(bottomPartWidthConstraint)
             make.height.equalTo(38)
         }
         
@@ -133,7 +139,7 @@ class LoginViewController: UIViewController {
         self.loginButton!.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(self.passwordTextField!.snp_bottom).offset(20)
             make.centerX.equalTo(vibrancyView)
-            make.width.equalTo(300)
+            make.width.equalTo(bottomPartWidthConstraint)
             make.height.equalTo(38)
         }
         
