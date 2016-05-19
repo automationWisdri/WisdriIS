@@ -3948,7 +3948,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
     
     
     // ***** maintenance plan information *****
-    if (operationType != SubmitMaintenancePlan && operationType != StartFastProcedure && operationType != Approve && operationType != Continue && operationType != Modify) {
+    if (operationType != SubmitMaintenancePlan && operationType != ApplyForRecheck && operationType != StartFastProcedure && operationType != Approve && operationType != Continue && operationType != Modify) {
         [operationParam setValue:[NSNull null] forKey:@"Plan"];
         
     } else {
