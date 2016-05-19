@@ -1328,133 +1328,146 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
         dataTask = [self.networkService dataRequestWithRequestType:requestType
                                                  params:updateParams
                                           andUriSetting:nil
-         completionHandler:^(RequestType requestType, NSData *responsedData, NSError *error) {
-              if (!responsedData) {
-                  NSLog(@"Update User Info 请求异常，原因: %@", @"返回的数据为空");
-                  
-                  NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeResponsedNULLData andCallbackError:error];
-                  handler(FALSE, err, @"", nil);
-                  
-                  if (requestType == UpdateContactUserInfo) {
-                      [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification object:(NSError *)err];
-                      if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                          [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                      }
-                      
-                  } else if(requestType == UpdateRelavantUserInfo) {
-                      [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification object:(NSError *)err];
-                      if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                          [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                      }
-                  }
-                  
-              } else {
-             
-                  NSError *parseError;
-                  NSDictionary *parsedData = nil;
-                  
-                  parsedData = [NSJSONSerialization JSONObjectWithData:responsedData
-                                                               options:NSJSONReadingMutableContainers
-                                                                 error:&parseError];
-                  
-                  if (!parsedData || parseError) {
-                      NSLog(@"Update User Info 操作解析内容失败，原因: %@", parseError);
-                      
-                      NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeIncorrectResponsedDataFormat andCallbackError:parseError];
-                      handler(FALSE, err, @"", nil);
-                      
-                      if (requestType == UpdateContactUserInfo) {
-                          [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification
-                                                                              object:(NSError *)err];
-                          if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                              [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                          }
-                          
-                      } else if(requestType == UpdateRelavantUserInfo) {
-                          [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification
-                                                                              object:(NSError *)err];
-                          if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                              [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                          }
-                      }
-                      
-                  } else {
-                      
-                      RequestResult result = (RequestResult)[parsedData[@"Result"] integerValue];
-                      NSArray *usersData = nil;
-                      NSError *err;
-                      
-                      NSMutableArray *updatedData = [NSMutableArray array];
-                      
-                      switch (result) {
-                          case RequestSuccessful:
-                              usersData = parsedData[@"Users"];
-                              
-                              if (usersData && ((NSNull *)usersData != [NSNull null])) {
-                                  if(usersData.count > 0) {
-                                      for(NSDictionary *user in usersData) {
-                                          WISUser *newUserInfo = [[WISUser alloc] init];
-                                          
-                                          newUserInfo.userName = ((NSNull*)user[@"UserName"] == [NSNull null]) ? @"" : (NSString *)user[@"UserName"];
-                                          newUserInfo.fullName = ((NSNull*)user[@"Name"] == [NSNull null]) ? @"" : (NSString *)user[@"Name"];
-                                          newUserInfo.telephoneNumber = ((NSNull*)user[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)user[@"Telephone"];
-                                          newUserInfo.cellPhoneNumber = ((NSNull*)user[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)user[@"MobilePhone"];
-                                          newUserInfo.roleCode = ((NSNull*)user[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleCode"];
-                                          newUserInfo.roleName = ((NSNull*)user[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleName"];
-                                          
-                                          if(![self.users valueForKey:newUserInfo.userName]) {
-                                              [self.users setValue:newUserInfo forKey:newUserInfo.userName];
-                                          }
-                                          
-                                          [updatedData addObject:newUserInfo];
-                                      }
-                                  }
-                              }
-                              
-                              if (requestType == UpdateContactUserInfo) {
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoSucceededNotification
-                                                                                      object:updatedData];
-                                  if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoSucceeded)]) {
-                                      [self.maintenanceTaskOpDelegate updateContactUserInfoSucceeded];
-                                  }
-                              
-                              } else if(requestType == UpdateRelavantUserInfo) {
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoSucceededNotification
-                                                                                      object:updatedData];
-                                  if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoSucceeded)]) {
-                                      [self.maintenanceTaskOpDelegate updateContactUserInfoSucceeded];
-                                  }
-                              }
-                              
-                              handler(YES, nil, NSStringFromClass([updatedData class]), updatedData);
-                              break;
-                              
-                          case RequestFailed:
-                              err = [self produceErrorObjectWithWISErrorCode:ErrorCodeInvalidOperation andCallbackError:nil];
-                              handler(FALSE, err, @"", nil);
-                              
-                              if (requestType == UpdateContactUserInfo) {
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification object:(NSError *)err];
-                                  if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                                      [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                                  }
-                                  
-                              } else if(requestType == UpdateRelavantUserInfo) {
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification object:(NSError *)err];
-                                  if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
-                                      [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
-                                  }
-                              }
-                              break;
-                              
-                          default:
-                              break;
-                      }
-                  }
-              }
-         }];
+        completionHandler:^(RequestType requestType, NSData *responsedData, NSError *error) {
+            if (!responsedData) {
+                NSLog(@"Update User Info 请求异常，原因: %@", @"返回的数据为空");
+                
+                NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeResponsedNULLData andCallbackError:error];
+                handler(FALSE, err, @"", nil);
+                
+                if (requestType == UpdateContactUserInfo) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification object:(NSError *)err];
+                    if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                        [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                    }
+                    
+                } else if(requestType == UpdateRelavantUserInfo) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification object:(NSError *)err];
+                    if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                        [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                    }
+                }
+                
+            } else {
+                NSError *parseError;
+                NSDictionary *parsedData = nil;
+                
+                parsedData = [NSJSONSerialization JSONObjectWithData:responsedData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&parseError];
+                
+                if (!parsedData || parseError) {
+                    NSLog(@"Update User Info 操作解析内容失败，原因: %@", parseError);
+                    
+                    NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeIncorrectResponsedDataFormat andCallbackError:parseError];
+                    handler(FALSE, err, @"", nil);
+                    
+                    if (requestType == UpdateContactUserInfo) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification
+                                                                            object:(NSError *)err];
+                        if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                            [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                        }
+                        
+                    } else if(requestType == UpdateRelavantUserInfo) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification
+                                                                            object:(NSError *)err];
+                        if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                            [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                        }
+                    }
+                    
+                } else {
+                    
+                    RequestResult result = (RequestResult)[parsedData[@"Result"] integerValue];
+                    NSArray *usersData = nil;
+                    NSError *err;
+                    
+                    NSMutableArray *updatedData = [NSMutableArray array];
+                    
+                    switch (result) {
+                        case RequestSuccessful:
+                            usersData = parsedData[@"Users"];
+                            
+                            if (usersData && ((NSNull *)usersData != [NSNull null])) {
+                                if(usersData.count > 0) {
+                                    for(NSDictionary *user in usersData) {
+                                        WISUser *newUserInfo = [[WISUser alloc] init];
+                                        
+                                        newUserInfo.userName = ((NSNull*)user[@"UserName"] == [NSNull null]) ? @"" : (NSString *)user[@"UserName"];
+                                        newUserInfo.fullName = ((NSNull*)user[@"Name"] == [NSNull null]) ? @"" : (NSString *)user[@"Name"];
+                                        newUserInfo.telephoneNumber = ((NSNull*)user[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)user[@"Telephone"];
+                                        newUserInfo.cellPhoneNumber = ((NSNull*)user[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)user[@"MobilePhone"];
+                                        newUserInfo.roleCode = ((NSNull*)user[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleCode"];
+                                        newUserInfo.roleName = ((NSNull*)user[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleName"];
+                                        
+                                        /// IMAGES INFO
+                                        NSArray *imagesURL = (NSArray *)user[@"ImageURL"];
+                                        if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
+                                            for (NSString *url in imagesURL) {
+                                                WISFileInfo *imageInfo = [WISDataManager produceFileInfoWithFileRemoteURL:url];
+                                                
+                                                if (![newUserInfo.imagesInfo valueForKey:imageInfo.fileName]) {
+                                                    [newUserInfo.imagesInfo setValue:imageInfo forKey:imageInfo.fileName];
+                                                }
+                                            }
+                                            
+                                        } else {
+                                            // do nothing, because WISMaintenanceTask initializer has done the initializing job.
+                                        }
+                                        
+                                        if(![self.users valueForKey:newUserInfo.userName]) {
+                                            [self.users setValue:newUserInfo forKey:newUserInfo.userName];
+                                        }
+                                        
+                                        [updatedData addObject:newUserInfo];
+                                    }
+                                }
+                            }
+                            
+                            if (requestType == UpdateContactUserInfo) {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoSucceededNotification
+                                                                                    object:updatedData];
+                                if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoSucceeded)]) {
+                                    [self.maintenanceTaskOpDelegate updateContactUserInfoSucceeded];
+                                }
+                                
+                            } else if(requestType == UpdateRelavantUserInfo) {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoSucceededNotification
+                                                                                    object:updatedData];
+                                if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoSucceeded)]) {
+                                    [self.maintenanceTaskOpDelegate updateContactUserInfoSucceeded];
+                                }
+                            }
+                            
+                            handler(YES, nil, NSStringFromClass([updatedData class]), updatedData);
+                            break;
+                            
+                        case RequestFailed:
+                            err = [self produceErrorObjectWithWISErrorCode:ErrorCodeInvalidOperation andCallbackError:nil];
+                            handler(FALSE, err, @"", nil);
+                            
+                            if (requestType == UpdateContactUserInfo) {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateContactUserInfoFailedNotification object:(NSError *)err];
+                                if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                                    [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                                }
+                                
+                            } else if(requestType == UpdateRelavantUserInfo) {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateRelavantUserInfoFailedNotification object:(NSError *)err];
+                                if ([self.maintenanceTaskOpDelegate respondsToSelector:@selector(updateContactUserInfoFailedWithError:)]) {
+                                    [self.maintenanceTaskOpDelegate updateContactUserInfoFailedWithError:err];
+                                }
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+        }];
     }
-    
     return dataTask;
 }
 
