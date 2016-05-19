@@ -157,7 +157,9 @@ class InspectionHomeViewController: BaseViewController {
         // options.menuDisplayMode = .SegmentedControl
         
         // options.menuDisplayMode = .Standard(widthMode: PagingMenuOptions.MenuItemWidthMode.Fixed(width: 60), centerItem: false, scrollingMode: PagingMenuOptions.MenuScrollingMode.ScrollEnabledAndBouces)
-        options.menuDisplayMode = .Standard(widthMode: PagingMenuOptions.MenuItemWidthMode.Fixed(width: self.view.bounds.width / CGFloat(viewControllers.count)), centerItem: false, scrollingMode: PagingMenuOptions.MenuScrollingMode.ScrollEnabledAndBouces)
+        // options.menuDisplayMode = .Standard(widthMode: PagingMenuOptions.MenuItemWidthMode.Fixed(width: self.view.bounds.width / CGFloat(viewControllers.count)), centerItem: false, scrollingMode: PagingMenuOptions.MenuScrollingMode.ScrollEnabledAndBouces)
+        
+        options.menuDisplayMode = .SegmentedControl
         
         options.menuItemMode = .Underline(height: 1.5, color: UIColor.yepTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
         options.font = UIFont.systemFontOfSize(15)

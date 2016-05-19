@@ -294,7 +294,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         }
         
         switch section {
-        case .InspectionDevice: return 0.001
+        case .InspectionDevice: return 20.0//0.001
         case .InspectionDeviceType: return 0.001//10
         case .InspectionResult: return 0.001//10
         case .InspectionOperation: return showMoreInformation ? 20.0 : 5.0
