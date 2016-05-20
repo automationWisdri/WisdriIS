@@ -145,7 +145,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
     }
     
     /// completion block executes before view will appear
-    class func performSegueToInspectionUploadingQueueViewController (superViewController:UIViewController, completion: (() -> Void)?) -> Void {
+    class func performPushToInspectionUploadingQueueViewController (superViewController:UIViewController, completion: (() -> Void)?) -> Void {
         
         let board = UIStoryboard.init(name: "InspectionUploadingQueue", bundle: NSBundle.mainBundle())
         let viewController = board.instantiateViewControllerWithIdentifier("InspectionUploadingQueueViewController") as! InspectionUploadingQueueViewController

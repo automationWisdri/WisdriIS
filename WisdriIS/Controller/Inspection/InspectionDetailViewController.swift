@@ -239,7 +239,9 @@ class InspectionDetailViewController: BaseViewController {
         viewController.operationEnabled = enableOperation
         viewController.superViewController = superViewController
         viewController.indexInList = index
+        viewController.hidesBottomBarWhenPushed = true
         superViewController.navigationController?.pushViewController(viewController, animated: true)
+        superViewController.tabBarController?.tabBar.hidden = true
     }
 }
 
