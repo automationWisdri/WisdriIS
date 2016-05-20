@@ -162,12 +162,12 @@ class InspectionHomeViewController: BaseViewController {
         
         options.menuDisplayMode = .SegmentedControl
         
-        options.menuItemMode = .Underline(height: 1.5, color: UIColor.yepTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
+        options.menuItemMode = .Underline(height: 1.5, color: UIColor.wisTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
         options.font = UIFont.systemFontOfSize(15)
         options.selectedFont = UIFont.systemFontOfSize(16)
         
-        options.textColor = UIColor.yepGrayColor()
-        options.selectedTextColor = UIColor.yepTintColor()
+        options.textColor = UIColor.wisGrayColor()
+        options.selectedTextColor = UIColor.wisTintColor()
         
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
@@ -192,7 +192,7 @@ class InspectionHomeViewController: BaseViewController {
             let scanResultAsArray = scanResult.componentsSeparatedByString("&")
             
             guard scanResultAsArray[0] == "DEVICE" && scanResultAsArray.count == 7 else {
-                YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
+                WISAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
                 return

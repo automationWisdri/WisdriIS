@@ -80,7 +80,6 @@
 		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
 		38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */; };
 		38E51E3C1CEC811B003092DA /* InspectionShowPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */; };
-		38E51E3E1CEC8312003092DA /* InspectionResultShowSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */; };
 		38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */; };
 		9F055A851CD119620077184B /* SubmitPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6436571CA29616007909BE /* SubmitPlanViewController.swift */; };
 		9F055A861CD11A3F0077184B /* SubmitPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F64369E1CA538C4007909BE /* SubmitPlan.storyboard */; };
@@ -109,6 +108,7 @@
 		9F1FA1E31CEB019E001A2F61 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */; };
 		9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */; };
 		9F1FA1E81CEB717F001A2F61 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E61CEB717F001A2F61 /* ArchiveViewController.swift */; };
+		9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */; };
 		9F2A53211C9AA92D001BE6F6 /* TaskListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */; };
 		9F2A53231C9AA96B001BE6F6 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */; };
 		9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */; };
@@ -1531,6 +1531,7 @@
 				385C1DEE1CE4BC9200F8E393 /* WISMaintenancePlan.m in Sources */,
 				9F1FA1E81CEB717F001A2F61 /* ArchiveViewController.swift in Sources */,
 				9F055B991CD3ABC80077184B /* UIScrollView+Yep.swift in Sources */,
+				9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */,
 				9F055BA31CD7980A0077184B /* PasswordViewController.swift in Sources */,
 				385C1E241CE4BD2700F8E393 /* InspectionDeviceBelongingCell.swift in Sources */,
 				385C1E521CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift in Sources */,

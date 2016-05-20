@@ -566,7 +566,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             cellResultDescription.bringBackData(&self!.inspectionTask!)
                             
                             if self?.inspectionTask.inspectionResult == .DeviceFaultForHandle && self?.inspectionTask.inspectionResultDescription == "" {
-                                YepAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
+                                WISAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
                                 return
                             }
                             
@@ -575,7 +575,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             WISInsepctionDataManager.sharedInstance().addInspectionTaskToUploadingQueue(self!.inspectionTask!, images: imagesInDictionary)
                             
                             // if submit successfully
-                            YepAlert.alert(
+                            WISAlert.alert(
                                 title: NSLocalizedString("Submit Inspection Result"),
                                 message: NSLocalizedString("Submit Inspection Result Successfully!"),
                                 dismissTitle: NSLocalizedString("Confirm"),

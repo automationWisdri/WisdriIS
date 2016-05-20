@@ -61,7 +61,7 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.reloadData()
         // self.inspectionTableView.contentOffset = CGPointMake(0.0, self.inspectionSearchBar.bounds.height)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -80,104 +80,25 @@ class InspectionListViewController : BaseViewController {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showErrorWithStatus(NSLocalizedString("Networking Not Reachable"))
         }
-    
+        
         inspectionTableView.mj_header.endRefreshing()
     }
     
     
     //
-    @objc func parseScanedCode(notification:NSNotification) -> Void {
-        if (notification.userInfo![codeScanNotificationTokenKey] as! String) == self.codeScanNotificationToken {
-            // do checking jobs
-            print("InspectionListViewController- code:\(notification.object)")
-            
-            let scanResult = notification.object as! String
-            let scanResultAsArray = scanResult.componentsSeparatedByString("&")
-            
-            guard scanResultAsArray[0] == "DEVICE" && scanResultAsArray.count == 7 else {
-                WISAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
-                    // do nothing
-                })
-                return
-            }
-            
-            let deviceID = scanResultAsArray[1]
-            let deviceName = scanResultAsArray[2]
-            let deviceCode = scanResultAsArray[3]
-            let company = scanResultAsArray[4]
-            let processSegment = scanResultAsArray[5]
-            let deviceTypeID = scanResultAsArray[6]
-            
-            let index = WISInsepctionDataManager.sharedInstance().indexOfInspectionTaskInListByDeviceID(deviceID)
-            
-            SVProgressHUD.show()
-            
-            if index > -1 {
-                InspectionDetailViewController.performSegueToInspectionDetailView(self, inspectionTask: WISInsepctionDataManager.sharedInstance().inspectionTasks[index], index: index, needToScanCode: false, enableOperation: inspectionOperationEnabled)
-                
-            } else {
-                var newInspectionTask = WISInspectionTask()
-                
-                if WISDataManager.sharedInstance().networkReachabilityStatus != .NotReachable && WISDataManager.sharedInstance().networkReachabilityStatus != .Unknown {
-                    WISDataManager.sharedInstance().updateInspectionInfoWithDeviceID(deviceID, completionHandler: { [weak self]
-                        (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) in
-                        if completedWithNoError {
-                            print("receive inspection info of device (deviceID): \(deviceID) successfully!")
-                            let task = updatedData as! WISInspectionTask
-                            newInspectionTask = task.copy() as! WISInspectionTask
-                            
-                        } else {
-                            print("receive inspection info of device (deviceID): \(deviceID) failed!")
-                            newInspectionTask.device.deviceID = deviceID
-                            newInspectionTask.device.deviceName = deviceName
-                            newInspectionTask.device.deviceCode = deviceCode
-                            newInspectionTask.device.company = company
-                            newInspectionTask.device.processSegment = processSegment
-                        }
-                        
-                        let deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[deviceTypeID]
-                        
-                        if deviceType != nil {
-                            newInspectionTask.device.deviceType = deviceType!.copy() as! WISDeviceType
-                        }
-                        
-                        InspectionDetailViewController.performSegueToInspectionDetailView(self!, inspectionTask: newInspectionTask, index: -1, needToScanCode: false, enableOperation: self!.inspectionOperationEnabled)
-                        
-                    })
-                    
-                } else {
-                    newInspectionTask.device.deviceID = deviceID
-                    newInspectionTask.device.deviceName = deviceName
-                    newInspectionTask.device.deviceCode = deviceCode
-                    newInspectionTask.device.company = company
-                    newInspectionTask.device.processSegment = processSegment
-                    
-                    
-                    let deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[deviceTypeID]
-                    
-                    if deviceType != nil {
-                        newInspectionTask.device.deviceType = deviceType!.copy() as! WISDeviceType
-                    }
-                    
-                    InspectionDetailViewController.performSegueToInspectionDetailView(self, inspectionTask: newInspectionTask, index: -1, needToScanCode: false, enableOperation: inspectionOperationEnabled)
-                }
-            }
-            SVProgressHUD.dismiss()
-        }
-        return
-    }
     
     
-//    func performSegueToInspectionDetailView(inspectionTask:WISInspectionTask, needToScanCode:Bool, enableOperation:Bool) -> Void {
-//        let board = UIStoryboard.init(name: "InspectionDetail", bundle: NSBundle.mainBundle())
-//        let viewController = board.instantiateViewControllerWithIdentifier("InspectionDetailViewController") as! InspectionDetailViewController
-//        viewController.inspectionTask = inspectionTask
-//        viewController.isQRCodeMatched = !needToScanCode
-//        // 需要根据角色来区分是否详细任务信息是否可编辑
-//        viewController.operationEnabled = enableOperation
-//        
-//        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
+    
+    //    func performSegueToInspectionDetailView(inspectionTask:WISInspectionTask, needToScanCode:Bool, enableOperation:Bool) -> Void {
+    //        let board = UIStoryboard.init(name: "InspectionDetail", bundle: NSBundle.mainBundle())
+    //        let viewController = board.instantiateViewControllerWithIdentifier("InspectionDetailViewController") as! InspectionDetailViewController
+    //        viewController.inspectionTask = inspectionTask
+    //        viewController.isQRCodeMatched = !needToScanCode
+    //        // 需要根据角色来区分是否详细任务信息是否可编辑
+    //        viewController.operationEnabled = enableOperation
+    //
+    //        self.navigationController?.pushViewController(viewController, animated: true)
+    //    }
     
     func loadDeviceTypes() {
         WISDataManager.sharedInstance().updateDeviceTypesInfoWithCompletionHandler { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) in
@@ -297,7 +218,7 @@ class InspectionListViewController : BaseViewController {
                     break
                     
                 default:
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     break
                 }
             }
@@ -423,5 +344,3 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     //    }
     
 }
-
-
