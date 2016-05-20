@@ -14,6 +14,8 @@
 @interface WISNetworkService (/*Private Method*/)
 
 @property (readwrite, nonatomic, getter=isNetworkReachabilityStatusMonitoringON) BOOL networkReachabilityStatusMonitoringIsON;
+
+@property (readwrite) NSInteger networkActivityCount;
 ///
 @property (readwrite) RequestType requestType;
 
@@ -74,6 +76,8 @@
         
         _fileHostName = [fileHostName copy];
         _fileUriServerName = [fileUriServerName copy];
+        
+        _networkActivityCount = 0;
         
         self.requestType = SignIn;
         
@@ -191,6 +195,22 @@
     return self.networkReachabilityStatusMonitoringIsON;
 }
 
+
+#pragma mark - Network Activity Counting
+- (void) increaseNetworkActivityCount {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _networkActivityCount += 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = (_networkActivityCount > 0);
+    });
+}
+
+- (void) decreaseNetworkActivityCount {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _networkActivityCount -= 1;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = (_networkActivityCount > 0);
+    });
+    
+}
 
 #pragma mark - Network Request and Data Transmission
 - (NSURLSessionDataTask*) dataRequestWithRequestType:(RequestType) requestType
@@ -597,13 +617,17 @@
             NSLog(@"responsedDataOriginal: %@", [[NSString alloc] initWithData:responsedData encoding:NSUTF8StringEncoding]);
             handler(requestType, responsedData, nil);
         }
+        [self decreaseNetworkActivityCount];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         handler(requestType, nil, error);
         NSLog(@"\nTask Info:%@\n%@", [task.currentRequest URL], [task.currentRequest allHTTPHeaderFields]);
         NSLog(@"\nhttp body:%@\n", [task.currentRequest HTTPBody]);
         NSLog(@"\nhttp stream:%@\n", [task.currentRequest HTTPBodyStream]);
         NSLog(@"\nhttp method:%@\n", [task.currentRequest HTTPMethod]);
+        [self decreaseNetworkActivityCount];
     }];
+    [self increaseNetworkActivityCount];
     
     return dataTask;
 }
@@ -727,9 +751,11 @@
            if ([[NSFileManager defaultManager] fileExistsAtPath:fileFullName]) {
                [[NSFileManager defaultManager] removeItemAtPath:fileFullName error:&deleteFileError];
            }
+           [self decreaseNetworkActivityCount];
        }];
     
     [uploadTask resume];
+    [self increaseNetworkActivityCount];
     
     return uploadTask;
 }
@@ -826,9 +852,11 @@
              
              handler(responsedData, nil);
          }
+         [self decreaseNetworkActivityCount];
      }];
     
     [downloadTask resume];
+    [self increaseNetworkActivityCount];
     
     return downloadTask;
 
@@ -959,9 +987,11 @@
              
              handler(responsedData, nil);
          }
+         [self decreaseNetworkActivityCount];
      }];
     
     [downloadTask resume];
+    [self increaseNetworkActivityCount];
     
     return downloadTask;
 }

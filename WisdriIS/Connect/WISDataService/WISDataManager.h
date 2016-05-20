@@ -85,11 +85,11 @@ typedef NS_ENUM(NSInteger, MaintenanceTaskOperationType) {
     /// 备注
     Remark = 18,
     /// 接受转单
-    AcceptPassOnTask = 19,
+    AcceptPassOnTask = 20,
     /// 接受转单(该转单由前方部长发起)
-    AcceptAssignedPassOnTask = 20,
+    AcceptAssignedPassOnTask = 21,
     /// 转单(前方部长转单)
-    Assign = 21,
+    Assign = 22,
 };
 
 

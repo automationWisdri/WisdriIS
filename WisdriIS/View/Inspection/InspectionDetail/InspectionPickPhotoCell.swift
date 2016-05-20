@@ -7,17 +7,14 @@
 //
 
 import UIKit
-//import CoreLocation
 import MobileCoreServices
 import Photos
 import Proposer
-//import RealmSwift
-//import Kingfisher
 import MapKit
-//import SVProgressHUD
 
 
 class InspectionPickPhotoCell : UITableViewCell {
+    static let cellHeight: CGFloat = 80.0
     
     @IBOutlet weak var mediaCollectionView: UICollectionView!
     

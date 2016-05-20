@@ -10,29 +10,30 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
+enum InspectionTaskType {
+    /// 当前点检任务
+    case OnTheGo
+    /// 历史点检任务
+    case Historical
+    /// 逾期点检任务
+    case OverDue
+}
+
 class InspectionListViewController : BaseViewController {
     
     // var inspectionTasks = [WISInspectionTask]()
     
     @IBOutlet weak var inspectionTableView: UITableView!
-    // 导航栏右侧弹出菜单
-    var inspectionPopoverButton:UIBarButtonItem?
-    
-    var inspectionPopoverMenuController:InspectionPopoverMenuController?
-//    var inspectionPopoverPresentationController:UIPopoverPresentationController?
-    // 搜索栏
-    var inspectionSearchBar: UISearchBar?
-    
-    var blurEffectView: UIVisualEffectView?
     
     private let inspectionListCellID = "InspectionListCell"
     private let inspectionDetailViewSegueID = "showInspectionDetail"
-    private var codeScanNotificationToken : String?
     
-    var inspectionOperationEnabled = true
+    var inspectionTaskType: InspectionTaskType = .Historical
+    
+    var showMoreInformation = false
+    var inspectionOperationEnabled = false
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         // self.inspectionSearchBar.delegate = self
@@ -40,72 +41,7 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.delegate = self
         inspectionTableView.dataSource = self
         
-        title = NSLocalizedString("Inpection Task List")
-        
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector:#selector(self.parseScanedCode(_:)),
-                                                         name: QRCodeScanedSuccessfullyNotification,
-                                                         object: nil)
-        print("Notification \(QRCodeScanedSuccessfullyNotification) registered in InspectionDetailViewController while loading view")
-        
-        
-        /// *** right button item on navigationbar
-        // inspectionPopoverButton = UIBarButtonItem.init(title: "Menu", style: .Plain, target: self, action: #selector(self.pushScanView(_:)))
-        inspectionPopoverButton = UIBarButtonItem.init(barButtonSystemItem: .Bookmarks, target: self, action: #selector(self.popoverMenu(_:)))
-        self.navigationItem.rightBarButtonItem = inspectionPopoverButton
-
-        // *** Popover menu controller
-        inspectionPopoverMenuController = InspectionPopoverMenuController()
-        inspectionPopoverMenuController!.modalPresentationStyle = .Popover
-        // inspectionPopoverMenuController!.color
-        // inspectionPopoverMenuController!.preferredStatusBarUpdateAnimation()
-        inspectionPopoverMenuController!.preferredContentSize = inspectionPopoverMenuController!.menuTableViewPreferedSize
-        inspectionPopoverMenuController!.PopoverSuperController = self
-        
-        inspectionPopoverMenuController!.PopoverMenuItemTapedCompletion = {
-            (menuItem:InspectionPopoverMenuItem) -> Void in
-            weak var weakSelf = self
-            /// REMARK: before presenting a view Controller, you should dismiss current presenting one
-            weakSelf!.inspectionPopoverMenuController!.dismissInspectionPopoverMenu()
-            
-            switch menuItem {
-            case .ScanQRCode:
-                self.codeScanNotificationToken = CodeScanViewController.performPresentToCodeScanViewController(self) {
-                    self.blurEffectView?.removeFromSuperview()
-                    print("presenting Code Scan View")
-                }
-                
-                print("code scan notification token: \n\(self.codeScanNotificationToken)")
-                break
-                
-            case .UploadingQueue:
-                InspectionUploadingQueueViewController.performSegueToInspectionUploadingQueueViewController(self) {
-                    print("segue InspectionUploadingQueueViewController")
-                    weakSelf!.blurEffectView?.removeFromSuperview()
-                    print("show Inspection Uploading Queue View")
-                }
-                break
-                
-            case .HistoricalInspection:
-                break
-            }
-        }
-        
-        
-        /// *** search bar setting
-        inspectionSearchBar = UISearchBar()
-        //inspectionSearchBar.prompt = "prompt"
-        inspectionSearchBar!.placeholder = NSLocalizedString("placeholder")
-        inspectionSearchBar!.setShowsCancelButton(false, animated: true)
-        inspectionSearchBar!.barStyle = .Default
-        inspectionSearchBar!.returnKeyType = .Search
-        inspectionSearchBar!.showsScopeBar = false
-        inspectionSearchBar!.sizeToFit()
-        // inspectionTableView.tableHeaderView = inspectionSearchBar
-        
-        /// *** blurEffect
-        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        blurEffectView?.alpha = 0.85
+        // title = NSLocalizedString("Inpection Task List")
         
         /// *** list setting
         inspectionTableView.registerNib(UINib(nibName: inspectionListCellID, bundle: nil), forCellReuseIdentifier: inspectionListCellID)
@@ -126,6 +62,10 @@ class InspectionListViewController : BaseViewController {
         // self.inspectionTableView.contentOffset = CGPointMake(0.0, self.inspectionSearchBar.bounds.height)
     }
 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     func refreshPage(){
         inspectionTableView.mj_header.beginRefreshing()
@@ -266,13 +206,22 @@ class InspectionListViewController : BaseViewController {
     }
     
     func loadInspectionTaskList() {
+        switch self.inspectionTaskType {
+        case .OnTheGo: loadOnTheGoInspectionTaskList()
+        case .Historical: loadHistoricalInspectionTaskList()
+        case .OverDue: loadOverDueInspectionTaskList()
+        }
+    }
+    
+    
+    func loadOnTheGoInspectionTaskList() {
         SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus(NSLocalizedString("Updating inspection task list", comment: ""))
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating on the go inspection task list", comment: ""))
         
         WISDataManager.sharedInstance().updateInspectionsInfoWithCompletionHandler { (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
-                WISInsepctionDataManager.sharedInstance().inspectionTasks.removeAll()
+                WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
                 if inspectionTasks.count > 0 {
                     for inspectionTask in inspectionTasks {
                         let task = inspectionTask.copy() as! WISInspectionTask
@@ -283,7 +232,7 @@ class InspectionListViewController : BaseViewController {
                         if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
                             task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
                         }
-                        WISInsepctionDataManager.sharedInstance().inspectionTasks.append(task)
+                        WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.append(task)
                     }
                 }
                 
@@ -292,7 +241,7 @@ class InspectionListViewController : BaseViewController {
                 }
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Inspection task list updated successfully", comment: ""))
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("On the go inspection task list updated successfully", comment: ""))
                 
             } else {
                 switch error.code {
@@ -309,42 +258,53 @@ class InspectionListViewController : BaseViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func loadHistoricalInspectionTaskList() {
+        // SVProgressHUD.setDefaultMaskType(.None)
+        // SVProgressHUD.showWithStatus(NSLocalizedString("Updating historical inspection task list", comment: ""))
     }
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: QRCodeScanedSuccessfullyNotification, object: nil)
-        print("Notification \(QRCodeScanedSuccessfullyNotification) deregistered in InspectionListViewController while deiniting")
-    }
-    
-    
-    func popoverMenu(sender: UIBarButtonItem) {
+    func loadOverDueInspectionTaskList() {
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.showWithStatus(NSLocalizedString("Updating over due inspection task list", comment: ""))
         
-        let inspectionPopoverPresentationController = inspectionPopoverMenuController!.popoverPresentationController
-        inspectionPopoverPresentationController!.permittedArrowDirections = .Up
-        inspectionPopoverPresentationController!.backgroundColor = inspectionPopoverMenuController!.menuTableViewForeGroundColor
-        
-        /// MARK: expression below use the position of barButtonItem to locate the Popover
-        /// 
-        // inspectionPopoverPresentationController!.barButtonItem = sender
-        inspectionPopoverPresentationController!.delegate = self
-        inspectionPopoverPresentationController!.sourceView = self.view
-        var frame:CGRect = sender.valueForKey("view")!.frame
-        frame.origin.y += 20
-        frame.origin.x -= 4
-        inspectionPopoverPresentationController!.sourceRect = frame
-        
-        inspectionPopoverMenuController!.menuTableView?.reloadData()
-        
-        print("Presentation Style: \(inspectionPopoverPresentationController?.presentationStyle.rawValue)")
-        self.presentViewController(inspectionPopoverMenuController!, animated: true) {
-            self.blurEffectView!.frame = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.bounds)! //self.view.bounds
-            self.view.addSubview(self.blurEffectView!)
+        WISDataManager.sharedInstance().updateOverDueInspectionsInfoWithCompletionHandler { (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+            if completionWithNoError {
+                let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
+                WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
+                if inspectionTasks.count > 0 {
+                    for inspectionTask in inspectionTasks {
+                        let task = inspectionTask.copy() as! WISInspectionTask
+                        
+                        if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
+                            task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
+                        }
+                        WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.append(task)
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.inspectionTableView.reloadData()
+                }
+                
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Over due inspection task list updated successfully", comment: ""))
+                
+            } else {
+                switch error.code {
+                case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showErrorWithStatus(NSLocalizedString("Networking state abnormal, please try again later!", comment: ""))
+                    break
+                    
+                default:
+                    errorCode(error)
+                    break
+                }
+            }
         }
     }
 }
+
 
 // MARK: - Table view data source & delegate method
 
@@ -355,7 +315,11 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WISInsepctionDataManager.sharedInstance().inspectionTasks.count
+        switch self.inspectionTaskType {
+        case .OnTheGo: return WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.count
+        case .Historical: return WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.count
+        case .OverDue: return WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.count
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -363,24 +327,39 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard indexPath.row < WISInsepctionDataManager.sharedInstance().inspectionTasks.count else {
-            return getCell(tableView, cell: InspectionListCell.self, indexPath: NSIndexPath(forRow: WISInsepctionDataManager.sharedInstance().inspectionTasks.count - 1, inSection: 0))
+        let inspectionTasks: [WISInspectionTask]
+        
+        switch self.inspectionTaskType {
+        case .OnTheGo: inspectionTasks = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks
+        case .Historical: inspectionTasks = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks
+        case .OverDue: inspectionTasks = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks
+        }
+        
+        guard indexPath.row < inspectionTasks.count else {
+            return getCell(tableView, cell: InspectionListCell.self, indexPath: NSIndexPath(forRow: inspectionTasks.count - 1, inSection: 0))
         }
         
         let cell = getCell(tableView, cell: InspectionListCell.self, indexPath: indexPath)
-        cell.bindData(WISInsepctionDataManager.sharedInstance().inspectionTasks[indexPath.row])
+        cell.bindData(inspectionTasks[indexPath.row])
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let task = WISInsepctionDataManager.sharedInstance().inspectionTasks[indexPath.row]
+        
+        let task: WISInspectionTask
+        
+        switch self.inspectionTaskType {
+        case .OnTheGo: task = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks[indexPath.row]
+        case .Historical: task = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks[indexPath.row]
+        case .OverDue: task = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks[indexPath.row]
+        }
         
         defer {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
         
         // performSegueWithIdentifier(inspectionDetailViewSegueID, sender: equipment)
-        InspectionDetailViewController.performSegueToInspectionDetailView(self, inspectionTask: task, index:indexPath.row,needToScanCode: true, enableOperation: inspectionOperationEnabled)
+        InspectionDetailViewController.performPushToInspectionDetailView(self, inspectionTask: task, index:indexPath.row,showMoreInformation: self.showMoreInformation, enableOperation: inspectionOperationEnabled)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -446,22 +425,3 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
 }
 
 
-
-extension InspectionListViewController: UIPopoverPresentationControllerDelegate {
-    
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return UIModalPresentationStyle.None
-    }
-    
-    func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        print("popoverPresentationControllerShouldDismissPopover")
-        self.blurEffectView?.removeFromSuperview()
-        return true
-    }
-    
-    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-        print("popoverPresentationControllerDidDismissPopover")
-    }
-    
-    
-}

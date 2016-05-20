@@ -105,7 +105,9 @@ extension AboutViewController: UITableViewDataSource, UITableViewDelegate {
                     delay(1.5, work: {
                         WISDataManager.sharedInstance().clearCacheOfImages()
                         SVProgressHUD.dismiss()
-                        self.aboutTableView.reloadData()
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.aboutTableView.reloadData()
+                        }
                     })
                 }, cancelAction: {})
             

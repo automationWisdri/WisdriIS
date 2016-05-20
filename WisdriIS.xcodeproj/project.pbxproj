@@ -76,6 +76,12 @@
 		385C1E501CE4BDCD00F8E393 /* InspectionPopoverContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */; };
 		385C1E511CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */; };
 		385C1E521CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */; };
+		38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E331CEC3F95003092DA /* InspectionList.storyboard */; };
+		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
+		38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */; };
+		38E51E3C1CEC811B003092DA /* InspectionShowPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */; };
+		38E51E3E1CEC8312003092DA /* InspectionResultShowSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */; };
+		38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */; };
 		9F055A851CD119620077184B /* SubmitPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6436571CA29616007909BE /* SubmitPlanViewController.swift */; };
 		9F055A861CD11A3F0077184B /* SubmitPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F64369E1CA538C4007909BE /* SubmitPlan.storyboard */; };
 		9F055B991CD3ABC80077184B /* UIScrollView+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */; };
@@ -307,6 +313,12 @@
 		385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPopoverContentController.swift; sourceTree = "<group>"; };
 		385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionUploadingQueue.storyboard; sourceTree = "<group>"; };
 		385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionUploadingQueueViewController.swift; sourceTree = "<group>"; };
+		38E51E331CEC3F95003092DA /* InspectionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionList.storyboard; sourceTree = "<group>"; };
+		38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionHomeViewController.swift; sourceTree = "<group>"; };
+		38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionResultShowSelectionCell.xib; sourceTree = "<group>"; };
+		38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionShowPhotoCell.xib; sourceTree = "<group>"; };
+		38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionResultShowSelectionCell.swift; sourceTree = "<group>"; };
+		38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionShowPhotoCell.swift; sourceTree = "<group>"; };
 		9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Yep.swift"; sourceTree = "<group>"; };
 		9F055B9C1CD791170077184B /* ProfilePasswordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfilePasswordCell.swift; path = View/Profile/ProfilePassword/ProfilePasswordCell.swift; sourceTree = "<group>"; };
 		9F055B9D1CD791170077184B /* ProfilePasswordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfilePasswordCell.xib; path = View/Profile/ProfilePassword/ProfilePasswordCell.xib; sourceTree = "<group>"; };
@@ -688,6 +700,8 @@
 		385C1E061CE4BD2700F8E393 /* InspectionDetail */ = {
 			isa = PBXGroup;
 			children = (
+				38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */,
+				38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */,
 				385C1E071CE4BD2700F8E393 /* InspectionColoredTitleCell.swift */,
 				385C1E081CE4BD2700F8E393 /* InspectionColoredTitleCell.xib */,
 				385C1E091CE4BD2700F8E393 /* InspectionDetailViewBaseCell.swift */,
@@ -707,6 +721,8 @@
 				385C1E171CE4BD2700F8E393 /* InspectionResultDescriptionCell.xib */,
 				385C1E181CE4BD2700F8E393 /* InspectionResultSelectionCell.swift */,
 				385C1E191CE4BD2700F8E393 /* InspectionResultSelectionCell.xib */,
+				38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */,
+				38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */,
 			);
 			path = InspectionDetail;
 			sourceTree = "<group>";
@@ -739,6 +755,8 @@
 				385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */,
 				385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */,
 				385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */,
+				38E51E331CEC3F95003092DA /* InspectionList.storyboard */,
+				38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */,
 			);
 			path = Inspection;
 			sourceTree = "<group>";
@@ -1302,6 +1320,7 @@
 				9FEF4FE81C76D4B9001A7644 /* Assets.xcassets in Resources */,
 				385C1E2B1CE4BD2700F8E393 /* InspectionDeviceTypeInfoCell.xib in Resources */,
 				385C1E341CE4BD2700F8E393 /* InspectionListCell.storyboard in Resources */,
+				38E51E3C1CEC811B003092DA /* InspectionShowPhotoCell.xib in Resources */,
 				385C1E251CE4BD2700F8E393 /* InspectionDeviceBelongingCell.xib in Resources */,
 				9F6436DA1CAA0B49007909BE /* PickUserCell.xib in Resources */,
 				385C1E2D1CE4BD2700F8E393 /* InspectionDeviceTypeInformationCell.xib in Resources */,
@@ -1335,12 +1354,14 @@
 				385C1E381CE4BD2700F8E393 /* InspectionUploadingQueueCell.xib in Resources */,
 				385C1E221CE4BD2700F8E393 /* InspectionColoredTitleCell.xib in Resources */,
 				9F7C4BC31C8E6B4100652CDF /* MediaPreview.storyboard in Resources */,
+				38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */,
 				9F336DB21CCF038C00844CB1 /* TaskPlanCell.xib in Resources */,
 				385C1E311CE4BD2700F8E393 /* InspectionResultDescriptionCell.xib in Resources */,
 				9F7C4BAC1C88324F00652CDF /* TaskDetailSingleInfoCell.xib in Resources */,
 				9F055BA11CD797E50077184B /* Password.storyboard in Resources */,
 				9F7C4BB41C8924F400652CDF /* TaskDetail.storyboard in Resources */,
 				9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */,
+				38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */,
 				9F801AC71C86906300F64265 /* TaskMediaCell.xib in Resources */,
 				9F99A76D1CC7B88A00E1F92D /* TaskList.storyboard in Resources */,
 				9FEF4FE61C76D4B9001A7644 /* Main.storyboard in Resources */,
@@ -1447,6 +1468,7 @@
 				9F801AA91C85E7A500F64265 /* ProfileColoredTitleCell.swift in Sources */,
 				385C1E281CE4BD2700F8E393 /* InspectionDeviceRemarkCell.swift in Sources */,
 				9F7C4BB01C888DC200652CDF /* TaskDetailSingleInfoCell.swift in Sources */,
+				38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */,
 				385C1DF01CE4BC9200F8E393 /* WISMaintenanceTaskRating.m in Sources */,
 				9F7C4BC41C8E6B4100652CDF /* MediaPreviewViewController.swift in Sources */,
 				385C1E4F1CE4BDCD00F8E393 /* InspectionListViewController.swift in Sources */,
@@ -1484,6 +1506,7 @@
 				385C1DE21CE4BC9200F8E393 /* LBXScanLineAnimation.swift in Sources */,
 				9F055BB21CDC2E180077184B /* ProfileInfoViewController.swift in Sources */,
 				9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */,
+				38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */,
 				385C1E021CE4BC9200F8E393 /* WISSystemNetworkNotification.m in Sources */,
 				9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */,
 				385C1DF51CE4BC9200F8E393 /* NSDate+WISExtension.m in Sources */,

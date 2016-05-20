@@ -9,6 +9,7 @@
 import UIKit
 
 class InspectionDeviceTypeInformationCell:InspectionDetailViewBaseCell {
+    static let cellHeight: CGFloat = 120.0
     
     @IBOutlet weak var deviceTypeInformationTitleLabel: UILabel!
     @IBOutlet weak var deviceTypeInformationTextView: UITextView!
@@ -26,7 +27,7 @@ class InspectionDeviceTypeInformationCell:InspectionDetailViewBaseCell {
         // Configure the view for the selected state
     }
     
-    override func bindData(model: WISInspectionTask) {
+    func bindData(model: WISInspectionTask) {
         deviceTypeInformationTextView.text = model.device.deviceType.inspectionInformation
     }
 }
