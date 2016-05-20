@@ -25,6 +25,7 @@ class InspectionHomeViewController: BaseViewController {
     var inspectionSearchBar: UISearchBar?
     // 模糊效果
     var blurEffectView: UIVisualEffectView?
+    let alphaOfBlurEffect: CGFloat = 0.80
     
     private var codeScanNotificationToken : String?
 
@@ -65,7 +66,7 @@ class InspectionHomeViewController: BaseViewController {
             switch menuItem {
             case .ScanQRCode:
                 self.codeScanNotificationToken = CodeScanViewController.performPresentToCodeScanViewController(self) {
-                    self.blurEffectView?.removeFromSuperview()
+                    weakSelf!.disappearBlurEffect(0.0)
                     print("presenting Code Scan View")
                 }
                 
@@ -75,7 +76,7 @@ class InspectionHomeViewController: BaseViewController {
             case .UploadingQueue:
                 InspectionUploadingQueueViewController.performSegueToInspectionUploadingQueueViewController(self) {
                     print("segue InspectionUploadingQueueViewController")
-                    weakSelf!.blurEffectView?.removeFromSuperview()
+                    weakSelf!.disappearBlurEffect(0.0)
                     print("show Inspection Uploading Queue View")
                 }
                 break
@@ -97,8 +98,8 @@ class InspectionHomeViewController: BaseViewController {
         // inspectionTableView.tableHeaderView = inspectionSearchBar
         
         /// *** blurEffect
-        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        blurEffectView?.alpha = 0.85
+        blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight)) as UIVisualEffectView
+        // blurEffectView?.alpha = 0.85
         
         let storyboard = UIStoryboard(name: "InspectionList", bundle: nil)
         
@@ -264,7 +265,6 @@ class InspectionHomeViewController: BaseViewController {
     }
     
     func popoverMenu(sender: UIBarButtonItem) {
-        
         let inspectionPopoverPresentationController = inspectionPopoverMenuController!.popoverPresentationController
         inspectionPopoverPresentationController!.permittedArrowDirections = .Up
         inspectionPopoverPresentationController!.backgroundColor = inspectionPopoverMenuController!.menuTableViewForeGroundColor
@@ -283,9 +283,30 @@ class InspectionHomeViewController: BaseViewController {
         
         print("Presentation Style: \(inspectionPopoverPresentationController?.presentationStyle.rawValue)")
         self.presentViewController(inspectionPopoverMenuController!, animated: true) {
-            self.blurEffectView!.frame = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.frame)! //self.view.bounds
-            self.view.addSubview(self.blurEffectView!)
+            self.presentBlurEffect(self.alphaOfBlurEffect)
         }
+    }
+    
+    
+    func presentBlurEffect(finishedAlpha: CGFloat) -> Void {
+        self.blurEffectView!.frame = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.frame)! //self.view.bounds
+        self.blurEffectView?.alpha = 0.0
+        self.parentViewController?.parentViewController?.view.addSubview(self.blurEffectView!)
+        
+        UIView.animateWithDuration(0.15, delay: 0.0, options: .CurveLinear, animations: {
+            self.blurEffectView?.alpha = finishedAlpha
+            }, completion: { finished in
+                // do nothing
+        })
+    }
+    
+    
+    func disappearBlurEffect(finishedAlpha: CGFloat) -> Void {
+        UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveLinear, animations: {
+            self.blurEffectView?.alpha = finishedAlpha
+            }, completion: { finished in
+                self.blurEffectView!.removeFromSuperview()
+        })
     }
     
     /*
@@ -308,7 +329,7 @@ extension InspectionHomeViewController: UIPopoverPresentationControllerDelegate 
     
     func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
         print("popoverPresentationControllerShouldDismissPopover")
-        self.blurEffectView?.removeFromSuperview()
+        self.disappearBlurEffect(0.0)
         return true
     }
     
