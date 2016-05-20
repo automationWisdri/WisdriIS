@@ -44,7 +44,7 @@ class PickUserViewController: UIViewController {
             
             guard selectedUser.count == 1 else {
 //                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                YepAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
+                WISAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
                 return
             }
             
@@ -58,7 +58,7 @@ class PickUserViewController: UIViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     
                 }
             })
@@ -67,7 +67,7 @@ class PickUserViewController: UIViewController {
             
             guard selectedUser.count == 1 else {
 //                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                YepAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
+                WISAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
                 return
             }
             
@@ -80,7 +80,7 @@ class PickUserViewController: UIViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     
                 }
             })
@@ -109,10 +109,10 @@ class PickUserViewController: UIViewController {
         
         title = NSLocalizedString("Pick User", comment: "")
         self.automaticallyAdjustsScrollViewInsets = false
-        self.view.backgroundColor = UIColor.yepBackgroundColor()
+        self.view.backgroundColor = UIColor.wisBackgroundColor()
         
-        pickUserTableView.separatorColor = UIColor.yepCellSeparatorColor()
-        pickUserTableView.separatorInset = YepConfig.ContactsCell.separatorInset
+        pickUserTableView.separatorColor = UIColor.wisCellSeparatorColor()
+        pickUserTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         
         pickUserTableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         pickUserTableView.rowHeight = 80
@@ -180,7 +180,7 @@ class PickUserViewController: UIViewController {
                 
             } else {
                 
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
     }

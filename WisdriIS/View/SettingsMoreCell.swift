@@ -18,7 +18,7 @@ class SettingsMoreCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        accessoryImageView.tintColor = UIColor.yepCellAccessoryImageViewTintColor()
+        accessoryImageView.tintColor = UIColor.wisCellAccessoryImageViewTintColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

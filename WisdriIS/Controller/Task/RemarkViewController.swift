@@ -42,7 +42,7 @@ class RemarkViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         title = NSLocalizedString("Remark", comment: "")
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         view.userInteractionEnabled = true
         
         navigationItem.rightBarButtonItem = postButton
@@ -66,9 +66,9 @@ class RemarkViewController: UIViewController {
         // 任务描述字段的长度控制
         let messageLength = (messageTextView.text as NSString).length
         
-        guard messageLength <= YepConfig.maxFeedTextLength else {
-            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), YepConfig.maxFeedTextLength)
-            YepAlert.alertSorry(message: message, inViewController: self)
+        guard messageLength <= WISConfig.maxTaskTextLength else {
+            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
+            WISAlert.alertSorry(message: message, inViewController: self)
             return
         }
         
@@ -80,7 +80,7 @@ class RemarkViewController: UIViewController {
                 
             } else {
                 
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         })
     }

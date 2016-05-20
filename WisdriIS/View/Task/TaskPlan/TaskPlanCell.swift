@@ -13,62 +13,31 @@ class TaskPlanCell: UITableViewCell {
     @IBOutlet weak var planImageCollectionView: UICollectionView!
     @IBOutlet weak var annotationLabel: UILabel!
     @IBOutlet weak var planDescriptionTextView: TaskTextView!
+    @IBOutlet weak var planDescriptionTextHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var estimatedDateLabel: UILabel!
     @IBOutlet weak var relevantUserTextView: TaskTextView!
+    @IBOutlet weak var relevantUserTextHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var indexLabel: UILabel!
     
-    let taskMediaCellID = "TaskMediaCell"
+    private let taskMediaCellID = "TaskMediaCell"
     
     // 方案附属文件
     private var wisFileInfos = [WISFileInfo]()
     
-    private var images = [UIImage]() {
-        didSet {
-            planImageCollectionView.reloadData()
-        }
-    }
-    
     var tapMediaAction: ((transitionView: UIView, image: UIImage?, wisFileInfos: [WISFileInfo], index: Int) -> Void)?
+    
+    static let planTextViewMaxWidth: CGFloat = {
+        let maxWidth = UIScreen.mainScreen().bounds.width - 30
+        return maxWidth
+    }()
+    
+    static let relevantUserTextViewMaxWidth: CGFloat = {
+        let maxWidth = UIScreen.mainScreen().bounds.width - 54
+        return maxWidth
+    }()
     
     class func instanceFromNib() -> TaskPlanCell {
         return UINib(nibName: "TaskPlanCell", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! TaskPlanCell
-    }
-    
-    static let textViewMaxWidth: CGFloat = {
-        let maxWidth = UIScreen.mainScreen().bounds.width - 27
-//        print(maxWidth)
-        return maxWidth
-    }()
-
-    func heightOfCell(plan: String, user: String) -> CGFloat {
-        
-        let plan: String = plan
-        let user: String = user
-        
-        let planDescriptionRect = plan.boundingRectWithSize(CGSize(width: TaskPlanCell.textViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.TaskDescriptionCell.textAttributes, context: nil)
-        
-        let relevantUserRect = user.boundingRectWithSize(CGSize(width: TaskPlanCell.textViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.TaskDescriptionCell.textAttributes, context: nil)
-
-        let height: CGFloat = 142 + ceil(planDescriptionRect.height) + ceil(relevantUserRect.height)
-        
-        return ceil(height)
-    }
-    
-    private func calHeightOfPlanDescriptionTextView() {
-        
-        let rect = planDescriptionTextView.text.boundingRectWithSize(CGSize(width: TaskPlanCell.textViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.TaskDescriptionCell.textAttributes, context: nil)
-        
-        planDescriptionTextView.frame.size.height = ceil(rect.height)
-    }
-
-    func getImagesFileInfo(wisFileInfos: [WISFileInfo]) {
-        if wisFileInfos.count == 0 {
-            print("方案没有附属图片")
-            return
-        } else {
-//            print("方案有 \(wisFileInfos.count) 张图片")
-            self.wisFileInfos = wisFileInfos
-            planImageCollectionView.reloadData()
-        }
     }
     
     override func awakeFromNib() {
@@ -78,16 +47,19 @@ class TaskPlanCell: UITableViewCell {
         planDescriptionTextView.textContainer.lineFragmentPadding = 0
         planDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
+        // 为了保证文字和图标对其，增加 1 pixel 顶部缩进
         relevantUserTextView.textContainer.lineFragmentPadding = 0
-        relevantUserTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        planImageCollectionView.contentInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 15)
+        relevantUserTextView.textContainerInset = UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
+            
+        planImageCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         planImageCollectionView.showsHorizontalScrollIndicator = false
         planImageCollectionView.backgroundColor = UIColor.clearColor()
         planImageCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
         planImageCollectionView.dataSource = self
         planImageCollectionView.delegate = self
+        
 //        print("CollectionView 方案有 \(self.wisFileInfos.count) 张图片")
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -96,6 +68,70 @@ class TaskPlanCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        wisFileInfos.removeAll()
+    }
+    
+    func bind(taskPlan: WISMaintenancePlan, index: Int) {
+        
+        // Bind Data
+        self.indexLabel.text = "#\(index)"
+        self.planDescriptionTextView.text = taskPlan.planDescription
+        self.estimatedDateLabel.text = taskPlan.estimatedEndingTime.toDateStringWithSeparator("-") + " 前完成"
+        self.relevantUserTextView.text = WISUserDefaults.getRelevantUserText(taskPlan.participants)
+        
+        for item : AnyObject in taskPlan.imagesInfo.allKeys {
+            self.wisFileInfos.append(taskPlan.imagesInfo.objectForKey(item) as! WISFileInfo)
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.planImageCollectionView.reloadData()
+        }
+        
+        // Make UI
+        if wisFileInfos.count != 0 {
+            planImageCollectionView.hidden = false
+        } else {
+            planImageCollectionView.hidden = true
+        }
+
+        self.planDescriptionTextHeightConstraint.constant = calHeightOfPlanTextView(text: planDescriptionTextView.text)
+        
+        self.relevantUserTextHeightConstraint.constant = calHeightOfUserTextView(text: relevantUserTextView.text)
+    }
+    
+    func calHeightOfCell(taskPlan: WISMaintenancePlan) -> CGFloat {
+        
+        var heightOfCell: CGFloat
+        
+        let planDescriptionTextHeight = calHeightOfPlanTextView(text: taskPlan.planDescription)
+        
+        let relevantUserText = WISUserDefaults.getRelevantUserText(taskPlan.participants)
+        let relevantUserTextHeight = calHeightOfUserTextView(text: relevantUserText)
+        
+        if taskPlan.imagesInfo.count != 0 {
+            heightOfCell = 162 + planDescriptionTextHeight + relevantUserTextHeight
+        } else {
+            heightOfCell = 74 +  planDescriptionTextHeight + relevantUserTextHeight
+        }
+        
+        return heightOfCell
+    }
+    
+    private func calHeightOfPlanTextView(text text: String) -> CGFloat {
+        
+        let rect = text.boundingRectWithSize(CGSize(width: TaskPlanCell.planTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.TaskDescriptionCell.textAttributes, context: nil)
+        
+        return ceil(rect.height)
+    }
+    
+    private func calHeightOfUserTextView(text text: String) -> CGFloat {
+        
+        let rect = text.boundingRectWithSize(CGSize(width: TaskPlanCell.relevantUserTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.TaskDescriptionCell.textAttributes, context: nil)
+        
+        return ceil(rect.height) + 1
+    }
+
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate

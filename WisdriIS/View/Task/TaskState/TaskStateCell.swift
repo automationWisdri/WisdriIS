@@ -38,8 +38,8 @@ class TaskStateCell: UITableViewCell {
     func bind(status: WISMaintenanceTaskState) {
         userNameLabel.text = status.personInCharge.fullName
         statusNameLabel.text = status.state
-        startTimeLabel.text = DATE.stringFromDate(status.startTime)
-        endTimeLabel.text = DATE.stringFromDate(status.endTime)
+        startTimeLabel.text = WISConfig.DATE.stringFromDate(status.startTime)
+        endTimeLabel.text = WISConfig.DATE.stringFromDate(status.endTime)
         
         if let string = startTimeLabel.text {
             self.startTimeLabelLeadingConstraint.constant = calculateOffset(string)

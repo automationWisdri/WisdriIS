@@ -12,7 +12,7 @@ import UIKit
 class HorizontalLineView: UIView {
 
     @IBInspectable
-    var lineColor: UIColor = UIColor.yepBorderColor() {
+    var lineColor: UIColor = UIColor.wisBorderColor() {
         didSet {
             setNeedsDisplay()
         }

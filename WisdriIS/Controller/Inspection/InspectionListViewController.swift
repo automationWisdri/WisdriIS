@@ -110,8 +110,8 @@ class InspectionListViewController : BaseViewController {
         /// *** list setting
         inspectionTableView.registerNib(UINib(nibName: inspectionListCellID, bundle: nil), forCellReuseIdentifier: inspectionListCellID)
         
-        inspectionTableView.separatorColor = UIColor.yepCellSeparatorColor()
-        inspectionTableView.separatorInset = YepConfig.ContactsCell.separatorInset
+        inspectionTableView.separatorColor = UIColor.wisCellSeparatorColor()
+        inspectionTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         inspectionTableView.tableFooterView = UIView()
         
         inspectionTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
@@ -155,7 +155,7 @@ class InspectionListViewController : BaseViewController {
             let scanResultAsArray = scanResult.componentsSeparatedByString("&")
             
             guard scanResultAsArray[0] == "DEVICE" && scanResultAsArray.count == 7 else {
-                YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
+                WISAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
                 return
@@ -302,7 +302,7 @@ class InspectionListViewController : BaseViewController {
                     break
                     
                 default:
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     break
                 }
             }

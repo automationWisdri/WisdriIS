@@ -18,11 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window = UIWindow()
         self.window?.frame = UIScreen.mainScreen().bounds
-        self.window?.backgroundColor = UIColor.yepBackgroundColor()
+        self.window?.backgroundColor = UIColor.wisBackgroundColor()
         self.window?.makeKeyAndVisible()
-        
-        let loginViewController = LoginViewController()
-        self.window?.rootViewController = loginViewController
+        self.window?.rootViewController = LoginViewController()
         
         SVProgressHUD.setForegroundColor(UIColor(white: 1, alpha: 1))
         SVProgressHUD.setBackgroundColor(UIColor(white: 0.15, alpha: 0.85))

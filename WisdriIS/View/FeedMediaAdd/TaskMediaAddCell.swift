@@ -15,7 +15,7 @@ class TaskMediaAddCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        mediaAddImage.tintColor = UIColor.yepTintColor()
-        contentView.backgroundColor = UIColor.yepBackgroundColor()
+        mediaAddImage.tintColor = UIColor.wisTintColor()
+        contentView.backgroundColor = UIColor.wisBackgroundColor()
     }
 }

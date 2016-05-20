@@ -32,6 +32,8 @@ class TaskDetailViewController: BaseViewController {
     private var planCount = 0
     private var stateCount = 0
     
+    private let height: [CGFloat] = [100, 150, 220]
+    
     private let pickUserSegueIdentifier = "pickUserForPassOperation"
     private let assignUserSegueIdentifier = "assignUserForPassOperation"
     private let submitQuickPlanSegueIdentifier = "submitQuickPlanOperation"
@@ -71,7 +73,14 @@ class TaskDetailViewController: BaseViewController {
         // 厂级负责人不同意方案
         view.rejectOperation = { [weak self] in
             SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝", operationType: MaintenanceTaskOperationType.Reject, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            
+            let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
+            var taskImageInfo = [String : WISFileInfo]()
+            for item: AnyObject in imagesInfo.allKeys {
+                taskImageInfo[item as! String] = (imagesInfo.objectForKey(item) as! WISFileInfo)
+            }
+            
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝", operationType: MaintenanceTaskOperationType.Reject, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
@@ -80,7 +89,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             })
         }
@@ -97,7 +106,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             })
         }
@@ -119,7 +128,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 
                 }
             })
@@ -137,7 +146,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     
                 }
             })
@@ -155,7 +164,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                     
                 }
             })
@@ -164,9 +173,16 @@ class TaskDetailViewController: BaseViewController {
         // 审批同意维保方案
         view.approveOperation = { [weak self] in
             // 厂级负责人审批同意维保方案
-            if WISDataManager.sharedInstance().currentUser.roleName == "厂级负责人" {
+            if WISDataManager.sharedInstance().currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.FactoryManager.rawValue]  {
                 SVProgressHUD.showWithStatus("正在提交")
-                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "审批同意", operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                
+                let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
+                var taskImageInfo = [String : WISFileInfo]()
+                for item: AnyObject in imagesInfo.allKeys {
+                    taskImageInfo[item as! String] = (imagesInfo.objectForKey(item) as! WISFileInfo)
+                }
+                
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "审批同意", operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                     
                     if completedWithNoError {
                         SVProgressHUD.setDefaultMaskType(.None)
@@ -175,7 +191,7 @@ class TaskDetailViewController: BaseViewController {
                     
                     } else {
                     
-                        errorCode(error)
+                        WISConfig.errorCode(error)
                     }
                 })
                 
@@ -212,7 +228,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             })
         }
@@ -229,7 +245,7 @@ class TaskDetailViewController: BaseViewController {
                     
                 } else {
                     
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             })
         }
@@ -283,18 +299,19 @@ class TaskDetailViewController: BaseViewController {
                 }
 
                 // 获取任务图片
-                self.taskImagesFileInfoArray.removeAll()
-                
-                for item : AnyObject in self.wisTask!.imagesInfo.allKeys {
-//                    self.imagesInfo[item as! String] = self.wisTask!.imagesInfo.objectForKey(item) as? WISFileInfo
-                    self.taskImagesFileInfoArray.append(self.wisTask!.imagesInfo.objectForKey(item) as! WISFileInfo)
-                }
+//                self.taskImagesFileInfoArray.removeAll()
+//                
+//                for item : AnyObject in self.wisTask!.imagesInfo.allKeys {
+////                    self.imagesInfo[item as! String] = self.wisTask!.imagesInfo.objectForKey(item) as? WISFileInfo
+//                    self.taskImagesFileInfoArray.append(self.wisTask!.imagesInfo.objectForKey(item) as! WISFileInfo)
+//                }
                 
                 // 获取方案图片
                 if self.wisTask!.maintenancePlans != nil {
                     self.planCount = self.wisTask!.maintenancePlans.count
                     self.stateCount = self.wisTask!.passedStates.count
                 }
+                
                 SVProgressHUD.dismiss()
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -302,7 +319,7 @@ class TaskDetailViewController: BaseViewController {
                 }
                 
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
     }
@@ -345,7 +362,7 @@ class TaskDetailViewController: BaseViewController {
             break
             
         case "modifyPlanOperation":
-            let vc = segue.destinationViewController as! ModifyPlanViewController
+            let vc = segue.destinationViewController as! SubmitPlanViewController
             vc.segueIdentifier = self.modifyPlanSegueIdentifier
             vc.wisPlan = wisTask!.maintenancePlans.lastObject as? WISMaintenancePlan
             break
@@ -491,11 +508,6 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                     } else {
                         cell.annotatinoInfoLabel.text = wisTask?.personInCharge.fullName
                     }
-                    
-//                    if wisTask!.personInCharge.cellPhoneNumber != nil {
-//                        cell.getPhoneNumber(wisTask!.personInCharge.cellPhoneNumber)
-//                    }
-                    cell.getPhoneNumber("027-81996614")
                 }
                 
                 return cell
@@ -522,11 +534,8 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.selectionStyle = .None
 
-            cell.sectionNameLabel.text = wisTask?.processSegmentName
-            cell.taskDescriptionTextView.text = wisTask?.taskApplicationContent
-            cell.taskTimeLabel.text = DATE.stringFromDate(wisTask!.createdDateTime)
-            cell.getImagesFileInfo(taskImagesFileInfoArray)
-            
+            cell.bind(wisTask!)
+       
             return cell
             
         case .TaskHandleInfo:
@@ -540,35 +549,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.estimatedDateLabel.text = ""
                 cell.relevantUserTextView.text = NSLocalizedString("None", comment: "")
             } else {
-
-                cell.planDescriptionTextView.text = (wisTask?.maintenancePlans[indexPath.row] as! WISMaintenancePlan).planDescription
-                cell.estimatedDateLabel.text = DATE.stringFromDate((wisTask?.maintenancePlans[indexPath.row] as! WISMaintenancePlan).estimatedEndingTime)
-                
-                planImagesFileInfoArray.removeAll()
-                
-                for item : AnyObject in (self.wisTask!.maintenancePlans[indexPath.row] as! WISMaintenancePlan).imagesInfo.allKeys {
-                    self.planImagesFileInfoArray.append((self.wisTask!.maintenancePlans[indexPath.row] as! WISMaintenancePlan).imagesInfo.objectForKey(item) as! WISFileInfo)
-                }
-                
-                cell.getImagesFileInfo(planImagesFileInfoArray)
-                
-                let taskParticipants = (wisTask?.maintenancePlans[indexPath.row] as! WISMaintenancePlan).participants
-                
-                switch taskParticipants.count {
-                case 0:
-                    cell.relevantUserTextView.text = "无其他参与人员"
-                default:
-                    cell.relevantUserTextView.text = ""
-                    for user in taskParticipants {
-                        
-                        if user as! NSObject == taskParticipants.lastObject as! WISUser {
-                            cell.relevantUserTextView.text = cell.relevantUserTextView.text + user.fullName
-                        } else {
-                            cell.relevantUserTextView.text = user.fullName + "， " + cell.relevantUserTextView.text
-                        }
-                    }
-                    cell.relevantUserTextView.text = "参与人员:  " + cell.relevantUserTextView.text
-                }
+                cell.bind(wisTask?.maintenancePlans[indexPath.row] as! WISMaintenancePlan, index: indexPath.row + 1)
             }
 
             return cell
@@ -615,22 +596,17 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = cell as? TaskDetailSingleInfoCell else {
                     break
                 }
-                // 个人觉得没必要显示座机，又增加了一次用户点击的操作
+
                 // Phone Call Alert 有待进一步完善
                 cell.tapToCallAction = {
                     if let telNumber = self.wisTask!.creator.telephoneNumber, mobileNumber = self.wisTask!.creator.cellPhoneNumber {
-                        YepAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                        WISAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
                             let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, mobileCallAction: {
                                 let phoneCallURL = NSURL(string: "tel://" + mobileNumber)!
                                 UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, cancelAction: {})
-//                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
-//                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
-////                            print(phoneCallURL)
-//                            UIApplication.sharedApplication().openURL(phoneCallURL)
-//                            }, cancelAction: {})
                     }
                 }
                 
@@ -642,7 +618,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 cell.tapToCallAction = {
                     if let telNumber = self.wisTask!.personInCharge.telephoneNumber, mobileNumber = self.wisTask!.personInCharge.cellPhoneNumber {
-                        YepAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                        WISAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
                             let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, mobileCallAction: {
@@ -650,12 +626,6 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                                 UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, cancelAction: {})
                     }
-//                    if let phoneNumber = self.wisTask!.personInCharge.cellPhoneNumber {
-//                        YepAlert.confirmOrCancel(title: phoneNumber, message: "", confirmTitle: "呼叫", cancelTitle: "取消", inViewController: self, withConfirmAction: {
-//                            let phoneCallURL = NSURL(string: "tel://" + phoneNumber)!
-//                            UIApplication.sharedApplication().openURL(phoneCallURL)
-//                            }, cancelAction: {})
-//                    }
                 }
                 
             default:
@@ -678,8 +648,6 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 let vc = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
                 
-//                vc.previewMedias = attachments.map({ PreviewMedia.AttachmentType(attachment: $0) })
-//                vc.previewMedias = wisFileInfos.map({ PreviewMedia.WISFileInfoType(wisFileInfo: $0) })
                 vc.previewImages = wisFileInfos
                 vc.startIndex = index
                 
@@ -690,11 +658,11 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 vc.transitionView = transitionView
                 
-//                self?.view.endEditing(true)
+                self?.view.endEditing(true)
                 
-//                delay(0.3, work: { () -> Void in
-//                    transitionView.alpha = 0 // 加 Delay 避免图片闪烁
-//                })
+                delay(0.3, work: { () -> Void in
+                    transitionView.alpha = 0 // 加 Delay 避免图片闪烁
+                })
                 
                 delay(0) {
                     transitionView.alpha = 0 // 放到下一个 Runloop 避免太快消失产生闪烁
@@ -707,7 +675,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 mediaPreviewWindow.rootViewController = vc
-                mediaPreviewWindow.windowLevel = UIWindowLevelAlert - 1
+//                mediaPreviewWindow.windowLevel = UIWindowLevelAlert - 1
                 mediaPreviewWindow.makeKeyAndVisible()
             }
             break
@@ -742,6 +710,10 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                     transitionView.alpha = 0 // 加 Delay 避免图片闪烁
                 })
                 
+                delay(0) {
+                    transitionView.alpha = 0 // 放到下一个 Runloop 避免太快消失产生闪烁
+                }
+                
                 vc.afterDismissAction = { [weak self] in
                     transitionView.alpha = 1
                     mediaPreviewWindow.hidden = true
@@ -766,29 +738,18 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         case Section.TaskBasicInfo.rawValue:
             
             return 44
-//            switch indexPath.row {
-//                
-//            case BasicInfoRow.TaskInfo.rawValue:
-//                return 44
-//                
-//            case BasicInfoRow.Double.rawValue:
-//                return 44
-//                
-//            default:
-//                return 0
-//            }
             
         case Section.TaskDescription.rawValue:
             
             let cell = tableView.dequeueReusableCellWithIdentifier(taskDescriptionCellID) as! TaskDescriptionCell
             
-            return cell.heightOfCell(cell.taskDescriptionTextView.text)
+            return cell.calHeightOfCell(wisTask!)
             
         case Section.TaskHandleInfo.rawValue:
             
             let cell = tableView.dequeueReusableCellWithIdentifier(taskPlanCellID) as! TaskPlanCell
-            
-            return cell.heightOfCell(cell.planDescriptionTextView.text, user: cell.relevantUserTextView.text)
+
+            return cell.calHeightOfCell((wisTask!.maintenancePlans[indexPath.row] as! WISMaintenancePlan))
             
         case Section.Remark.rawValue:
             return 111

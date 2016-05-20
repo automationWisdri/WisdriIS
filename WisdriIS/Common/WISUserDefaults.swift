@@ -15,31 +15,16 @@ var currentClockStatus = 0
 var workShifts = [String: Int]()
 
 class WISUserDefaults {
-
-//    var userSegmentList: [Segment] = {
-//        var userSegmentList = [Segment]()
-//        WISDataManager.sharedInstance().updateProcessSegmentWithCompletionHandler({ (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
-//            userSegmentList.insert(generalSkill, atIndex: 0)
-//            if completedWithNoError {
-//                let segments: Dictionary = updatedData as! Dictionary<String, String>
-//                for (id, name) in segments {
-//                    let skill = Segment(id: id, name: name)
-//                    userSegmentList.append(skill)
-//                }
-//            }
-//        })
-//        return userSegmentList
-//    }()
     
     class func setupSegment() {
         WISDataManager.sharedInstance().updateProcessSegmentWithCompletionHandler({ (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             userSegmentList.removeAll()
-            userSegmentList.insert(generalSkill, atIndex: 0)
+            userSegmentList.insert(segmentPlaceholder, atIndex: 0)
             if completedWithNoError {
                 let segments: Dictionary = updatedData as! Dictionary<String, String>
                 for (id, name) in segments {
-                    let skill = Segment(id: id, name: name)
-                    userSegmentList.append(skill)
+                    let segment = Segment(id: id, name: name)
+                    userSegmentList.append(segment)
                 }
             }
         })
@@ -54,7 +39,6 @@ class WISUserDefaults {
             let row = TaskOperation()
             row.operationType = operationType
             row.operationName = operationName
-//            print(row)
             currentTaskOperations.append(row)
         }
         
@@ -104,4 +88,28 @@ class WISUserDefaults {
         }
     }
 
+    class func getRelevantUserText(participants: NSMutableArray) -> String {
+        
+        let taskParticipants = participants
+        var relevantUserText: String
+        
+        switch taskParticipants.count {
+        case 0:
+            relevantUserText = "无其他参与人员"
+        default:
+            relevantUserText = ""
+            for user in taskParticipants {
+                
+                if user as! NSObject == taskParticipants.lastObject as! WISUser {
+                    relevantUserText = relevantUserText + user.fullName
+                } else {
+                    relevantUserText = user.fullName + "， " + relevantUserText
+                }
+            }
+//            relevantUserText = "参与人员:  " + relevantUserText
+        }
+        
+        return relevantUserText
+    }
+    
 }

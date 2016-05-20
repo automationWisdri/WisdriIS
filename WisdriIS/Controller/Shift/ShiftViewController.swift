@@ -94,7 +94,7 @@ class ShiftViewController: UIViewController {
                 self.noRecords = self.clockRecords.isEmpty
                 self.shiftTableView.reloadData()
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
     }
@@ -213,7 +213,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
     func dotMarker(colorOnDayView dayView: CVCalendarDayView) -> [UIColor] {
         
         let clear = UIColor.clearColor()
-        let tint = UIColor.yepTintColor()
+        let tint = UIColor.wisTintColor()
         
         let day = dayView.date.day
         let month = dayView.date.month
@@ -323,7 +323,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
 extension ShiftViewController: CVCalendarMenuViewDelegate {
 
 //    func dayOfWeekTextColor() -> UIColor {
-//        return UIColor.yepTintColor()
+//        return UIColor.wisTintColor()
 //    }
     
     func dayOfWeekTextUppercase() -> Bool {
@@ -376,7 +376,7 @@ extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
         
         let record = clockRecords[indexPath.row]
 
-        cell.infoLabel.text = DATE.stringFromDate(record.clockActionTime)
+        cell.infoLabel.text = WISConfig.DATE.stringFromDate(record.clockActionTime)
         
         switch record.clockAction {
         case .In:

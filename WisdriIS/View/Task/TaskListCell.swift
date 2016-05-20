@@ -30,16 +30,16 @@ class TaskListCell: UITableViewCell {
     func bind(model: WISMaintenanceTask) {
         
         self.taskIDLabel?.text = model.taskID
-        self.taskDateLabel?.text = DATE.stringFromDate(model.createdDateTime)
+        self.taskDateLabel?.text = WISConfig.DATE.stringFromDate(model.createdDateTime)
 //        self.taskDescriptionLabel?.text = model.taskApplicationContent
         taskDescriptionLabel.text = model.taskDescription
         
         if model.state == "" {
-            self.taskStatusImageView?.image = taskStateImage("未知状态")
+            self.taskStatusImageView?.image = WISConfig.taskStateImage("未知状态")
             self.taskStatusLabel?.text = "未知状态"
         } else {
-            self.taskStatusImageView?.image = taskStateImage(model.state)
-            self.taskStatusLabel?.text = configureStateText(model.state)
+            self.taskStatusImageView?.image = WISConfig.taskStateImage(model.state)
+            self.taskStatusLabel?.text = WISConfig.configureStateText(model.state)
         }
         
     }

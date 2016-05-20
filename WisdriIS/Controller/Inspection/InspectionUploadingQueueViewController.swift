@@ -42,8 +42,8 @@ class InspectionUploadingQueueViewController: BaseViewController {
         /// *** list setting
         inspectionUploadingQueueTableView.registerNib(UINib(nibName: InspectionUploadingQueueCellID, bundle: nil), forCellReuseIdentifier: InspectionUploadingQueueCellID)
         
-        inspectionUploadingQueueTableView.separatorColor = UIColor.yepCellSeparatorColor()
-        inspectionUploadingQueueTableView.separatorInset = YepConfig.ContactsCell.separatorInset
+        inspectionUploadingQueueTableView.separatorColor = UIColor.wisCellSeparatorColor()
+        inspectionUploadingQueueTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         // inspectionUploadingQueueTableView.tableHeaderView = inspectionSearchBar
         
         inspectionUploadingQueueTableView.tableFooterView = UIView()

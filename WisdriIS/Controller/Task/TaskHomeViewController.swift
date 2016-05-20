@@ -8,16 +8,25 @@
 
 import UIKit
 import PagingMenuController
+import SVProgressHUD
 
 class TaskHomeViewController: BaseViewController {
-    
-    private let currentUser = WISDataManager.sharedInstance().currentUser
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         title = NSLocalizedString("Task List", comment: "")
+        
+        guard let currentUser = WISDataManager.sharedInstance().currentUser else {
+            SVProgressHUD.showErrorWithStatus("获取登录信息失败\n请检查网络情况后重新登录")
+            delay(1.5, work: {
+                if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                    appDelegate.window?.rootViewController = LoginViewController()
+                }
+            })
+            return
+        }
         
         let storyboard = UIStoryboard(name: "TaskList", bundle: nil)
         
@@ -50,24 +59,21 @@ class TaskHomeViewController: BaseViewController {
         
         let options = PagingMenuOptions()
 
-//        options.menuItemMargin = 1
-//        options.menuDisplayMode = .SegmentedControl
         options.menuDisplayMode = .Standard(widthMode: PagingMenuOptions.MenuItemWidthMode.Fixed(width: 60), centerItem: false, scrollingMode: PagingMenuOptions.MenuScrollingMode.ScrollEnabledAndBouces)
         
-        options.menuItemMode = .Underline(height: 1.5, color: UIColor.yepTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
+        options.menuItemMode = .Underline(height: 1.5, color: UIColor.wisTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
         
         options.font = UIFont.systemFontOfSize(15)
         
         options.selectedFont = UIFont.systemFontOfSize(16)
         
-        options.textColor = UIColor.yepGrayColor()
-        options.selectedTextColor = UIColor.yepTintColor()
+        options.textColor = UIColor.wisGrayColor()
+        options.selectedTextColor = UIColor.wisTintColor()
         
         let roleCodes = WISDataManager.sharedInstance().roleCodes
         if currentUser.roleCode == roleCodes[RoleCode.TechManager.rawValue]
             || currentUser.roleCode == roleCodes[RoleCode.FieldManager.rawValue] {
             viewControllers = [taskListForApproval, taskListNormal, taskListNotArchived, taskListArchived]
-//            viewControllers = [taskListForApproval, taskListNormal]
             options.menuHeight = 40
         } else if currentUser.roleCode == roleCodes[RoleCode.FactoryManager.rawValue] {
             viewControllers = [taskListForApproval, taskListNormal]

@@ -28,7 +28,7 @@ class FeedBasicCell: UITableViewCell {
 
     lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.yepTintColor()
+        label.textColor = UIColor.wisTintColor()
         label.font = UIFont.systemFontOfSize(15)
 
         label.frame = CGRect(x: 65, y: 21, width: 100, height: 18)
@@ -42,7 +42,7 @@ class FeedBasicCell: UITableViewCell {
 //    lazy var skillButton: UIButton = {
 //        let button = UIButton()
 //        button.setBackgroundImage(UIImage(named: "skill_bubble_empty"), forState: .Normal)
-//        button.setTitleColor(UIColor.yepTintColor(), forState: .Normal)
+//        button.setTitleColor(UIColor.wisTintColor(), forState: .Normal)
 //        button.titleLabel?.font = UIFont.feedSkillFont()
 //
 //        let cellWidth = self.bounds.width
@@ -56,7 +56,7 @@ class FeedBasicCell: UITableViewCell {
 
     lazy var messageTextView: TaskTextView = {
         let textView = TaskTextView()
-        textView.textColor = UIColor.yepMessageColor()
+        textView.textColor = UIColor.wisMessageColor()
         textView.font = UIFont.feedMessageFont()
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -107,7 +107,7 @@ class FeedBasicCell: UITableViewCell {
 
     lazy var messageCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.yepTintColor()
+        label.textColor = UIColor.wisTintColor()
         label.font = UIFont.feedBottomLabelsFont()
         label.textAlignment = .Right
 
@@ -184,7 +184,7 @@ class FeedBasicCell: UITableViewCell {
 
 //    class func heightOfFeed(feed: DiscoveredFeed) -> CGFloat {
 //
-//        let rect = feed.body.boundingRectWithSize(CGSize(width: FeedBasicCell.messageTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.FeedBasicCell.textAttributes, context: nil)
+//        let rect = feed.body.boundingRectWithSize(CGSize(width: FeedBasicCell.messageTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.FeedBasicCell.textAttributes, context: nil)
 //
 //        let height: CGFloat = 10 + 40 + ceil(rect.height) + 4 + 15 + 17 + 15
 //
@@ -208,7 +208,7 @@ class FeedBasicCell: UITableViewCell {
 
     private func calHeightOfMessageTextView() {
 
-        let rect = messageTextView.text.boundingRectWithSize(CGSize(width: FeedBasicCell.messageTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.FeedBasicCell.textAttributes, context: nil)
+        let rect = messageTextView.text.boundingRectWithSize(CGSize(width: FeedBasicCell.messageTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.FeedBasicCell.textAttributes, context: nil)
 
         messageTextView.frame.size.height = ceil(rect.height)
     }
@@ -238,7 +238,7 @@ class FeedBasicCell: UITableViewCell {
                 nicknameLabel.frame = basicLayout.nicknameLabelFrameWhen(hasLogo: false, hasSkill: true)
 
             } else {
-                let rect = skill.localName.boundingRectWithSize(CGSize(width: 320, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.FeedBasicCell.skillTextAttributes, context: nil)
+                let rect = skill.localName.boundingRectWithSize(CGSize(width: 320, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.FeedBasicCell.skillTextAttributes, context: nil)
 
                 let skillButtonWidth = ceil(rect.width) + 20
 
@@ -277,7 +277,7 @@ class FeedBasicCell: UITableViewCell {
         } else {
             leftBottomLabel.frame.origin.y = contentView.bounds.height - leftBottomLabel.frame.height - 15
 
-            //let rect = messagesCountString.boundingRectWithSize(CGSize(width: 320, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: YepConfig.FeedBasicCell.bottomLabelsTextAttributes, context: nil)
+            //let rect = messagesCountString.boundingRectWithSize(CGSize(width: 320, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.FeedBasicCell.bottomLabelsTextAttributes, context: nil)
 
             //let width = ceil(rect.width)
             let width: CGFloat = 30

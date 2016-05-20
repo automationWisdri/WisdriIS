@@ -1,69 +1,44 @@
 //
-//  UIColor+Yep.swift
-//  Yep
+//  UIColor+WIS.swift
+//  WisdriIS
 //
-//  Created by NIX on 15/3/16.
-//  Copyright (c) 2015年 Catch Inc. All rights reserved.
+//  Created by Allen on 5/3/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
 
 extension UIColor {
-    class func yepTintColor() -> UIColor {
+    class func wisTintColor() -> UIColor {
         return UIColor(red: 50/255.0, green: 167/255.0, blue: 255/255.0, alpha: 1.0)
     }
     
-    class func yepMessageColor() -> UIColor {
+    class func wisMessageColor() -> UIColor {
         return UIColor(red: 64/255.0, green: 64/255.0, blue: 64/255.0, alpha: 1.0)
     }
 
-
-    class func yepNavgationBarTitleColor() -> UIColor {
+    class func wisNavgationBarTitleColor() -> UIColor {
         return UIColor(red: 0.247, green: 0.247, blue: 0.247, alpha: 1.0)
     }
 
-    class func yepViewBackgroundColor() -> UIColor {
+    class func wisViewBackgroundColor() -> UIColor {
         return UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
     }
 
-    class func yepInputTextColor() -> UIColor {
+    class func wisInputTextColor() -> UIColor {
         return UIColor(red: 0.557, green: 0.557, blue: 0.576, alpha: 1.0)
     }
 
-    class func yepMessageToolbarSubviewBorderColor() -> UIColor {
+    class func wisMessageToolbarSubviewBorderColor() -> UIColor {
         return UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
     }
 
-    class func yepBorderColor() -> UIColor {
+    class func wisBorderColor() -> UIColor {
         return UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
     }
 
     class func avatarBackgroundColor() -> UIColor {
         return UIColor(red: 50/255.0, green: 167/255.0, blue: 255/255.0, alpha: 0.3)
-    }
-
-    class func leftBubbleTintColor() -> UIColor {
-        return UIColor(white: 231 / 255.0, alpha: 1.0)
-    }
-
-    class func rightBubbleTintColor() -> UIColor {
-        return UIColor.yepTintColor()
-    }
-
-    class func leftWaveColor() -> UIColor {
-        return UIColor.darkGrayColor().colorWithAlphaComponent(0.2)
-    }
-
-    class func rightWaveColor() -> UIColor {
-        return UIColor(red:0.176,  green:0.537,  blue:0.878, alpha:1)
-    }
-
-    class func skillMasterColor() -> UIColor {
-        return yepTintColor()
-    }
-
-    class func skillLearningColor() -> UIColor {
-        return UIColor(red:0.49, green:0.83, blue:0.13, alpha:1)
     }
     
     class func messageToolBarColor() -> UIColor {
@@ -71,39 +46,39 @@ extension UIColor {
     }
 
     class func messageToolBarHighlightColor() -> UIColor {
-        return UIColor.yepTintColor()
+        return UIColor.wisTintColor()
     }
 
     class func messageToolBarNormalColor() -> UIColor {
         return UIColor.lightGrayColor()
     }
     
-    class func yepDisabledColor() -> UIColor {
+    class func wisDisabledColor() -> UIColor {
         return UIColor(red:0.95, green:0.95, blue:0.95, alpha:1)
     }
     
-    class func yepGrayColor() -> UIColor {
+    class func wisGrayColor() -> UIColor {
         return UIColor(red: 142.0/255.0, green: 142.0/255.0, blue: 147.0/255.0, alpha: 1.0)
     }
     
-    class func yepBackgroundColor() -> UIColor {
+    class func wisBackgroundColor() -> UIColor {
         return UIColor(red: 250/255.0, green: 250/255.0, blue: 250/255.0, alpha: 1.0)
     }
 
-    class func yepCellSeparatorColor() -> UIColor {
+    class func wisCellSeparatorColor() -> UIColor {
         return UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
     }
 
-    class func yepCellAccessoryImageViewTintColor() -> UIColor {
+    class func wisCellAccessoryImageViewTintColor() -> UIColor {
         return UIColor.lightGrayColor()
     }
 
-    class func yepIconImageViewTintColor() -> UIColor {
-        return yepCellAccessoryImageViewTintColor()
+    class func wisIconImageViewTintColor() -> UIColor {
+        return wisCellAccessoryImageViewTintColor()
     }
 
     // 反色
-    var yep_inverseColor: UIColor {
+    var wis_inverseColor: UIColor {
 
         var red: CGFloat = 0
         var green: CGFloat = 0
@@ -115,7 +90,7 @@ extension UIColor {
     }
 
     // 黑白色
-    var yep_binaryColor: UIColor {
+    var wis_binaryColor: UIColor {
 
         var white: CGFloat = 0
         getWhite(&white, alpha: nil)
@@ -123,8 +98,8 @@ extension UIColor {
         return white > 0.92 ? UIColor.blackColor() : UIColor.whiteColor()
     }
 
-    var yep_profilePrettyColor: UIColor {
-        //return yep_inverseColor
-        return yep_binaryColor
+    var wis_profilePrettyColor: UIColor {
+        //return wis_inverseColor
+        return wis_binaryColor
     }
 }

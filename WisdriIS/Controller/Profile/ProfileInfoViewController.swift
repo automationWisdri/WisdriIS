@@ -31,7 +31,7 @@ class ProfileInfoViewController: UIViewController {
         // Do any additional setup after loading the view.
         title = "修改信息"
         
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         navigationItem.rightBarButtonItem = postButton
         
         profileInfoTableView.tableHeaderView = introView
@@ -133,7 +133,7 @@ class ProfileInfoViewController: UIViewController {
                 SVProgressHUD.showSuccessWithStatus("修改成功")
                 self.navigationController?.popViewControllerAnimated(true)
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
 

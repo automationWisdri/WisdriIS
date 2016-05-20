@@ -91,7 +91,7 @@ class Listenable<T> {
 
 class YepUserDefaults {
 
-    static let defaults = NSUserDefaults(suiteName: YepConfig.appGroupID)!
+//    static let defaults = NSUserDefaults(suiteName: WISConfig.appGroupID)!
 
     static var isLogined: Bool {
 
@@ -149,7 +149,7 @@ class YepUserDefaults {
 
 //            if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
 //                if let rootViewController = appDelegate.window?.rootViewController {
-//                    YepAlert.alert(title: NSLocalizedString("Sorry", comment: ""), message: NSLocalizedString("User authentication error, you need to login again!", comment: ""), dismissTitle: NSLocalizedString("Relogin", comment: ""), inViewController: rootViewController, withDismissAction: { () -> Void in
+//                    WISAlert.alert(title: NSLocalizedString("Sorry", comment: ""), message: NSLocalizedString("User authentication error, you need to login again!", comment: ""), dismissTitle: NSLocalizedString("Relogin", comment: ""), inViewController: rootViewController, withDismissAction: { () -> Void in
 //
 //                        appDelegate.startShowStory()
 //                    })

@@ -11,18 +11,10 @@ import CoreLocation
 import MobileCoreServices
 import Photos
 import Proposer
-//import Kingfisher
-import MapKit
+//import MapKit
 import SVProgressHUD
 
-let generalSkill = Segment(id: "0", name: NSLocalizedString("Choose...", comment: ""))
-
-//struct FeedVoice {
-//
-//    let fileURL: NSURL
-//    let sampleValuesCount: Int
-//    let limitedSampleValues: [CGFloat]
-//}
+let segmentPlaceholder = Segment(id: "0", name: NSLocalizedString("Choose...", comment: ""))
 
 struct Segment: Hashable {
     
@@ -43,12 +35,10 @@ let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNoti
 
 class NewTaskViewController: BaseViewController {
 
-    var preparedSkill: Segment?
-
-    weak var feedsViewController: TaskListViewController?
-    var getFeedsViewController: (() -> TaskListViewController?)?
+    /// 用户默认所属的工艺段
+    var preparedSegment: Segment?
     
-    @IBOutlet private weak var feedWhiteBGView: UIView!
+    @IBOutlet private weak var taskWhiteBGView: UIView!
     
     @IBOutlet private weak var messageTextView: UITextView!
 
@@ -64,35 +54,24 @@ class NewTaskViewController: BaseViewController {
     @IBOutlet private weak var channelLabel: UILabel!
     @IBOutlet private weak var choosePromptLabel: UILabel!
     
-//    @IBOutlet private weak var pickedSkillBubbleImageView: UIImageView!
-    @IBOutlet private weak var pickedSkillLabel: UILabel!
+    @IBOutlet private weak var pickedSegmentLabel: UILabel!
     
-    @IBOutlet private weak var skillPickerView: UIPickerView!
+    @IBOutlet private weak var segmentPickerView: UIPickerView!
 
-//    private lazy var socialWorkHalfMaskImageView: UIImageView = {
-//        let imageView = UIImageView(image: UIImage(named: "social_media_image_mask"))
-//        return imageView
-//    }()
-//
-//    private lazy var socialWorkFullMaskImageView: UIImageView = {
-//        let imageView = UIImageView(image: UIImage(named: "social_media_image_mask_full"))
-//        return imageView
-//    }()
-
-    private let infoAboutThisFeed = NSLocalizedString("Info about this Task...", comment: "")
+    private let infoAboutThisTask = NSLocalizedString("Info about this Task...", comment: "")
 
     private var isNeverInputMessage = true
     private var isDirty = false {
         willSet {
             if !newValue && isNeverInputMessage {
-                messageTextView.text = infoAboutThisFeed
+                messageTextView.text = infoAboutThisTask
             }
 
             messageTextView.textColor = newValue ? UIColor.blackColor() : UIColor.lightGrayColor()
         }
         didSet {
-            if pickedSkill != nil {
-                if pickedSkill?.id != "0" {
+            if pickedSegment != nil {
+                if pickedSegment?.id != "0" {
                     postButton.enabled = self.isDirty
                 }
             }
@@ -107,7 +86,6 @@ class NewTaskViewController: BaseViewController {
         return button
     }()
 
-    // 选取照片 Controller
     private lazy var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -118,7 +96,7 @@ class NewTaskViewController: BaseViewController {
     
     private var imageAssets: [PHAsset] = []
     
-    // 任务相关的图片
+    /// 任务图片，显示于 Media Collection View
     private var mediaImages = [UIImage]() {
         didSet {
             dispatch_async(dispatch_get_main_queue()) { [weak self] in
@@ -127,84 +105,31 @@ class NewTaskViewController: BaseViewController {
         }
     }
     
-    // DataManager 查询任务相关图片获得的返回值
+    /// DataManager 查询任务相关图片获得的返回值
     private var imagesDictionary = Dictionary<String, UIImage>()
-//    private var imagesArray = Array<WISFileInfo>()
+    /// DataManager 新建任务时的图片信息
     private var applicationFileInfo = Dictionary<String, WISFileInfo>()
-
-    enum UploadState {
-        case Ready
-        case Uploading
-        case Failed(message: String)
-        case Success
-    }
-    
-    var uploadState: UploadState = .Ready {
-        willSet {
-            switch newValue {
-
-            case .Ready:
-                break
-
-            case .Uploading:
-                postButton.enabled = false
-                messageTextView.resignFirstResponder()
-//                YepHUD.showActivityIndicator()
-
-//            case .Failed(let message):
-//                YepHUD.hideActivityIndicator()
-//                postButton.enabled = true
-
-//                if presentingViewController != nil {
-//                    YepAlert.alertSorry(message: message, inViewController: self)
-//                } else {
-//                    feedsViewController?.handleUploadingErrorMessage(message)
-//                }
-
-            case .Success:
-//                YepHUD.hideActivityIndicator()
-                messageTextView.text = nil
-            default:
-                break
-            }
-        }
-    }
     
     private let taskMediaAddCellID = "TaskMediaAddCell"
     private let taskMediaCellID = "TaskMediaCell"
     
     //let max = Int(INT16_MAX)
-    private var skills = [Segment]()
+    private var segments = [Segment]()
     
-    private var pickedSkill: Segment? {
+    private var pickedSegment: Segment? {
         willSet {
-            pickedSkillLabel.text = newValue?.name
+            pickedSegmentLabel.text = newValue?.name
             choosePromptLabel.hidden = (newValue != nil)
         }
         didSet {
-            if pickedSkill != nil {
-                if pickedSkill?.id != "0" {
+            if pickedSegment != nil {
+                if pickedSegment?.id != "0" {
                     postButton.enabled = self.isDirty
                 }
             } else {
                 postButton.enabled = false
             }
         }
-    }
-    
-    func setupSegment() {
-        WISDataManager.sharedInstance().updateProcessSegmentWithCompletionHandler({ (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
-            self.skills.insert(generalSkill, atIndex: 0)
-            if completedWithNoError {
-                let segments: Dictionary = updatedData as! Dictionary<String, String>
-                for (id, name) in segments {
-                    let skill = Segment(id: id, name: name)
-                    self.skills.append(skill)
-                }
-//                self.skillPickerView.reloadInputViews()
-            }
-        })
-
     }
 
     deinit {
@@ -215,7 +140,7 @@ class NewTaskViewController: BaseViewController {
         super.viewDidLoad()
         
         title = NSLocalizedString("New Task", comment: "")
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         
         navigationItem.rightBarButtonItem = postButton
 
@@ -223,14 +148,11 @@ class NewTaskViewController: BaseViewController {
 
         navigationItem.leftBarButtonItem = cancleButton
         self.view.userInteractionEnabled = true
-        view.sendSubviewToBack(feedWhiteBGView)
-
-        feedsViewController = getFeedsViewController?()
-        print("feedsViewController: \(feedsViewController)")
+        view.sendSubviewToBack(taskWhiteBGView)
         
         isDirty = false
 
-        print(messageTextView.text)
+//        print(messageTextView.text)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         messageTextView.delegate = self
@@ -240,17 +162,17 @@ class NewTaskViewController: BaseViewController {
         
         mediaCollectionView.registerNib(UINib(nibName: taskMediaAddCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaAddCellID)
         mediaCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
-        mediaCollectionView.contentInset.left = 15
+        mediaCollectionView.contentInset.left = WISConfig.MediaCollection.leftEdgeInset
         mediaCollectionView.dataSource = self
         mediaCollectionView.delegate = self
         mediaCollectionView.showsHorizontalScrollIndicator = false
         
-        // pick skill
-        skills = userSegmentList
+        // 获取在登录时查询到的用户所属工艺段
+        segments = userSegmentList
         
-        // 只有自己也有，才使用准备的
-        if let skill = preparedSkill, _ = skills.indexOf(skill) {
-            pickedSkill = preparedSkill
+        // 如果系统默认的工艺段（例如：测试工艺段），在用户所属的工艺段列表中，自动为该任务选择工艺段
+        if let segment = preparedSegment, _ = segments.indexOf(segment) {
+            pickedSegment = preparedSegment
         }
         
         channelLabel.text = NSLocalizedString("Channel:", comment: "")
@@ -258,17 +180,17 @@ class NewTaskViewController: BaseViewController {
         
         channelViewTopConstraint.constant = 30
         
-        skillPickerView.dataSource = self
-        skillPickerView.delegate = self
+        segmentPickerView.dataSource = self
+        segmentPickerView.delegate = self
         
-        skillPickerView.alpha = 0
+        segmentPickerView.alpha = 0
         
-        let hasSkill = (pickedSkill != nil)
-        pickedSkillLabel.alpha = hasSkill ? 1 : 0
+        let hasSegment = (pickedSegment != nil)
+        pickedSegmentLabel.alpha = hasSegment ? 1 : 0
         
         channelView.backgroundColor = UIColor.whiteColor()
         channelView.userInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(NewTaskViewController.showSkillPickerView(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(NewTaskViewController.showSegmentPickerView(_:)))
         channelView.addGestureRecognizer(tap)
         
         mediaCollectionView.hidden = false
@@ -301,9 +223,8 @@ class NewTaskViewController: BaseViewController {
                 for image in images {
                     self?.mediaImages.append(image)
                     
-                    photoFileName = "task_image_" + String(image.hash)
+                    photoFileName = "task_image_" + String(image.hashValue)
                     self?.imagesDictionary[photoFileName!] = image
-//                    print(self?.imagesDictionary["task_image" + String(image.hash)])
                 }
             }
         }
@@ -311,34 +232,34 @@ class NewTaskViewController: BaseViewController {
     
     // MARK: Actions
     
-    @objc private func showSkillPickerView(tap: UITapGestureRecognizer) {
+    @objc private func showSegmentPickerView(tap: UITapGestureRecognizer) {
         
         // 初次 show，预先 selectRow
 
         self.messageTextView.endEditing(true)
         
-        if pickedSkill == nil {
-            if !skills.isEmpty {
+        if pickedSegment == nil {
+            if !segments.isEmpty {
                 //let centerRow = max / 2
                 //let selectedRow = centerRow
                 let selectedRow = 0
-                skillPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+                segmentPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
                 
-                pickedSkill = skills[selectedRow % skills.count]
+                pickedSegment = segments[selectedRow % segments.count]
             }
             
         } else {
-            if let skill = preparedSkill, let index = skills.indexOf(skill) {
+            if let segment = preparedSegment, let index = segments.indexOf(segment) {
             
                 //var selectedRow = max / 2
-                //selectedRow = selectedRow - selectedRow % skills.count + index
+                //selectedRow = selectedRow - selectedRow % segments.count + index
                 let selectedRow = index
 
-                skillPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-                pickedSkill = skills[selectedRow % skills.count]
+                segmentPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+                pickedSegment = segments[selectedRow % segments.count]
             }
             
-            preparedSkill = nil // 再 show 就不需要 selectRow 了
+            preparedSegment = nil // 再 show 就不需要 selectRow 了
         }
         
         UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { [weak self] in
@@ -348,9 +269,9 @@ class NewTaskViewController: BaseViewController {
             self?.channelViewBottomLineView.alpha = 0
             self?.choosePromptLabel.alpha = 0
 
-            self?.pickedSkillLabel.alpha = 0
+            self?.pickedSegmentLabel.alpha = 0
             
-            self?.skillPickerView.alpha = 1
+            self?.segmentPickerView.alpha = 1
             
             self?.channelViewTopConstraint.constant = 108
             self?.view.layoutIfNeeded()
@@ -360,10 +281,10 @@ class NewTaskViewController: BaseViewController {
         })
     }
 
-    private func hideSkillPickerView() {
+    private func hideSegmentPickerView() {
         
-        if pickedSkill == generalSkill {
-            pickedSkill = nil
+        if pickedSegment == segmentPlaceholder {
+            pickedSegment = nil
         }
         
         UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseInOut, animations: { [weak self] in
@@ -373,12 +294,12 @@ class NewTaskViewController: BaseViewController {
             self?.channelViewBottomLineView.alpha = 1
             self?.choosePromptLabel.alpha = 1
             
-            if let _ = self?.pickedSkill {
-                self?.pickedSkillLabel.alpha = 1
-                print(self?.pickedSkillLabel.text)
+            if let _ = self?.pickedSegment {
+                self?.pickedSegmentLabel.alpha = 1
+                print(self?.pickedSegmentLabel.text)
             }
             
-            self?.skillPickerView.alpha = 0
+            self?.segmentPickerView.alpha = 0
             
             self?.channelViewTopConstraint.constant = 30
             self?.view.layoutIfNeeded()
@@ -394,71 +315,7 @@ class NewTaskViewController: BaseViewController {
 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    /*
-    func tryMakeUploadingFeed() -> DiscoveredFeed? {
 
-//        guard let
-//            myUserID = YepUserDefaults.userID.value,
-//            realm = try? Realm(),
-//            me = userWithUserID(myUserID, inRealm: realm) else {
-//                return nil
-//        }
-
-//        let creator = DiscoveredUser.fromUser(me)
-
-        var kind: FeedKind = .Text
-
-        let createdUnixTime = NSDate().timeIntervalSince1970
-        let updatedUnixTime = createdUnixTime
-
-        let message = messageTextView.text.trimming(.WhitespaceAndNewline)
-
-        var feedAttachment: DiscoveredFeed.Attachment?
-
-        switch attachment {
-
-        case .Default:
-
-            if !mediaImages.isEmpty {
-                kind = .Image
-
-                let imageAttachments: [DiscoveredAttachment] = mediaImages.map({ image in
-
-                    let imageWidth = image.size.width
-                    let imageHeight = image.size.height
-
-                    let fixedImageWidth: CGFloat
-                    let fixedImageHeight: CGFloat
-
-                    if imageWidth > imageHeight {
-                        fixedImageWidth = min(imageWidth, YepConfig.Media.miniImageWidth)
-                        fixedImageHeight = imageHeight * (fixedImageWidth / imageWidth)
-                    } else {
-                        fixedImageHeight = min(imageHeight, YepConfig.Media.miniImageHeight)
-                        fixedImageWidth = imageWidth * (fixedImageHeight / imageHeight)
-                    }
-
-                    let fixedSize = CGSize(width: fixedImageWidth, height: fixedImageHeight)
-
-                    // resize to smaller, not need fixRotation
-
-                    if let image = image.resizeToSize(fixedSize, withInterpolationQuality: .Medium) {
-                        return DiscoveredAttachment(metadata: "", URLString: "", image: image)
-                    } else {
-                        return nil
-                    }
-                }).flatMap({ $0 })
-
-                feedAttachment = .Images(imageAttachments)
-            }
-
-        default:
-            break
-        }
-
-        return DiscoveredFeed(id: "", allowComment: true, kind: kind, createdUnixTime: createdUnixTime, updatedUnixTime: updatedUnixTime, creator: creator, body: message, attachment: feedAttachment, distance: 0, skill: nil, groupID: "", messagesCount: 0, uploadingErrorMessage: nil)
-    }
-*/
     @objc private func post(sender: UIBarButtonItem) {
         post(again: false)
     }
@@ -468,9 +325,9 @@ class NewTaskViewController: BaseViewController {
         // 任务描述字段的长度控制
         let messageLength = (messageTextView.text as NSString).length
         
-        guard messageLength <= YepConfig.maxFeedTextLength else {
-            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), YepConfig.maxFeedTextLength)
-            YepAlert.alertSorry(message: message, inViewController: self)
+        guard messageLength <= WISConfig.maxTaskTextLength else {
+            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
+            WISAlert.alertSorry(message: message, inViewController: self)
             return
         }
         
@@ -494,7 +351,7 @@ class NewTaskViewController: BaseViewController {
                             self.applicationFileInfo[image.fileName] = image
                         }
                         
-                        WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSkill?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+                        WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
                                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
@@ -502,21 +359,22 @@ class NewTaskViewController: BaseViewController {
                                 // self.dismissViewControllerAnimated(true, completion: nil)
                                 
                             } else {
-                                errorCode(error)
+                                WISConfig.errorCode(error)
                             }
                         })
                         
                     } else {
-                        errorCode(error)
+                        WISConfig.errorCode(error)
                     }
             })
         }
     }
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
 //        self.view.endEditing(true)
-//        super.touchesBegan(touches, withEvent: event)
-//    }
+        super.touchesBegan(touches, withEvent: event)
+        hideSegmentPickerView()
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -544,20 +402,19 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
         switch indexPath.section {
             
         case 0:
+            
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaCellID, forIndexPath: indexPath) as! TaskMediaCell
-            
             let image = mediaImages[indexPath.item]
-            
             cell.configureWithImage(image)
-            
             return cell
-            
+
         case 1:
             
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaAddCellID, forIndexPath: indexPath) as! TaskMediaAddCell
             return cell
             
         default:
+            
             return UICollectionViewCell()
         }
     }
@@ -568,7 +425,12 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        
+        if mediaImages.count == 0 {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -576,18 +438,16 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
         switch indexPath.section {
             
         case 0:
+            
             mediaImages.removeAtIndex(indexPath.item)
-            //            if !imageAssets.isEmpty {
-            //                imageAssets.removeAtIndex(indexPath.item)
-            //            }
             collectionView.deleteItemsAtIndexPaths([indexPath])
             
         case 1:
 
             messageTextView.resignFirstResponder()
             
-            if mediaImages.count == 4 {
-                YepAlert.alertSorry(message: NSLocalizedString("Task can only has 4 photos.", comment: ""), inViewController: self)
+            if mediaImages.count == 6 {
+                WISAlert.alertSorry(message: NSLocalizedString("Task can only has 6 photos.", comment: ""), inViewController: self)
                 return
             }
             
@@ -662,7 +522,7 @@ extension NewTaskViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(textView: UITextView) {
         
-        hideSkillPickerView()
+        hideSegmentPickerView()
     }
 }
 
@@ -673,6 +533,7 @@ extension NewTaskViewController: UIScrollViewDelegate {
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         messageTextView.resignFirstResponder()
+//        hideSegmentPickerView()
     }
 }
 
@@ -681,11 +542,11 @@ extension NewTaskViewController: UIScrollViewDelegate {
 extension NewTaskViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return skills.isEmpty ? 0 : 1
+        return segments.isEmpty ? 0 : 1
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return skills.count
+        return segments.count
     }
     
     func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -694,7 +555,7 @@ extension NewTaskViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         
-        let skill = skills[row % skills.count]
+        let skill = segments[row % segments.count]
         
         if let view = view as? TaskSectionPickerItemView {
             view.configureWithString(skill.name)
@@ -708,9 +569,7 @@ extension NewTaskViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        pickedSkill = skills[row % skills.count]
-//        print(pickedSkill)
-    }
+        pickedSegment = segments[row % segments.count]    }
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -726,7 +585,6 @@ extension NewTaskViewController: UIImagePickerControllerDelegate, UINavigationCo
             case kUTTypeImage as! String:
                 
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//                    let imageURL = info[UIImagePickerControllerReferenceURL] as? String
                     
                     if mediaImages.count <= 3 {
                         mediaImages.append(image)
@@ -737,19 +595,6 @@ extension NewTaskViewController: UIImagePickerControllerDelegate, UINavigationCo
                 break
             }
         }
-        
-        
-        //        let imageName = imageURL.path!.lastPathComponent
-        //        let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! as String
-        //        let localPath = documentDirectory.stringByAppendingPathComponent(imageName)
-        //
-        //        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        //        let data = UIImagePNGRepresentation(image)
-        //        data!.writeToFile(localPath, atomically: true)
-        //
-        //        let imageData = NSData(contentsOfFile: localPath)!
-        //        let photoURL = NSURL(fileURLWithPath: localPath)
-        //        let imageWithData = UIImage(data: imageData)!
         
         dismissViewControllerAnimated(true, completion: nil)
     }

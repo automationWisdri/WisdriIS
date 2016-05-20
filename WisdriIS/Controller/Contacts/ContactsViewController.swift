@@ -53,10 +53,6 @@ class ContactsViewController: BaseViewController {
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
-
-        YepUserDefaults.avatarURLString.removeListenerWithName(Listener.Avatar)
-        YepUserDefaults.nickname.removeListenerWithName(Listener.Nickname)
-
         contactsTableView?.delegate = nil
     }
 
@@ -92,8 +88,8 @@ class ContactsViewController: BaseViewController {
             self.searchController = searchController
         }
 
-        contactsTableView.separatorColor = UIColor.yepCellSeparatorColor()
-        contactsTableView.separatorInset = YepConfig.ContactsCell.separatorInset
+        contactsTableView.separatorColor = UIColor.wisCellSeparatorColor()
+        contactsTableView.separatorInset = WISConfig.ContactsCell.separatorInset
 
         contactsTableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         contactsTableView.rowHeight = 80
@@ -109,17 +105,17 @@ class ContactsViewController: BaseViewController {
 //            self?.updateContactsTableView()
 //        }
 
-        YepUserDefaults.nickname.bindListener(Listener.Nickname) { [weak self] _ in
-            dispatch_async(dispatch_get_main_queue()) {
-                self?.updateContactsTableView()
-            }
-        }
-
-        YepUserDefaults.avatarURLString.bindListener(Listener.Avatar) { [weak self] _ in
-            dispatch_async(dispatch_get_main_queue()) {
-                self?.updateContactsTableView()
-            }
-        }
+//        YepUserDefaults.nickname.bindListener(Listener.Nickname) { [weak self] _ in
+//            dispatch_async(dispatch_get_main_queue()) {
+//                self?.updateContactsTableView()
+//            }
+//        }
+//
+//        YepUserDefaults.avatarURLString.bindListener(Listener.Avatar) { [weak self] _ in
+//            dispatch_async(dispatch_get_main_queue()) {
+//                self?.updateContactsTableView()
+//            }
+//        }
 
         #if DEBUG
 //            view.addSubview(contactsFPSLabel)

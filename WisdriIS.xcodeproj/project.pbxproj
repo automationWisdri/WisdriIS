@@ -129,7 +129,6 @@
 		9F7C4BB01C888DC200652CDF /* TaskDetailSingleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BAF1C888DC200652CDF /* TaskDetailSingleInfoCell.swift */; };
 		9F7C4BB21C888F6100652CDF /* TaskDetailDoubleInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BB11C888F6100652CDF /* TaskDetailDoubleInfoCell.swift */; };
 		9F7C4BB41C8924F400652CDF /* TaskDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BB31C8924F400652CDF /* TaskDetail.storyboard */; };
-		9F7C4BB91C8D56D000652CDF /* TaskMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BB61C8D56D000652CDF /* TaskMediaView.swift */; };
 		9F7C4BBE1C8D6D1B00652CDF /* TaskDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BBC1C8D6D1B00652CDF /* TaskDescriptionCell.swift */; };
 		9F7C4BBF1C8D6D1B00652CDF /* TaskDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BBD1C8D6D1B00652CDF /* TaskDescriptionCell.xib */; };
 		9F7C4BC31C8E6B4100652CDF /* MediaPreview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BC11C8E6B4100652CDF /* MediaPreview.storyboard */; };
@@ -140,11 +139,10 @@
 		9F7C4BCD1C8E724900652CDF /* YepHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCC1C8E724900652CDF /* YepHelper.swift */; };
 		9F7C4BCF1C8E9CD400652CDF /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */; };
 		9F801A821C8539D400F64265 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A7E1C8539D400F64265 /* BaseViewController.swift */; };
-		9F801A881C853B3300F64265 /* UIColor+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A861C853B3300F64265 /* UIColor+Yep.swift */; };
+		9F801A881C853B3300F64265 /* UIColor+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A861C853B3300F64265 /* UIColor+WIS.swift */; };
 		9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A871C853B3300F64265 /* UIFont+Yep.swift */; };
 		9F801A951C85727A00F64265 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A931C85727A00F64265 /* ProfileViewController.swift */; };
-		9F801A971C85916D00F64265 /* YepConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A961C85916D00F64265 /* YepConfig.swift */; };
-		9F801A991C8591A900F64265 /* YepUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A981C8591A900F64265 /* YepUserDefaults.swift */; };
+		9F801A971C85916D00F64265 /* WISConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A961C85916D00F64265 /* WISConfig.swift */; };
 		9F801A9D1C8594AC00F64265 /* ProfileLessInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A9B1C8594AC00F64265 /* ProfileLessInfoCell.swift */; };
 		9F801A9E1C8594AC00F64265 /* ProfileLessInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801A9C1C8594AC00F64265 /* ProfileLessInfoCell.xib */; };
 		9F801AA21C8594B800F64265 /* TaskDetailLargeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AA01C8594B800F64265 /* TaskDetailLargeInfoCell.swift */; };
@@ -160,14 +158,14 @@
 		9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB81C867EC600F64265 /* PhotoCell.swift */; };
 		9F801ABB1C867EC600F64265 /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AB91C867EC600F64265 /* PhotoCell.xib */; };
 		9F801ABD1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ABC1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift */; };
-		9F801ABF1C8681B300F64265 /* UIImage+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ABE1C8681B300F64265 /* UIImage+Yep.swift */; };
+		9F801ABF1C8681B300F64265 /* UIImage+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ABE1C8681B300F64265 /* UIImage+WIS.swift */; };
 		9F801AC61C86906300F64265 /* TaskMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AC11C86906300F64265 /* TaskMediaCell.swift */; };
 		9F801AC71C86906300F64265 /* TaskMediaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AC21C86906300F64265 /* TaskMediaCell.xib */; };
 		9F801AC81C86906300F64265 /* TaskMediaAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AC41C86906300F64265 /* TaskMediaAddCell.swift */; };
 		9F801AC91C86906300F64265 /* TaskMediaAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AC51C86906300F64265 /* TaskMediaAddCell.xib */; };
 		9F801AD91C86BAB400F64265 /* TouchClosuresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AD81C86BAB400F64265 /* TouchClosuresView.swift */; };
 		9F801ADB1C86BAF600F64265 /* TaskTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADA1C86BAF600F64265 /* TaskTextView.swift */; };
-		9F801ADD1C86BC5700F64265 /* YepAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADC1C86BC5700F64265 /* YepAlert.swift */; };
+		9F801ADD1C86BC5700F64265 /* WISAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADC1C86BC5700F64265 /* WISAlert.swift */; };
 		9F801ADF1C86C46F00F64265 /* TaskSectionPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */; };
 		9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */; };
 		9F801AE31C86C82100F64265 /* UIImageView+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */; };
@@ -192,7 +190,6 @@
 		9FEF4FE81C76D4B9001A7644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */; };
 		9FEF4FEB1C76D4B9001A7644 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF4FE91C76D4B9001A7644 /* LaunchScreen.storyboard */; };
 		9FEF4FF61C775778001A7644 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF4FF51C775778001A7644 /* LoginViewController.swift */; };
-		9FEF50061C78A99E001A7644 /* WISDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF4FFE1C78A99E001A7644 /* WISDefine.swift */; };
 		9FEF50141C78A9B7001A7644 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */; };
 		9FEF501C1C78B1F0001A7644 /* Dark.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF50171C78B1F0001A7644 /* Dark.bundle */; };
 		9FEF501D1C78B1F0001A7644 /* Light.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF50181C78B1F0001A7644 /* Light.bundle */; };
@@ -377,13 +374,13 @@
 		9F7C4BCC1C8E724900652CDF /* YepHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepHelper.swift; sourceTree = "<group>"; };
 		9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaControlView.swift; path = View/MediaControlView.swift; sourceTree = "<group>"; };
 		9F801A7E1C8539D400F64265 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		9F801A861C853B3300F64265 /* UIColor+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Yep.swift"; sourceTree = "<group>"; };
+		9F801A861C853B3300F64265 /* UIColor+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+WIS.swift"; sourceTree = "<group>"; };
 		9F801A871C853B3300F64265 /* UIFont+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Yep.swift"; sourceTree = "<group>"; };
 		9F801A8B1C8540C200F64265 /* SettingsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsUserCell.xib; path = View/SettingsUserCell.xib; sourceTree = "<group>"; };
 		9F801A8E1C856B1D00F64265 /* SettingsMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsMoreCell.swift; path = WisdriIS/View/SettingsMoreCell.swift; sourceTree = SOURCE_ROOT; };
 		9F801A8F1C856B1D00F64265 /* SettingsMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsMoreCell.xib; path = WisdriIS/View/SettingsMoreCell.xib; sourceTree = SOURCE_ROOT; };
 		9F801A931C85727A00F64265 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		9F801A961C85916D00F64265 /* YepConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepConfig.swift; sourceTree = "<group>"; };
+		9F801A961C85916D00F64265 /* WISConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISConfig.swift; sourceTree = "<group>"; };
 		9F801A981C8591A900F64265 /* YepUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepUserDefaults.swift; sourceTree = "<group>"; };
 		9F801A9B1C8594AC00F64265 /* ProfileLessInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLessInfoCell.swift; sourceTree = "<group>"; };
 		9F801A9C1C8594AC00F64265 /* ProfileLessInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileLessInfoCell.xib; sourceTree = "<group>"; };
@@ -400,7 +397,7 @@
 		9F801AB81C867EC600F64265 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		9F801AB91C867EC600F64265 /* PhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
 		9F801ABC1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PHImageRequestOptions+WIS.swift"; sourceTree = "<group>"; };
-		9F801ABE1C8681B300F64265 /* UIImage+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Yep.swift"; sourceTree = "<group>"; };
+		9F801ABE1C8681B300F64265 /* UIImage+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+WIS.swift"; sourceTree = "<group>"; };
 		9F801AC11C86906300F64265 /* TaskMediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaCell.swift; sourceTree = "<group>"; };
 		9F801AC21C86906300F64265 /* TaskMediaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMediaCell.xib; sourceTree = "<group>"; };
 		9F801AC41C86906300F64265 /* TaskMediaAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaAddCell.swift; sourceTree = "<group>"; };
@@ -410,7 +407,7 @@
 		9F801AD41C86B93600F64265 /* FeedBasicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedBasicCell.swift; path = View/FeedBasicCell.swift; sourceTree = "<group>"; };
 		9F801AD81C86BAB400F64265 /* TouchClosuresView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchClosuresView.swift; path = View/TouchClosuresView.swift; sourceTree = "<group>"; };
 		9F801ADA1C86BAF600F64265 /* TaskTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTextView.swift; path = View/TaskTextView.swift; sourceTree = "<group>"; };
-		9F801ADC1C86BC5700F64265 /* YepAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepAlert.swift; sourceTree = "<group>"; };
+		9F801ADC1C86BC5700F64265 /* WISAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISAlert.swift; sourceTree = "<group>"; };
 		9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskSectionPickerItemView.swift; path = View/TaskSectionPickerItemView.swift; sourceTree = "<group>"; };
 		9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HorizontalLineView.swift; path = View/HorizontalLineView.swift; sourceTree = "<group>"; };
 		9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Yep.swift"; sourceTree = "<group>"; };
@@ -1153,11 +1150,11 @@
 			children = (
 				9FEF500C1C78A9A4001A7644 /* Extension */,
 				9F7C4BCC1C8E724900652CDF /* YepHelper.swift */,
-				9F801A961C85916D00F64265 /* YepConfig.swift */,
+				9F801A961C85916D00F64265 /* WISConfig.swift */,
 				9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */,
 				9FEF4FFE1C78A99E001A7644 /* WISDefine.swift */,
 				9FEF50011C78A99E001A7644 /* WISSettings.swift */,
-				9F801ADC1C86BC5700F64265 /* YepAlert.swift */,
+				9F801ADC1C86BC5700F64265 /* WISAlert.swift */,
 				9F801A981C8591A900F64265 /* YepUserDefaults.swift */,
 				9F801AA41C85E0FF00F64265 /* String+Yep.swift */,
 				9FA4C37B1C995AF600BA4115 /* WISUserDefaults.swift */,
@@ -1169,11 +1166,11 @@
 			isa = PBXGroup;
 			children = (
 				9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */,
-				9F801A861C853B3300F64265 /* UIColor+Yep.swift */,
+				9F801A861C853B3300F64265 /* UIColor+WIS.swift */,
 				9F801A871C853B3300F64265 /* UIFont+Yep.swift */,
 				9FEF500D1C78A9B7001A7644 /* Request+Extension.swift */,
 				9FEF500E1C78A9B7001A7644 /* UIImage+Extension.swift */,
-				9F801ABE1C8681B300F64265 /* UIImage+Yep.swift */,
+				9F801ABE1C8681B300F64265 /* UIImage+WIS.swift */,
 				9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */,
 				9F801ABC1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift */,
 				9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */,
@@ -1429,22 +1426,21 @@
 				385C1DF71CE4BC9200F8E393 /* WISInspectionTaskDataNotification.m in Sources */,
 				9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */,
 				9F055C781CE061AE0077184B /* InfoView.swift in Sources */,
-				9F801ABF1C8681B300F64265 /* UIImage+Yep.swift in Sources */,
+				9F801ABF1C8681B300F64265 /* UIImage+WIS.swift in Sources */,
 				9F801ABD1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift in Sources */,
 				9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */,
 				9F801AC81C86906300F64265 /* TaskMediaAddCell.swift in Sources */,
-				9F7C4BB91C8D56D000652CDF /* TaskMediaView.swift in Sources */,
 				9FEF4FF61C775778001A7644 /* LoginViewController.swift in Sources */,
 				385C1E301CE4BD2700F8E393 /* InspectionResultDescriptionCell.swift in Sources */,
 				9F169F731C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift in Sources */,
-				9F801A971C85916D00F64265 /* YepConfig.swift in Sources */,
+				9F801A971C85916D00F64265 /* WISConfig.swift in Sources */,
 				9FA4C37C1C995AF600BA4115 /* WISUserDefaults.swift in Sources */,
 				9F055C6F1CDC72D40077184B /* TaskStateCell.swift in Sources */,
 				9F801ADF1C86C46F00F64265 /* TaskSectionPickerItemView.swift in Sources */,
 				9F7C4BB21C888F6100652CDF /* TaskDetailDoubleInfoCell.swift in Sources */,
 				9F801AA21C8594B800F64265 /* TaskDetailLargeInfoCell.swift in Sources */,
 				385C1E4E1CE4BDCD00F8E393 /* InspectionDetailViewController.swift in Sources */,
-				9F801ADD1C86BC5700F64265 /* YepAlert.swift in Sources */,
+				9F801ADD1C86BC5700F64265 /* WISAlert.swift in Sources */,
 				385C1DE71CE4BC9200F8E393 /* LBXScanWrapper.swift in Sources */,
 				9F6436D51CAA0A63007909BE /* PickUserViewController.swift in Sources */,
 				9F801AB41C867D8D00F64265 /* ImageCacheController.swift in Sources */,
@@ -1484,7 +1480,6 @@
 				9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */,
 				385C1DE61CE4BC9200F8E393 /* LBXScanViewStyle.swift in Sources */,
 				9F801A9D1C8594AC00F64265 /* ProfileLessInfoCell.swift in Sources */,
-				9F801A991C8591A900F64265 /* YepUserDefaults.swift in Sources */,
 				9F055D351CE458500077184B /* WISRefreshFooter.swift in Sources */,
 				385C1DE21CE4BC9200F8E393 /* LBXScanLineAnimation.swift in Sources */,
 				9F055BB21CDC2E180077184B /* ProfileInfoViewController.swift in Sources */,
@@ -1492,7 +1487,6 @@
 				385C1E021CE4BC9200F8E393 /* WISSystemNetworkNotification.m in Sources */,
 				9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */,
 				385C1DF51CE4BC9200F8E393 /* NSDate+WISExtension.m in Sources */,
-				9FEF50061C78A99E001A7644 /* WISDefine.swift in Sources */,
 				9F4B21641C7C313000D15B8E /* WISSpacingLabel.swift in Sources */,
 				385C1DFA1CE4BC9200F8E393 /* WISDataManager.m in Sources */,
 				9F055D341CE4584D0077184B /* WISRefreshHeader.swift in Sources */,
@@ -1535,7 +1529,7 @@
 				9F055BA91CD8FE9B0077184B /* ShiftViewController.swift in Sources */,
 				385C1E041CE4BC9200F8E393 /* WISPushNotificationService.swift in Sources */,
 				385C1E351CE4BD2700F8E393 /* InspectionListCell.swift in Sources */,
-				9F801A881C853B3300F64265 /* UIColor+Yep.swift in Sources */,
+				9F801A881C853B3300F64265 /* UIColor+WIS.swift in Sources */,
 				385C1DFC1CE4BC9200F8E393 /* WISLocalDocumentImageStore.m in Sources */,
 				385C1DFF1CE4BC9200F8E393 /* WISNetworkResponsedNULLDataException.m in Sources */,
 				9F99A7681CC48AAA00E1F92D /* CodeScanViewController.swift in Sources */,

@@ -26,9 +26,9 @@ class InspectionListCell: UITableViewCell {
     
     func bindData(model: WISInspectionTask) {
         self.inspectionDeviceName.text = model.device.deviceName
-        self.inspectionExpirationDate.text = DATE.stringFromDate(model.lastInspectionFinishedTimePlusCycleTime)
+        self.inspectionExpirationDate.text = WISConfig.DATE.stringFromDate(model.lastInspectionFinishedTimePlusCycleTime)
         self.inspectionDeviceTypeName.text = model.device.deviceType.deviceTypeName
-        // self.taskStatusImageView?.image = taskStateImage(model.state)
+        // self.taskStatusImageView?.image = WISConfig.taskStateImage(model.state)
         self.inspectionDeviceProcessSegment.text = model.device.processSegment
     }
 }

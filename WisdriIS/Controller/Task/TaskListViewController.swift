@@ -18,17 +18,15 @@ class TaskListViewController: BaseViewController {
 
     var wisTasks = [WISMaintenanceTask]()
     var currentOperatingCellIndex = -1
-    var currentUpdateCellType:TaskListCellUpdatingType = .DoNothing
-    var updateCellInfoURLSessionTask:NSURLSessionTask?
+    var currentUpdateCellType: TaskListCellUpdatingType = .DoNothing
+    var updateCellInfoURLSessionTask: NSURLSessionTask?
     
     // for task type: NotArchived and Archived
-    let recordNumberInPage:Int = 50
+    let recordNumberInPage: Int = 50
     var currentPageIndex = 1
     
     private let taskListCellID = "TaskListCell"
 
-//    var tab: String? = nil
-//    private var _tableView: UITableView!
     
     @IBOutlet weak var taskTableView: UITableView!
     
@@ -50,10 +48,10 @@ class TaskListViewController: BaseViewController {
         self.automaticallyAdjustsScrollViewInsets = false        
         
         taskTableView.registerNib(UINib(nibName: taskListCellID, bundle: nil), forCellReuseIdentifier: taskListCellID)
-//        view.backgroundColor = UIColor.yepBackgroundColor()
+//        view.backgroundColor = UIColor.wisBackgroundColor()
         
-        taskTableView.separatorColor = UIColor.yepCellSeparatorColor()
-        taskTableView.separatorInset = YepConfig.ContactsCell.separatorInset
+        taskTableView.separatorColor = UIColor.wisCellSeparatorColor()
+        taskTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         taskTableView.tableFooterView = UIView()
 //        taskTableView.addSubview(buttonView)
         
@@ -88,7 +86,6 @@ class TaskListViewController: BaseViewController {
     
     func refreshInitalPage() {
         self.taskTableView.mj_header.beginRefreshing()
-//        WISSettings.sharedInstance[kHomeTab] = tab
     }
     
     func loadNextPage() {
@@ -96,7 +93,7 @@ class TaskListViewController: BaseViewController {
     }
     
     func headerRefresh() {
-        //如果有上拉加载更多 正在执行，则取消它
+        // 如果有上拉加载更多 正在执行，则取消它
         if self.taskTableView.mj_footer != nil {
             if self.taskTableView.mj_footer.isRefreshing() {
                 self.taskTableView.mj_footer.endRefreshing()
@@ -106,11 +103,9 @@ class TaskListViewController: BaseViewController {
         getTaskList(taskType!)
     }
     
-    
     func footerRefresh() {
         getTaskList(taskType!)
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -120,14 +115,12 @@ class TaskListViewController: BaseViewController {
         print("Task List View Controller will appear!")
     }
     
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         self.currentPageIndex = 1
         getTaskList(taskType!)
     }
-    
     
     func getTaskList(taskType: MaintenanceTaskType) -> Void {
         switch taskType {
@@ -160,7 +153,7 @@ class TaskListViewController: BaseViewController {
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
 
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
     }
@@ -198,7 +191,7 @@ class TaskListViewController: BaseViewController {
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
             
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
     }
@@ -268,7 +261,7 @@ class TaskListViewController: BaseViewController {
                         self.updateCellInfoURLSessionTask = nil
                     }
                 } else {
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             }
             break

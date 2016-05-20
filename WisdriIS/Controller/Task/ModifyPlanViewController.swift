@@ -2,8 +2,8 @@
 //  ModifyPlanViewController.swift
 //  WisdriIS
 //
-//  Created by 任韬 on 16/4/27.
-//  Copyright © 2016年 Wisdri. All rights reserved.
+//  Created by Allen on 4/27/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
@@ -39,6 +39,7 @@ class ModifyPlanViewController: BaseViewController {
     
     // 导入页面的 Segue Identifier
     var segueIdentifier: String?
+    // 导出页面的 Segue Identifier
     private let pickUserSegueIdentifier = "pickUserForModifyPlan"
     
     // 获取已有的维保方案
@@ -47,7 +48,12 @@ class ModifyPlanViewController: BaseViewController {
     // 页面加载时获取 WISMaintenancePlan.participants
     // 获取 PickUser 页面返回的用户数组，用于 “参与人员” TextView 的显示
     var taskParticipants = [WISUser]()
+    // wisFileInfos 用于 CollcetionView 中图片等显示
     private var wisFileInfos = [WISFileInfo]()
+    // imagesInfo 用于 DataMangaer 接口
+    private var imagesInfo = [String : WISFileInfo]()
+    
+    var tapMediaAction: ((transitionView: UIView, image: UIImage?, wisFileInfos: [WISFileInfo], index: Int) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,48 +62,28 @@ class ModifyPlanViewController: BaseViewController {
         
         for item : AnyObject in self.wisPlan!.imagesInfo.allKeys {
             self.wisFileInfos.append(self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
+            self.imagesInfo[item as! String] = (self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
         }
         
         switch segueIdentifier! {
             
-        case "modifyPlanOperation":
-            title = "修改方案"
-            
-            taskPlanTextView.text = wisPlan?.planDescription
-            
-            taskParticipants = wisPlan!.participants.copy() as! [WISUser]
-            for user in taskParticipants {
-                print(user.userName)
-            }
-            
-            estimateDatePicker.date = wisPlan!.estimatedEndingTime
-            
-            print(wisPlan?.estimatedEndingTime)
-            break
-            
         case "approveOperation":
             title = "同意方案"
-            
-            taskPlanTextView.text = wisPlan?.planDescription
-            
-            taskParticipants = wisPlan!.participants.copy() as! [WISUser]
-            for user in taskParticipants {
-                print(user.userName)
-            }
-            print(wisPlan!.estimatedEndingTime)
+            taskPlanTextView.text = wisPlan!.planDescription
             estimateDatePicker.date = wisPlan!.estimatedEndingTime
-            break
             
         case "recheckOperation":
             title = "复审方案"
-            break
+            taskPlanTextView.text = wisPlan!.planDescription
+            estimateDatePicker.date = wisPlan!.estimatedEndingTime
             
         default:
             break
         }
         
+//        taskPlanTextView.frame.size.height = calHeightOfPlanTextView(text: taskPlanTextView.text)
         
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.userInteractionEnabled = true
         
@@ -116,7 +102,7 @@ class ModifyPlanViewController: BaseViewController {
         mediaCollectionView.backgroundColor = UIColor.clearColor()
         
         mediaCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
-        mediaCollectionView.contentInset.left = 15
+        mediaCollectionView.contentInset.left = WISConfig.MediaCollection.leftEdgeInset
         mediaCollectionView.dataSource = self
         mediaCollectionView.delegate = self
         mediaCollectionView.showsHorizontalScrollIndicator = false
@@ -125,35 +111,19 @@ class ModifyPlanViewController: BaseViewController {
         
         relevantUserTextView.textContainer.lineFragmentPadding = 0
         relevantUserTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        relevantUserTextView.frame.size.width = SCREEN_WIDTH - 40
         
-        if taskParticipants.count == 0 {
-            relevantUserTextView.text = ""
-        }
+        relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)
+
+//        let tapToPickUser = UITapGestureRecognizer(target: self, action: #selector(ModifyPlanViewController.tapToPickUser(_:)))
+//        relevantUserView.userInteractionEnabled = true
+//        relevantUserView.addGestureRecognizer(tapToPickUser)
+        accessoryImageView.hidden = true
         
-        let tapToPickUser = UITapGestureRecognizer(target: self, action: #selector(ModifyPlanViewController.tapToPickUser(_:)))
-        //        accessoryImageView.userInteractionEnabled = true
-        //        accessoryImageView.addGestureRecognizer(tapImage)
-        relevantUserView.userInteractionEnabled = true
-        relevantUserView.addGestureRecognizer(tapToPickUser)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        relevantUserTextView.text = ""
-        // 有问题，待修改
-        switch taskParticipants.count {
-        case 0:
-            relevantUserTextView.text = ""
-        default:
-            for user in taskParticipants {
-                if user == taskParticipants.last {
-                    relevantUserTextView.text = relevantUserTextView.text + user.fullName
-                } else {
-                    relevantUserTextView.text = user.fullName + "， " + relevantUserTextView.text
-                }
-            }
-        }
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -164,11 +134,11 @@ class ModifyPlanViewController: BaseViewController {
     @objc private func post(sender: UIBarButtonItem) {
         
         SVProgressHUD.showWithStatus("正在提交")
-        print(estimateDatePicker.date)
+//        print(estimateDatePicker.date)
         switch self.segueIdentifier! {
             
         case "approveOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus("提交成功")
@@ -176,13 +146,13 @@ class ModifyPlanViewController: BaseViewController {
                     self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             }
             break
             
         case "recheckOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus("提交成功")
@@ -190,11 +160,11 @@ class ModifyPlanViewController: BaseViewController {
                     self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             }
             break
-            
+          /*
         case "modifyPlanOperation":
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "修改维保方案", operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
                 if completedWithNoError {
@@ -204,11 +174,11 @@ class ModifyPlanViewController: BaseViewController {
                     // self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             }
             break
-            
+            */
         default:
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showErrorWithStatus("提交失败")
@@ -235,6 +205,13 @@ class ModifyPlanViewController: BaseViewController {
             }
         }
     }
+    
+    private func calHeightOfPlanTextView(text text: String) -> CGFloat {
+        
+        let rect = text.boundingRectWithSize(CGSize(width: TaskPlanCell.planTextViewMaxWidth, height: CGFloat(FLT_MAX)), options: [.UsesLineFragmentOrigin, .UsesFontLeading], attributes: WISConfig.TaskDescriptionCell.textAttributes, context: nil)
+        
+        return ceil(rect.height)
+    }
 
 }
 
@@ -258,8 +235,7 @@ extension ModifyPlanViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        return attachments.count
-        print("Description 中有 \(wisFileInfos.count) 张图片")
+//        print("Description 中有 \(wisFileInfos.count) 张图片")
         return wisFileInfos.count
     }
     
@@ -281,12 +257,12 @@ extension ModifyPlanViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-    
+    /* 暂不考虑在同意、复审页面查看大图
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! TaskMediaCell
         
         let transitionView = cell.imageView
-        //        tapMediaAction?(transitionView: transitionView, image: cell.imageView.image, attachments: attachments, index: indexPath.item)
-        //        tapMediaAction?(transitionView: transitionView, image: cell.imageView.image, attachments: attachments, index: indexPath.item)
+        tapMediaAction?(transitionView: transitionView, image: cell.imageView.image, wisFileInfos: wisFileInfos, index: indexPath.item)
     }
+ */
 }

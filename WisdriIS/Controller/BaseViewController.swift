@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
         }
 
         navigationController.navigationBar.backgroundColor = nil
-//        navigationController.navigationBar.barTintColor = UIColor.yepTintColor()
+//        navigationController.navigationBar.barTintColor = UIColor.wisTintColor()
         navigationController.navigationBar.translucent = true
         navigationController.navigationBar.shadowImage = nil
         navigationController.navigationBar.barStyle = UIBarStyle.Default
@@ -37,7 +37,7 @@ class BaseViewController: UIViewController {
 //        navigationController.navigationItem.backBarButtonItem = backBarButtonItem
 
         let textAttributes = [
-            NSForegroundColorAttributeName: UIColor.yepNavgationBarTitleColor(),
+            NSForegroundColorAttributeName: UIColor.wisNavgationBarTitleColor(),
 //            NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName: UIFont.navigationBarTitleFont()
         ]

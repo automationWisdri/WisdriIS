@@ -76,7 +76,7 @@ class RatingViewController: BaseViewController {
         
         title = NSLocalizedString("Task Rating")
         
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         navigationItem.rightBarButtonItem = postButton
         
         isDirty = false
@@ -101,7 +101,7 @@ class RatingViewController: BaseViewController {
         
         ratingCommentTextView.textContainer.lineFragmentPadding = 0
         ratingCommentTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        ratingCommentTextView.backgroundColor = UIColor.yepBackgroundColor()
+        ratingCommentTextView.backgroundColor = UIColor.wisBackgroundColor()
         ratingCommentTextView.delegate = self
         
     }
@@ -138,7 +138,7 @@ class RatingViewController: BaseViewController {
                 self.navigationController?.popToRootViewControllerAnimated(true)
             } else {
                 
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         }
         

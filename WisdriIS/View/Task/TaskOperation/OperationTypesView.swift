@@ -24,7 +24,7 @@ class OperationTypeCell: UITableViewCell {
         return label
     }()
 
-    var colorTitleLabelTextColor: UIColor = UIColor.yepTintColor() {
+    var colorTitleLabelTextColor: UIColor = UIColor.wisTintColor() {
         willSet {
             colorTitleLabel.textColor = newValue
         }
@@ -329,7 +329,7 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
 //            let cell = tableView.dequeueReusableCellWithIdentifier("ConversationMoreColorTitleCell") as! ConversationMoreColorTitleCell
             let cell = tableView.dequeueReusableCellWithIdentifier("OperationTypeCell") as! OperationTypeCell
             cell.colorTitleLabel.text = currentTaskOperations[indexPath.row].operationName
-            cell.colorTitleLabelTextColor = UIColor.yepTintColor()
+            cell.colorTitleLabelTextColor = UIColor.wisTintColor()
             cell.colorTitleLabelFontStyle = .Light
 
             return cell
@@ -338,7 +338,7 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
 
             let cell = tableView.dequeueReusableCellWithIdentifier("OperationTypeCell") as! OperationTypeCell
             cell.colorTitleLabel.text = currentTaskOperations[indexPath.row].operationName
-            cell.colorTitleLabelTextColor = UIColor.yepTintColor()
+            cell.colorTitleLabelTextColor = UIColor.wisTintColor()
             cell.colorTitleLabelFontStyle = .Light
 
             return cell

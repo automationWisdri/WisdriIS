@@ -36,10 +36,10 @@ class InspectionPopoverMenuController: UIViewController {
         menuTableView!.allowsMultipleSelection = false
         menuTableView!.indicatorStyle = .Default
         // menuTableView!.separatorStyle = .SingleLine
-        // menuTableView!.separatorInset = YepConfig.ContactsCell.separatorInset
-        menuTableView!.separatorInset.left = YepConfig.Profile.leftEdgeInset
-        // menuTableView!.separatorInset.right = YepConfig.Profile.rightEdgeInset
-        menuTableView!.separatorColor = UIColor.yepCellSeparatorColor()
+        // menuTableView!.separatorInset = WISConfig.ContactsCell.separatorInset
+        menuTableView!.separatorInset.left = WISConfig.Profile.leftEdgeInset
+        // menuTableView!.separatorInset.right = WISConfig.Profile.rightEdgeInset
+        menuTableView!.separatorColor = UIColor.wisCellSeparatorColor()
         
         menuTableView!.delegate = self
         menuTableView!.dataSource = self

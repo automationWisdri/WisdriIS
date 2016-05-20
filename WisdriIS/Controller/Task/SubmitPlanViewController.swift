@@ -88,6 +88,7 @@ class SubmitPlanViewController: BaseViewController {
     
     // 导入页面的 Segue Identifier
     var segueIdentifier: String?
+    // 导出页面的 Segue Identifier
     private let pickUserSegueIdentifier = "pickUserForSubmitPlan"
     
     override func viewDidLoad() {
@@ -122,31 +123,12 @@ class SubmitPlanViewController: BaseViewController {
             print(wisPlan?.estimatedEndingTime)
             break
             
-        case "approveOperation":
-            title = "同意方案"
-            
-            taskPlanTextView.text = wisPlan?.planDescription
-            
-            isDirty = true
-            
-            taskParticipants = wisPlan!.participants.copy() as! [WISUser]
-            for user in taskParticipants {
-                print(user.userName)
-            }
-            print(wisPlan!.estimatedEndingTime)
-            estimateDatePicker.date = wisPlan!.estimatedEndingTime
-            break
-            
-        case "recheckOperation":
-            title = "复审方案"
-            break
-            
         default:
             break
         }
 
         
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.userInteractionEnabled = true
         
@@ -166,7 +148,7 @@ class SubmitPlanViewController: BaseViewController {
         
         mediaCollectionView.registerNib(UINib(nibName: taskMediaAddCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaAddCellID)
         mediaCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
-        mediaCollectionView.contentInset.left = 15
+        mediaCollectionView.contentInset.left = 20
         mediaCollectionView.dataSource = self
         mediaCollectionView.delegate = self
         mediaCollectionView.showsHorizontalScrollIndicator = false
@@ -181,13 +163,9 @@ class SubmitPlanViewController: BaseViewController {
         }
         
         let tapToPickUser = UITapGestureRecognizer(target: self, action: #selector(SubmitPlanViewController.tapToPickUser(_:)))
-        //        accessoryImageView.userInteractionEnabled = true
-        //        accessoryImageView.addGestureRecognizer(tapImage)
+
         relevantUserView.userInteractionEnabled = true
         relevantUserView.addGestureRecognizer(tapToPickUser)
-        
-//        let singleTap = UITapGestureRecognizer.init(target: self, action: #selector(SubmitPlanViewController.singleTapped(_:)))
-//        self.view.addGestureRecognizer(singleTap)
 
     }
     
@@ -223,8 +201,10 @@ class SubmitPlanViewController: BaseViewController {
 //    }
     
     @objc private func post(sender: UIBarButtonItem) {
+        
+        SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.showWithStatus("正在提交")
-        print(estimateDatePicker.date)
+//        print(estimateDatePicker.date)
         // 上传图片
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
             NSLog("Upload progress is %f", progress.fractionCompleted)
@@ -238,50 +218,27 @@ class SubmitPlanViewController: BaseViewController {
                     }
         
                     switch self.segueIdentifier! {
-             /*
-        case "approveOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
-                if completedWithNoError {
-                    
-                    SVProgressHUD.showSuccessWithStatus("提交成功")
-                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                } else {
-                    
-                    errorCode(error)
-                }
-            }
-            break
-            
-        case "recheckOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
-                if completedWithNoError {
-                    
-                    SVProgressHUD.showSuccessWithStatus("提交成功")
-                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                } else {
-                    
-                    errorCode(error)
-                }
-            }
-            break
+
+                    case "modifyPlanOperation":
+                        
+                        for item: AnyObject in self.wisPlan!.imagesInfo.allKeys {
+                            self.taskImageInfo[item as! String] = (self.wisPlan!.imagesInfo.valueForKey(item as! String) as! WISFileInfo)
+                        }
+                        
+                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "修改维保方案", operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
+                            if completedWithNoError {
+                                SVProgressHUD.setDefaultMaskType(.None)
+                                SVProgressHUD.showSuccessWithStatus("修改成功")
+                                self.navigationController?.popViewControllerAnimated(true)
+                                
+                            } else {
+                                
+                                WISConfig.errorCode(error)
+                            }
+                        }
  
-        case "modifyPlanOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "修改维保方案", operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil) { (completedWithNoError, error) in
-                if completedWithNoError {
-                    
-                    SVProgressHUD.showSuccessWithStatus("修改成功")
-                    self.navigationController?.popViewControllerAnimated(true)
-                    
-                } else {
-                    
-                    errorCode(error)
-                }
-            }
-            break
-            */
                     case "submitPlanOperation":
+                        
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "维保方案", operationType: MaintenanceTaskOperationType.SubmitMaintenancePlan, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
@@ -289,12 +246,13 @@ class SubmitPlanViewController: BaseViewController {
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
-                                errorCode(error)
+                                WISConfig.errorCode(error)
                             }
                         }
                         break
             
                     case "submitQuickPlanOperation":
+                        
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "快速维保方案", operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
@@ -302,13 +260,10 @@ class SubmitPlanViewController: BaseViewController {
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
-                                errorCode(error)
+                                WISConfig.errorCode(error)
                             }
                         }
-                        break
-            
- 
-            
+                        
                     default:
                         SVProgressHUD.setDefaultMaskType(.None)
                         SVProgressHUD.showErrorWithStatus("提交失败")
@@ -316,7 +271,7 @@ class SubmitPlanViewController: BaseViewController {
                     }
                     
                 } else {
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
             })
     
@@ -408,7 +363,7 @@ extension SubmitPlanViewController: UIImagePickerControllerDelegate, UINavigatio
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     //                    let imageURL = info[UIImagePickerControllerReferenceURL] as? String
                     
-                    if mediaImages.count <= 3 {
+                    if mediaImages.count <= 5 {
                         mediaImages.append(image)
                     }
                 }
@@ -417,19 +372,6 @@ extension SubmitPlanViewController: UIImagePickerControllerDelegate, UINavigatio
                 break
             }
         }
-        
-        
-        //        let imageName = imageURL.path!.lastPathComponent
-        //        let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! as String
-        //        let localPath = documentDirectory.stringByAppendingPathComponent(imageName)
-        //
-        //        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        //        let data = UIImagePNGRepresentation(image)
-        //        data!.writeToFile(localPath, atomically: true)
-        //
-        //        let imageData = NSData(contentsOfFile: localPath)!
-        //        let photoURL = NSURL(fileURLWithPath: localPath)
-        //        let imageWithData = UIImage(data: imageData)!
         
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -446,9 +388,9 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch section {
-        case 0:
-            return 1
         case 1:
+            return 1
+        case 0:
             return mediaImages.count
         default:
             return 0
@@ -459,11 +401,11 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
         
         switch indexPath.section {
             
-        case 0:
+        case 1:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaAddCellID, forIndexPath: indexPath) as! TaskMediaAddCell
             return cell
             
-        case 1:
+        case 0:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaCellID, forIndexPath: indexPath) as! TaskMediaCell
             
             let image = mediaImages[indexPath.item]
@@ -483,19 +425,24 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        
+        if mediaImages.count == 0 {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         switch indexPath.section {
             
-        case 0:
+        case 1:
             
             taskPlanTextView.resignFirstResponder()
             
-            if mediaImages.count == 4 {
-                YepAlert.alertSorry(message: NSLocalizedString("Task can only has 4 photos.", comment: ""), inViewController: self)
+            if mediaImages.count == 6 {
+                WISAlert.alertSorry(message: NSLocalizedString("Task plan can only has 6 photos.", comment: ""), inViewController: self)
                 return
             }
             
@@ -542,11 +489,9 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
             
             self.presentViewController(pickAlertController, animated: true, completion: nil)
             
-        case 1:
+        case 0:
+            
             mediaImages.removeAtIndex(indexPath.item)
-            //            if !imageAssets.isEmpty {
-            //                imageAssets.removeAtIndex(indexPath.item)
-            //            }
             collectionView.deleteItemsAtIndexPaths([indexPath])
             
         default:

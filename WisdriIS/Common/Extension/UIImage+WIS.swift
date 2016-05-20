@@ -1,15 +1,31 @@
 //
-//  UIImage+Yep.swift
-//  Yep
+//  UIImage+WIS.swift
+//  WisdriIS
 //
-//  Created by NIX on 15/3/16.
-//  Copyright (c) 2015年 Catch Inc. All rights reserved.
+//  Created by Allen on 3/16/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
 import Ruler
 import ImageIO
 import MobileCoreServices
+
+extension UIImage {
+    
+    convenience init? (imageNamed: String) {
+        self.init(named: imageNamed)
+        
+    }
+    
+    class func imageUsedTemplateMode(named: String) -> UIImage? {
+        let image = UIImage(named: named)
+        if image == nil {
+            return nil
+        }
+        return image!.imageWithRenderingMode(.AlwaysTemplate)
+    }
+}
 
 extension UIImage {
 

@@ -40,7 +40,7 @@ class AboutViewController: BaseViewController {
         appNameLabelTopConstraint.constant = Ruler.iPhoneVertical(10, 20, 20, 20).value
         aboutTableViewTopConstraint.constant = Ruler.iPhoneVertical(130, 180, 260, 315).value
 
-        appNameLabel.textColor = UIColor.yepTintColor()
+        appNameLabel.textColor = UIColor.wisTintColor()
 
         aboutTableView.registerNib(UINib(nibName: profileLessInfoCellID, bundle: nil), forCellReuseIdentifier: profileLessInfoCellID)
 
@@ -100,7 +100,7 @@ extension AboutViewController: UITableViewDataSource, UITableViewDelegate {
             
         case Row.Cache.rawValue:
             
-            YepAlert.confirmOrCancel(title: "注意", message: "是否清除本地缓存？", confirmTitle: "清除", cancelTitle: "取消", inViewController: self, withConfirmAction: {
+            WISAlert.confirmOrCancel(title: "注意", message: "是否清除本地缓存？", confirmTitle: "清除", cancelTitle: "取消", inViewController: self, withConfirmAction: {
                     SVProgressHUD.showWithStatus("正在清除")
                     delay(1.5, work: {
                         WISDataManager.sharedInstance().clearCacheOfImages()

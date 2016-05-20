@@ -66,7 +66,7 @@ class InspectionDetailViewController: BaseViewController {
         
         // Do any additional setup after loading the view.
         title = NSLocalizedString("Inspection Task Detail", comment: "")
-        self.view.backgroundColor = UIColor.yepBackgroundColor()
+        self.view.backgroundColor = UIColor.wisBackgroundColor()
         inspectionDetailTableView.delegate = self
         inspectionDetailTableView.dataSource = self
         
@@ -191,7 +191,7 @@ class InspectionDetailViewController: BaseViewController {
             let scanResultAsArray = scanResult.componentsSeparatedByString("&")
             
             guard scanResultAsArray[0] == "DEVICE" && scanResultAsArray.count == 7 else {
-                YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
+                WISAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("Scaned QRCode is ", comment: "") + scanResult, dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
                 isQRCodeMatched = false
@@ -199,7 +199,7 @@ class InspectionDetailViewController: BaseViewController {
             }
             
             guard scanResultAsArray[1] == inspectionTask.device.deviceID else {
-                YepAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("QRCode does not match the device", comment: ""), dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
+                WISAlert.alert(title: NSLocalizedString("QRCode content not match", comment: ""), message: NSLocalizedString("QRCode does not match the device", comment: ""), dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: {
                     // do nothing
                 })
                 isQRCodeMatched = false
@@ -480,7 +480,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             case .Action:
                 //／ SUBMIT INSPECTION RESULT
                 if isQRCodeMatched {
-                    YepAlert.confirmOrCancel(
+                    WISAlert.confirmOrCancel(
                         title: NSLocalizedString("Submit Inspection Result"),
                         message: NSLocalizedString("Do you want to submit inspection result?"),
                         confirmTitle: NSLocalizedString("Confirm"),
@@ -513,7 +513,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             cellResultDescription.bringBackData(&self!.inspectionTask!)
                             
                             if self?.inspectionTask.inspectionResult == .DeviceFaultForHandle && self?.inspectionTask.inspectionResultDescription == "" {
-                                YepAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
+                                WISAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
                                 return
                             }
                             
@@ -522,7 +522,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             WISInsepctionDataManager.sharedInstance().addInspectionTaskToUploadingQueue(self!.inspectionTask!, images: imagesInDictionary)
                             
                             // if submit successfully
-                            YepAlert.alert(
+                            WISAlert.alert(
                                 title: NSLocalizedString("Submit Inspection Result"),
                                 message: NSLocalizedString("Submit Inspection Result Successfully!"),
                                 dismissTitle: NSLocalizedString("Confirm"),

@@ -60,7 +60,7 @@ class InspectionPickPhotoCell : UITableViewCell {
                 //                postButton.enabled = true
                 
                 //                if presentingViewController != nil {
-                //                    YepAlert.alertSorry(message: message, inViewController: self)
+                //                    WISAlert.alertSorry(message: message, inViewController: self)
                 //                } else {
                 //                    feedsViewController?.handleUploadingErrorMessage(message)
                 //                }
@@ -153,7 +153,7 @@ extension InspectionPickPhotoCell: UICollectionViewDataSource, UICollectionViewD
             
         case 1:
             if mediaImages.count >= imageCountUpLimit {
-                YepAlert.alertSorry(message: NSLocalizedString("Task can only has \(imageCountUpLimit) photos."), inViewController: self.superViewController)
+                WISAlert.alertSorry(message: NSLocalizedString("Task can only has \(imageCountUpLimit) photos."), inViewController: self.superViewController)
                 return
             }
             let pickAlertController = UIAlertController(title: NSLocalizedString("Choose Source"), message: nil, preferredStyle: .ActionSheet)

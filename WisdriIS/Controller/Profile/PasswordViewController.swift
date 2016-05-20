@@ -28,7 +28,7 @@ class PasswordViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor.yepBackgroundColor()
+        view.backgroundColor = UIColor.wisBackgroundColor()
         title = NSLocalizedString("Edit Password", comment: "")
         navigationItem.rightBarButtonItem = postButton
         
@@ -108,7 +108,7 @@ class PasswordViewController: BaseViewController {
                 })
                 
             } else {
-                errorCode(error)
+                WISConfig.errorCode(error)
             }
         })
     }

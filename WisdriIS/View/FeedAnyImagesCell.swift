@@ -8,8 +8,8 @@
 
 import UIKit
 
-let feedAttachmentImageSize = YepConfig.FeedNormalImagesCell.imageSize
-let feedAttachmentBiggerImageSize = YepConfig.FeedBiggerImageCell.imageSize
+let feedAttachmentImageSize = WISConfig.FeedNormalImagesCell.imageSize
+let feedAttachmentBiggerImageSize = WISConfig.FeedBiggerImageCell.imageSize
 
 private let taskMediaCellID = "TaskMediaCell"
 private let screenWidth: CGFloat = UIScreen.mainScreen().bounds.width

@@ -45,14 +45,14 @@
                                                     <constraint firstAttribute="width" constant="140" id="3Ds-0H-SdS"/>
                                                     <constraint firstAttribute="height" constant="21" id="PWR-hN-nXh"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rxW-bl-Auw">
-                                                <rect key="frame" x="20" y="38" width="536" height="42"/>
+                                                <rect key="frame" x="20" y="38" width="541" height="42"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accessory" translatesAutoresizingMaskIntoConstraints="NO" id="pfh-yi-Clu" userLabel="Accessory Image View">
@@ -72,7 +72,7 @@
                                             <constraint firstAttribute="bottom" secondItem="rxW-bl-Auw" secondAttribute="bottom" constant="10" id="M62-nZ-U7e"/>
                                             <constraint firstAttribute="trailing" secondItem="pfh-yi-Clu" secondAttribute="trailing" constant="13" id="UNm-Yl-Bky"/>
                                             <constraint firstItem="bQY-KP-qYe" firstAttribute="leading" secondItem="VP7-Gu-U6B" secondAttribute="leading" constant="20" id="iOJ-yp-5Qr"/>
-                                            <constraint firstItem="pfh-yi-Clu" firstAttribute="leading" secondItem="rxW-bl-Auw" secondAttribute="trailing" constant="20" id="rLA-rF-syk"/>
+                                            <constraint firstItem="pfh-yi-Clu" firstAttribute="leading" secondItem="rxW-bl-Auw" secondAttribute="trailing" constant="15" id="rLA-rF-syk"/>
                                             <constraint firstItem="bQY-KP-qYe" firstAttribute="top" secondItem="VP7-Gu-U6B" secondAttribute="top" constant="10" id="tyj-Yg-L6d"/>
                                         </constraints>
                                     </view>
@@ -85,7 +85,7 @@
                                                     <constraint firstAttribute="height" constant="21" id="FTS-wg-qGg"/>
                                                     <constraint firstAttribute="width" constant="140" id="NbN-6x-zFV"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -135,9 +135,9 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4De-V4-ZBD">
-                                                <rect key="frame" x="20" y="38" width="560" height="80"/>
+                                                <rect key="frame" x="20" y="38" width="565" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6E-V9-xpu">
@@ -146,7 +146,7 @@
                                                     <constraint firstAttribute="width" constant="140" id="5ZY-Nl-5j4"/>
                                                     <constraint firstAttribute="height" constant="21" id="u5E-Zm-jy0"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -177,7 +177,7 @@
                                             <constraint firstItem="m6E-V9-xpu" firstAttribute="top" secondItem="w2c-Uh-3Bc" secondAttribute="top" constant="10" id="fBm-km-PyQ"/>
                                             <constraint firstItem="oIT-Im-8Eb" firstAttribute="top" secondItem="w2c-Uh-3Bc" secondAttribute="top" id="haq-tc-KIU"/>
                                             <constraint firstItem="ael-pY-2Sb" firstAttribute="top" secondItem="2s1-cH-BfK" secondAttribute="bottom" constant="13" id="jUM-hf-ZdR"/>
-                                            <constraint firstAttribute="trailing" secondItem="4De-V4-ZBD" secondAttribute="trailing" constant="20" id="kkX-7r-reT"/>
+                                            <constraint firstAttribute="trailing" secondItem="4De-V4-ZBD" secondAttribute="trailing" constant="15" id="kkX-7r-reT"/>
                                             <constraint firstItem="2s1-cH-BfK" firstAttribute="top" secondItem="4De-V4-ZBD" secondAttribute="bottom" constant="13" id="nqg-la-9DL"/>
                                             <constraint firstAttribute="bottom" secondItem="ael-pY-2Sb" secondAttribute="bottom" id="u4O-a1-e8v"/>
                                             <constraint firstItem="4De-V4-ZBD" firstAttribute="leading" secondItem="w2c-Uh-3Bc" secondAttribute="leading" constant="20" id="zTn-by-cso"/>

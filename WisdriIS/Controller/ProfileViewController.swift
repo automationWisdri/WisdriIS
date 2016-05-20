@@ -52,7 +52,8 @@ class ProfileViewController: BaseViewController {
 
         title = NSLocalizedString("Profile", comment: "")
 
-        let avatarSize = YepConfig.editProfileAvatarSize()
+        // avatar size is 100
+        let avatarSize = WISConfig.profileAvatarSize()
         avatarImageViewWidthConstraint.constant = avatarSize
         updateAvatar() {}
         
@@ -80,7 +81,7 @@ class ProfileViewController: BaseViewController {
 
         currentUser = WISDataManager.sharedInstance().currentUser
         
-        let avatarSize = YepConfig.editProfileAvatarSize()
+        let avatarSize = WISConfig.profileAvatarSize()
         
         var imagesInfo = [String : WISFileInfo]()
         
@@ -299,7 +300,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 case 1:
                     cell.infoLabel.hidden = false
                     cell.infoLabel.text = "上班中"
-                    cell.infoLabel.textColor = UIColor.yepTintColor()
+                    cell.infoLabel.textColor = UIColor.wisTintColor()
                 case 2:
                     cell.infoLabel.hidden = false
                     cell.infoLabel.text = "已下班"
@@ -406,14 +407,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                     WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
                         if completedWithNoError {
                             
-                            SVProgressHUD.showWithStatus("打卡成功")
+                            SVProgressHUD.showSuccessWithStatus("打卡成功")
                             currentClockStatus = data as! Int
 
                             self.editProfileTableView.reloadData()
                             
                         } else {
                             
-                            errorCode(error)
+                            WISConfig.errorCode(error)
                         }
                         
                     })
@@ -429,7 +430,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
         case Section.LogOut.rawValue:
 
-            YepAlert.confirmOrCancel(title: NSLocalizedString("Notice", comment: ""), message: NSLocalizedString("Do you want to logout?", comment: ""), confirmTitle: NSLocalizedString("Yes", comment: ""), cancelTitle: NSLocalizedString("Cancel", comment: ""), inViewController: self, withConfirmAction: { () -> Void in
+            WISAlert.confirmOrCancel(title: NSLocalizedString("Notice", comment: ""), message: NSLocalizedString("Do you want to logout?", comment: ""), confirmTitle: NSLocalizedString("Yes", comment: ""), cancelTitle: NSLocalizedString("Cancel", comment: ""), inViewController: self, withConfirmAction: { () -> Void in
                 
 //                WISDataManager.sharedInstance().clearCacheOfImages()
 
@@ -458,8 +459,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
         activityIndicator.startAnimating()
 
-        let image = image.largestCenteredSquareImage().resizeToTargetSize(YepConfig.avatarMaxSize())
-//        let imageData = UIImageJPEGRepresentation(image, YepConfig.avatarCompressionQuality())
+        let image = image.largestCenteredSquareImage().resizeToTargetSize(WISConfig.avatarMaxSize())
+//        let imageData = UIImageJPEGRepresentation(image, WISConfig.avatarCompressionQuality())
 
         var images = [String : UIImage]()
         
@@ -490,13 +491,13 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                         } else {
                             SVProgressHUD.showErrorWithStatus("获取用户头像失败")
                             self.activityIndicator.stopAnimating()
-//                            errorCode(error)
+//                            WISConfig.errorCode(error)
                         }
                     })
                 } else {
                     SVProgressHUD.showErrorWithStatus("上传图片失败")
                     self.activityIndicator.stopAnimating()
-//                    errorCode(error)
+//                    WISConfig.errorCode(error)
                 }
         }
     }

@@ -22,7 +22,7 @@ class TaskDetailLargeInfoCell: UITableViewCell {
 
         selectionStyle = .None
 
-        infoTextView.font = YepConfig.EditProfile.introFont
+//        infoTextView.font = WISConfig.EditProfile.introFont
         infoTextView.textContainer.lineFragmentPadding = 0
         infoTextView.textContainerInset = UIEdgeInsetsZero
         infoTextView.delegate = self
@@ -41,9 +41,9 @@ extension TaskDetailLargeInfoCell: UITextViewDelegate {
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
 
         // 初次设置前，清空 placeholder
-        if YepUserDefaults.introduction.value == nil {
-            textView.text = ""
-        }
+//        if YepUserDefaults.introduction.value == nil {
+//            textView.text = ""
+//        }
 
         return true
     }

@@ -218,7 +218,7 @@ class MediaPreviewViewController: UIViewController {
                     
                 } else {
                     // 待完善
-                    errorCode(error)
+                    WISConfig.errorCode(error)
                 }
                 
             })
@@ -393,7 +393,7 @@ extension MediaPreviewViewController: UICollectionViewDataSource, UICollectionVi
                         }
                     } else {
                         // 待完善
-                        errorCode(error)
+                        WISConfig.errorCode(error)
                     }
                     
             })

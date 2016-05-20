@@ -95,10 +95,10 @@
             </objects>
             <point key="canvasLocation" x="1402.5" y="816"/>
         </scene>
-        <!--ModifyPlanViewController-->
+        <!--SubmitPlanViewController-->
         <scene sceneID="Oe1-47-jn7">
             <objects>
-                <viewControllerPlaceholder storyboardName="ModifyPlan" referencedIdentifier="ModifyPlanViewController" id="1Pa-6Y-ok5" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="SubmitPlan" referencedIdentifier="SubmitPlanViewController" id="1Pa-6Y-ok5" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwT-qA-XqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1402" y="925"/>

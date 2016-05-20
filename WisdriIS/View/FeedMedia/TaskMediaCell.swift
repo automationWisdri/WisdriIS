@@ -16,9 +16,9 @@ class TaskMediaCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        imageView.backgroundColor = YepConfig.FeedMedia.backgroundColor
+        imageView.backgroundColor = WISConfig.TaskMedia.backgroundColor
         imageView.layer.borderWidth = 1.0 / UIScreen.mainScreen().scale
-        imageView.layer.borderColor = UIColor.yepBorderColor().CGColor
+        imageView.layer.borderColor = UIColor.wisBorderColor().CGColor
         
         contentView.backgroundColor = UIColor.clearColor()
     }
