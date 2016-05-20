@@ -149,8 +149,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
         
         let board = UIStoryboard.init(name: "InspectionUploadingQueue", bundle: NSBundle.mainBundle())
         let viewController = board.instantiateViewControllerWithIdentifier("InspectionUploadingQueueViewController") as! InspectionUploadingQueueViewController
-        
-        // 需要根据角色来区分详细任务信息是否可编辑
+        viewController.hidesBottomBarWhenPushed = true
         superViewController.navigationController?.pushViewController(viewController, animated: true)
         completion!()
     }
