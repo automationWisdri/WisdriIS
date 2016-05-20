@@ -74,8 +74,8 @@ class InspectionDetailViewController: BaseViewController {
         inspectionDetailTableView.delegate = self
         inspectionDetailTableView.dataSource = self
         
-//        let singleTap = UITapGestureRecognizer.init(target: self, action: #selector(InspectionDetailViewController.singleTapped(_:)))
-//        self.view.addGestureRecognizer(singleTap)
+        //        let singleTap = UITapGestureRecognizer.init(target: self, action: #selector(InspectionDetailViewController.singleTapped(_:)))
+        //        self.view.addGestureRecognizer(singleTap)
         
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionDeviceInfoCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionDeviceInfoCellID)
@@ -136,16 +136,16 @@ class InspectionDetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         if showMoreInformation {
-//            let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
-//                NSIndexPath.init(
-//                    forRow: InspectionResultRow.ResultSelection.rawValue, inSection: Section.InspectionResult.rawValue)) as UITableViewCell?
-//
-//            let selectionCell = (cell as? InspectionResultSelectionCell)?.inspectionResultTableView.cellForRowAtIndexPath((
-//                NSIndexPath.init(forRow: 0, inSection: 0)))
-//
-//            selectionCell?.selected = true
-//            var ss = selectionCell?.selected
-//            var ww=ss
+            //            let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
+            //                NSIndexPath.init(
+            //                    forRow: InspectionResultRow.ResultSelection.rawValue, inSection: Section.InspectionResult.rawValue)) as UITableViewCell?
+            //
+            //            let selectionCell = (cell as? InspectionResultSelectionCell)?.inspectionResultTableView.cellForRowAtIndexPath((
+            //                NSIndexPath.init(forRow: 0, inSection: 0)))
+            //
+            //            selectionCell?.selected = true
+            //            var ss = selectionCell?.selected
+            //            var ww=ss
         }
         print("InspectionDetailViewController's view will appear")
     }
@@ -164,7 +164,7 @@ class InspectionDetailViewController: BaseViewController {
         self.view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
     }
-
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: QRCodeScanedSuccessfullyNotification, object: nil)
         print("Notification \(QRCodeScanedSuccessfullyNotification) deregistered in InspectionDetailViewController while deiniting")
@@ -174,20 +174,20 @@ class InspectionDetailViewController: BaseViewController {
         // self.view.endEditing(true)
         // do nothing
     }
-
+    
     // MARK: - Methods
     
     func getInspectionDetail() -> Void {
         // SVProgressHUD.show()
         //        WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(inspectionTask?.taskID) {
-//            (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
-//            if completedWithNoError {
-//                self.inspectionTaskInfo = updatedData as? WISMaintenanceTask
-//                SVProgressHUD.dismiss()
-//                self.inspectionDetailTableView.reloadData()
-//                // self.getTaskAction()
-//            }
-//        }
+        //            (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+        //            if completedWithNoError {
+        //                self.inspectionTaskInfo = updatedData as? WISMaintenanceTask
+        //                SVProgressHUD.dismiss()
+        //                self.inspectionDetailTableView.reloadData()
+        //                // self.getTaskAction()
+        //            }
+        //        }
     }
     
     //
@@ -226,20 +226,19 @@ class InspectionDetailViewController: BaseViewController {
     }
     
     class func performPushToInspectionDetailView(superViewController:UIViewController,
-                                                  inspectionTask:WISInspectionTask,
-                                                  index:Int,
-                                                  showMoreInformation:Bool, enableOperation:Bool) -> Void {
+                                                 inspectionTask:WISInspectionTask,
+                                                 index:Int,
+                                                 showMoreInformation:Bool, enableOperation:Bool) -> Void {
         
         let board = UIStoryboard.init(name: "InspectionDetail", bundle: NSBundle.mainBundle())
         let viewController = board.instantiateViewControllerWithIdentifier("InspectionDetailViewController") as! InspectionDetailViewController
         viewController.inspectionTask = inspectionTask.copy() as! WISInspectionTask
         
         viewController.showMoreInformation = showMoreInformation
-        // 需要根据角色来区分详细任务信息是否可编辑(由SuperViewController决定)
+        // 需要根据角色来区分是否详细任务信息是否可编辑(由SuperViewController决定)
         viewController.operationEnabled = enableOperation
         viewController.superViewController = superViewController
         viewController.indexInList = index
-        viewController.hidesBottomBarWhenPushed = true
         superViewController.navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -261,7 +260,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4
     }
-
+    
     /// Number of Rows in each section
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = Section(rawValue: section) else {
@@ -287,7 +286,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             return 0
         }
     }
-
+    
     /// Set height of header in section
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let section = Section(rawValue: section) else {
@@ -302,7 +301,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         case .More: return 0.0
         }
     }
-
+    
     /// Set Cells in section
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -533,7 +532,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             switch row {
             case .Action:
                 //／ SUBMIT INSPECTION RESULT
-                if isQRCodeMatched {
+                if showMoreInformation {
                     WISAlert.confirmOrCancel(
                         title: NSLocalizedString("Submit Inspection Result"),
                         message: NSLocalizedString("Do you want to submit inspection result?"),
@@ -567,7 +566,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             cellResultDescription.bringBackData(&self!.inspectionTask!)
                             
                             if self?.inspectionTask.inspectionResult == .DeviceFaultForHandle && self?.inspectionTask.inspectionResultDescription == "" {
-                                WISAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
+                                YepAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
                                 return
                             }
                             
@@ -576,7 +575,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             WISInsepctionDataManager.sharedInstance().addInspectionTaskToUploadingQueue(self!.inspectionTask!, images: imagesInDictionary)
                             
                             // if submit successfully
-                            WISAlert.alert(
+                            YepAlert.alert(
                                 title: NSLocalizedString("Submit Inspection Result"),
                                 message: NSLocalizedString("Submit Inspection Result Successfully!"),
                                 dismissTitle: NSLocalizedString("Confirm"),
@@ -587,14 +586,14 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                                         WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAtIndex(self!.indexInList)
                                     }
                                     self!.navigationController?.popViewControllerAnimated(true)
-                            })
+                                })
                         },
                         cancelAction: {/*[weak self]*/ () -> Void in
                             // do something
                             
                     })
                     
-                /// SCAN QRCODE
+                    /// SCAN QRCODE
                 } else {
                     self.codeScanNotificationToken = CodeScanViewController.performPresentToCodeScanViewController(self) {
                         // do nothing
@@ -609,7 +608,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         }
     }
     
-
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let section = Section(rawValue: indexPath.section) else {
             return
@@ -659,7 +658,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         }
     }
     
-
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -674,8 +673,8 @@ extension InspectionDetailViewController: UIImagePickerControllerDelegate, UINav
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
                     let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
-                                   NSIndexPath.init(forRow: InspectionAddResultRow.PickPhoto.rawValue,
-                                                    inSection: Section.InspectionResult.rawValue)) as! InspectionPickPhotoCell
+                        NSIndexPath.init(forRow: InspectionAddResultRow.PickPhoto.rawValue,
+                            inSection: Section.InspectionResult.rawValue)) as! InspectionPickPhotoCell
                     if cell.mediaImages.count <= cell.imageCountUpLimit - 1 {
                         cell.mediaImages.append(image)
                     }

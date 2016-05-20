@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 
 class PickUserViewController: UIViewController {
-
+    
     @IBOutlet weak var pickUserTableView: UITableView!
     
     @IBAction func doneAction(sender: AnyObject) {
@@ -26,7 +26,7 @@ class PickUserViewController: UIViewController {
         switch segueIdentifier! {
         case "pickUserForSubmitPlan":
             // currentTask?.maintenancePlan.participants.addObjectsFromArray(selectedUser)
-
+            
             // 跳转回维保方案页面，将选择的用户返回给页面的 taskParticipants 对象
             let destinationVC = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 2] as! SubmitPlanViewController
             destinationVC.taskParticipants = selectedUser
@@ -41,36 +41,16 @@ class PickUserViewController: UIViewController {
             
         case "pickUserForPassOperation", "assignUserForPassOperation":
             guard selectedUser.count == 1 else {
-//                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                WISAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
+                //                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
+                // YepAlert.Sorry(message: "必须选择 1 名用户", inViewController: self)
+                WISAlert.alert(title: NSLocalizedString("Wrong Operation", comment: ""), message: NSLocalizedString("One and only one user should be seleceted", comment: ""), dismissTitle: NSLocalizedString("Confirm", comment: ""), inViewController: self, withDismissAction: nil)
                 return
             }
             
-            SVProgressHUD.showWithStatus("正在提交")
-//            print(selectedUser[0].userName)
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "转单", operationType: MaintenanceTaskOperationType.PassOn, taskReceiverName: selectedUser[0].userName, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
-                if completedWithNoError {
-                    let status = "任务已转给：" + self.selectedUser[0].fullName
-                    SVProgressHUD.showSuccessWithStatus(status)
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                    
-                } else {
-                    
-                    WISConfig.errorCode(error)
-                    
-                }
-            })
-            
-        case "assignUserForPassOperation":
-            
-            guard selectedUser.count == 1 else {
-//                SVProgressHUD.showErrorWithStatus("只能选择 1 个用户")
-                WISAlert.alertSorry(message: "只能选择 1 个用户", inViewController: self)
-                return
-            }
+            let opType = segueIdentifier! == "pickUserForPassOperation" ? MaintenanceTaskOperationType.PassOn : MaintenanceTaskOperationType.Assign
             
             SVProgressHUD.showWithStatus(NSLocalizedString("Submitting in progress", comment: ""))
-//            print(selectedUser[0].userName)
+            //            print(selectedUser[0].userName)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "转单", operationType: opType, taskReceiverName: selectedUser[0].userName, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     let status = NSLocalizedString("Task has been passed to ", comment: "") + self.selectedUser[0].fullName
@@ -78,7 +58,6 @@ class PickUserViewController: UIViewController {
                     self.navigationController?.popToRootViewControllerAnimated(true)
                     
                 } else {
-                    
                     WISConfig.errorCode(error)
                     
                 }
@@ -102,7 +81,7 @@ class PickUserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         title = NSLocalizedString("Pick User", comment: "")
@@ -180,27 +159,25 @@ class PickUserViewController: UIViewController {
                 }
                 
             } else {
-                
                 WISConfig.errorCode(error)
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -225,28 +202,28 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         guard let section = Section(rawValue: section) else {
             return 0
         }
         
         switch segueIdentifier! {
             
-        case "pickUserForSubmitPlan":
-            switch section {
-                case .Engineer: return engineerUser.count
-                case .Technician: return technicianUser.count
-            }
-        case "pickUserForModifyPlan":
-            switch section {
-            case .Engineer: return engineerUser.count
-            case .Technician: return technicianUser.count
-            }
-        case "pickUserForPassOperation": return engineerUser.count
-        case "assignUserForPassOperation": return engineerUser.count
-        default: return 0
+            case "pickUserForSubmitPlan":
+                switch section {
+                    case .Engineer: return engineerUser.count
+                    case .Technician: return technicianUser.count
+                }
+            case "pickUserForModifyPlan":
+                switch section {
+                    case .Engineer: return engineerUser.count
+                    case .Technician: return technicianUser.count
+                }
+            case "pickUserForPassOperation": return engineerUser.count
+            case "assignUserForPassOperation": return engineerUser.count
+            default: return 0
         }
-
+        
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -255,11 +232,11 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         switch segueIdentifier! {
-        
+            
         case "pickUserForSubmitPlan":
             switch section {
-                case .Engineer: return 20
-                case .Technician: return 20
+            case .Engineer: return 20
+            case .Technician: return 20
             }
         case "pickUserForModifyPlan":
             switch section {
@@ -270,15 +247,15 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
         case "assignUserForPassOperation": return 0
         default: return 0
         }
-
+        
     }
     
 //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
+//
 //        guard let section = Section(rawValue: section) else {
 //            return ""
 //        }
-//        
+//
 //        switch section {
 //        case .Engineer: return "工程师"
 //        case .Technician: return "电工"
@@ -297,12 +274,12 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
             
         case "pickUserForSubmitPlan":
             switch section {
-                case .Engineer:
-                    cell.bind(self.engineerUser[indexPath.row])
-                    return cell
+            case .Engineer:
+                cell.bind(self.engineerUser[indexPath.row])
+                return cell
             case .Technician:
-                    cell.bind(self.technicianUser[indexPath.row])
-                    return cell
+                cell.bind(self.technicianUser[indexPath.row])
+                return cell
             }
         case "pickUserForModifyPlan":
             switch section {
@@ -324,34 +301,7 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
     }
-    /*
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        guard let section = Section(rawValue: indexPath.section), let cell = cell as? ContactsCell else {
-            return
-        }
-            
-        if segueIdentifier == "pickUserForSubmitPlan" {
-            switch section {
-            
-            case .Engineer:
-                
-                if taskParticipantsUsername.contains(self.engineerUser[indexPath.row].userName) {
-//                    cell.setSelected(true, animated: false)
-                    cell.selected = true
-                }
-                
-            case .Technician:
-                
-                if taskParticipantsUsername.contains(self.technicianUser[indexPath.row].userName) {
-//                    cell.setSelected(true, animated: false)
-                    cell.selected = true
-                }
-            }
-        }
-        
-    }
-    */
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if !navigationItem.rightBarButtonItem!.enabled {
             // navigationItem.rightBarButtonItem!.enabled = true
