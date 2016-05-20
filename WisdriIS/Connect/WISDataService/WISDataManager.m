@@ -3414,7 +3414,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 
 
 - (void)clearCacheOfImages {
-    [[[WISFileStoreManager defaultManager]downloadImageStore] clearCacheInMemory];
+    // [[[WISFileStoreManager defaultManager]downloadImageStore] clearCacheInMemory];
     [[[WISFileStoreManager defaultManager]downloadImageStore] clearCacheOnDeviceStorage];
 }
 

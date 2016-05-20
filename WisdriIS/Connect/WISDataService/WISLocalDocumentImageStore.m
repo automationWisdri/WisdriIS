@@ -281,10 +281,14 @@ NSString * const defaultLocalImageStorageDirectoryKey = @"defaultLocalImageStora
 
 
 #pragma mark - Notification selector
-- (void)clearCacheInMemory:(NSNotification *)notification {
-    NSLog(@"flushing %lu images out of the cache", (unsigned long)[self.dictionaryOfImage count]);
-    [self.dictionaryOfImage removeAllObjects];
+- (BOOL)clearCacheInMemory:(NSNotification *)notification {
+    BOOL removed = NO;
+    if (self.dictionaryOfImage.count > 0) {
+        NSLog(@"flushing %lu images out of the cache", (unsigned long)[self.dictionaryOfImage count]);
+        [self.dictionaryOfImage removeAllObjects];
+        removed = YES;
+    }
+    return removed;
 }
-
 
 @end
