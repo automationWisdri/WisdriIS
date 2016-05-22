@@ -16,14 +16,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Show Result" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRc-0c-daR" userLabel="Annotation Label">
-                        <rect key="frame" x="10" y="12" width="102" height="22"/>
+                        <rect key="frame" x="18" y="12" width="102" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="eRc-0c-daR" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="2" id="ho7-eo-n78"/>
+                    <constraint firstItem="eRc-0c-daR" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="10" id="ZwS-lq-n4H"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

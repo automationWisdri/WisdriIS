@@ -235,7 +235,7 @@ class InspectionDetailViewController: BaseViewController {
         viewController.inspectionTask = inspectionTask.copy() as! WISInspectionTask
         
         viewController.showMoreInformation = showMoreInformation
-        // 需要根据角色来区分是否详细任务信息是否可编辑(由SuperViewController决定)
+        // 需要根据角色来区分详细任务信息是否可编辑(由SuperViewController决定)
         viewController.operationEnabled = enableOperation
         viewController.superViewController = superViewController
         viewController.indexInList = index

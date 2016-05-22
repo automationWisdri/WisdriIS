@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -41,9 +41,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Sh0-QY-Q1K" firstAttribute="trailing" secondItem="cJo-6A-Pd2" secondAttribute="trailingMargin" id="K5O-hL-Hcc"/>
+                    <constraint firstItem="Sh0-QY-Q1K" firstAttribute="leading" secondItem="Cf9-Fo-rbE" secondAttribute="trailing" constant="9" id="5Rt-tj-cPH"/>
+                    <constraint firstItem="TKT-H6-904" firstAttribute="leading" secondItem="5ZD-IX-BSG" secondAttribute="trailing" constant="9" id="FQK-hD-ceS"/>
                     <constraint firstItem="Cf9-Fo-rbE" firstAttribute="leading" secondItem="cJo-6A-Pd2" secondAttribute="leadingMargin" constant="10" id="UM4-bc-dxu"/>
-                    <constraint firstItem="TKT-H6-904" firstAttribute="trailing" secondItem="cJo-6A-Pd2" secondAttribute="trailingMargin" id="XdD-XY-owu"/>
                     <constraint firstItem="5ZD-IX-BSG" firstAttribute="leading" secondItem="cJo-6A-Pd2" secondAttribute="leadingMargin" constant="10" id="nzk-oH-odg"/>
                 </constraints>
             </tableViewCellContentView>
