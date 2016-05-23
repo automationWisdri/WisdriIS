@@ -352,7 +352,6 @@
 		9F336DAC1CCB4C0F00844CB1 /* RemarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemarkViewController.swift; sourceTree = "<group>"; };
 		9F336DAF1CCF038C00844CB1 /* TaskPlanCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskPlanCell.swift; path = View/Task/TaskPlan/TaskPlanCell.swift; sourceTree = "<group>"; };
 		9F336DB01CCF038C00844CB1 /* TaskPlanCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskPlanCell.xib; path = View/Task/TaskPlan/TaskPlanCell.xib; sourceTree = "<group>"; };
-		9F4B21631C7C313000D15B8E /* WISSpacingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WISSpacingLabel.swift; path = View/WISSpacingLabel.swift; sourceTree = "<group>"; };
 		9F6436571CA29616007909BE /* SubmitPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPlanViewController.swift; sourceTree = "<group>"; };
 		9F64369E1CA538C4007909BE /* SubmitPlan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubmitPlan.storyboard; sourceTree = "<group>"; };
 		9F6436D41CAA0A63007909BE /* PickUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickUserViewController.swift; path = PickUser/PickUserViewController.swift; sourceTree = "<group>"; };
@@ -886,7 +885,6 @@
 			children = (
 				9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */,
 				9F2A53251C9AF596001BE6F6 /* WISRefreshHeader.swift */,
-				9F4B21631C7C313000D15B8E /* WISSpacingLabel.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
