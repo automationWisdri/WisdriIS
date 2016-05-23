@@ -3,7 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -18,6 +18,9 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ean-DX-V6m" userLabel="Task ID Label">
                         <rect key="frame" x="81" y="10" width="100" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="DLY-CI-0n0"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -34,6 +37,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfh-6q-HTf" userLabel="Task Status Label">
                         <rect key="frame" x="182" y="10" width="130" height="18"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="18" id="t1P-0Q-9hx"/>
                             <constraint firstAttribute="width" constant="130" id="zix-vj-P68"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
@@ -41,7 +45,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-Sr-vOL" userLabel="Task Date Label">
-                        <rect key="frame" x="202" y="55" width="110" height="15"/>
+                        <rect key="frame" x="202" y="58" width="110" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="110" id="rQP-Zu-jl7"/>
                         </constraints>
@@ -53,35 +57,24 @@
                         <rect key="frame" x="13" y="10" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="3KY-U7-nEK"/>
+                            <constraint firstAttribute="width" secondItem="Bvw-co-0QS" secondAttribute="height" multiplier="1:1" id="QQI-sF-rnF"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="h6f-Sr-vOL" secondAttribute="trailing" id="0uZ-GQ-Zlo"/>
-                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="top" secondItem="NWB-bR-B82" secondAttribute="bottom" constant="3" id="4VJ-1z-oZl"/>
-                    <constraint firstItem="Bvw-co-0QS" firstAttribute="top" secondItem="ofz-1a-f2g" secondAttribute="topMargin" constant="2" id="8Fq-62-DAh"/>
+                    <constraint firstAttribute="bottom" secondItem="h6f-Sr-vOL" secondAttribute="bottom" constant="6.5" id="88E-xO-KH0"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="trailing" secondItem="ofz-1a-f2g" secondAttribute="trailingMargin" id="EhE-Zx-zTN"/>
                     <constraint firstItem="NWB-bR-B82" firstAttribute="top" secondItem="ean-DX-V6m" secondAttribute="bottom" constant="3" id="Fb3-GW-kR5"/>
                     <constraint firstItem="ean-DX-V6m" firstAttribute="top" secondItem="Bvw-co-0QS" secondAttribute="top" id="HeS-ej-yrX"/>
                     <constraint firstItem="Bvw-co-0QS" firstAttribute="leading" secondItem="ofz-1a-f2g" secondAttribute="leadingMargin" constant="5" id="M9d-XW-aDd"/>
                     <constraint firstItem="h6f-Sr-vOL" firstAttribute="trailing" secondItem="NWB-bR-B82" secondAttribute="trailing" id="OX3-eU-IVM"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="trailing" secondItem="NWB-bR-B82" secondAttribute="trailing" id="SPL-oC-Qnh"/>
-                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="leading" secondItem="pfh-6q-HTf" secondAttribute="leading" id="TDq-5p-ush"/>
                     <constraint firstItem="Bvw-co-0QS" firstAttribute="centerY" secondItem="ofz-1a-f2g" secondAttribute="centerY" id="UbB-5D-4kx"/>
-                    <constraint firstItem="pfh-6q-HTf" firstAttribute="baseline" secondItem="ean-DX-V6m" secondAttribute="baseline" id="Vle-hH-6Tn"/>
                     <constraint firstItem="ean-DX-V6m" firstAttribute="leading" secondItem="Bvw-co-0QS" secondAttribute="trailing" constant="8" symbolic="YES" id="Z82-LL-mXg"/>
-                    <constraint firstItem="pfh-6q-HTf" firstAttribute="firstBaseline" secondItem="ean-DX-V6m" secondAttribute="firstBaseline" id="a1X-uy-ffZ"/>
                     <constraint firstItem="ean-DX-V6m" firstAttribute="leading" secondItem="NWB-bR-B82" secondAttribute="leading" id="cPw-Dx-4O5"/>
+                    <constraint firstItem="pfh-6q-HTf" firstAttribute="top" secondItem="ean-DX-V6m" secondAttribute="top" id="uc7-U1-uem"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="leading" secondItem="ean-DX-V6m" secondAttribute="trailing" constant="1" id="v9W-AW-oP7"/>
-                    <constraint firstItem="NWB-bR-B82" firstAttribute="top" secondItem="ofz-1a-f2g" secondAttribute="top" constant="31" id="wv3-wN-zQZ"/>
-                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="bottom" secondItem="Bvw-co-0QS" secondAttribute="bottom" id="zKH-uy-Nb8"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="0uZ-GQ-Zlo"/>
-                        <exclude reference="TDq-5p-ush"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="taskDateLabel" destination="h6f-Sr-vOL" id="USG-Jk-gWe"/>

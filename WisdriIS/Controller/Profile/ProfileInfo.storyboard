@@ -24,7 +24,7 @@
         <!--Profile Info View Controller-->
         <scene sceneID="Lz1-Ix-ZTa">
             <objects>
-                <viewController storyboardIdentifier="ProfileInfoViewController" id="Nqa-pC-c8D" customClass="ProfileInfoViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileInfoViewController" hidesBottomBarWhenPushed="YES" id="Nqa-pC-c8D" customClass="ProfileInfoViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Tf-T1-85b"/>
                         <viewControllerLayoutGuide type="bottom" id="vgV-oQ-yWe"/>

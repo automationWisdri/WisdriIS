@@ -311,11 +311,11 @@
                                     <outlet property="calendarDelegate" destination="1wQ-pg-4w9" id="VP6-wF-iyN"/>
                                 </connections>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-Tm-k7t" userLabel="Shift Table View">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-Tm-k7t" userLabel="Shift Table View">
                                 <rect key="frame" x="0.0" y="398" width="600" height="153"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="separatorInset" minX="90" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="dataSource" destination="1wQ-pg-4w9" id="6kT-EE-Xer"/>
                                     <outlet property="delegate" destination="1wQ-pg-4w9" id="xBd-A1-8N3"/>

@@ -24,7 +24,7 @@
         <!--Task Detail View Controller-->
         <scene sceneID="N4P-Nb-8hF">
             <objects>
-                <viewController storyboardIdentifier="TaskDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="SBb-pL-HoP" customClass="TaskDetailViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TaskDetailViewController" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="SBb-pL-HoP" customClass="TaskDetailViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nsp-oL-gii"/>
                         <viewControllerLayoutGuide type="bottom" id="23I-vq-sja"/>

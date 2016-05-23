@@ -11,8 +11,9 @@ import UIKit
 class TaskDetailSingleInfoCell: UITableViewCell {
 
     @IBOutlet weak var annotationLabel: UILabel!
-    @IBOutlet weak var annotatinoInfoLabel: UILabel!
+    @IBOutlet weak var annotationInfoLabel: UILabel!
     @IBOutlet weak var actionImageView: UIImageView!
+    @IBOutlet weak var annotationImageView: UIImageView!
     
     var tapToCallAction: (() -> Void)?
     
