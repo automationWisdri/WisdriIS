@@ -45,9 +45,12 @@ class InspectionHomeViewController: BaseViewController {
         
         if self.currentUser.roleCode == self.roleCodes[RoleCode.Engineer.rawValue] || self.currentUser.roleCode == self.roleCodes[RoleCode.Technician.rawValue]{
             self.navigationItem.rightBarButtonItem = inspectionPopoverButton
+            
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
+        
+        
         
         // *** Popover menu controller
         inspectionPopoverMenuController = InspectionPopoverMenuController()

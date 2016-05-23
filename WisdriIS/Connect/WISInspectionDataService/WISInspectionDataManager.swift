@@ -276,31 +276,33 @@ class WISInsepctionDataManager {
         tasks.append((self.currentUploadingInspectionTask!.inspectionTask)!)
         
         self.currentURLSessionTask = WISDataManager.sharedInstance().submitInspectionResult(tasks, completionHandler: {[weak self] (completedWithNoError, error) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             if completedWithNoError {
-                weak var weakSelf = self
                 print("\n")
-                print("submit inspection task: \(weakSelf?.currentUploadingInspectionTask?.inspectionTask.device.deviceID) completed")
+                print("submit inspection task: \(strongSelf.currentUploadingInspectionTask?.inspectionTask.device.deviceID) completed")
                 
-                weakSelf!.removeInspectionTaskFromUploadingQueueByIndex(0)
-                weakSelf!.currentUploadingInspectionTask?.uploadingState = InspectionUploadingState.UploadingCompleted
-                weakSelf!.uploadingStateBeforeSuspended = InspectionUploadingState.Unknown
+                strongSelf.removeInspectionTaskFromUploadingQueueByIndex(0)
+                strongSelf.currentUploadingInspectionTask?.uploadingState = InspectionUploadingState.UploadingCompleted
+                strongSelf.uploadingStateBeforeSuspended = InspectionUploadingState.Unknown
                 
-                weakSelf!.currentURLSessionTask = nil
-                weakSelf!.currentUploadingInspectionTask = nil
+                strongSelf.currentURLSessionTask = nil
+                strongSelf.currentUploadingInspectionTask = nil
                 
-                if weakSelf!.inspectionTasksUploadingQueue.isEmpty {
+                if strongSelf.inspectionTasksUploadingQueue.isEmpty {
                     // do nothing
                 } else {
-                    weakSelf!.popItemFromUploadingQueueToCurrentUploadingInspectionTaskByIndex(0)
-                    weakSelf!.attemptInspectionTaskUploading()
+                    strongSelf.popItemFromUploadingQueueToCurrentUploadingInspectionTaskByIndex(0)
+                    strongSelf.attemptInspectionTaskUploading()
                 }
                 
             } else {
-                weak var weakSelf = self
-                weakSelf!.currentURLSessionTask = nil
-                weakSelf!.currentUploadingInspectionTask?.isImagesUploadingCompleted = true
-                weakSelf!.currentUploadingInspectionTask?.uploadingState = .UploadingPending
-                // weakSelf!.attemptInspectionTaskUploading()
+                strongSelf.currentURLSessionTask = nil
+                strongSelf.currentUploadingInspectionTask?.isImagesUploadingCompleted = true
+                strongSelf.currentUploadingInspectionTask?.uploadingState = .UploadingPending
+                // strongSelf.attemptInspectionTaskUploading()
             }
         })
         currentURLSessionTask?.resume()
