@@ -85,7 +85,7 @@
 		38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */; };
 		9F055A851CD119620077184B /* SubmitPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6436571CA29616007909BE /* SubmitPlanViewController.swift */; };
 		9F055A861CD11A3F0077184B /* SubmitPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F64369E1CA538C4007909BE /* SubmitPlan.storyboard */; };
-		9F055B991CD3ABC80077184B /* UIScrollView+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */; };
+		9F055B991CD3ABC80077184B /* UIScrollView+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F055B981CD3ABC80077184B /* UIScrollView+WIS.swift */; };
 		9F055B9E1CD791170077184B /* ProfilePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F055B9C1CD791170077184B /* ProfilePasswordCell.swift */; };
 		9F055B9F1CD791170077184B /* ProfilePasswordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F055B9D1CD791170077184B /* ProfilePasswordCell.xib */; };
 		9F055BA11CD797E50077184B /* Password.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F055BA01CD797E50077184B /* Password.storyboard */; };
@@ -111,6 +111,8 @@
 		9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */; };
 		9F1FA1E81CEB717F001A2F61 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E61CEB717F001A2F61 /* ArchiveViewController.swift */; };
 		9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */; };
+		9F1FA1EB1CF341BB001A2F61 /* TaskSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */; };
+		9F1FA1EE1CF3490E001A2F61 /* ImageCacheController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB11C867D8D00F64265 /* ImageCacheController.swift */; };
 		9F2A53211C9AA92D001BE6F6 /* TaskListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */; };
 		9F2A53231C9AA96B001BE6F6 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */; };
 		9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */; };
@@ -120,16 +122,12 @@
 		9F336DAD1CCB4C0F00844CB1 /* RemarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F336DAC1CCB4C0F00844CB1 /* RemarkViewController.swift */; };
 		9F336DB11CCF038C00844CB1 /* TaskPlanCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F336DAF1CCF038C00844CB1 /* TaskPlanCell.swift */; };
 		9F336DB21CCF038C00844CB1 /* TaskPlanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F336DB01CCF038C00844CB1 /* TaskPlanCell.xib */; };
-		9F4B21641C7C313000D15B8E /* WISSpacingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4B21631C7C313000D15B8E /* WISSpacingLabel.swift */; };
 		9F6436D51CAA0A63007909BE /* PickUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6436D41CAA0A63007909BE /* PickUserViewController.swift */; };
-		9F6436D91CAA0B49007909BE /* PickUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6436D71CAA0B49007909BE /* PickUserCell.swift */; };
-		9F6436DA1CAA0B49007909BE /* PickUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F6436D81CAA0B49007909BE /* PickUserCell.xib */; };
 		9F6436DC1CAA0C93007909BE /* PickUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F6436DB1CAA0C93007909BE /* PickUser.storyboard */; };
 		9F6437281CAC224C007909BE /* login-bg-iphone-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F6437271CAC224C007909BE /* login-bg-iphone-3.jpg */; };
 		9F64372D1CAC2C44007909BE /* Rating.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F64372C1CAC2C44007909BE /* Rating.storyboard */; };
 		9F64372F1CAE51FA007909BE /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F64372E1CAE51FA007909BE /* RatingViewController.swift */; };
 		9F7C4B9B1C86E09900652CDF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4B9D1C86E09900652CDF /* Localizable.strings */; };
-		9F7C4BA41C88137A00652CDF /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BA31C88137A00652CDF /* ContactsViewController.swift */; };
 		9F7C4BA81C88168900652CDF /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BA61C88168900652CDF /* ContactsCell.swift */; };
 		9F7C4BA91C88168900652CDF /* ContactsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BA71C88168900652CDF /* ContactsCell.xib */; };
 		9F7C4BAC1C88324F00652CDF /* TaskDetailSingleInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BAB1C88324F00652CDF /* TaskDetailSingleInfoCell.xib */; };
@@ -144,23 +142,22 @@
 		9F7C4BC81C8E6E1300652CDF /* MediaViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BC61C8E6E1300652CDF /* MediaViewCell.swift */; };
 		9F7C4BC91C8E6E1300652CDF /* MediaViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7C4BC71C8E6E1300652CDF /* MediaViewCell.xib */; };
 		9F7C4BCB1C8E6F1300652CDF /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */; };
-		9F7C4BCD1C8E724900652CDF /* YepHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCC1C8E724900652CDF /* YepHelper.swift */; };
+		9F7C4BCD1C8E724900652CDF /* WISHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCC1C8E724900652CDF /* WISHelper.swift */; };
 		9F7C4BCF1C8E9CD400652CDF /* MediaControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */; };
 		9F801A821C8539D400F64265 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A7E1C8539D400F64265 /* BaseViewController.swift */; };
 		9F801A881C853B3300F64265 /* UIColor+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A861C853B3300F64265 /* UIColor+WIS.swift */; };
-		9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A871C853B3300F64265 /* UIFont+Yep.swift */; };
+		9F801A891C853B3300F64265 /* UIFont+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A871C853B3300F64265 /* UIFont+WIS.swift */; };
 		9F801A951C85727A00F64265 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A931C85727A00F64265 /* ProfileViewController.swift */; };
 		9F801A971C85916D00F64265 /* WISConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A961C85916D00F64265 /* WISConfig.swift */; };
 		9F801A9D1C8594AC00F64265 /* ProfileLessInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801A9B1C8594AC00F64265 /* ProfileLessInfoCell.swift */; };
 		9F801A9E1C8594AC00F64265 /* ProfileLessInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801A9C1C8594AC00F64265 /* ProfileLessInfoCell.xib */; };
 		9F801AA21C8594B800F64265 /* TaskDetailLargeInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AA01C8594B800F64265 /* TaskDetailLargeInfoCell.swift */; };
 		9F801AA31C8594B800F64265 /* TaskDetailLargeInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AA11C8594B800F64265 /* TaskDetailLargeInfoCell.xib */; };
-		9F801AA51C85E0FF00F64265 /* String+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AA41C85E0FF00F64265 /* String+Yep.swift */; };
+		9F801AA51C85E0FF00F64265 /* String+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AA41C85E0FF00F64265 /* String+WIS.swift */; };
 		9F801AA91C85E7A500F64265 /* ProfileColoredTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AA71C85E7A500F64265 /* ProfileColoredTitleCell.swift */; };
 		9F801AAA1C85E7A500F64265 /* ProfileColoredTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AA81C85E7A500F64265 /* ProfileColoredTitleCell.xib */; };
 		9F801AAE1C867D6200F64265 /* NewTask.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AAC1C867D6200F64265 /* NewTask.storyboard */; };
 		9F801AAF1C867D6200F64265 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AAD1C867D6200F64265 /* NewTaskViewController.swift */; };
-		9F801AB41C867D8D00F64265 /* ImageCacheController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB11C867D8D00F64265 /* ImageCacheController.swift */; };
 		9F801AB51C867D8D00F64265 /* PickPhotos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F801AB21C867D8D00F64265 /* PickPhotos.storyboard */; };
 		9F801AB61C867D8D00F64265 /* PickPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB31C867D8D00F64265 /* PickPhotosViewController.swift */; };
 		9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB81C867EC600F64265 /* PhotoCell.swift */; };
@@ -176,7 +173,7 @@
 		9F801ADD1C86BC5700F64265 /* WISAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADC1C86BC5700F64265 /* WISAlert.swift */; };
 		9F801ADF1C86C46F00F64265 /* TaskSectionPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */; };
 		9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */; };
-		9F801AE31C86C82100F64265 /* UIImageView+Yep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */; };
+		9F801AE31C86C82100F64265 /* UIImageView+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE21C86C82100F64265 /* UIImageView+WIS.swift */; };
 		9F8FEE661CD0542E00D2B043 /* ModifyPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F8FEE651CD0542E00D2B043 /* ModifyPlan.storyboard */; };
 		9F8FEE681CD0546100D2B043 /* ModifyPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8FEE671CD0546100D2B043 /* ModifyPlanViewController.swift */; };
 		9F99A7681CC48AAA00E1F92D /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F99A7671CC48AAA00E1F92D /* CodeScanViewController.swift */; };
@@ -198,10 +195,7 @@
 		9FEF4FE81C76D4B9001A7644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */; };
 		9FEF4FEB1C76D4B9001A7644 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF4FE91C76D4B9001A7644 /* LaunchScreen.storyboard */; };
 		9FEF4FF61C775778001A7644 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF4FF51C775778001A7644 /* LoginViewController.swift */; };
-		9FEF50141C78A9B7001A7644 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */; };
-		9FEF501C1C78B1F0001A7644 /* Dark.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF50171C78B1F0001A7644 /* Dark.bundle */; };
-		9FEF501D1C78B1F0001A7644 /* Light.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF50181C78B1F0001A7644 /* Light.bundle */; };
-		9FEF501F1C78B1F0001A7644 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF501A1C78B1F0001A7644 /* Media.xcassets */; };
+		9FEF50141C78A9B7001A7644 /* UITableView+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50101C78A9B7001A7644 /* UITableView+WIS.swift */; };
 		9FEF50271C7ADB07001A7644 /* WISTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50261C7ADB07001A7644 /* WISTabBarController.swift */; };
 		9FEF502F1C7AFE18001A7644 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FEF502E1C7AFE18001A7644 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -323,7 +317,7 @@
 		38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionShowPhotoCell.xib; sourceTree = "<group>"; };
 		38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionResultShowSelectionCell.swift; sourceTree = "<group>"; };
 		38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionShowPhotoCell.swift; sourceTree = "<group>"; };
-		9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Yep.swift"; sourceTree = "<group>"; };
+		9F055B981CD3ABC80077184B /* UIScrollView+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+WIS.swift"; sourceTree = "<group>"; };
 		9F055B9C1CD791170077184B /* ProfilePasswordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfilePasswordCell.swift; path = View/Profile/ProfilePassword/ProfilePasswordCell.swift; sourceTree = "<group>"; };
 		9F055B9D1CD791170077184B /* ProfilePasswordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfilePasswordCell.xib; path = View/Profile/ProfilePassword/ProfilePasswordCell.xib; sourceTree = "<group>"; };
 		9F055BA01CD797E50077184B /* Password.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Password.storyboard; path = Profile/Password.storyboard; sourceTree = "<group>"; };
@@ -346,6 +340,7 @@
 		9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = About/AboutViewController.swift; sourceTree = "<group>"; };
 		9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Archive.storyboard; path = Archive/Archive.storyboard; sourceTree = "<group>"; };
 		9F1FA1E61CEB717F001A2F61 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArchiveViewController.swift; path = Archive/ArchiveViewController.swift; sourceTree = "<group>"; };
+		9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskSegment.swift; path = Model/TaskSegment.swift; sourceTree = "<group>"; };
 		9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskListCell.xib; path = View/Task/TaskListCell.xib; sourceTree = "<group>"; };
 		9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCell.swift; path = View/Task/TaskListCell.swift; sourceTree = "<group>"; };
 		9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WISRefreshFooter.swift; path = View/Common/WISRefreshFooter.swift; sourceTree = "<group>"; };
@@ -361,8 +356,6 @@
 		9F6436571CA29616007909BE /* SubmitPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPlanViewController.swift; sourceTree = "<group>"; };
 		9F64369E1CA538C4007909BE /* SubmitPlan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubmitPlan.storyboard; sourceTree = "<group>"; };
 		9F6436D41CAA0A63007909BE /* PickUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickUserViewController.swift; path = PickUser/PickUserViewController.swift; sourceTree = "<group>"; };
-		9F6436D71CAA0B49007909BE /* PickUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickUserCell.swift; path = View/User/PickUserCell.swift; sourceTree = "<group>"; };
-		9F6436D81CAA0B49007909BE /* PickUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PickUserCell.xib; path = View/User/PickUserCell.xib; sourceTree = "<group>"; };
 		9F6436DB1CAA0C93007909BE /* PickUser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = PickUser.storyboard; path = PickUser/PickUser.storyboard; sourceTree = "<group>"; };
 		9F6437271CAC224C007909BE /* login-bg-iphone-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "login-bg-iphone-3.jpg"; sourceTree = "<group>"; };
 		9F64372C1CAC2C44007909BE /* Rating.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Rating.storyboard; path = Rating/Rating.storyboard; sourceTree = "<group>"; };
@@ -371,7 +364,6 @@
 		9F7C4B9F1C86E27B00652CDF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		9F7C4BA01C86E27B00652CDF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9F7C4BA11C86E27B00652CDF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		9F7C4BA31C88137A00652CDF /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		9F7C4BA61C88168900652CDF /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		9F7C4BA71C88168900652CDF /* ContactsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactsCell.xib; sourceTree = "<group>"; };
 		9F7C4BAB1C88324F00652CDF /* TaskDetailSingleInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskDetailSingleInfoCell.xib; path = View/Task/TaskDetailSingleInfoCell.xib; sourceTree = "<group>"; };
@@ -379,30 +371,25 @@
 		9F7C4BAF1C888DC200652CDF /* TaskDetailSingleInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailSingleInfoCell.swift; path = View/Task/TaskDetailSingleInfoCell.swift; sourceTree = "<group>"; };
 		9F7C4BB11C888F6100652CDF /* TaskDetailDoubleInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailDoubleInfoCell.swift; path = View/Task/TaskDetailDoubleInfoCell.swift; sourceTree = "<group>"; };
 		9F7C4BB31C8924F400652CDF /* TaskDetail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TaskDetail.storyboard; sourceTree = "<group>"; };
-		9F7C4BB61C8D56D000652CDF /* TaskMediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaView.swift; sourceTree = "<group>"; };
 		9F7C4BBC1C8D6D1B00652CDF /* TaskDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDescriptionCell.swift; sourceTree = "<group>"; };
 		9F7C4BBD1C8D6D1B00652CDF /* TaskDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskDescriptionCell.xib; sourceTree = "<group>"; };
 		9F7C4BC11C8E6B4100652CDF /* MediaPreview.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MediaPreview.storyboard; sourceTree = "<group>"; };
 		9F7C4BC21C8E6B4100652CDF /* MediaPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewViewController.swift; sourceTree = "<group>"; };
 		9F7C4BC61C8E6E1300652CDF /* MediaViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewCell.swift; sourceTree = "<group>"; };
 		9F7C4BC71C8E6E1300652CDF /* MediaViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaViewCell.xib; sourceTree = "<group>"; };
-		9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaView.swift; path = View/MediaView/MediaView.swift; sourceTree = "<group>"; };
-		9F7C4BCC1C8E724900652CDF /* YepHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepHelper.swift; sourceTree = "<group>"; };
+		9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
+		9F7C4BCC1C8E724900652CDF /* WISHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISHelper.swift; sourceTree = "<group>"; };
 		9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaControlView.swift; path = View/MediaControlView.swift; sourceTree = "<group>"; };
 		9F801A7E1C8539D400F64265 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9F801A861C853B3300F64265 /* UIColor+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+WIS.swift"; sourceTree = "<group>"; };
-		9F801A871C853B3300F64265 /* UIFont+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Yep.swift"; sourceTree = "<group>"; };
-		9F801A8B1C8540C200F64265 /* SettingsUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsUserCell.xib; path = View/SettingsUserCell.xib; sourceTree = "<group>"; };
-		9F801A8E1C856B1D00F64265 /* SettingsMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsMoreCell.swift; path = WisdriIS/View/SettingsMoreCell.swift; sourceTree = SOURCE_ROOT; };
-		9F801A8F1C856B1D00F64265 /* SettingsMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsMoreCell.xib; path = WisdriIS/View/SettingsMoreCell.xib; sourceTree = SOURCE_ROOT; };
-		9F801A931C85727A00F64265 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		9F801A871C853B3300F64265 /* UIFont+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+WIS.swift"; sourceTree = "<group>"; };
+		9F801A931C85727A00F64265 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Profile/ProfileViewController.swift; sourceTree = "<group>"; };
 		9F801A961C85916D00F64265 /* WISConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISConfig.swift; sourceTree = "<group>"; };
-		9F801A981C8591A900F64265 /* YepUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YepUserDefaults.swift; sourceTree = "<group>"; };
 		9F801A9B1C8594AC00F64265 /* ProfileLessInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileLessInfoCell.swift; sourceTree = "<group>"; };
 		9F801A9C1C8594AC00F64265 /* ProfileLessInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileLessInfoCell.xib; sourceTree = "<group>"; };
 		9F801AA01C8594B800F64265 /* TaskDetailLargeInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailLargeInfoCell.swift; path = View/Task/TaskDetailLargeInfoCell.swift; sourceTree = "<group>"; };
 		9F801AA11C8594B800F64265 /* TaskDetailLargeInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskDetailLargeInfoCell.xib; path = View/Task/TaskDetailLargeInfoCell.xib; sourceTree = "<group>"; };
-		9F801AA41C85E0FF00F64265 /* String+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Yep.swift"; sourceTree = "<group>"; };
+		9F801AA41C85E0FF00F64265 /* String+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+WIS.swift"; sourceTree = "<group>"; };
 		9F801AA71C85E7A500F64265 /* ProfileColoredTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileColoredTitleCell.swift; sourceTree = "<group>"; };
 		9F801AA81C85E7A500F64265 /* ProfileColoredTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileColoredTitleCell.xib; sourceTree = "<group>"; };
 		9F801AAC1C867D6200F64265 /* NewTask.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewTask.storyboard; sourceTree = "<group>"; };
@@ -418,19 +405,18 @@
 		9F801AC21C86906300F64265 /* TaskMediaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMediaCell.xib; sourceTree = "<group>"; };
 		9F801AC41C86906300F64265 /* TaskMediaAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaAddCell.swift; sourceTree = "<group>"; };
 		9F801AC51C86906300F64265 /* TaskMediaAddCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMediaAddCell.xib; sourceTree = "<group>"; };
-		9F801AD01C86B5F800F64265 /* NSFileManager+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Yep.swift"; sourceTree = "<group>"; };
 		9F801AD81C86BAB400F64265 /* TouchClosuresView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchClosuresView.swift; path = View/TouchClosuresView.swift; sourceTree = "<group>"; };
 		9F801ADA1C86BAF600F64265 /* TaskTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTextView.swift; path = View/TaskTextView.swift; sourceTree = "<group>"; };
 		9F801ADC1C86BC5700F64265 /* WISAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISAlert.swift; sourceTree = "<group>"; };
 		9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskSectionPickerItemView.swift; path = View/TaskSectionPickerItemView.swift; sourceTree = "<group>"; };
 		9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HorizontalLineView.swift; path = View/HorizontalLineView.swift; sourceTree = "<group>"; };
-		9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Yep.swift"; sourceTree = "<group>"; };
+		9F801AE21C86C82100F64265 /* UIImageView+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+WIS.swift"; sourceTree = "<group>"; };
 		9F8FEE651CD0542E00D2B043 /* ModifyPlan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ModifyPlan.storyboard; sourceTree = "<group>"; };
 		9F8FEE671CD0546100D2B043 /* ModifyPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyPlanViewController.swift; sourceTree = "<group>"; };
 		9F99A7671CC48AAA00E1F92D /* CodeScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeScanViewController.swift; sourceTree = "<group>"; };
 		9F99A76A1CC77E7600E1F92D /* TaskHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskHomeViewController.swift; sourceTree = "<group>"; };
 		9F99A76C1CC7B88A00E1F92D /* TaskList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TaskList.storyboard; sourceTree = "<group>"; };
-		9F9EF0AF1C9658910001CCFB /* WIS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WIS-Bridging-Header.h"; sourceTree = "<group>"; };
+		9F9EF0AF1C9658910001CCFB /* WIS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "WIS-Bridging-Header.h"; path = "Base/WIS-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F9EF0B01C965EA50001CCFB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9F9EF0B21C965EAE0001CCFB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9FA4C37B1C995AF600BA4115 /* WISUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISUserDefaults.swift; sourceTree = "<group>"; };
@@ -443,20 +429,14 @@
 		9FD804141CB5F86E00932955 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		9FD804151CB5F86E00932955 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9FEF4FDD1C76D4B9001A7644 /* WisdriIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisdriIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FEF4FE01C76D4B9001A7644 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9FEF4FE01C76D4B9001A7644 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Base/AppDelegate.swift; sourceTree = "<group>"; };
 		9FEF4FE51C76D4B9001A7644 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9FEF4FEA1C76D4B9001A7644 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9FEF4FEC1C76D4B9001A7644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9FEF4FEC1C76D4B9001A7644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Base/Info.plist; sourceTree = "<group>"; };
 		9FEF4FF51C775778001A7644 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = WisdriIS/Controller/LoginViewController.swift; sourceTree = SOURCE_ROOT; };
-		9FEF4FFE1C78A99E001A7644 /* WISDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISDefine.swift; sourceTree = "<group>"; };
 		9FEF50011C78A99E001A7644 /* WISSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISSettings.swift; sourceTree = "<group>"; };
-		9FEF500D1C78A9B7001A7644 /* Request+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Request+Extension.swift"; sourceTree = "<group>"; };
-		9FEF500E1C78A9B7001A7644 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
-		9FEF50171C78B1F0001A7644 /* Dark.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Dark.bundle; sourceTree = "<group>"; };
-		9FEF50181C78B1F0001A7644 /* Light.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Light.bundle; sourceTree = "<group>"; };
-		9FEF501A1C78B1F0001A7644 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		9FEF50101C78A9B7001A7644 /* UITableView+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+WIS.swift"; sourceTree = "<group>"; };
 		9FEF50261C7ADB07001A7644 /* WISTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISTabBarController.swift; sourceTree = "<group>"; };
 		9FEF502E1C7AFE18001A7644 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BC6B107521742D5686D06108 /* Pods-WisdriIS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisdriIS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WisdriIS/Pods-WisdriIS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -870,6 +850,7 @@
 			isa = PBXGroup;
 			children = (
 				9F2A532D1C9FD0B0001BE6F6 /* TaskOperation.swift */,
+				9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -882,8 +863,6 @@
 				9F055C711CE0343E0077184B /* Clock */,
 				9F055BAA1CDC2C1F0077184B /* ProfileInfo */,
 				9F055B9B1CD790A70077184B /* ProfilePassword */,
-				9F99A7691CC66FB700E1F92D /* Setting */,
-				9F6436D61CAA0AF7007909BE /* PickUser */,
 				9F7C4BC51C8E6E1300652CDF /* MediaView */,
 				9F7C4BAA1C8830C700652CDF /* Task */,
 				9F7C4BA51C88168900652CDF /* Contacts */,
@@ -893,7 +872,6 @@
 				9F801AA61C85E7A500F64265 /* ProfileColoredTitle */,
 				9F801A9A1C8594AC00F64265 /* ProfileLessInfo */,
 				9F4B21621C7C311A00D15B8E /* Common */,
-				9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */,
 				9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */,
 				9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */,
 				9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */,
@@ -922,15 +900,6 @@
 			name = PickUser;
 			sourceTree = "<group>";
 		};
-		9F6436D61CAA0AF7007909BE /* PickUser */ = {
-			isa = PBXGroup;
-			children = (
-				9F6436D71CAA0B49007909BE /* PickUserCell.swift */,
-				9F6436D81CAA0B49007909BE /* PickUserCell.xib */,
-			);
-			name = PickUser;
-			sourceTree = "<group>";
-		};
 		9F64372B1CAC2C01007909BE /* Rating */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,14 +907,6 @@
 				9F64372E1CAE51FA007909BE /* RatingViewController.swift */,
 			);
 			name = Rating;
-			sourceTree = "<group>";
-		};
-		9F7C4BA21C88137A00652CDF /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				9F7C4BA31C88137A00652CDF /* ContactsViewController.swift */,
-			);
-			path = Contacts;
 			sourceTree = "<group>";
 		};
 		9F7C4BA51C88168900652CDF /* Contacts */ = {
@@ -980,7 +941,6 @@
 		9F7C4BB51C8D56D000652CDF /* TaskDescription */ = {
 			isa = PBXGroup;
 			children = (
-				9F7C4BB61C8D56D000652CDF /* TaskMediaView.swift */,
 				9F7C4BBC1C8D6D1B00652CDF /* TaskDescriptionCell.swift */,
 				9F7C4BBD1C8D6D1B00652CDF /* TaskDescriptionCell.xib */,
 			);
@@ -1000,6 +960,7 @@
 		9F7C4BC51C8E6E1300652CDF /* MediaView */ = {
 			isa = PBXGroup;
 			children = (
+				9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */,
 				9F7C4BC61C8E6E1300652CDF /* MediaViewCell.swift */,
 				9F7C4BC71C8E6E1300652CDF /* MediaViewCell.xib */,
 			);
@@ -1074,7 +1035,7 @@
 				9F801AC21C86906300F64265 /* TaskMediaCell.xib */,
 			);
 			name = TaskMedia;
-			path = View/FeedMedia;
+			path = View/TaskMedia;
 			sourceTree = "<group>";
 		};
 		9F801AC31C86906300F64265 /* TaskMediaAdd */ = {
@@ -1084,7 +1045,7 @@
 				9F801AC51C86906300F64265 /* TaskMediaAddCell.xib */,
 			);
 			name = TaskMediaAdd;
-			path = View/FeedMediaAdd;
+			path = View/TaskMediaAdd;
 			sourceTree = "<group>";
 		};
 		9F99A7661CC48AAA00E1F92D /* CodeScan */ = {
@@ -1093,16 +1054,6 @@
 				9F99A7671CC48AAA00E1F92D /* CodeScanViewController.swift */,
 			);
 			path = CodeScan;
-			sourceTree = "<group>";
-		};
-		9F99A7691CC66FB700E1F92D /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				9F801A8E1C856B1D00F64265 /* SettingsMoreCell.swift */,
-				9F801A8F1C856B1D00F64265 /* SettingsMoreCell.xib */,
-				9F801A8B1C8540C200F64265 /* SettingsUserCell.xib */,
-			);
-			name = Setting;
 			sourceTree = "<group>";
 		};
 		9FEF4FD41C76D4B9001A7644 = {
@@ -1135,7 +1086,6 @@
 				9FEF4FE01C76D4B9001A7644 /* AppDelegate.swift */,
 				9FEF4FE41C76D4B9001A7644 /* Main.storyboard */,
 				9FEF4FE91C76D4B9001A7644 /* LaunchScreen.storyboard */,
-				9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */,
 				9FEF4FEC1C76D4B9001A7644 /* Info.plist */,
 				9F7C4B9D1C86E09900652CDF /* Localizable.strings */,
 				9F9EF0AF1C9658910001CCFB /* WIS-Bridging-Header.h */,
@@ -1154,7 +1104,6 @@
 				9F99A7661CC48AAA00E1F92D /* CodeScan */,
 				9F64372B1CAC2C01007909BE /* Rating */,
 				9F6436D31CAA09E4007909BE /* PickUser */,
-				9F7C4BA21C88137A00652CDF /* Contacts */,
 				9F801AAB1C867D6200F64265 /* Task */,
 				9F801AB01C867D8D00F64265 /* PickPhotos */,
 				9F7C4BC01C8E6B4100652CDF /* MediaPreview */,
@@ -1169,14 +1118,11 @@
 			isa = PBXGroup;
 			children = (
 				9FEF500C1C78A9A4001A7644 /* Extension */,
-				9F7C4BCC1C8E724900652CDF /* YepHelper.swift */,
+				9F7C4BCC1C8E724900652CDF /* WISHelper.swift */,
 				9F801A961C85916D00F64265 /* WISConfig.swift */,
 				9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */,
-				9FEF4FFE1C78A99E001A7644 /* WISDefine.swift */,
 				9FEF50011C78A99E001A7644 /* WISSettings.swift */,
 				9F801ADC1C86BC5700F64265 /* WISAlert.swift */,
-				9F801A981C8591A900F64265 /* YepUserDefaults.swift */,
-				9F801AA41C85E0FF00F64265 /* String+Yep.swift */,
 				9FA4C37B1C995AF600BA4115 /* WISUserDefaults.swift */,
 			);
 			path = Common;
@@ -1185,16 +1131,14 @@
 		9FEF500C1C78A9A4001A7644 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				9F055B981CD3ABC80077184B /* UIScrollView+Yep.swift */,
+				9F801AA41C85E0FF00F64265 /* String+WIS.swift */,
+				9F055B981CD3ABC80077184B /* UIScrollView+WIS.swift */,
 				9F801A861C853B3300F64265 /* UIColor+WIS.swift */,
-				9F801A871C853B3300F64265 /* UIFont+Yep.swift */,
-				9FEF500D1C78A9B7001A7644 /* Request+Extension.swift */,
-				9FEF500E1C78A9B7001A7644 /* UIImage+Extension.swift */,
+				9F801A871C853B3300F64265 /* UIFont+WIS.swift */,
 				9F801ABE1C8681B300F64265 /* UIImage+WIS.swift */,
-				9FEF50101C78A9B7001A7644 /* UITableView+Extension.swift */,
+				9FEF50101C78A9B7001A7644 /* UITableView+WIS.swift */,
 				9F801ABC1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift */,
-				9F801AE21C86C82100F64265 /* UIImageView+Yep.swift */,
-				9F801AD01C86B5F800F64265 /* NSFileManager+Yep.swift */,
+				9F801AE21C86C82100F64265 /* UIImageView+WIS.swift */,
 				9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */,
 			);
 			path = Extension;
@@ -1203,11 +1147,9 @@
 		9FEF50151C78B1F0001A7644 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9FEF50171C78B1F0001A7644 /* Dark.bundle */,
-				9FEF50181C78B1F0001A7644 /* Light.bundle */,
 				9F6437271CAC224C007909BE /* login-bg-iphone-3.jpg */,
 				9FEF502E1C7AFE18001A7644 /* Images.xcassets */,
-				9FEF501A1C78B1F0001A7644 /* Media.xcassets */,
+				9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1324,9 +1266,7 @@
 				385C1E341CE4BD2700F8E393 /* InspectionListCell.storyboard in Resources */,
 				38E51E3C1CEC811B003092DA /* InspectionShowPhotoCell.xib in Resources */,
 				385C1E251CE4BD2700F8E393 /* InspectionDeviceBelongingCell.xib in Resources */,
-				9F6436DA1CAA0B49007909BE /* PickUserCell.xib in Resources */,
 				385C1E2D1CE4BD2700F8E393 /* InspectionDeviceTypeInformationCell.xib in Resources */,
-				9FEF501F1C78B1F0001A7644 /* Media.xcassets in Resources */,
 				9F055BB01CDC2DFB0077184B /* ProfileInfo.storyboard in Resources */,
 				9F801ABB1C867EC600F64265 /* PhotoCell.xib in Resources */,
 				9F6436DC1CAA0C93007909BE /* PickUser.storyboard in Resources */,
@@ -1344,12 +1284,10 @@
 				385C1E291CE4BD2700F8E393 /* InspectionDeviceRemarkCell.xib in Resources */,
 				9F8FEE661CD0542E00D2B043 /* ModifyPlan.storyboard in Resources */,
 				9F7C4BBF1C8D6D1B00652CDF /* TaskDescriptionCell.xib in Resources */,
-				9FEF501D1C78B1F0001A7644 /* Light.bundle in Resources */,
 				380499541CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib in Resources */,
 				9F055C751CE034690077184B /* ClockInfoCell.xib in Resources */,
 				9F055BAE1CDC2C830077184B /* ProfileInfoCell.xib in Resources */,
 				9F801AC91C86906300F64265 /* TaskMediaAddCell.xib in Resources */,
-				9FEF501C1C78B1F0001A7644 /* Dark.bundle in Resources */,
 				385C1E4D1CE4BDCD00F8E393 /* InspectionDetail.storyboard in Resources */,
 				9F801AAA1C85E7A500F64265 /* ProfileColoredTitleCell.xib in Resources */,
 				9F801A9E1C8594AC00F64265 /* ProfileLessInfoCell.xib in Resources */,
@@ -1446,7 +1384,7 @@
 				9F801AB61C867D8D00F64265 /* PickPhotosViewController.swift in Sources */,
 				9F2A532E1C9FD0B0001BE6F6 /* TaskOperation.swift in Sources */,
 				385C1DEB1CE4BC9200F8E393 /* WISDeviceType.m in Sources */,
-				9F801AE31C86C82100F64265 /* UIImageView+Yep.swift in Sources */,
+				9F801AE31C86C82100F64265 /* UIImageView+WIS.swift in Sources */,
 				385C1DF71CE4BC9200F8E393 /* WISInspectionTaskDataNotification.m in Sources */,
 				9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */,
 				9F055C781CE061AE0077184B /* InfoView.swift in Sources */,
@@ -1467,7 +1405,6 @@
 				9F801ADD1C86BC5700F64265 /* WISAlert.swift in Sources */,
 				385C1DE71CE4BC9200F8E393 /* LBXScanWrapper.swift in Sources */,
 				9F6436D51CAA0A63007909BE /* PickUserViewController.swift in Sources */,
-				9F801AB41C867D8D00F64265 /* ImageCacheController.swift in Sources */,
 				9F801AA91C85E7A500F64265 /* ProfileColoredTitleCell.swift in Sources */,
 				385C1E281CE4BD2700F8E393 /* InspectionDeviceRemarkCell.swift in Sources */,
 				9F7C4BB01C888DC200652CDF /* TaskDetailSingleInfoCell.swift in Sources */,
@@ -1491,17 +1428,17 @@
 				9F336DB11CCF038C00844CB1 /* TaskPlanCell.swift in Sources */,
 				385C1E2E1CE4BD2700F8E393 /* InspectionPickPhotoCell.swift in Sources */,
 				9F336DAD1CCB4C0F00844CB1 /* RemarkViewController.swift in Sources */,
-				9F6436D91CAA0B49007909BE /* PickUserCell.swift in Sources */,
 				385C1E231CE4BD2700F8E393 /* InspectionDetailViewBaseCell.swift in Sources */,
 				385C1E211CE4BD2700F8E393 /* InspectionColoredTitleCell.swift in Sources */,
 				9F801A821C8539D400F64265 /* BaseViewController.swift in Sources */,
 				385C1DE81CE4BC9200F8E393 /* WISClockRecord.m in Sources */,
 				9F055BAD1CDC2C830077184B /* ProfileInfoCell.swift in Sources */,
+				9F1FA1EB1CF341BB001A2F61 /* TaskSegment.swift in Sources */,
 				9F801AD91C86BAB400F64265 /* TouchClosuresView.swift in Sources */,
 				9F055B9E1CD791170077184B /* ProfilePasswordCell.swift in Sources */,
 				385C1E001CE4BC9200F8E393 /* WISInspectionTaskNetworkNotification.m in Sources */,
 				9F801ADB1C86BAF600F64265 /* TaskTextView.swift in Sources */,
-				9F7C4BCD1C8E724900652CDF /* YepHelper.swift in Sources */,
+				9F7C4BCD1C8E724900652CDF /* WISHelper.swift in Sources */,
 				9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */,
 				385C1DE61CE4BC9200F8E393 /* LBXScanViewStyle.swift in Sources */,
 				9F801A9D1C8594AC00F64265 /* ProfileLessInfoCell.swift in Sources */,
@@ -1511,10 +1448,10 @@
 				9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */,
 				380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */,
 				38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */,
+				9F1FA1EE1CF3490E001A2F61 /* ImageCacheController.swift in Sources */,
 				385C1E021CE4BC9200F8E393 /* WISSystemNetworkNotification.m in Sources */,
-				9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */,
+				9F801A891C853B3300F64265 /* UIFont+WIS.swift in Sources */,
 				385C1DF51CE4BC9200F8E393 /* NSDate+WISExtension.m in Sources */,
-				9F4B21641C7C313000D15B8E /* WISSpacingLabel.swift in Sources */,
 				385C1DFA1CE4BC9200F8E393 /* WISDataManager.m in Sources */,
 				9F055D341CE4584D0077184B /* WISRefreshHeader.swift in Sources */,
 				9F1FA1E31CEB019E001A2F61 /* AboutViewController.swift in Sources */,
@@ -1534,7 +1471,7 @@
 				385C1E321CE4BD2700F8E393 /* InspectionResultSelectionCell.swift in Sources */,
 				385C1DEE1CE4BC9200F8E393 /* WISMaintenancePlan.m in Sources */,
 				9F1FA1E81CEB717F001A2F61 /* ArchiveViewController.swift in Sources */,
-				9F055B991CD3ABC80077184B /* UIScrollView+Yep.swift in Sources */,
+				9F055B991CD3ABC80077184B /* UIScrollView+WIS.swift in Sources */,
 				9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */,
 				9F055BA31CD7980A0077184B /* PasswordViewController.swift in Sources */,
 				385C1E241CE4BD2700F8E393 /* InspectionDeviceBelongingCell.swift in Sources */,
@@ -1547,7 +1484,6 @@
 				385C1E031CE4BC9200F8E393 /* WISNetworkService.m in Sources */,
 				385C1DE51CE4BC9200F8E393 /* LBXScanViewController.swift in Sources */,
 				385C1DEF1CE4BC9200F8E393 /* WISMaintenanceTask.m in Sources */,
-				9F7C4BA41C88137A00652CDF /* ContactsViewController.swift in Sources */,
 				9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */,
 				385C1DEC1CE4BC9200F8E393 /* WISFileInfo.m in Sources */,
 				385C1DF41CE4BC9200F8E393 /* WISIncorrectParamsException.m in Sources */,
@@ -1564,9 +1500,9 @@
 				385C1DFE1CE4BC9200F8E393 /* WISInspectionDataManager.swift in Sources */,
 				9F055C741CE034690077184B /* ClockInfoCell.swift in Sources */,
 				9F7C4BCB1C8E6F1300652CDF /* MediaView.swift in Sources */,
-				9FEF50141C78A9B7001A7644 /* UITableView+Extension.swift in Sources */,
+				9FEF50141C78A9B7001A7644 /* UITableView+WIS.swift in Sources */,
 				385C1DE41CE4BC9200F8E393 /* LBXScanView.swift in Sources */,
-				9F801AA51C85E0FF00F64265 /* String+Yep.swift in Sources */,
+				9F801AA51C85E0FF00F64265 /* String+WIS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1580,6 +1516,7 @@
 				9F7C4BA11C86E27B00652CDF /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		9FEF4FE41C76D4B9001A7644 /* Main.storyboard */ = {
@@ -1589,6 +1526,7 @@
 				9F7C4B9F1C86E27B00652CDF /* zh-Hans */,
 			);
 			name = Main.storyboard;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		9FEF4FE91C76D4B9001A7644 /* LaunchScreen.storyboard */ = {
@@ -1598,6 +1536,7 @@
 				9F7C4BA01C86E27B00652CDF /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1691,7 +1630,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = WisdriIS/Info.plist;
+				INFOPLIST_FILE = WisdriIS/Base/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1701,7 +1640,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisdri.WisdriIndustrialService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WisdriIS/WIS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WisdriIS/Base/WIS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1713,7 +1652,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = WisdriIS/Info.plist;
+				INFOPLIST_FILE = WisdriIS/Base/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1723,7 +1662,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisdri.WisdriIndustrialService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "WisdriIS/WIS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WisdriIS/Base/WIS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

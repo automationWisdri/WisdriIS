@@ -51,7 +51,7 @@ class TaskListViewController: BaseViewController {
 //        view.backgroundColor = UIColor.wisBackgroundColor()
         
         taskTableView.separatorColor = UIColor.wisCellSeparatorColor()
-        taskTableView.separatorInset = WISConfig.ContactsCell.separatorInset
+        taskTableView.separatorInset = WISConfig.TaskListCell.separatorInset
         taskTableView.tableFooterView = UIView()
 //        taskTableView.addSubview(buttonView)
         

@@ -46,7 +46,7 @@ class WISRefreshHeader: MJRefreshHeader {
         self.loadingView = UIActivityIndicatorView(activityIndicatorStyle: .White)
         self.addSubview(self.loadingView!)
         
-        self.arrowImage = UIImageView(image: UIImage.imageUsedTemplateMode("ic_arrow_downward"))
+        self.arrowImage = UIImageView(image: UIImage.imageUsedTemplateMode("icon_arrow_downward"))
         self.addSubview(self.arrowImage!)
         
 //        self.KVOController.observe(WISColor.sharedInstance, keyPath: "style", options: [.Initial,.New]) {[weak self] (nav, color, change) -> Void in

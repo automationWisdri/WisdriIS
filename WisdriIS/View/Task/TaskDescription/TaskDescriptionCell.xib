@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="419" height="200"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="419" height="200"/>
+                <rect key="frame" x="0.0" y="0.0" width="419" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Fop-fw-cWS">
@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="How do you do? Do not go gentle into that good night." translatesAutoresizingMaskIntoConstraints="NO" id="bWE-8Y-iR2" customClass="TaskTextView" customModule="WisdriIS" customModuleProvider="target">
-                        <rect key="frame" x="20" y="36" width="389" height="42"/>
+                        <rect key="frame" x="20" y="36" width="384" height="42"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="HmM-3m-1j8"/>
                         </constraints>
@@ -57,7 +57,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t8L-ux-7Dq" userLabel="Name Label">
-                        <rect key="frame" x="309" y="10" width="100" height="18"/>
+                        <rect key="frame" x="304" y="10" width="100" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="DMI-F2-mwN"/>
                             <constraint firstAttribute="height" constant="18" id="K1f-ih-QHJ"/>
@@ -74,7 +74,7 @@
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_location" translatesAutoresizingMaskIntoConstraints="NO" id="epZ-zs-dyS">
-                        <rect key="frame" x="287" y="10" width="18" height="18"/>
+                        <rect key="frame" x="282" y="10" width="18" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="epZ-zs-dyS" secondAttribute="height" multiplier="1:1" id="D4c-cZ-cJy"/>
                             <constraint firstAttribute="height" constant="18" id="MST-FY-lDb"/>
@@ -94,7 +94,7 @@
                     <constraint firstItem="t8L-ux-7Dq" firstAttribute="leading" secondItem="epZ-zs-dyS" secondAttribute="trailing" constant="4" id="RvN-DO-ky6"/>
                     <constraint firstItem="bWE-8Y-iR2" firstAttribute="top" secondItem="t8L-ux-7Dq" secondAttribute="bottom" constant="8" id="dmW-vb-SFv"/>
                     <constraint firstItem="t8L-ux-7Dq" firstAttribute="trailing" secondItem="bWE-8Y-iR2" secondAttribute="trailing" id="ePc-cw-mio"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="bWE-8Y-iR2" secondAttribute="trailing" constant="2" id="qvT-fh-60w"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bWE-8Y-iR2" secondAttribute="trailing" constant="7" id="qvT-fh-60w"/>
                     <constraint firstItem="wgH-mH-Jy7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="rVE-na-RoQ"/>
                     <constraint firstItem="t8L-ux-7Dq" firstAttribute="top" secondItem="epZ-zs-dyS" secondAttribute="top" id="vFl-Pm-9xE"/>
                     <constraint firstItem="Sjc-nC-zWf" firstAttribute="leading" secondItem="bWE-8Y-iR2" secondAttribute="leading" id="yBw-QD-lEk"/>

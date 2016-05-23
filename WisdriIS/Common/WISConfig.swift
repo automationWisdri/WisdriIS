@@ -70,9 +70,13 @@ class WISConfig {
     class func profileAvatarSize() -> CGFloat {
         return 100
     }
+    
+    struct TaskListCell {
+        static let separatorInset = UIEdgeInsets(top: 0, left: 80, bottom: 0, right: 0)
+    }
 
     struct ContactsCell {
-        static let separatorInset = UIEdgeInsets(top: 0, left: 85, bottom: 0, right: 0)
+        static let separatorInset = UIEdgeInsets(top: 0, left: 45, bottom: 0, right: 0)
     }
    
     struct TaskDescriptionCell {

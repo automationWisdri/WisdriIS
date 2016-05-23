@@ -449,7 +449,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             case .Action:
                 let cell = tableView.dequeueReusableCellWithIdentifier(inspectionColoredTitleCellID) as! InspectionColoredTitleCell
                 cell.selectionStyle = .Gray
-                cell.coloredTitleColor = UIColor.blueColor()
+                cell.coloredTitleColor = UIColor.wisTintColor()
                 cell.coloredTitleLabel.textAlignment = NSTextAlignment.Center
                 cell.coloredTitleLabel.font = UIFont.systemFontOfSize(18.0)
                 if showMoreInformation {

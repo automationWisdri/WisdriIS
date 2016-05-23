@@ -473,7 +473,7 @@ extension UIImage {
 
 extension UIImage {
 
-    var yep_avarageColor: UIColor {
+    var wis_avarageColor: UIColor {
 
         let rgba = UnsafeMutablePointer<CUnsignedChar>.alloc(4)
         let colorSpace: CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()!
@@ -493,7 +493,7 @@ extension UIImage {
 
 extension UIImage {
 
-    var yep_progressiveImage: UIImage? {
+    var wis_progressiveImage: UIImage? {
 
         guard let cgImage = CGImage else {
             return nil

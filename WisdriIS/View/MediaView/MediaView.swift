@@ -125,13 +125,13 @@ class MediaView: UIView {
         if !isRoomIn {
             isRoomIn = true
             zoomScaleBeforeZoomIn = scrollView.zoomScale
-            scrollView.yep_zoomToPoint(zoomPoint, withScale: scrollView.zoomScale * 2, animated: true)
+            scrollView.wis_zoomToPoint(zoomPoint, withScale: scrollView.zoomScale * 2, animated: true)
             
         } else {
             if let zoomScale = zoomScaleBeforeZoomIn {
                 zoomScaleBeforeZoomIn = nil
                 isRoomIn = false
-                scrollView.yep_zoomToPoint(zoomPoint, withScale: zoomScale, animated: true)
+                scrollView.wis_zoomToPoint(zoomPoint, withScale: zoomScale, animated: true)
             }
         }
     }
@@ -140,7 +140,7 @@ class MediaView: UIView {
         
         if let zoomScale = zoomScaleBeforeZoomIn {
             let quickZoomDuration: NSTimeInterval = 0.35
-            scrollView.yep_zoomToPoint(CGPoint.zero, withScale: zoomScale, animationDuration: quickZoomDuration, animationCurve: .EaseInOut)
+            scrollView.wis_zoomToPoint(CGPoint.zero, withScale: zoomScale, animationDuration: quickZoomDuration, animationCurve: .EaseInOut)
             delay(quickZoomDuration) { [weak self] in
                 self?.tapToDismissAction?()
             }

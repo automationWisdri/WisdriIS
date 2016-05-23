@@ -171,6 +171,8 @@ class PickUserViewController: UIViewController {
                 
             } else {
                 WISConfig.errorCode(error)
+                self.noRecords = self.relevantUser.isEmpty
+                self.pickUserTableView.reloadData()
             }
         }
     }

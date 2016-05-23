@@ -123,7 +123,7 @@ extension WISTabBarController: UITabBarControllerDelegate {
 //                guard let feedsTableView = vc.feedsTableView else {
 //                    return true
 //                }
-//                if feedsTableView.yep_isAtTop {
+//                if feedsTableView.wis_isAtTop {
 //                    if !hasFirstTapOnFeedsWhenItIsAtTop {
 //                        hasFirstTapOnFeedsWhenItIsAtTop = true
 //                        return false
@@ -154,22 +154,22 @@ extension WISTabBarController: UITabBarControllerDelegate {
 
 //        case .Tasks:
 //            if let vc = nvc.topViewController as? TasksViewController {
-//                if !vc.conversationsTableView.yep_isAtTop {
-//                    vc.conversationsTableView.yep_scrollsToTop()
+//                if !vc.conversationsTableView.wis_isAtTop {
+//                    vc.conversationsTableView.wis_scrollsToTop()
 //                }
 //            }
 
 //        case .Contacts:
 //            if let vc = nvc.topViewController as? ContactsViewController {
-//                if !vc.contactsTableView.yep_isAtTop {
-//                    vc.contactsTableView.yep_scrollsToTop()
+//                if !vc.contactsTableView.wis_isAtTop {
+//                    vc.contactsTableView.wis_scrollsToTop()
 //                }
 //            }
 
 //        case .Feeds:
 //            if let vc = nvc.topViewController as? FeedsViewController {
-//                if !vc.feedsTableView.yep_isAtTop {
-//                    vc.feedsTableView.yep_scrollsToTop()
+//                if !vc.feedsTableView.wis_isAtTop {
+//                    vc.feedsTableView.wis_scrollsToTop()
 //
 //                } else {
 //                    if !vc.feeds.isEmpty && !vc.pullToRefreshView.isRefreshing {
@@ -181,8 +181,8 @@ extension WISTabBarController: UITabBarControllerDelegate {
 
 //        case .Schedule:
 //            if let vc = nvc.topViewController as? ScheduleViewController {
-//                if !vc.discoveredUsersCollectionView.yep_isAtTop {
-//                    vc.discoveredUsersCollectionView.yep_scrollsToTop()
+//                if !vc.discoveredUsersCollectionView.wis_isAtTop {
+//                    vc.discoveredUsersCollectionView.wis_scrollsToTop()
 //                }
 //            }
 
