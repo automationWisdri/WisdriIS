@@ -84,9 +84,9 @@ class TaskPlanCell: UITableViewCell {
             self.wisFileInfos.append(taskPlan.imagesInfo.objectForKey(item) as! WISFileInfo)
         }
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.planImageCollectionView.reloadData()
-        }
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.planImageCollectionView.reloadData()
+//        }
         
         // Make UI
         if wisFileInfos.count != 0 {

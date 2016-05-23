@@ -16,6 +16,7 @@ class ProfilePasswordCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        infoTextField.keyboardType = .ASCIICapable
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

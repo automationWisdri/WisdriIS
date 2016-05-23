@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,39 +16,49 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0R-gC-KP9" userLabel="Annotation Label">
-                        <rect key="frame" x="18" y="13" width="60" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annotation" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0R-gC-KP9" userLabel="Annotation Label">
+                        <rect key="frame" x="44" y="13" width="45" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="tx5-dF-oO8"/>
+                            <constraint firstAttribute="width" constant="45" id="tx5-dF-oO8"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCg-sv-weL" userLabel="Annotation Info Label">
-                        <rect key="frame" x="83" y="13" width="70" height="18"/>
+                        <rect key="frame" x="97" y="13" width="50" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="vCe-fx-kgv"/>
+                            <constraint firstAttribute="width" constant="50" id="vCe-fx-kgv"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4I-v8-uux" userLabel="Info Label">
-                        <rect key="frame" x="158" y="13" width="152" height="18"/>
+                        <rect key="frame" x="147" y="13" width="158" height="18"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_task" translatesAutoresizingMaskIntoConstraints="NO" id="icZ-e5-IGg">
+                        <rect key="frame" x="20" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="icZ-e5-IGg" secondAttribute="height" multiplier="1:1" id="3pu-b8-APc"/>
+                            <constraint firstAttribute="height" constant="20" id="5eF-YJ-Yvx"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="d4I-v8-uux" firstAttribute="leading" secondItem="FCg-sv-weL" secondAttribute="trailing" constant="5" id="0Bs-69-UG5"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="d4I-v8-uux" secondAttribute="trailing" constant="2" id="B25-PD-DKv"/>
-                    <constraint firstItem="c0R-gC-KP9" firstAttribute="leading" secondItem="Thh-uT-hVK" secondAttribute="leadingMargin" constant="10" id="Jhz-c6-8LG"/>
+                    <constraint firstItem="d4I-v8-uux" firstAttribute="centerY" secondItem="Thh-uT-hVK" secondAttribute="centerY" id="53e-Bb-Rao"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="d4I-v8-uux" secondAttribute="trailing" constant="7" id="B25-PD-DKv"/>
+                    <constraint firstItem="c0R-gC-KP9" firstAttribute="leading" secondItem="icZ-e5-IGg" secondAttribute="trailing" constant="4" id="Ql9-yi-vMp"/>
                     <constraint firstItem="FCg-sv-weL" firstAttribute="baseline" secondItem="c0R-gC-KP9" secondAttribute="baseline" id="UAN-V2-cgG"/>
-                    <constraint firstItem="d4I-v8-uux" firstAttribute="baseline" secondItem="FCg-sv-weL" secondAttribute="baseline" id="h4o-jk-dLj"/>
-                    <constraint firstItem="FCg-sv-weL" firstAttribute="leading" secondItem="c0R-gC-KP9" secondAttribute="trailing" constant="5" id="omu-Z9-oTg"/>
+                    <constraint firstItem="icZ-e5-IGg" firstAttribute="width" secondItem="icZ-e5-IGg" secondAttribute="height" multiplier="1:1" id="gPn-Yd-JLM"/>
+                    <constraint firstItem="FCg-sv-weL" firstAttribute="leading" secondItem="c0R-gC-KP9" secondAttribute="trailing" constant="8" id="omu-Z9-oTg"/>
+                    <constraint firstItem="d4I-v8-uux" firstAttribute="leading" secondItem="FCg-sv-weL" secondAttribute="trailing" id="tug-GA-HgA"/>
+                    <constraint firstItem="icZ-e5-IGg" firstAttribute="leading" secondItem="Thh-uT-hVK" secondAttribute="leading" constant="20" id="w7w-79-84a"/>
                     <constraint firstItem="FCg-sv-weL" firstAttribute="centerY" secondItem="Thh-uT-hVK" secondAttribute="centerY" id="xQk-kn-bSr"/>
+                    <constraint firstItem="icZ-e5-IGg" firstAttribute="centerY" secondItem="Thh-uT-hVK" secondAttribute="centerY" id="xyZ-jo-eY2"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -58,4 +69,7 @@
             <point key="canvasLocation" x="307" y="280"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_task" width="80" height="80"/>
+    </resources>
 </document>

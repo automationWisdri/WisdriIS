@@ -259,6 +259,8 @@ class TaskDetailViewController: BaseViewController {
         // Do any additional setup after loading the view
         title = NSLocalizedString("Task Detail", comment: "")
         
+        self.view.backgroundColor = UIColor.wisBackgroundColor()
+        
         taskDetailTableView.delegate = self
         taskDetailTableView.dataSource = self
         
@@ -268,6 +270,8 @@ class TaskDetailViewController: BaseViewController {
         taskDetailTableView.registerNib(UINib(nibName: taskDescriptionCellID, bundle: nil), forCellReuseIdentifier: taskDescriptionCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskPlanCellID, bundle: nil), forCellReuseIdentifier: taskPlanCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskStateCellID, bundle: nil), forCellReuseIdentifier: taskStateCellID)
+        
+        taskDetailTableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -276,7 +280,7 @@ class TaskDetailViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-         getTaskDetail()
+        getTaskDetail()
     }
     
     override func didReceiveMemoryWarning() {
@@ -465,6 +469,19 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard let section = Section(rawValue: section) else {
+            return 0
+        }
+        
+        switch section {
+        case .Remark:
+            return 20
+        default:
+            return 0
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         guard let section = Section(rawValue: indexPath.section) else {
@@ -482,16 +499,17 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailSingleInfoCellID) as! TaskDetailSingleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "创建人："
+                cell.annotationLabel.text = "创建人"
                 if wisTask!.creator == nil {
-                    cell.annotatinoInfoLabel.text = NSLocalizedString("None", comment: "")
+                    cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                 } else {
                     if wisTask!.creator.fullName == nil || wisTask!.creator.fullName.isEmpty {
-                        cell.annotatinoInfoLabel.text = NSLocalizedString("None", comment: "")
+                        cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                     } else {
-                        cell.annotatinoInfoLabel.text = wisTask?.creator.fullName
+                        cell.annotationInfoLabel.text = wisTask?.creator.fullName
                     }
                 }
+                cell.annotationImageView.image = UIImage(named: "icon_user_create")
                 return cell
                 
             case BasicInfoRow.PersonInCharge.rawValue:
@@ -499,17 +517,17 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailSingleInfoCellID) as! TaskDetailSingleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "责任人："
+                cell.annotationLabel.text = "责任人"
                 if wisTask!.personInCharge == nil {
-                    cell.annotatinoInfoLabel.text = NSLocalizedString("None", comment: "")
+                    cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                 } else {
                     if wisTask!.personInCharge.fullName == nil || wisTask!.personInCharge.fullName.isEmpty {
-                        cell.annotatinoInfoLabel.text = NSLocalizedString("None", comment: "")
+                        cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                     } else {
-                        cell.annotatinoInfoLabel.text = wisTask?.personInCharge.fullName
+                        cell.annotationInfoLabel.text = wisTask?.personInCharge.fullName
                     }
                 }
-                
+                cell.annotationImageView.image = UIImage(named: "icon_user_incharge")
                 return cell
                 
             case BasicInfoRow.TaskInfo.rawValue:
@@ -517,7 +535,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailDoubleInfoCellID) as! TaskDetailDoubleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "编号："
+                cell.annotationLabel.text = "编号"
                 cell.annotationInfoLabel.text = wisTask?.taskID
                 cell.infoLabel.text = wisTask?.state
                 

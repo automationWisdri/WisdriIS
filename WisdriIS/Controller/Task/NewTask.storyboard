@@ -59,6 +59,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="I5A-Wd-eMC"/>
                                         </constraints>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>

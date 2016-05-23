@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
         
         vibrancyView.contentView.addSubview(self.userNameTextField!)
         
-        let bottomPartTopConstraint = Ruler.iPhoneVertical(100, 125, 200, 280).value
+        let bottomPartTopConstraint = Ruler.iPhoneVertical(100, 125, 200, 240).value
         let bottomPartWidthConstraint = Ruler.iPhoneVertical(250, 270, 300, 300).value
         
         self.userNameTextField!.snp_makeConstraints{ (make) -> Void in
@@ -233,6 +233,9 @@ class LoginViewController: UIViewController {
             self.passwordTextField!.becomeFirstResponder()
             return
         }
+        
+        self.userNameTextField?.resignFirstResponder()
+        self.passwordTextField?.resignFirstResponder()
         SVProgressHUD.showWithStatus("正在登陆")
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in

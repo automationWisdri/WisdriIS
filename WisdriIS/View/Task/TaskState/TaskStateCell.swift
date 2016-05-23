@@ -20,9 +20,9 @@ class TaskStateCell: UITableViewCell {
     
     let timeLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(12)]
     
-    let timeLabelWidth: CGFloat = 106
+    let timeLabelWidth: CGFloat = 121
     
-    let timeLabelLeadingBase: CGFloat = -4
+    let timeLabelLeadingBase: CGFloat = 2
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,8 +38,8 @@ class TaskStateCell: UITableViewCell {
     func bind(status: WISMaintenanceTaskState) {
         userNameLabel.text = status.personInCharge.fullName
         statusNameLabel.text = status.state
-        startTimeLabel.text = WISConfig.DATE.stringFromDate(status.startTime)
-        endTimeLabel.text = WISConfig.DATE.stringFromDate(status.endTime)
+        startTimeLabel.text = WISConfig.DATE.stringFromDate(status.startTime) + " 起"
+        endTimeLabel.text = WISConfig.DATE.stringFromDate(status.endTime) + " 止"
         
         if let string = startTimeLabel.text {
             self.startTimeLabelLeadingConstraint.constant = calculateOffset(string)

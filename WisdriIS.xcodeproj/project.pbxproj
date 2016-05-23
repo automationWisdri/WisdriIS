@@ -415,8 +415,6 @@
 		9F801AC41C86906300F64265 /* TaskMediaAddCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskMediaAddCell.swift; sourceTree = "<group>"; };
 		9F801AC51C86906300F64265 /* TaskMediaAddCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMediaAddCell.xib; sourceTree = "<group>"; };
 		9F801AD01C86B5F800F64265 /* NSFileManager+Yep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Yep.swift"; sourceTree = "<group>"; };
-		9F801AD21C86B8F200F64265 /* FeedAnyImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedAnyImagesCell.swift; path = View/FeedAnyImagesCell.swift; sourceTree = "<group>"; };
-		9F801AD41C86B93600F64265 /* FeedBasicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedBasicCell.swift; path = View/FeedBasicCell.swift; sourceTree = "<group>"; };
 		9F801AD81C86BAB400F64265 /* TouchClosuresView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchClosuresView.swift; path = View/TouchClosuresView.swift; sourceTree = "<group>"; };
 		9F801ADA1C86BAF600F64265 /* TaskTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTextView.swift; path = View/TaskTextView.swift; sourceTree = "<group>"; };
 		9F801ADC1C86BC5700F64265 /* WISAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISAlert.swift; sourceTree = "<group>"; };
@@ -892,11 +890,9 @@
 				9F7C4BCA1C8E6F1300652CDF /* MediaView.swift */,
 				9F7C4BCE1C8E9CD400652CDF /* MediaControlView.swift */,
 				9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */,
-				9F801AD41C86B93600F64265 /* FeedBasicCell.swift */,
 				9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */,
 				9F801AD81C86BAB400F64265 /* TouchClosuresView.swift */,
 				9F801ADA1C86BAF600F64265 /* TaskTextView.swift */,
-				9F801AD21C86B8F200F64265 /* FeedAnyImagesCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";

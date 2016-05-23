@@ -181,6 +181,7 @@ extension ProfileInfoViewController: UITableViewDataSource, UITableViewDelegate 
             let cell = tableView.dequeueReusableCellWithIdentifier(profileInfoCellIdentifier) as! ProfileInfoCell
             cell.annotationLabel.text = "用户姓名"
             cell.infoTextField.placeholder = "请填入用户姓名"
+            cell.infoTextField.keyboardType = .Default
             return cell
         
         case "editPhone":
@@ -191,12 +192,14 @@ extension ProfileInfoViewController: UITableViewDataSource, UITableViewDelegate 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileInfoCellIdentifier) as! ProfileInfoCell
                 cell.annotationLabel.text = "固定电话"
                 cell.infoTextField.placeholder = "请填入固定电话号码"
+                cell.infoTextField.keyboardType = .PhonePad
                 return cell
                 
             case PhoneRow.Mobile.rawValue:
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileInfoCellIdentifier) as! ProfileInfoCell
                 cell.annotationLabel.text = "移动电话"
                 cell.infoTextField.placeholder = "请填入移动电话号码"
+                cell.infoTextField.keyboardType = .PhonePad
                 return cell
                 
             default:

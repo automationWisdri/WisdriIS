@@ -70,9 +70,9 @@ class TaskDescriptionCell: UITableViewCell {
             self.wisFileInfos.append(wisTask.imagesInfo.objectForKey(item) as! WISFileInfo)
         }
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.taskImageCollectionView.reloadData()
-        }
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.taskImageCollectionView.reloadData()
+//        }
         
         // Make UI
         if wisTask.imagesInfo.count == 0 {

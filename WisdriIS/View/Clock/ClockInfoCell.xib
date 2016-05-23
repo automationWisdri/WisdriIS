@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,31 +16,40 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Annotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-Hu-Zvx" userLabel="Annotation Label">
-                        <rect key="frame" x="25" y="12" width="88" height="21"/>
+                        <rect key="frame" x="50" y="12" width="80" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="KYr-uP-1fF"/>
-                            <constraint firstAttribute="width" constant="88" id="xox-oK-x45"/>
+                            <constraint firstAttribute="height" constant="20" id="KYr-uP-1fF"/>
+                            <constraint firstAttribute="width" constant="80" id="xox-oK-x45"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Info" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N9-ww-jpD" userLabel="Info Label">
-                        <rect key="frame" x="132" y="12" width="163" height="21"/>
+                        <rect key="frame" x="150" y="12" width="150" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="K12-VD-mtp"/>
-                            <constraint firstAttribute="width" constant="163" id="qHb-6w-ZqP"/>
+                            <constraint firstAttribute="width" constant="150" id="qHb-6w-ZqP"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_clock_active" translatesAutoresizingMaskIntoConstraints="NO" id="ncZ-fB-jFy">
+                        <rect key="frame" x="20" y="11" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Sbu-Cs-V4I"/>
+                            <constraint firstAttribute="width" secondItem="ncZ-fB-jFy" secondAttribute="height" multiplier="1:1" id="tx2-X9-5tN"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="d7s-Hu-Zvx" firstAttribute="leading" secondItem="ncZ-fB-jFy" secondAttribute="trailing" constant="8" id="2g9-yH-nef"/>
+                    <constraint firstItem="ncZ-fB-jFy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="77e-GP-fPJ"/>
                     <constraint firstItem="d7s-Hu-Zvx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HsQ-F0-vMg"/>
-                    <constraint firstAttribute="trailing" secondItem="9N9-ww-jpD" secondAttribute="trailing" constant="25" id="UyS-BK-ko6"/>
+                    <constraint firstAttribute="trailing" secondItem="9N9-ww-jpD" secondAttribute="trailing" constant="20" id="UyS-BK-ko6"/>
+                    <constraint firstItem="ncZ-fB-jFy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="aLK-RT-mfX"/>
                     <constraint firstItem="9N9-ww-jpD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="isF-dJ-zNj"/>
-                    <constraint firstItem="d7s-Hu-Zvx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="qhA-AF-SJy"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -49,4 +59,7 @@
             <point key="canvasLocation" x="335" y="284"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_clock_active" width="80" height="80"/>
+    </resources>
 </document>

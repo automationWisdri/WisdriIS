@@ -12,7 +12,7 @@ class TaskSectionPickerItemView: UIView {
 
     lazy var sectionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFontOfSize(17)
         label.textColor = UIColor.whiteColor()
         return label
     }()

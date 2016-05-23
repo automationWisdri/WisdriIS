@@ -69,6 +69,16 @@ class PickUserViewController: UIViewController {
         }
     }
     
+    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("人员列表获取失败。", comment: ""))
+    
+    private var noRecords = false {
+        didSet {
+            if noRecords != oldValue {
+                pickUserTableView.tableFooterView = noRecords ? noRecordsFooterView : UIView()
+            }
+        }
+    }
+    
     var segueIdentifier: String?
     private let cellIdentifier = "ContactsCell"
     
@@ -141,6 +151,7 @@ class PickUserViewController: UIViewController {
                     }
                 }
                 
+                self.noRecords = self.relevantUser.isEmpty
                 self.pickUserTableView.reloadData()
                 
                 var indexPath: NSIndexPath
