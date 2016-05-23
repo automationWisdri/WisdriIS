@@ -37,7 +37,8 @@ class InspectionUploadingQueueViewController: BaseViewController {
         /// *** right button item on navigationbar
         // inspectionPopoverButton = UIBarButtonItem.init(title: "Menu", style: .Plain, target: self, action: #selector(self.pushScanView(_:)))
         inspectionUploadingRightButton = UIBarButtonItem.init(barButtonSystemItem: .Action, target: self, action: #selector(self.startInspectionTaskUploading(_:)))
-        self.navigationItem.rightBarButtonItem = inspectionUploadingRightButton
+        /// remove uploading button, for automatic uploading program works well so far. 2016.05.20 JingweiWu
+        // self.navigationItem.rightBarButtonItem = inspectionUploadingRightButton
         
         /// *** list setting
         inspectionUploadingQueueTableView.registerNib(UINib(nibName: InspectionUploadingQueueCellID, bundle: nil), forCellReuseIdentifier: InspectionUploadingQueueCellID)
@@ -145,7 +146,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
     }
     
     /// completion block executes before view will appear
-    class func performSegueToInspectionUploadingQueueViewController (superViewController:UIViewController, completion: (() -> Void)?) -> Void {
+    class func performPushToInspectionUploadingQueueViewController (superViewController:UIViewController, completion: (() -> Void)?) -> Void {
         
         let board = UIStoryboard.init(name: "InspectionUploadingQueue", bundle: NSBundle.mainBundle())
         let viewController = board.instantiateViewControllerWithIdentifier("InspectionUploadingQueueViewController") as! InspectionUploadingQueueViewController

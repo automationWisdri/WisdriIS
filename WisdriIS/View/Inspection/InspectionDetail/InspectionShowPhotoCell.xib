@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Inspection Images" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtK-0N-lAw" userLabel="Annotation Label">
-                        <rect key="frame" x="10" y="12" width="180" height="22"/>
+                        <rect key="frame" x="18" y="12" width="180" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -33,17 +33,17 @@
                     </collectionView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="FtK-0N-lAw" firstAttribute="leading" secondItem="en0-JL-HiG" secondAttribute="leadingMargin" constant="2" id="EqU-HY-8zj"/>
                     <constraint firstItem="FtK-0N-lAw" firstAttribute="top" secondItem="en0-JL-HiG" secondAttribute="topMargin" constant="4" id="GPI-oP-rdm"/>
                     <constraint firstItem="jlP-l0-z5H" firstAttribute="leading" secondItem="en0-JL-HiG" secondAttribute="leadingMargin" constant="-8" id="bBw-mg-Brm"/>
                     <constraint firstAttribute="trailingMargin" secondItem="jlP-l0-z5H" secondAttribute="trailing" constant="-8" id="dxA-Ke-uHT"/>
+                    <constraint firstItem="FtK-0N-lAw" firstAttribute="leading" secondItem="en0-JL-HiG" secondAttribute="leadingMargin" constant="10" id="gjb-Ek-Vz2"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="inspectionImageTitleLabel" destination="FtK-0N-lAw" id="Gvg-2u-fGg"/>
                 <outlet property="inspectionImagesCollectionView" destination="jlP-l0-z5H" id="loq-e3-Wmy"/>
             </connections>
-            <point key="canvasLocation" x="259.5" y="219"/>
+            <point key="canvasLocation" x="259.5" y="218.5"/>
         </tableViewCell>
     </objects>
 </document>

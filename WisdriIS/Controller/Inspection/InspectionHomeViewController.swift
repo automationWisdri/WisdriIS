@@ -74,7 +74,7 @@ class InspectionHomeViewController: BaseViewController {
                 break
                 
             case .UploadingQueue:
-                InspectionUploadingQueueViewController.performSegueToInspectionUploadingQueueViewController(self) {
+                InspectionUploadingQueueViewController.performPushToInspectionUploadingQueueViewController(self) {
                     print("segue InspectionUploadingQueueViewController")
                     weakSelf!.disappearBlurEffect(0.0)
                     print("show Inspection Uploading Queue View")

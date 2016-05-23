@@ -225,9 +225,13 @@
 
 "Over due inspection task list updated successfully" = "逾期点检任务列表更新成功";
 
-"Inspection Result" = "点检结果";
-
 "Inspection Images" = "点检图片";
+
+"Totally %d images uploaded in this inspection task" = "点检任务共有%d张图片";
+
+"No image uploaded in this inspection task" = "点检任务未上传图片";
+
+"Finished" = "完成";
 
 "Finished inspection tasks uploaded successfully" = "当前已完成点检任务信息上传成功";
 

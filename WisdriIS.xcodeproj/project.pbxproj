@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1E2D987F95B9BF0F499F8F21 /* Pods_WisdriIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C5A7E49FD930EEC5826B71 /* Pods_WisdriIS.framework */; };
+		380499541CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */; };
+		380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */; };
 		385C1DDF1CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */; };
 		385C1DE01CE4BC9200F8E393 /* CodeScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 385C1D871CE4BC9200F8E393 /* CodeScan.bundle */; };
 		385C1DE11CE4BC9200F8E393 /* LBXPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1D891CE4BC9200F8E393 /* LBXPermissions.swift */; };
@@ -207,6 +209,8 @@
 /* Begin PBXFileReference section */
 		09C5A7E49FD930EEC5826B71 /* Pods_WisdriIS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WisdriIS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8C085E8B80801B50615C50 /* Pods-WisdriIS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisdriIS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisdriIS/Pods-WisdriIS.release.xcconfig"; sourceTree = "<group>"; };
+		380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionPresentResultWithPhotoCell.xib; sourceTree = "<group>"; };
+		380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPresentResultWithPhotoCell.swift; sourceTree = "<group>"; };
 		385C1D841CE4BC9200F8E393 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.4.1.a"; sourceTree = "<group>"; };
 		385C1D871CE4BC9200F8E393 /* CodeScan.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CodeScan.bundle; sourceTree = "<group>"; };
@@ -698,6 +702,7 @@
 		385C1E061CE4BD2700F8E393 /* InspectionDetail */ = {
 			isa = PBXGroup;
 			children = (
+				380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */,
 				38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */,
 				38E51E3A1CEC811B003092DA /* InspectionShowPhotoCell.xib */,
 				385C1E071CE4BD2700F8E393 /* InspectionColoredTitleCell.swift */,
@@ -721,6 +726,7 @@
 				385C1E191CE4BD2700F8E393 /* InspectionResultSelectionCell.xib */,
 				38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */,
 				38E51E3F1CEC8327003092DA /* InspectionShowPhotoCell.swift */,
+				380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */,
 			);
 			path = InspectionDetail;
 			sourceTree = "<group>";
@@ -1339,6 +1345,7 @@
 				9F8FEE661CD0542E00D2B043 /* ModifyPlan.storyboard in Resources */,
 				9F7C4BBF1C8D6D1B00652CDF /* TaskDescriptionCell.xib in Resources */,
 				9FEF501D1C78B1F0001A7644 /* Light.bundle in Resources */,
+				380499541CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib in Resources */,
 				9F055C751CE034690077184B /* ClockInfoCell.xib in Resources */,
 				9F055BAE1CDC2C830077184B /* ProfileInfoCell.xib in Resources */,
 				9F801AC91C86906300F64265 /* TaskMediaAddCell.xib in Resources */,
@@ -1502,6 +1509,7 @@
 				385C1DE21CE4BC9200F8E393 /* LBXScanLineAnimation.swift in Sources */,
 				9F055BB21CDC2E180077184B /* ProfileInfoViewController.swift in Sources */,
 				9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */,
+				380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */,
 				38E51E401CEC8327003092DA /* InspectionShowPhotoCell.swift in Sources */,
 				385C1E021CE4BC9200F8E393 /* WISSystemNetworkNotification.m in Sources */,
 				9F801A891C853B3300F64265 /* UIFont+Yep.swift in Sources */,

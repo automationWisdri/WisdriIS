@@ -41,8 +41,14 @@ class InspectionDetailViewController: BaseViewController {
     private let inspectionResultSelectionCellID = "InspectionResultSelectionCell"
     private let inspectionPickPhotoCellID = "InspectionPickPhotoCell"
     
+    
+    /// Obsolete
     private let inspectionResultShowSelectionCellID = "InspectionResultShowSelectionCell"
+    /// Obsolete
     private let inspectionShowPhotoCellID = "InspectionShowPhotoCell"
+    
+    
+    private let inspectionPresentResultWithPhotoCellID = "InspectionPresentResultWithPhotoCell"
     
     private let inspectionResultDescriptionCellID = "InspectionResultDescriptionCell"
     
@@ -94,10 +100,15 @@ class InspectionDetailViewController: BaseViewController {
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionPickPhotoCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionPickPhotoCellID)
         
+        /** Obsolete
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionResultShowSelectionCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionResultShowSelectionCellID)
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionShowPhotoCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionShowPhotoCellID)
+        */
+        
+        inspectionDetailTableView.registerNib(UINib(nibName: inspectionPresentResultWithPhotoCellID, bundle: nil),
+                                              forCellReuseIdentifier: inspectionPresentResultWithPhotoCellID)
         
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionResultDescriptionCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionResultDescriptionCellID)
@@ -235,11 +246,13 @@ class InspectionDetailViewController: BaseViewController {
         viewController.inspectionTask = inspectionTask.copy() as! WISInspectionTask
         
         viewController.showMoreInformation = showMoreInformation
-        // 需要根据角色来区分是否详细任务信息是否可编辑(由SuperViewController决定)
+        // 需要根据角色来区分详细任务信息是否可编辑(由SuperViewController决定)
         viewController.operationEnabled = enableOperation
         viewController.superViewController = superViewController
         viewController.indexInList = index
+        viewController.hidesBottomBarWhenPushed = true
         superViewController.navigationController?.pushViewController(viewController, animated: true)
+        superViewController.tabBarController?.tabBar.hidden = true
     }
 }
 
@@ -258,7 +271,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
     
     /// Number of sections in TableView
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return Section.count
     }
     
     /// Number of Rows in each section
@@ -269,21 +282,20 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         
         switch section {
         case .InspectionDevice:
-            return 3
+            return InspectionDeviceRow.count
         case .InspectionDeviceType:
-            return 2
+            return InspectionDeviceTypeRow.count
         case .InspectionResult:
             // in different situation, the return value should change
             if showMoreInformation {
-                return 3
+                
+                return operationEnabled ? InspectionAddResultRow.count : InspectionPresentResultRow.count
             } else {
                 return 0
             }
             
         case .InspectionOperation:
-            return operationEnabled ? 1 : 0
-        case .More:
-            return 0
+            return operationEnabled ? InspectionOperationRow.count : 0
         }
     }
     
@@ -298,7 +310,6 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         case .InspectionDeviceType: return 0.001//10
         case .InspectionResult: return 0.001//10
         case .InspectionOperation: return showMoreInformation ? 20.0 : 5.0
-        case .More: return 0.0
         }
     }
     
@@ -389,6 +400,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                     break
                 }
                 
+                /** InspectionShowResultRow -- Obsolete 2016.05.22
                 switch row {
                 case .Result:
                     let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultShowSelectionCellID) as! InspectionResultShowSelectionCell
@@ -403,6 +415,21 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                     
                     return cell
                     
+                    
+                case .ResultDescription:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultDescriptionCellID) as! InspectionResultDescriptionCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!, editable: false)
+                    return cell
+                }
+                */
+                
+                switch row {
+                case .ResultWithPhoto:
+                    let cell = tableView.dequeueReusableCellWithIdentifier(inspectionPresentResultWithPhotoCellID) as! InspectionPresentResultWithPhotoCell
+                    cell.selectionStyle = .None
+                    cell.bindData(inspectionTask!)
+                    return cell
                     
                 case .ResultDescription:
                     let cell = tableView.dequeueReusableCellWithIdentifier(inspectionResultDescriptionCellID) as! InspectionResultDescriptionCell
@@ -489,12 +516,19 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 guard let row = InspectionPresentResultRow(rawValue: indexPath.row) else {
                     break
                 }
-                
+                /** Obsolete
                 switch row {
                 case .Result: return InspectionResultShowSelectionCell.cellHeight
                 case .ShowPhoto: return InspectionShowPhotoCell.calCellHeight(self.inspectionTask)
                 case .ResultDescription: return InspectionResultDescriptionCell.cellHeight
                 }
+                */
+                
+                switch row {
+                case .ResultWithPhoto: return InspectionPresentResultWithPhotoCell.calCellHeight(self.inspectionTask)
+                case .ResultDescription: return InspectionResultDescriptionCell.cellHeight
+                }
+                
             }
             
         // Section: Operation
@@ -616,7 +650,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         
         switch section {
         case .InspectionResult:
-            guard let cell = cell as? InspectionShowPhotoCell else {
+            guard let cell = cell as? InspectionPresentResultWithPhotoCell else {
                 break
             }
             
@@ -696,32 +730,66 @@ private enum Section: Int {
     case InspectionDeviceType = 1
     case InspectionResult = 2
     case InspectionOperation = 3
-    case More
+    
+    static let count: Int = {
+        return 4
+    }()
 }
 
 private enum InspectionDeviceRow: Int {
     case DeviceInfo = 0
     case DeviceBelonging = 1
     case DeviceRemark = 2
+    
+    static let count: Int = {
+        return 3
+    }()
 }
 
 private enum InspectionDeviceTypeRow: Int {
     case DeviceTypeInfo = 0
     case DeviceTypeInformation = 1
+    
+    static let count: Int = {
+        return 2
+    }()
 }
 
 private enum InspectionAddResultRow: Int {
     case ResultSelection = 0
     case PickPhoto = 1
     case ResultDescription = 2
+    
+    static let count: Int = {
+        return 3
+    }()
 }
 
-private enum InspectionPresentResultRow: Int {
+/// Obsolete
+private enum InspectionShowResultRow: Int {
     case Result = 0
     case ShowPhoto = 1
     case ResultDescription = 2
+    
+    static let count: Int = {
+        return 3
+    }()
 }
+
+private enum InspectionPresentResultRow: Int {
+    case ResultWithPhoto = 0
+    case ResultDescription = 1
+    
+    static let count: Int = {
+        return 2
+    }()
+}
+
 
 private enum InspectionOperationRow: Int {
     case Action = 0
+    
+    static let count: Int = {
+        return 1
+    }()
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -16,11 +16,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IUG-e1-hBs">
-                        <rect key="frame" x="0.0" y="38" width="320" height="101.5"/>
+                        <rect key="frame" x="18" y="38" width="302" height="101.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Result" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRc-0c-daR" userLabel="Annotation Label">
-                        <rect key="frame" x="10" y="8" width="88" height="22"/>
+                        <rect key="frame" x="18" y="8" width="88" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -28,8 +28,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="IUG-e1-hBs" secondAttribute="trailing" constant="-8" id="MCn-zw-2GX"/>
-                    <constraint firstItem="IUG-e1-hBs" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="-8" id="bYB-Gl-yg3"/>
-                    <constraint firstItem="eRc-0c-daR" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="10" id="kqr-Ib-a9l"/>
+                    <constraint firstItem="eRc-0c-daR" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="10" id="RhB-Dv-eZR"/>
+                    <constraint firstItem="IUG-e1-hBs" firstAttribute="leading" secondItem="2Ve-Uk-BcK" secondAttribute="leadingMargin" constant="10" id="lZ0-9V-yGa"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
