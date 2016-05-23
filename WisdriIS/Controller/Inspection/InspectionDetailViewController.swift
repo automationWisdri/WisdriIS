@@ -119,11 +119,10 @@ class InspectionDetailViewController: BaseViewController {
         #if (arch(x86_64) || arch(i386)) && os(iOS)
             // ignore
         #else
-            /// code below doesn't work 2016.05.09
+            /// code below doesn't work well 2016.05.09
             keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
                 print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)")
                 if let strongSelf = self {
-                    
                     strongSelf.view.frame.origin.y -= (keyboardHeightIncrement + 50)
                     strongSelf.view.frame.size.height += (keyboardHeightIncrement + 50)
                     strongSelf.view.layoutIfNeeded()
@@ -599,7 +598,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             let cellResultDescription = tableView.cellForRowAtIndexPath(indexPath) as! InspectionResultDescriptionCell
                             cellResultDescription.bringBackData(&self!.inspectionTask!)
                             
-                            if self?.inspectionTask.inspectionResult == .DeviceFaultForHandle && self?.inspectionTask.inspectionResultDescription == "" {
+                            if self!.inspectionTask.inspectionResult == .DeviceFaultForHandle && self!.inspectionTask.inspectionResultDescription == "" {
                                 WISAlert.alert(title: NSLocalizedString("Submit Inspection Result"), message: NSLocalizedString("Result description is needed when device is fault"), dismissTitle: NSLocalizedString("Confirm"), inViewController: self, withDismissAction: nil)
                                 return
                             }
@@ -615,7 +614,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                                 dismissTitle: NSLocalizedString("Confirm"),
                                 inViewController: self,
                                 
-                                withDismissAction: {[weak self] () -> Void in
+                                withDismissAction: { () -> Void in
                                     if self!.indexInList > -1 {
                                         WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAtIndex(self!.indexInList)
                                     }
@@ -659,40 +658,36 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                     return
                 }
                 
-                let viewController = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
-                
-                viewController.previewImages = imageFileInfos
-                viewController.startIndex = index
-                
-                let transitionView = transitionView
-                let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
-                viewController.previewImageViewInitalFrame = frame
-                viewController.bottomPreviewImage = image
-                viewController.transitionView = transitionView
-                
-                self?.view.endEditing(true)
-                
-                delay(0.3, work: { () -> Void in
-                    transitionView.alpha = 0
-                })
-                
-                viewController.afterDismissAction = { [weak self] in
-                    transitionView.alpha = 1
-                    mediaPreviewWindow.hidden = true
-                    self?.view.window?.makeKeyAndVisible()
+                if let strongSelf = self {
+                    let viewController = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
+                    
+                    viewController.previewImages = imageFileInfos
+                    viewController.startIndex = index
+                    
+                    let transitionView = transitionView
+                    let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
+                    viewController.previewImageViewInitalFrame = frame
+                    viewController.bottomPreviewImage = image
+                    viewController.transitionView = transitionView
+                    
+                    strongSelf.view.endEditing(true)
+                    
+                    delay(0.3, work: { () -> Void in
+                        transitionView.alpha = 0
+                    })
+                    
+                    viewController.afterDismissAction = { [weak self] in
+                        transitionView.alpha = 1
+                        mediaPreviewWindow.hidden = true
+                        self!.view.window?.makeKeyAndVisible()
+                    }
                 }
-                
-                mediaPreviewWindow.rootViewController = viewController
-                mediaPreviewWindow.makeKeyAndVisible()
             }
-            break
             
         default:
             break
         }
     }
-    
-    
 }
 
 // MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
