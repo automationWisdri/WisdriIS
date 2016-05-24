@@ -11,10 +11,11 @@ import Foundation
 private let defaultLocalPushNotificationArchivingStorageDirectoryKey = "defaultLocalPushNotificationArchivingStorageDirectory"
 
 class WISPushNotificationDataManager {
+    static var userName: String = ""
     
     // MARK: Shared Instances
     static func sharedInstance() -> WISPushNotificationDataManager { return WISPushNotificationDataManager.sharedPushNotificationDataManagerInstance }
-    private static let sharedPushNotificationDataManagerInstance = WISPushNotificationDataManager(archivingStorageFolderName: "PushNotificationArchivingCache")
+    private static let sharedPushNotificationDataManagerInstance = WISPushNotificationDataManager(archivingStorageFolderName: WISPushNotificationDataManager.cacheFolderName())
     
     private var localPushNotificationArchivingStorageDirectories = [String : String]()
     
@@ -24,6 +25,9 @@ class WISPushNotificationDataManager {
         print("WISPushNotificationDataManager initializing!")
         
         setDefaultLocalArchivingStorageDirectory(folderName)
+        if WISPushNotificationDataManager.userName == "" {
+            WISPushNotificationDataManager.userName = WISDataManager.sharedInstance().currentUser.userName
+        }
         
         let archivingFilesFullPath = filesFullPathIn(Directory: defaultLocalPushNotificationArchivingStorageDirectory)
         
@@ -44,6 +48,10 @@ class WISPushNotificationDataManager {
     
     // MARK: -
     
+    class private func cacheFolderName() -> String {
+        return WISDataManager.sharedInstance().currentUser.userName + "_" + "PushNotificationArchivingCache"
+    }
+    
     private func notificationListContains(notification: WISPushNotification) -> Bool {
         guard self.pushNotifications.count > 0 else {
             return false
@@ -55,6 +63,30 @@ class WISPushNotificationDataManager {
             }
         }
         return false
+    }
+    
+    
+    func reloadDataWithUserName(name: String) -> Void {
+        guard name != WISPushNotificationDataManager.userName else {
+            return
+        }
+        
+        WISPushNotificationDataManager.userName = name
+        setDefaultLocalArchivingStorageDirectory(WISPushNotificationDataManager.cacheFolderName())
+        
+        let archivingFilesFullPath = filesFullPathIn(Directory: defaultLocalPushNotificationArchivingStorageDirectory)
+        
+        pushNotifications.removeAll()
+        if archivingFilesFullPath.count > 0 {
+            for fileFullPath in archivingFilesFullPath {
+                pushNotifications.append(NSKeyedUnarchiver.unarchiveObjectWithFile(fileFullPath) as! WISPushNotification)
+            }
+        }
+        
+        if pushNotifications.count > 0 {
+            pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
+        }
+
     }
     
     
