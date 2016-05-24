@@ -28,6 +28,7 @@ class CodeScanViewController: LBXScanViewController {
     // Cancel button
     var btnCancel:UIButton = UIButton()
     
+    var isPushedFromParentController: Bool?
     var superViewController: UIViewController?
     var prefersHideStatuseBar = true
     
@@ -60,7 +61,9 @@ class CodeScanViewController: LBXScanViewController {
         btnFlashlight.setImage(UIImage(named: "CodeScan.bundle/qrcode_scan_btn_flash_nor"), forState:UIControlState.Normal)
         btnFlashlight.addTarget(self, action: #selector(self.toggleFlashlight), forControlEvents: UIControlEvents.TouchUpInside)
         
-        if self.isMovingToParentViewController() {
+        self.isPushedFromParentController = self.isMovingToParentViewController()
+        
+        if (self.isPushedFromParentController == true) {
             print("codeScanViewController is moving to parentViewController")
         } else {
             
@@ -129,7 +132,7 @@ class CodeScanViewController: LBXScanViewController {
     }
     
     
-    class func performSegueToCodeScanViewController(superViewController:UIViewController, completion: (() -> Void)?) -> String! {
+    class func performPushToCodeScanViewController(superViewController:UIViewController, completion: (() -> Void)?) -> String! {
         var style = LBXScanViewStyle()
         style.animationImage = UIImage(named: "CodeScan.bundle/qrcode_scan_light_green")
         
@@ -161,7 +164,12 @@ class CodeScanViewController: LBXScanViewController {
                                           userInfo: [codeScanNotificationTokenKey as NSString!:self.codeScanNotificationToken!])
         
         NSNotificationCenter.defaultCenter().postNotification(notification)
-        self.dismissCodeScanView()
+        
+        if self.isPushedFromParentController == true {
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            self.dismissCodeScanView()
+        }
         
         // super.handleCodeResult(arrayResult)
     }

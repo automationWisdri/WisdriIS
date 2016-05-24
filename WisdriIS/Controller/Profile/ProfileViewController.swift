@@ -41,9 +41,11 @@ class ProfileViewController: BaseViewController {
     private var currentUser: WISUser!
 
     deinit {
-
         editProfileTableView?.delegate = nil
-
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: QRCodeScanedSuccessfullyNotification, object: nil)
+        print("Notification \(QRCodeScanedSuccessfullyNotification) deregistered in ProfileViewController while deiniting")
+        
         print("deinit EditProfileViewController")
     }
 
@@ -58,6 +60,10 @@ class ProfileViewController: BaseViewController {
         updateAvatar() {}
         
         roleLabel.text = currentUser?.roleName
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(self.parseScanedCode(_:)),
+                                                         name: QRCodeScanedSuccessfullyNotification,
+                                                         object: nil)
 
         editProfileTableView.registerNib(UINib(nibName: profileLessInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: profileLessInfoCellIdentifier)
         editProfileTableView.registerNib(UINib(nibName: profileColoredTitleCellIdentifier, bundle: nil), forCellReuseIdentifier: profileColoredTitleCellIdentifier)
@@ -74,6 +80,7 @@ class ProfileViewController: BaseViewController {
 
         view.endEditing(true)
     }
+
 
     // MARK: Actions
 
@@ -117,7 +124,6 @@ class ProfileViewController: BaseViewController {
                     self.avatarImageView.image = UIImage(named: "default_avatar_60")
                 }
         }
-        
         completion()
     }
 
@@ -179,11 +185,44 @@ class ProfileViewController: BaseViewController {
             self?.imagePicker.hidesBarsOnTap = false
         }
     }
+
     
-    @objc private func scan(sender: UIBarButtonItem) {
-        
-        self.presentViewController(CodeScanViewController(), animated: true, completion: nil)
+    //
+    @objc private func parseScanedCode(notification:NSNotification) -> Void {
+        if (notification.userInfo![codeScanNotificationTokenKey] as! String) == self.codeScanNotificationToken {
+            print("InspectionDetailViewController- code:\(notification.object)")
+            
+            // do checking jobs here
+            let scanResult = notification.object as! String
+            let scanResultAsArray = scanResult.componentsSeparatedByString("&")
+            
+            /** While testing, let every QR code scaned works
+            guard scanResultAsArray[0] == "CLOCK" else {
+                SVProgressHUD.setDefaultMaskType(.None)
+                SVProgressHUD.showErrorWithStatus("二维码不匹配, 打卡失败!")
+                return
+            }
+            */
+            
+            // if code is validate, update clock status
+            WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
+                if completedWithNoError {
+                    currentClockStatus = data as! Int
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.editProfileTableView.reloadData()
+                    }
+                    
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus("打卡成功")
+                    
+                } else {
+                    WISConfig.errorCode(error)
+                }
+            })
+        }
+        return
     }
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -417,24 +456,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 NotificationListViewController.performPushToNotificationListView(self)
                 
             case InfoRow.Scan.rawValue:
-                
-                self.codeScanNotificationToken = CodeScanViewController.performSegueToCodeScanViewController(self, completion: nil)
+                self.codeScanNotificationToken = CodeScanViewController.performPushToCodeScanViewController(self, completion: nil)
                 
                 if self.codeScanNotificationToken != nil {
-                    WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
-                        if completedWithNoError {
-                            
-                            SVProgressHUD.showSuccessWithStatus("打卡成功")
-                            currentClockStatus = data as! Int
-
-                            self.editProfileTableView.reloadData()
-                            
-                        } else {
-                            
-                            WISConfig.errorCode(error)
-                        }
-                        
-                    })
+                    
                 }
                 
             case InfoRow.About.rawValue:
