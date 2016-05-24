@@ -247,3 +247,8 @@
 "Notification Content" = "通知内容";
 "Task ID" = "任务编号";
 
+"No on-the-go inspection task" = "暂无点检任务";
+"No historical inspection task" = "暂无历史点检任务";
+"No over due inspection task" = "暂无逾期点检任务";
+
+"No finished inspection task waiting for uploading" = "无等待上传的点检任务";
