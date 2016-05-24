@@ -32,8 +32,6 @@ class TaskDetailViewController: BaseViewController {
     private var planCount = 0
     private var stateCount = 0
     
-    private let height: [CGFloat] = [100, 150, 220]
-    
     private let pickUserSegueIdentifier = "pickUserForPassOperation"
     private let assignUserSegueIdentifier = "assignUserForPassOperation"
     private let submitQuickPlanSegueIdentifier = "submitQuickPlanOperation"
@@ -461,7 +459,11 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         case .TaskDescription:
             return 20
         case .TaskHandleInfo:
-            return 20
+            if planCount == 0 {
+                return 0
+            } else {
+                return 20
+            }
         case .TaskState:
             return 20
         case .Remark:

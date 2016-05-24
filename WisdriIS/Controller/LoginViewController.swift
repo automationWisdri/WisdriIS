@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
         self.userNameTextField!.tag = 1
         self.userNameTextField?.delegate = self
         
-        let userNameIconImageView = UIImageView(image: UIImage(named: "ic_account_circle")!.imageWithRenderingMode(.AlwaysTemplate))
+        let userNameIconImageView = UIImageView(image: UIImage(named: "icon_account")!.imageWithRenderingMode(.AlwaysTemplate))
         userNameIconImageView.frame = CGRectMake(0, 0, 34, 22)
         userNameIconImageView.tintColor = UIColor.whiteColor()
         userNameIconImageView.contentMode = .ScaleAspectFit
@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
         self.passwordTextField!.clearButtonMode = .Always
         self.passwordTextField!.tag = 2
         
-        let passwordIconImageView = UIImageView(image: UIImage(named: "ic_lock")!.imageWithRenderingMode(.AlwaysTemplate))
+        let passwordIconImageView = UIImageView(image: UIImage(named: "icon_lock")!.imageWithRenderingMode(.AlwaysTemplate))
         passwordIconImageView.frame = CGRectMake(0, 0, 34, 22)
         passwordIconImageView.contentMode = .ScaleAspectFit
         userNameIconImageView.tintColor = UIColor.whiteColor()

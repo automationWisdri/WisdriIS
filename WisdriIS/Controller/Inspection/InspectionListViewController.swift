@@ -47,7 +47,7 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.registerNib(UINib(nibName: inspectionListCellID, bundle: nil), forCellReuseIdentifier: inspectionListCellID)
         
         inspectionTableView.separatorColor = UIColor.wisCellSeparatorColor()
-        inspectionTableView.separatorInset = WISConfig.ContactsCell.separatorInset
+        inspectionTableView.separatorInset = WISConfig.TaskListCell.separatorInset
         inspectionTableView.tableFooterView = UIView()
         
         inspectionTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in

@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="419" height="222"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l5x-oR-eCJ" id="rvh-Bq-CIq">
-                <rect key="frame" x="0.0" y="0.0" width="419" height="222"/>
+                <rect key="frame" x="0.0" y="0.0" width="419" height="221.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="eGC-cQ-uCl">
@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Plan description" translatesAutoresizingMaskIntoConstraints="NO" id="y12-cs-ivk" customClass="TaskTextView" customModule="WisdriIS" customModuleProvider="target">
-                        <rect key="frame" x="20" y="36" width="389" height="42"/>
+                        <rect key="frame" x="20" y="36" width="384" height="42"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="Gtn-GG-qNg"/>
                         </constraints>
@@ -48,7 +48,7 @@
                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                     </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Index" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BG2-CD-2Pc">
-                        <rect key="frame" x="339" y="10" width="70" height="18"/>
+                        <rect key="frame" x="334" y="10" width="70" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="6id-lb-19S"/>
                             <constraint firstAttribute="width" constant="70" id="rrS-AF-2JS"/>
@@ -58,7 +58,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Relevant users' name" translatesAutoresizingMaskIntoConstraints="NO" id="PHT-ks-yg3" customClass="TaskTextView" customModule="WisdriIS" customModuleProvider="target">
-                        <rect key="frame" x="44" y="174" width="365" height="18"/>
+                        <rect key="frame" x="44" y="174" width="360" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="pOe-d5-rVc"/>
                         </constraints>
@@ -97,7 +97,7 @@
                     <constraint firstItem="PHT-ks-yg3" firstAttribute="top" secondItem="QTx-Oz-Mvf" secondAttribute="top" id="BLb-qE-KTK"/>
                     <constraint firstItem="x16-Rt-n2w" firstAttribute="top" secondItem="rvh-Bq-CIq" secondAttribute="top" constant="10" id="BRr-6K-J85"/>
                     <constraint firstItem="fOz-XG-tlh" firstAttribute="top" secondItem="B11-Sh-vTK" secondAttribute="top" id="Eu8-nv-oae"/>
-                    <constraint firstAttribute="trailing" secondItem="BG2-CD-2Pc" secondAttribute="trailing" constant="10" id="F9m-CV-Ppm"/>
+                    <constraint firstAttribute="trailing" secondItem="BG2-CD-2Pc" secondAttribute="trailing" constant="15" id="F9m-CV-Ppm"/>
                     <constraint firstItem="BG2-CD-2Pc" firstAttribute="top" secondItem="x16-Rt-n2w" secondAttribute="top" id="H37-vy-H45"/>
                     <constraint firstItem="QTx-Oz-Mvf" firstAttribute="leading" secondItem="y12-cs-ivk" secondAttribute="leading" id="KEE-wE-W2H"/>
                     <constraint firstItem="BG2-CD-2Pc" firstAttribute="trailing" secondItem="PHT-ks-yg3" secondAttribute="trailing" id="LEg-RY-ZyW"/>

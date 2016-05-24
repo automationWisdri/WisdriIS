@@ -11,7 +11,7 @@ import UIKit
 class InspectionColoredTitleCell: InspectionDetailViewBaseCell {
     static let cellHeight: CGFloat = 60.0
     
-    var coloredTitleColor: UIColor = UIColor.blueColor() {
+    var coloredTitleColor: UIColor = UIColor.wisTintColor() {
         willSet {
             coloredTitleLabel.textColor = newValue
         }
