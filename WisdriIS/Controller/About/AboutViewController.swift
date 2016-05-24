@@ -10,6 +10,7 @@ import UIKit
 import Ruler
 import SVProgressHUD
 import Foundation
+import CoreFoundation
 
 class AboutViewController: BaseViewController {
 
@@ -45,6 +46,13 @@ class AboutViewController: BaseViewController {
         aboutTableView.registerNib(UINib(nibName: profileLessInfoCellID, bundle: nil), forCellReuseIdentifier: profileLessInfoCellID)
 
         aboutTableViewHeightConstraint.constant = rowHeight + 1
+        
+        let infoDictionary = NSBundle.mainBundle().infoDictionary
+        let versionShortString = infoDictionary!["CFBundleShortVersionString"] as! String
+        let buildString = infoDictionary!["CFBundleVersion"] as! String
+        
+        let app_version = "Version: " + versionShortString + " (Build: " + buildString + ")"
+        self.appVersionLabel.text = app_version
     }
 
 }

@@ -10,6 +10,8 @@
 		1E2D987F95B9BF0F499F8F21 /* Pods_WisdriIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C5A7E49FD930EEC5826B71 /* Pods_WisdriIS.framework */; };
 		380499541CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */; };
 		380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */; };
+		383DBEB11CF31201005DF4A6 /* WISPushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */; };
+		383DBEB31CF315AA005DF4A6 /* WISPushNotificationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */; };
 		385C1DDF1CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */; };
 		385C1DE01CE4BC9200F8E393 /* CodeScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 385C1D871CE4BC9200F8E393 /* CodeScan.bundle */; };
 		385C1DE11CE4BC9200F8E393 /* LBXPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1D891CE4BC9200F8E393 /* LBXPermissions.swift */; };
@@ -78,6 +80,10 @@
 		385C1E501CE4BDCD00F8E393 /* InspectionPopoverContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */; };
 		385C1E511CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */; };
 		385C1E521CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */; };
+		38A5C0ED1CF33541008DBD48 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5C0EC1CF33541008DBD48 /* NotificationListViewController.swift */; };
+		38A5C0EF1CF3356F008DBD48 /* NotificationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */; };
+		38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */; };
+		38A5C0F41CF33A41008DBD48 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */; };
 		38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E331CEC3F95003092DA /* InspectionList.storyboard */; };
 		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
 		38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */; };
@@ -205,6 +211,8 @@
 		0D8C085E8B80801B50615C50 /* Pods-WisdriIS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisdriIS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisdriIS/Pods-WisdriIS.release.xcconfig"; sourceTree = "<group>"; };
 		380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionPresentResultWithPhotoCell.xib; sourceTree = "<group>"; };
 		380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPresentResultWithPhotoCell.swift; sourceTree = "<group>"; };
+		383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotification.swift; sourceTree = "<group>"; };
+		383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotificationDataManager.swift; sourceTree = "<group>"; };
 		385C1D841CE4BC9200F8E393 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
 		385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.4.1.a"; sourceTree = "<group>"; };
 		385C1D871CE4BC9200F8E393 /* CodeScan.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CodeScan.bundle; sourceTree = "<group>"; };
@@ -311,6 +319,10 @@
 		385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPopoverContentController.swift; sourceTree = "<group>"; };
 		385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionUploadingQueue.storyboard; sourceTree = "<group>"; };
 		385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionUploadingQueueViewController.swift; sourceTree = "<group>"; };
+		38A5C0EC1CF33541008DBD48 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListViewController.swift; sourceTree = "<group>"; };
+		38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationList.storyboard; sourceTree = "<group>"; };
+		38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationListCell.xib; sourceTree = "<group>"; };
+		38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
 		38E51E331CEC3F95003092DA /* InspectionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionList.storyboard; sourceTree = "<group>"; };
 		38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionHomeViewController.swift; sourceTree = "<group>"; };
 		38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionResultShowSelectionCell.xib; sourceTree = "<group>"; };
@@ -663,6 +675,8 @@
 			isa = PBXGroup;
 			children = (
 				385C1DDE1CE4BC9200F8E393 /* WISPushNotificationService.swift */,
+				383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */,
+				383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */,
 			);
 			path = WISPushNotificationService;
 			sourceTree = "<group>";
@@ -742,6 +756,25 @@
 				38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */,
 			);
 			path = Inspection;
+			sourceTree = "<group>";
+		};
+		38A5C0EB1CF333B1008DBD48 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */,
+				38A5C0EC1CF33541008DBD48 /* NotificationListViewController.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		38A5C0F01CF3391F008DBD48 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */,
+				38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */,
+			);
+			name = Notification;
+			path = View/Notification;
 			sourceTree = "<group>";
 		};
 		9F055B9A1CD73B530077184B /* Profile */ = {
@@ -857,6 +890,7 @@
 		9F4B215B1C7C2FF400D15B8E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				38A5C0F01CF3391F008DBD48 /* Notification */,
 				385C1E051CE4BD2700F8E393 /* Inspection */,
 				9F055C761CE061AE0077184B /* InfoView */,
 				9F055C711CE0343E0077184B /* Clock */,
@@ -1094,6 +1128,7 @@
 		9FEF4FF21C7756E3001A7644 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				38A5C0EB1CF333B1008DBD48 /* Notification */,
 				9F1FA1E41CEB713A001A2F61 /* Archive */,
 				9F1FA1DF1CEB00B9001A2F61 /* About */,
 				385C1E461CE4BDCD00F8E393 /* Inspection */,
@@ -1249,6 +1284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38A5C0EF1CF3356F008DBD48 /* NotificationList.storyboard in Resources */,
 				9F055A861CD11A3F0077184B /* SubmitPlan.storyboard in Resources */,
 				9FEF502F1C7AFE18001A7644 /* Images.xcassets in Resources */,
 				9FEF4FEB1C76D4B9001A7644 /* LaunchScreen.storyboard in Resources */,
@@ -1268,6 +1304,7 @@
 				9F055BB01CDC2DFB0077184B /* ProfileInfo.storyboard in Resources */,
 				9F801ABB1C867EC600F64265 /* PhotoCell.xib in Resources */,
 				9F6436DC1CAA0C93007909BE /* PickUser.storyboard in Resources */,
+				38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */,
 				385C1E361CE4BD2700F8E393 /* InspectionListCell.xib in Resources */,
 				9F1FA1E21CEB019E001A2F61 /* About.storyboard in Resources */,
 				9F801AB51C867D8D00F64265 /* PickPhotos.storyboard in Resources */,
@@ -1398,6 +1435,7 @@
 				9F055C6F1CDC72D40077184B /* TaskStateCell.swift in Sources */,
 				9F801ADF1C86C46F00F64265 /* TaskSectionPickerItemView.swift in Sources */,
 				9F7C4BB21C888F6100652CDF /* TaskDetailDoubleInfoCell.swift in Sources */,
+				383DBEB31CF315AA005DF4A6 /* WISPushNotificationDataManager.swift in Sources */,
 				9F801AA21C8594B800F64265 /* TaskDetailLargeInfoCell.swift in Sources */,
 				385C1E4E1CE4BDCD00F8E393 /* InspectionDetailViewController.swift in Sources */,
 				9F801ADD1C86BC5700F64265 /* WISAlert.swift in Sources */,
@@ -1417,6 +1455,7 @@
 				9F2A53231C9AA96B001BE6F6 /* TaskListCell.swift in Sources */,
 				9F7C4BCF1C8E9CD400652CDF /* MediaControlView.swift in Sources */,
 				385C1DED1CE4BC9200F8E393 /* WISInspectionTask.m in Sources */,
+				383DBEB11CF31201005DF4A6 /* WISPushNotification.swift in Sources */,
 				385C1E371CE4BD2700F8E393 /* InspectionUploadingQueueCell.swift in Sources */,
 				385C1E501CE4BDCD00F8E393 /* InspectionPopoverContentController.swift in Sources */,
 				9F055D361CE458870077184B /* WISSettings.swift in Sources */,
@@ -1456,6 +1495,7 @@
 				9F7C4BBE1C8D6D1B00652CDF /* TaskDescriptionCell.swift in Sources */,
 				385C1DE91CE4BC9200F8E393 /* WISCompany.m in Sources */,
 				385C1DFD1CE4BC9200F8E393 /* InspectionTaskForUploading.swift in Sources */,
+				38A5C0ED1CF33541008DBD48 /* NotificationListViewController.swift in Sources */,
 				385C1DF91CE4BC9200F8E393 /* WISSystemDataNotification.m in Sources */,
 				9F2A532C1C9F8E74001BE6F6 /* OperationTypesView.swift in Sources */,
 				9F64372F1CAE51FA007909BE /* RatingViewController.swift in Sources */,
@@ -1465,6 +1505,7 @@
 				385C1DF31CE4BC9200F8E393 /* WISDataResponsedNULLDataException.m in Sources */,
 				9F7C4BA81C88168900652CDF /* ContactsCell.swift in Sources */,
 				9F801A951C85727A00F64265 /* ProfileViewController.swift in Sources */,
+				38A5C0F41CF33A41008DBD48 /* NotificationListCell.swift in Sources */,
 				9F801AAF1C867D6200F64265 /* NewTaskViewController.swift in Sources */,
 				385C1E321CE4BD2700F8E393 /* InspectionResultSelectionCell.swift in Sources */,
 				385C1DEE1CE4BC9200F8E393 /* WISMaintenancePlan.m in Sources */,

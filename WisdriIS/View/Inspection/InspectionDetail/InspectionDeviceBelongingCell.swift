@@ -21,8 +21,8 @@ class InspectionDeviceBelongingCell:InspectionDetailViewBaseCell {
         super.awakeFromNib()
         // Initialization code
         
-        deviceCompanyTitleLabel.text = NSLocalizedString("Company", comment: "") + ":"
-        deviceProcessSegmentTitleLabel.text = NSLocalizedString("Process Segment", comment: "") + ":"
+        deviceCompanyTitleLabel.text = NSLocalizedString("Company", comment: "") //+ ":"
+        deviceProcessSegmentTitleLabel.text = NSLocalizedString("Process Segment", comment: "") //+ ":"
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

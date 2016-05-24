@@ -57,7 +57,7 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
     }
     
     func bindData(model: WISInspectionTask) {
-        self.inspectionResultTitleLabel.text = NSLocalizedString("Inspection Result", comment:"") + ": "
+        self.inspectionResultTitleLabel.text = NSLocalizedString("Inspection Result", comment:"") //+ ": "
         
         switch model.inspectionResult {
         case .DeviceNormal:

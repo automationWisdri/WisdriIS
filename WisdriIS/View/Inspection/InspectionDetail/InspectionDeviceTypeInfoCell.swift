@@ -20,8 +20,8 @@ class InspectionDeviceTypeInfoCell:InspectionDetailViewBaseCell {
         super.awakeFromNib()
         // Initialization code
         
-        deviceTypeNameTitleLabel.text = NSLocalizedString("Device Type", comment: "") + ":"
-        insepctionCycleTitleLabel.text = NSLocalizedString("Inspection Cycle", comment: "") + ":"
+        deviceTypeNameTitleLabel.text = NSLocalizedString("Device Type", comment: "") //+ ":"
+        insepctionCycleTitleLabel.text = NSLocalizedString("Inspection Cycle", comment: "") //+ ":"
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
