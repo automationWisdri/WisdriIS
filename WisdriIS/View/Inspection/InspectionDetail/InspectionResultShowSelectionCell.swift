@@ -26,9 +26,9 @@ class InspectionResultShowSelectionCell:InspectionDetailViewBaseCell {
     func bindData(model: WISInspectionTask) {
         switch model.inspectionResult {
         case .DeviceNormal:
-            inspectionShowResultSelectionLabel.text = NSLocalizedString("Inspection Result", comment:"") + ": " + NSLocalizedString("Normal", comment: "")
+            inspectionShowResultSelectionLabel.text = NSLocalizedString("Inspection Result", comment:"") + "  " + NSLocalizedString("Normal", comment: "")
         case .DeviceFaultForHandle:
-            inspectionShowResultSelectionLabel.text = NSLocalizedString("Inspection Result", comment:"") + ": " + NSLocalizedString("Fault for Handle", comment: "")
+            inspectionShowResultSelectionLabel.text = NSLocalizedString("Inspection Result", comment:"") + "  " + NSLocalizedString("Fault for Handle", comment: "")
         case .NotSelected:
             inspectionShowResultSelectionLabel.text = NSLocalizedString("Inspection Result", comment:"") + ": " + NSLocalizedString("None", comment: "")
         }
