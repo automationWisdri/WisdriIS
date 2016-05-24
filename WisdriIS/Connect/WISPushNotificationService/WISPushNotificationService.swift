@@ -9,6 +9,8 @@
 import Foundation
 import SVProgressHUD
 
+let OnLineNotificationReceivedNotification = "OnLineNotificationReceivedNotification"
+
 /// contents below are parameters for AppName:WisdriIS-Dev with getui ID titanwjw
 //let kGtAppId:String = "GJg6Sb5zUk8NHl8VQUs1Y7"
 //let kGtAppKey:String = "K4rRQSX3JF7Wxbr4enXEA3"
@@ -92,10 +94,19 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
             payloadMsg = String.init(data: payloadData, encoding: NSUTF8StringEncoding)!;
         }
         
+        let newNotification = WISPushNotification.init(notificationBody: payloadMsg, notificationReceivedDateTime: NSDate.init())
+        let notificationIndex = WISPushNotificationDataManager.sharedInstance().addPushNotification(newNotification)
+        
         if !offLine {
-            SVProgressHUD.setDefaultMaskType(.None)
-            SVProgressHUD.showInfoWithStatus(payloadMsg)
+            // SVProgressHUD.setDefaultMaskType(.None)
+            // SVProgressHUD.showInfoWithStatus(payloadMsg)
+            let alert = UIAlertView.init(title: NSLocalizedString("Notification", comment: ""), message: payloadMsg, delegate: nil, cancelButtonTitle: NSLocalizedString("Confirm", comment: ""))
+            alert.show()
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(OnLineNotificationReceivedNotification, object: String(notificationIndex))
         }
+        
+        
         
         let msg:String = "Receive Payload: \(payloadMsg), taskId:\(taskId), messageId:\(msgId)";
         
@@ -106,6 +117,7 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
             print("BadgeNumber after payload data has been received: \(application?.applicationIconBadgeNumber)")
         }
     }
-    
-    
 }
+
+
+

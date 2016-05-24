@@ -235,5 +235,15 @@
 
 "Finished inspection tasks uploaded successfully" = "当前已完成点检任务信息上传成功";
 
+"Notification" = "通知";
 
+"Edit" = "编辑";
+"Done" = "完成";
+
+"Notification List" = "通知";
+
+"Notification Received" = "接收的通知";
+
+"Notification Content" = "通知内容";
+"Task ID" = "任务编号";
 

@@ -217,6 +217,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case Phone
         case Password
         case Scan
+        case Notification
         case About
     }
 
@@ -229,7 +230,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         switch section {
 
         case Section.Info.rawValue:
-            return 5
+            return 6
 
         case Section.LogOut.rawValue:
             return 1
@@ -314,6 +315,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 return cell
                 
+            case InfoRow.Notification.rawValue:
+                let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
+                
+                cell.annotationLabel.text = NSLocalizedString("Notification Received", comment: "")
+                cell.infoLabel.hidden = true
+                cell.accessoryImageView.hidden = false
+                cell.selectionStyle = .Default
+                
+                return cell
+                
             case InfoRow.About.rawValue:
                 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
@@ -360,6 +371,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             case InfoRow.Scan.rawValue:
                 return 60
                 
+            case InfoRow.Notification.rawValue:
+                return 60
+                
             case InfoRow.About.rawValue:
                 return 60
 
@@ -398,6 +412,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             case InfoRow.Phone.rawValue:
                 
                 performSegueWithIdentifier("editPhone", sender: nil)
+                
+            case InfoRow.Notification.rawValue:
+                NotificationListViewController.performPushToNotificationListView(self)
                 
             case InfoRow.Scan.rawValue:
                 
