@@ -21,7 +21,7 @@ class ProfileViewController: BaseViewController {
 
     @IBOutlet private weak var roleLabel: UILabel!
 
-    @IBOutlet private weak var editProfileTableView: TPKeyboardAvoidingTableView!
+    @IBOutlet weak var editProfileTableView: TPKeyboardAvoidingTableView!
     
     private let editPhoneSegueIdentifier = "editPhone"
     private let editUserNameSegueIdentifier = "editUserName"

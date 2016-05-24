@@ -27,7 +27,7 @@ class ShiftViewController: UIViewController {
     
     private var clockRecords = [WISClockRecord]()
     
-    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("该日期无打卡记录。", comment: ""))
+    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("该日期无打卡记录", comment: ""))
     
     private var noRecords = false {
         didSet {
@@ -214,6 +214,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
         
         let clear = UIColor.clearColor()
         let tint = UIColor.wisTintColor()
+        let red = UIColor.redColor()
         
         let day = dayView.date.day
         let month = dayView.date.month
@@ -230,7 +231,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
         case 1:
             return [tint]
         case 2:
-            return [tint, tint]
+            return [red]
         case 3:
             return [clear]
         default:
@@ -243,7 +244,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
     }
     
     func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
-        return 13
+        return 15
     }
  
     

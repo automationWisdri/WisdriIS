@@ -27,6 +27,15 @@ class TaskListViewController: BaseViewController {
     
     private let taskListCellID = "TaskListCell"
 
+    private var noRecordsFooterView: InfoView?
+    
+    private var noRecords = false {
+        didSet {
+            if noRecords != oldValue {
+                taskTableView.tableFooterView = noRecords ? noRecordsFooterView : UIView()
+            }
+        }
+    }
     
     @IBOutlet weak var taskTableView: UITableView!
     
@@ -61,6 +70,20 @@ class TaskListViewController: BaseViewController {
         self.taskTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.headerRefresh()
             })
+        
+        // Add InfoView
+        switch self.taskType! {
+        case MaintenanceTaskType.ForApproval:
+            noRecordsFooterView = InfoView(NSLocalizedString("暂无待审批维保任务"))
+        case MaintenanceTaskType.Normal:
+            noRecordsFooterView = InfoView(NSLocalizedString("暂无维保任务"))
+        case MaintenanceTaskType.NotArchived:
+            noRecordsFooterView = InfoView(NSLocalizedString("暂无待归档维保任务"))
+        case MaintenanceTaskType.Archived:
+            noRecordsFooterView = InfoView(NSLocalizedString("暂无已归档维保任务"))
+        default:
+            noRecordsFooterView = InfoView(NSLocalizedString("暂无维保任务"))
+        }
         
         // move updating op to viewWillAppear() 2016.05.15
         // self.refreshPage()
@@ -230,6 +253,7 @@ class TaskListViewController: BaseViewController {
     
     private func updateTableViewInfo() {
         self.updateCellInfoURLSessionTask = nil
+        self.noRecords = self.wisTasks.isEmpty
         dispatch_async(dispatch_get_main_queue()){
             self.taskTableView.reloadData()
         }

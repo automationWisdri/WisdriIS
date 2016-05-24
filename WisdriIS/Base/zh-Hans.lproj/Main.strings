@@ -1,24 +1,2 @@
 
-/* Class = "UILabel"; text = "186-0235-4812"; ObjectID = "5WM-N1-8Kd"; */
-"5WM-N1-8Kd.text" = "186-0235-4812";
 
-/* Class = "UITabBarItem"; title = "Task"; ObjectID = "dFG-m4-Aq4"; */
-"dFG-m4-Aq4.title" = "Task";
-
-/* Class = "UINavigationItem"; title = "Schedule View Controller"; ObjectID = "e9T-UH-Rlt"; */
-"e9T-UH-Rlt.title" = "Schedule View Controller";
-
-/* Class = "UITabBarItem"; title = "Schedule"; ObjectID = "eZe-PZ-7aT"; */
-"eZe-PZ-7aT.title" = "Schedule";
-
-/* Class = "UINavigationItem"; title = "Contacts View Controller"; ObjectID = "qH5-vw-MMQ"; */
-"qH5-vw-MMQ.title" = "Contacts View Controller";
-
-/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "rnV-sy-V1j"; */
-"rnV-sy-V1j.title" = "Contacts";
-
-/* Class = "UINavigationItem"; title = "Task List"; ObjectID = "s3C-po-FxI"; */
-"s3C-po-FxI.title" = "Task List";
-
-/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "tUY-qU-Dbg"; */
-"tUY-qU-Dbg.title" = "Profile";

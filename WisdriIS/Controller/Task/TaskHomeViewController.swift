@@ -11,6 +11,8 @@ import PagingMenuController
 import SVProgressHUD
 
 class TaskHomeViewController: BaseViewController {
+    
+    var viewControllers = [TaskListViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class TaskHomeViewController: BaseViewController {
         taskListNotArchived.taskType = MaintenanceTaskType.NotArchived
         taskListNotArchived.title = "待归档"
         
-        var viewControllers = [TaskListViewController]()
+//        var viewControllers = [TaskListViewController]()
         
         // for test
         print(WISDataManager.sharedInstance().currentUser.roleCode)

@@ -34,35 +34,28 @@ class WISTabBarController: UITabBarController {
 
     private var previousTab = Tab.Tasks
 
-    private var checkDoubleTapOnFeedsTimer: NSTimer?
-    private var hasFirstTapOnFeedsWhenItIsAtTop = false {
+    private var checkDoubleTapOnTasksTimer: NSTimer?
+    private var hasFirstTapOnTasksWhenItIsAtTop = false {
         willSet {
             if newValue {
-                let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "checkDoubleTapOnFeeds:", userInfo: nil, repeats: false)
-                checkDoubleTapOnFeedsTimer = timer
+                let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(WISTabBarController.checkDoubleTapOnTasks(_:)), userInfo: nil, repeats: false)
+                checkDoubleTapOnTasksTimer = timer
 
             } else {
-                checkDoubleTapOnFeedsTimer?.invalidate()
+                checkDoubleTapOnTasksTimer?.invalidate()
             }
         }
     }
 
-    @objc private func checkDoubleTapOnFeeds(timer: NSTimer) {
+    @objc private func checkDoubleTapOnTasks(timer: NSTimer) {
 
-        hasFirstTapOnFeedsWhenItIsAtTop = false
+        hasFirstTapOnTasksWhenItIsAtTop = false
     }
 
-    private struct Listener {
-        static let lauchStyle = "WISTabBarController.lauchStyle"
-    }
+    deinit {
 
-//    deinit {
-//        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-//            appDelegate.lauchStyle.removeListenerWithName(Listener.lauchStyle)
-//        }
-//
-//        println("deinit WISTabBar")
-//    }
+        print("deinit WISTabBar")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,21 +77,12 @@ class WISTabBarController: UITabBarController {
         // Set Titles
 
         if let items = tabBar.items {
-            for i in 0..<items.count {
+            for i in 0 ..< items.count {
                 let item = items[i]
                 item.title = Tab(rawValue: i)?.title
             }
         }
 
-        // 处理启动切换
-
-//        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-//            appDelegate.lauchStyle.bindListener(Listener.lauchStyle) { [weak self] style in
-//                if style == .Message {
-//                    self?.selectedIndex = 0
-//                }
-//            }
-//        }
     }
 }
 
@@ -118,19 +102,20 @@ extension WISTabBarController: UITabBarControllerDelegate {
             return true
         }
 
-//        if case .Feeds = tab {
-//            if let vc = nvc.topViewController as? FeedsViewController {
-//                guard let feedsTableView = vc.feedsTableView else {
-//                    return true
-//                }
-//                if feedsTableView.wis_isAtTop {
-//                    if !hasFirstTapOnFeedsWhenItIsAtTop {
-//                        hasFirstTapOnFeedsWhenItIsAtTop = true
-//                        return false
-//                    }
-//                }
-//            }
-//        }
+        // 待完善，增加双击下拉刷新
+        if case .Tasks = tab {
+            if let vc = nvc.topViewController as? TaskHomeViewController {
+                guard let taskTableView = (vc.viewControllers.first! as TaskListViewController).taskTableView else {
+                    return true
+                }
+                if taskTableView.wis_isAtTop {
+                    if !hasFirstTapOnTasksWhenItIsAtTop {
+                        hasFirstTapOnTasksWhenItIsAtTop = true
+                        return false
+                    }
+                }
+            }
+        }
 
         return true
     }
@@ -150,61 +135,28 @@ extension WISTabBarController: UITabBarControllerDelegate {
             return
         }
 
-//        switch tab {
+        switch tab {
 
-//        case .Tasks:
-//            if let vc = nvc.topViewController as? TasksViewController {
-//                if !vc.conversationsTableView.wis_isAtTop {
-//                    vc.conversationsTableView.wis_scrollsToTop()
-//                }
-//            }
-
-//        case .Contacts:
-//            if let vc = nvc.topViewController as? ContactsViewController {
-//                if !vc.contactsTableView.wis_isAtTop {
-//                    vc.contactsTableView.wis_scrollsToTop()
-//                }
-//            }
-
-//        case .Feeds:
-//            if let vc = nvc.topViewController as? FeedsViewController {
-//                if !vc.feedsTableView.wis_isAtTop {
-//                    vc.feedsTableView.wis_scrollsToTop()
-//
-//                } else {
-//                    if !vc.feeds.isEmpty && !vc.pullToRefreshView.isRefreshing {
-//                        vc.feedsTableView.setContentOffset(CGPoint(x: 0, y: -150), animated: true)
-//                        hasFirstTapOnFeedsWhenItIsAtTop = false
-//                    }
-//                }
-//            }
-
-//        case .Schedule:
-//            if let vc = nvc.topViewController as? ScheduleViewController {
-//                if !vc.discoveredUsersCollectionView.wis_isAtTop {
-//                    vc.discoveredUsersCollectionView.wis_scrollsToTop()
-//                }
-//            }
-
-//        case .Profile:
-//            if let vc = nvc.topViewController as? ProfileViewController {
-//                if !vc.profileCollectionView.wis_isAtTop {
-//                    vc.profileCollectionView.wis_scrollsToTop()
-//                }
-//            }
-//        }
-
-        /*
-        if selectedIndex == 1 {
-            if let nvc = viewController as? UINavigationController, vc = nvc.topViewController as? ContactsViewController {
-                syncFriendshipsAndDoFurtherAction {
-                    dispatch_async(dispatch_get_main_queue()) { [weak vc] in
-                        vc?.updateContactsTableView()
-                    }
+        case .Tasks:
+            if let vc = nvc.topViewController as? TaskHomeViewController {
+                guard let taskTableView = (vc.viewControllers.first! as TaskListViewController).taskTableView else {
+                    return
+                }
+                if !taskTableView.wis_isAtTop {
+                    taskTableView.wis_scrollsToTop()
                 }
             }
+
+        case .Profile:
+            if let vc = nvc.topViewController as? ProfileViewController {
+                if !vc.editProfileTableView.wis_isAtTop {
+                    vc.editProfileTableView.wis_scrollsToTop()
+                }
+            }
+            
+        default:
+            return
         }
-        */
     }
 }
 

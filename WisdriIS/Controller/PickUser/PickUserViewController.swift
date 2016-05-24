@@ -69,7 +69,7 @@ class PickUserViewController: UIViewController {
         }
     }
     
-    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("人员列表获取失败。", comment: ""))
+    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("人员列表获取失败", comment: ""))
     
     private var noRecords = false {
         didSet {
@@ -103,7 +103,7 @@ class PickUserViewController: UIViewController {
         
         pickUserTableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         pickUserTableView.rowHeight = 80
-        pickUserTableView.tableFooterView = UIView()
+//        pickUserTableView.tableFooterView = UIView()
         
         pickUserTableView.delegate = self
         pickUserTableView.dataSource = self

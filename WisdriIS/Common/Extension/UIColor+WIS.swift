@@ -10,6 +10,10 @@ import UIKit
 
 extension UIColor {
     
+    class func wisLogoColor() -> UIColor {
+        return UIColor(red: 47/255.0, green: 89/255.0, blue: 171/255.0, alpha: 1.0)
+    }
+    
     class func wisTintColor() -> UIColor {
         return UIColor(red: 50/255.0, green: 167/255.0, blue: 255/255.0, alpha: 1.0)
     }

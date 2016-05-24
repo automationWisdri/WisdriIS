@@ -36,11 +36,11 @@ class AboutViewController: BaseViewController {
 
         title = NSLocalizedString("About", comment: "")
 
-        appLogoImageViewTopConstraint.constant = Ruler.iPhoneVertical(10, 30, 50, 70).value
-        appNameLabelTopConstraint.constant = Ruler.iPhoneVertical(10, 20, 20, 20).value
-        aboutTableViewTopConstraint.constant = Ruler.iPhoneVertical(130, 180, 260, 315).value
+        appLogoImageViewTopConstraint.constant = Ruler.iPhoneVertical(50, 70, 90, 110).value
+        appNameLabelTopConstraint.constant = Ruler.iPhoneVertical(20, 30, 30, 30).value
+        aboutTableViewTopConstraint.constant = Ruler.iPhoneVertical(140, 190, 270, 325).value
 
-        appNameLabel.textColor = UIColor.wisTintColor()
+        appNameLabel.textColor = UIColor.wisLogoColor()
 
         aboutTableView.registerNib(UINib(nibName: profileLessInfoCellID, bundle: nil), forCellReuseIdentifier: profileLessInfoCellID)
 
