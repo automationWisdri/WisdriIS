@@ -16,6 +16,7 @@ class TaskHomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("TaskHomeViewController did load")
 
         // Do any additional setup after loading the view.
         title = NSLocalizedString("Task List", comment: "")
@@ -52,8 +53,9 @@ class TaskHomeViewController: BaseViewController {
 //        var viewControllers = [TaskListViewController]()
         
         // for test
+        print("RoleCodes: " + WISDataManager.sharedInstance().roleCodes.description)
         print(WISDataManager.sharedInstance().currentUser.roleCode)
-        print(RoleCode.Operator)
+        print(currentUser.roleCode)
 
         if currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
             self.navigationItem.rightBarButtonItem = nil

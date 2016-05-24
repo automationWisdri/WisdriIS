@@ -236,11 +236,11 @@ class LoginViewController: UIViewController {
         
         self.userNameTextField?.resignFirstResponder()
         self.passwordTextField?.resignFirstResponder()
-        SVProgressHUD.showWithStatus("正在登陆")
+        SVProgressHUD.showWithStatus("正在登录")
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
-                SVProgressHUD.showSuccessWithStatus("登陆成功")
+                SVProgressHUD.showSuccessWithStatus("登录成功")
                 // 待修改
                 WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
                     if !completedWithNoError {

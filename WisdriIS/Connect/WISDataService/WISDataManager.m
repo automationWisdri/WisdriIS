@@ -777,7 +777,25 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                 }
                             }
                             
-                            self.currentUser = [userDetailInfo copy];
+                            // self.currentUser = [userDetailInfo copy];
+                            
+                            self.currentUser.userName = userDetailInfo.userName;
+                            self.currentUser.fullName = userDetailInfo.fullName;
+                            self.currentUser.cellPhoneNumber = userDetailInfo.cellPhoneNumber;
+                            self.currentUser.telephoneNumber = userDetailInfo.telephoneNumber;
+                            self.currentUser.urgentPhoneNumber = userDetailInfo.urgentPhoneNumber;
+                            
+                            self.currentUser.birthday = userDetailInfo.birthday;
+                            self.currentUser.eMail = userDetailInfo.eMail;
+                            self.currentUser.identityCardNumber = userDetailInfo.identityCardNumber;
+                            self.currentUser.lastUpatedTime = userDetailInfo.lastUpatedTime;
+                            self.currentUser.title = userDetailInfo.title;
+                            self.currentUser.remark = userDetailInfo.remark;
+                            
+                            self.currentUser.gender = userDetailInfo.gender;
+                            self.currentUser.company = userDetailInfo.company;
+                            
+                            self.currentUser.imagesInfo = userDetailInfo.imagesInfo;
                             
                             [[NSNotificationCenter defaultCenter]
                              postNotificationName:WISSystemUpdateCurrentUserDetailInfoSucceededNotification
