@@ -247,6 +247,10 @@ class LoginViewController: UIViewController {
                         SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
                     }
                 })
+                userSegmentList.removeAll()
+                currentClockStatus = .UndefinedClockStatus
+                clockStatusValidated = false
+                
                 WISUserDefaults.setupSegment()
                 WISUserDefaults.getCurrentUserClockStatus()
                 WISUserDefaults.getWorkShift(NSDate())

@@ -11,12 +11,23 @@ import Foundation
 var userSegmentList = [Segment]()
 var currentTask: WISMaintenanceTask?
 var currentTaskOperations = [TaskOperation]()
-var currentClockStatus = 0
+var currentClockStatus: ClockStatus = .UndefinedClockStatus {
+    didSet {
+        clockStatusValidated = true
+    }
+}
+
+var clockStatusValidated = false
+
 var workShifts = [String: Int]()
 
 class WISUserDefaults {
     
     class func setupSegment() {
+        guard userSegmentList.isEmpty == true else {
+            return
+        }
+        
         WISDataManager.sharedInstance().updateProcessSegmentWithCompletionHandler({ (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             userSegmentList.removeAll()
             userSegmentList.insert(segmentPlaceholder, atIndex: 0)
@@ -47,11 +58,9 @@ class WISUserDefaults {
     class func getCurrentUserClockStatus() {
         WISDataManager.sharedInstance().updateCurrentClockStatusWithCompletionHandler { (completedWithNoError, error, classNameOfDataAsString, data) in
             if completedWithNoError {
-                
-                currentClockStatus = data as! Int
+                currentClockStatus = ClockStatus(rawValue: (data as! Int))!
                 
             } else {
-                
                 // 待处理
             }
         }

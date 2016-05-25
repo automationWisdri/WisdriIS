@@ -173,7 +173,7 @@ class TaskListViewController: BaseViewController {
                 self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
 
             } else {
                 WISConfig.errorCode(error)
@@ -211,7 +211,7 @@ class TaskListViewController: BaseViewController {
                 self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
             
             } else {
                 WISConfig.errorCode(error)
@@ -231,9 +231,9 @@ class TaskListViewController: BaseViewController {
             getOnTheGoTaskList(taskType!)
             // beacause of the mechanism of asynchronous networking accessing , the following code always executs before wisTask being updated.
             // it works imperfect. 2016.05.15
-            dispatch_async(dispatch_get_main_queue()){
-                self.taskTableView.scrollToRowAtIndexPath(NSIndexPath.init(forRow: self.wisTasks.count - 1, inSection: 0), atScrollPosition: .Top, animated: true)
-            }
+            // dispatch_async(dispatch_get_main_queue()) {
+            //     self.taskTableView.scrollToRowAtIndexPath(NSIndexPath.init(forRow: self.wisTasks.count - 1, inSection: 0), atScrollPosition: .Top, animated: true)
+            // }
             break
             
         default:
@@ -254,7 +254,7 @@ class TaskListViewController: BaseViewController {
     private func updateTableViewInfo() {
         self.updateCellInfoURLSessionTask = nil
         self.noRecords = self.wisTasks.isEmpty
-        dispatch_async(dispatch_get_main_queue()){
+        dispatch_async(dispatch_get_main_queue()) {
             self.taskTableView.reloadData()
         }
     }

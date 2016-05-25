@@ -91,6 +91,7 @@ class TaskHomeViewController: BaseViewController {
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
     }
 
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
