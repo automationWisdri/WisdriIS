@@ -33,6 +33,16 @@ class InspectionListViewController : BaseViewController {
     var showMoreInformation = false
     var inspectionOperationEnabled = false
     
+    var hasNoRecord: Bool = false {
+        didSet {
+            if hasNoRecord != oldValue {
+                self.inspectionTableView.tableFooterView = hasNoRecord ? noRecordFooterView : UIView()
+            }
+        }
+    }
+    
+    private var noRecordFooterView: InfoView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +60,12 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.separatorInset = WISConfig.TaskListCell.separatorInset
         inspectionTableView.tableFooterView = UIView()
         
+        switch self.inspectionTaskType {
+        case .OnTheGo: noRecordFooterView = InfoView(NSLocalizedString("No on-the-go inspection task", comment:""))
+        case .Historical: noRecordFooterView = InfoView(NSLocalizedString("No historical inspection task", comment:""))
+        case .OverDue: noRecordFooterView = InfoView(NSLocalizedString("No over due inspection task", comment:""))
+        }
+        
         inspectionTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.refresh()
             })
@@ -58,7 +74,7 @@ class InspectionListViewController : BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        inspectionTableView.reloadData()
+        self.updateTableViewInfo()
         // self.inspectionTableView.contentOffset = CGPointMake(0.0, self.inspectionSearchBar.bounds.height)
     }
     
@@ -157,9 +173,7 @@ class InspectionListViewController : BaseViewController {
                     }
                 }
                 
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.inspectionTableView.reloadData()
-                }
+                self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("On the go inspection task list updated successfully", comment: ""))
@@ -203,9 +217,7 @@ class InspectionListViewController : BaseViewController {
                     }
                 }
                 
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.inspectionTableView.reloadData()
-                }
+                self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
                 SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Over due inspection task list updated successfully", comment: ""))
@@ -224,7 +236,21 @@ class InspectionListViewController : BaseViewController {
             }
         }
     }
+    
+    private func updateTableViewInfo() {
+        switch self.inspectionTaskType {
+        case .OnTheGo: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.isEmpty
+        case .Historical: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.isEmpty
+        case .OverDue: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.isEmpty
+        }
+        
+        dispatch_async(dispatch_get_main_queue()){
+            self.inspectionTableView.reloadData()
+        }
+    }
 }
+
+
 
 
 // MARK: - Table view data source & delegate method

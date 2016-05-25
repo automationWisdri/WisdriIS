@@ -165,29 +165,31 @@ class WISConfig {
         }
     }
     
-    class func errorCode(error: NSError) {
+    class func errorCode(error: NSError, customInformation: String = "") {
+        
+        let customString = (customInformation == "" ? "" : customInformation + "\n\n " + "原因: ")
         
         SVProgressHUD.setDefaultMaskType(.None)
         guard let errorCode = WISErrorCode(rawValue: error.code) else {
-            SVProgressHUD.showErrorWithStatus("内部错误")
+            SVProgressHUD.showErrorWithStatus(customString + "内部错误")
             return
         }
         
         switch errorCode {
         case .ErrorCodeInvalidOperation:
-            SVProgressHUD.showErrorWithStatus("操作非法")
+            SVProgressHUD.showErrorWithStatus(customString + "操作非法")
             return
         case .ErrorCodeIncorrectResponsedDataFormat:
-            SVProgressHUD.showErrorWithStatus("数据解析失败")
+            SVProgressHUD.showErrorWithStatus(customString + "数据解析失败")
             return
         case .ErrorCodeNetworkTransmission:
-            SVProgressHUD.showErrorWithStatus("网络传输错误")
+            SVProgressHUD.showErrorWithStatus(customString + "网络传输错误")
             return
         case .ErrorCodeResponsedNULLData:
-            SVProgressHUD.showErrorWithStatus("服务器返回数据错误")
+            SVProgressHUD.showErrorWithStatus(customString + "服务器返回数据错误")
             return
         case .ErrorCodeWrongFuncParameters:
-            SVProgressHUD.showErrorWithStatus("函数参数错误")
+            SVProgressHUD.showErrorWithStatus(customString + "函数参数错误")
             return
         case .ErrorCodeNoCurrentUserInfo:
             SVProgressHUD.showErrorWithStatus("请重新登录")
@@ -195,7 +197,7 @@ class WISConfig {
                 appDelegate.window?.rootViewController = LoginViewController()
             }
         default:
-            SVProgressHUD.showErrorWithStatus("未知错误")
+            SVProgressHUD.showErrorWithStatus(customString + "未知错误")
             return
         }
     }

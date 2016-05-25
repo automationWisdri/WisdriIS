@@ -173,7 +173,7 @@ class TaskListViewController: BaseViewController {
                 self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
 
             } else {
                 WISConfig.errorCode(error)
@@ -211,7 +211,7 @@ class TaskListViewController: BaseViewController {
                 self.updateTableViewInfo()
                 
                 SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list  updated successfully", comment: ""))
+                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
             
             } else {
                 WISConfig.errorCode(error)
@@ -255,7 +255,7 @@ class TaskListViewController: BaseViewController {
     private func updateTableViewInfo() {
         self.updateCellInfoURLSessionTask = nil
         self.noRecords = self.wisTasks.isEmpty
-        dispatch_async(dispatch_get_main_queue()){
+        dispatch_async(dispatch_get_main_queue()) {
             self.taskTableView.reloadData()
         }
     }

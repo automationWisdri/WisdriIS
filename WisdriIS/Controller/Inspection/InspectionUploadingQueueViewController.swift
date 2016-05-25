@@ -20,6 +20,15 @@ class InspectionUploadingQueueViewController: BaseViewController {
     
     private let InspectionUploadingQueueCellID = "InspectionUploadingQueueCell"
     
+    var hasNoRecord: Bool = false {
+        didSet {
+            if hasNoRecord != oldValue {
+                self.inspectionUploadingQueueTableView.tableFooterView = hasNoRecord ? noRecordFooterView : UIView()
+            }
+        }
+    }
+    
+    private var noRecordFooterView: InfoView?
     
     // MARK: - View Life Cycle Operation Methods
     
@@ -47,7 +56,8 @@ class InspectionUploadingQueueViewController: BaseViewController {
         inspectionUploadingQueueTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         // inspectionUploadingQueueTableView.tableHeaderView = inspectionSearchBar
         
-        inspectionUploadingQueueTableView.tableFooterView = UIView()
+        self.noRecordFooterView = InfoView(NSLocalizedString("No finished inspection task waiting for uploading", comment: ""))
+        self.hasNoRecord = WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
         
         inspectionUploadingQueueTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.refresh()
@@ -124,6 +134,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
                         self.inspectionUploadingQueueTableView.deleteRowsAtIndexPaths([NSIndexPath.init(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
                         self.inspectionUploadingQueueTableView.endUpdates()
                         self.inspectionUploadingQueueTableView.setEditing(false, animated: true)
+                        self.hasNoRecord = WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
                     }
                     break
                     

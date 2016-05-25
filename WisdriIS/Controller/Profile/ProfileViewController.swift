@@ -71,8 +71,13 @@ class ProfileViewController: BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if !clockStatusValidated {
+            WISUserDefaults.getCurrentUserClockStatus()
+        }
         
-        editProfileTableView.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.editProfileTableView.reloadData()
+        }
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -204,10 +209,10 @@ class ProfileViewController: BaseViewController {
             }
             */
             
-            // if code is validate, update clock status
+            // if code is validated, update clock status
             WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
-                    currentClockStatus = data as! Int
+                    currentClockStatus = ClockStatus(rawValue: (data as! Int))!
                     dispatch_async(dispatch_get_main_queue()) {
                         self.editProfileTableView.reloadData()
                     }
@@ -216,7 +221,7 @@ class ProfileViewController: BaseViewController {
                     SVProgressHUD.showSuccessWithStatus("打卡成功")
                     
                 } else {
-                    WISConfig.errorCode(error)
+                    WISConfig.errorCode(error, customInformation: "打卡失败")
                 }
             })
         }
@@ -337,11 +342,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.annotationLabel.text = "打卡扫一扫"
                 
                 switch currentClockStatus {
-                case 1:
+                case .ClockedIn:
                     cell.infoLabel.hidden = false
                     cell.infoLabel.text = "上班中"
                     cell.infoLabel.textColor = UIColor.wisTintColor()
-                case 2:
+                case .ClockedOff:
                     cell.infoLabel.hidden = false
                     cell.infoLabel.text = "已下班"
                     cell.infoLabel.textColor = UIColor.darkGrayColor()

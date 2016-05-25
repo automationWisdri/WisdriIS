@@ -50,7 +50,6 @@ class ShiftViewController: UIViewController {
         
         let now = NSDate()
         getClockRecords(now, endDate: now)
-
     }
     
     override func viewDidLayoutSubviews() {

@@ -25,7 +25,7 @@ class InspectionHomeViewController: BaseViewController {
     var inspectionSearchBar: UISearchBar?
     // 模糊效果
     var blurEffectView: UIVisualEffectView?
-    let alphaOfBlurEffect: CGFloat = 0.80
+    let alphaOfBlurEffect: CGFloat = 0.85
     
     private var codeScanNotificationToken : String?
 
@@ -49,8 +49,6 @@ class InspectionHomeViewController: BaseViewController {
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
-        
-        
         
         // *** Popover menu controller
         inspectionPopoverMenuController = InspectionPopoverMenuController()
@@ -156,7 +154,7 @@ class InspectionHomeViewController: BaseViewController {
             }
         }
         
-        self.title = viewControllers.count > 1 ? NSLocalizedString("Inpection Task List", comment: "") : viewControllers[0].title
+        self.navigationItem.title = viewControllers.count > 1 ? NSLocalizedString("Inpection Task List", comment: "") : viewControllers[0].title
         // options.menuItemMargin = 1
         // options.menuDisplayMode = .SegmentedControl
         

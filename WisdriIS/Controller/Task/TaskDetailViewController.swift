@@ -293,6 +293,7 @@ class TaskDetailViewController: BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        WISUserDefaults.setupSegment()
     }
     
     override func viewDidAppear(animated: Bool) {

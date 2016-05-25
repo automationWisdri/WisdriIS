@@ -186,7 +186,7 @@
 "Result description is needed when device is fault" = "设备出现故障时, 必须填写点检情况说明";
 
 // after 2016.05.15
-"Maintenance task list  updated successfully" = "维保任务列表更新成功";
+"Maintenance task list updated successfully" = "维保任务列表更新成功";
 
 "Inspection task list updated successfully" = "点检任务列表更新成功";
 
