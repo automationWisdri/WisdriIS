@@ -255,6 +255,8 @@ class LoginViewController: UIViewController {
                 WISUserDefaults.getCurrentUserClockStatus()
                 WISUserDefaults.getWorkShift(NSDate())
                 
+                WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
+                
                 if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                     appDelegate.startMainStory()
                 }

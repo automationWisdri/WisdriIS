@@ -36,8 +36,6 @@ class NotificationListViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
-        
         notificationTableView.delegate = self
         notificationTableView.dataSource = self
         
