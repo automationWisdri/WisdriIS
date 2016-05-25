@@ -26,6 +26,7 @@ class TaskDetailLargeInfoCell: UITableViewCell {
         infoTextView.textContainer.lineFragmentPadding = 0
         infoTextView.textContainerInset = UIEdgeInsetsZero
         infoTextView.delegate = self
+        infoTextView.scrollsToTop = false
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

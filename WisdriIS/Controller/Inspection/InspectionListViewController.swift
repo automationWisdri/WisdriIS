@@ -51,6 +51,8 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.delegate = self
         inspectionTableView.dataSource = self
         
+        inspectionTableView.scrollsToTop = false
+        
         // title = NSLocalizedString("Inpection Task List")
         
         /// *** list setting

@@ -38,6 +38,7 @@ class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
         inspectionResultDescriptionTextView.delegate = self
         inspectionResultDescriptionTextView.returnKeyType = .Default
         inspectionResultDescriptionTextView.editable = true
+        inspectionResultDescriptionTextView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

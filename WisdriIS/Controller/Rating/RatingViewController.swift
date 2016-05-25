@@ -61,6 +61,8 @@ class RatingViewController: BaseViewController {
         self.view.userInteractionEnabled = true
         self.ratingScrollView.delegate = self
         
+        self.ratingCommentTextView.scrollsToTop = false
+        
 //        let singleTap = UITapGestureRecognizer.init(target: self, action: #selector(RatingViewController.singleTapped(_:)))
 //        self.view.addGestureRecognizer(singleTap)
         

@@ -19,6 +19,7 @@ class InspectionDeviceRemarkCell:InspectionDetailViewBaseCell {
         // Initialization code
         
         deviceRemarkTitleLabel.text = NSLocalizedString("Remark", comment: "")
+        deviceRemarkTextView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

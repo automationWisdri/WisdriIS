@@ -19,6 +19,7 @@ class InspectionDeviceTypeInformationCell:InspectionDetailViewBaseCell {
         // Initialization code
         
         deviceTypeInformationTitleLabel.text = NSLocalizedString("Inspection Info", comment: "")
+        deviceTypeInformationTextView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

@@ -46,17 +46,20 @@ class TaskPlanCell: UITableViewCell {
         
         planDescriptionTextView.textContainer.lineFragmentPadding = 0
         planDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        planDescriptionTextView.scrollsToTop = false
         
         // 为了保证文字和图标对其，增加 1 pixel 顶部缩进
         relevantUserTextView.textContainer.lineFragmentPadding = 0
         relevantUserTextView.textContainerInset = UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
-            
+        relevantUserTextView.scrollsToTop = false
+        
         planImageCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         planImageCollectionView.showsHorizontalScrollIndicator = false
         planImageCollectionView.backgroundColor = UIColor.clearColor()
         planImageCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
         planImageCollectionView.dataSource = self
         planImageCollectionView.delegate = self
+        planImageCollectionView.scrollsToTop = false
         
 //        print("CollectionView 方案有 \(self.wisFileInfos.count) 张图片")
 

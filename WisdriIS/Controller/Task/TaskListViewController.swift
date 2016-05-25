@@ -54,6 +54,7 @@ class TaskListViewController: BaseViewController {
         taskTableView.delegate = self
         taskTableView.dataSource = self
 
+        taskTableView.scrollsToTop = false
         self.automaticallyAdjustsScrollViewInsets = false        
         
         taskTableView.registerNib(UINib(nibName: taskListCellID, bundle: nil), forCellReuseIdentifier: taskListCellID)
@@ -140,9 +141,10 @@ class TaskListViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.currentPageIndex = 1
-        getTaskList(taskType!)
+        
+        // Control updating task list in taskHomeViewController 2016.05.25
+        // getTaskList(taskType!)
     }
     
     func getTaskList(taskType: MaintenanceTaskType) -> Void {
@@ -157,7 +159,7 @@ class TaskListViewController: BaseViewController {
     }
     
     
-    func getOnTheGoTaskList(taskType: MaintenanceTaskType) -> Void {
+    private func getOnTheGoTaskList(taskType: MaintenanceTaskType) -> Void {
         SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
         
@@ -182,7 +184,7 @@ class TaskListViewController: BaseViewController {
     }
     
     
-    func getFinshedTaskList(taskType: MaintenanceTaskType, pageIndex:Int, numberOfRecordsInPage:Int) -> Void {
+    private func getFinshedTaskList(taskType: MaintenanceTaskType, pageIndex:Int, numberOfRecordsInPage:Int) -> Void {
         SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
         
@@ -260,6 +262,7 @@ class TaskListViewController: BaseViewController {
         }
     }
     
+    /// deprecated
     private func updateCellInTaskList() {
         let tableView = self.taskTableView
         let cellUpdatingType = self.currentUpdateCellType
