@@ -64,5 +64,11 @@ extension UIScrollView {
         
         UIView.commitAnimations()
     }
+    
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        nextResponder()?.touchesBegan(touches, withEvent: event)
+        super.touchesBegan(touches, withEvent: event)
+        
+    }
 }
 

@@ -154,10 +154,10 @@ class WISConfig {
             return UIImage(named: "icon_current_location")!
         }
         
-        switch state {
-        case "提交维保方案.":
+        switch configureStateText(state) {
+        case TaskStateForEngineer.ForSubmit.rawValue:
             return UIImage(named: "icon_subscribe_notify")!
-        case "等待接单.":
+        case TaskStateForEngineer.Pending.rawValue:
             return UIImage(named: "icon_current_location")!
         default:
             return UIImage(named: "icon_minicard")!
@@ -203,11 +203,13 @@ class WISConfig {
     class func configureStateText(state: String) -> String {
         
         let seperator = "."
-        let rangeOfLastCharacter = state.endIndex.advancedBy(-1) ..< state.endIndex // Range(start: state.endIndex.advancedBy(-1), end: state.endIndex)
         
         guard state.contains(seperator) else {
             return state
         }
+        
+        // 报错，Cannot decrement startIndex
+        let rangeOfLastCharacter = state.endIndex.advancedBy(-1) ..< state.endIndex // Range(start: state.endIndex.advancedBy(-1), end: state.endIndex)
         
         let rangeOfSeperator = state.rangeOfString(seperator)
         

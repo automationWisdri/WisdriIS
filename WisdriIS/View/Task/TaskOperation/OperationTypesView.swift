@@ -106,6 +106,7 @@ class OperationTypesView: UIView {
     var remarkOperation: (() -> Void)?
     var assignOperation: (() -> Void)?
     var acceptAssignedOperation: (() -> Void)?
+    var declineOperation: (() -> Void)?
 
     var tableViewBottomConstraint: NSLayoutConstraint?
 
@@ -422,6 +423,10 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
             case .AcceptAssignedPassOnTask:
                 hide()
                 acceptAssignedOperation?()
+                
+            case .DeclineToConfirm:
+                hide()
+                declineOperation?()
 
             default:
                 hide()

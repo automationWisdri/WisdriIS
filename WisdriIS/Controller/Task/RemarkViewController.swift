@@ -22,7 +22,7 @@ class RemarkViewController: UIViewController {
         willSet {
             postButton.enabled = newValue
             
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && !messageTextView.isFirstResponder() {
                 messageTextView.text = remarkAboutThisTask
             }
             
@@ -88,6 +88,15 @@ class RemarkViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
+        restoreTextViewPlaceHolder()
+    }
+    
+    private func restoreTextViewPlaceHolder() {
+        messageTextView.resignFirstResponder()
+        if !isDirty && isNeverInputMessage {
+            messageTextView.text = remarkAboutThisTask
+            messageTextView.textColor = UIColor.lightGrayColor()
+        }
     }
 
     /*
@@ -119,6 +128,7 @@ extension RemarkViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
+        isNeverInputMessage = NSString(string: textView.text).length == 0
         isDirty = NSString(string: textView.text).length > 0
     }
     
@@ -129,16 +139,16 @@ extension RemarkViewController: UITextViewDelegate {
 extension RemarkViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
-        messageTextView.resignFirstResponder()
+
+        restoreTextViewPlaceHolder()
     }
 }
 
-extension UIScrollView {
-    
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        nextResponder()?.touchesBegan(touches, withEvent: event)
-        super.touchesBegan(touches, withEvent: event)
-
-    }
-}
+//extension UIScrollView {
+//    
+//    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        nextResponder()?.touchesBegan(touches, withEvent: event)
+//        super.touchesBegan(touches, withEvent: event)
+//
+//    }
+//}

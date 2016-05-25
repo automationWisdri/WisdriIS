@@ -202,7 +202,6 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
         case Technician
     }
     
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         switch segueIdentifier! {
@@ -248,13 +247,13 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
             
         case "pickUserForSubmitPlan":
             switch section {
-            case .Engineer: return 20
-            case .Technician: return 20
+            case .Engineer: return 10
+            case .Technician: return 10
             }
         case "pickUserForModifyPlan":
             switch section {
-            case .Engineer: return 20
-            case .Technician: return 20
+            case .Engineer: return 10
+            case .Technician: return 10
             }
         case "pickUserForPassOperation": return 0
         case "assignUserForPassOperation": return 0

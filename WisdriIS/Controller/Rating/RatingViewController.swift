@@ -43,7 +43,7 @@ class RatingViewController: BaseViewController {
         willSet {
             postButton.enabled = newValue
             
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && !ratingCommentTextView.isFirstResponder() {
                 ratingCommentTextView.text = infoAboutThisRating
             }
             
@@ -143,7 +143,20 @@ class RatingViewController: BaseViewController {
         }
         
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        restoreTextViewPlaceHolder()
+    }
 
+    private func restoreTextViewPlaceHolder() {
+        ratingCommentTextView.resignFirstResponder()
+        
+        if !isDirty && isNeverInputMessage {
+            ratingCommentTextView.text = infoAboutThisRating
+            ratingCommentTextView.textColor = UIColor.lightGrayColor()
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -179,6 +192,7 @@ extension RatingViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
+        isNeverInputMessage = NSString(string: textView.text).length == 0
         isDirty = NSString(string: textView.text).length > 0
     }
 }
@@ -189,6 +203,7 @@ extension RatingViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        ratingCommentTextView.resignFirstResponder()
+//        ratingCommentTextView.resignFirstResponder()
+        restoreTextViewPlaceHolder()
     }
 }

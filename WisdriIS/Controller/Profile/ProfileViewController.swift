@@ -53,7 +53,7 @@ class ProfileViewController: BaseViewController {
         super.viewDidLoad()
 
         title = NSLocalizedString("Profile", comment: "")
-
+        
         // avatar size is 100
         let avatarSize = WISConfig.profileAvatarSize()
         avatarImageViewWidthConstraint.constant = avatarSize

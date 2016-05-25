@@ -119,6 +119,7 @@
 		9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E3D1CEC8312003092DA /* InspectionResultShowSelectionCell.swift */; };
 		9F1FA1EB1CF341BB001A2F61 /* TaskSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */; };
 		9F1FA1EE1CF3490E001A2F61 /* ImageCacheController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AB11C867D8D00F64265 /* ImageCacheController.swift */; };
+		9F1FA1F01CF491F7001A2F61 /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1EF1CF491F7001A2F61 /* TaskState.swift */; };
 		9F2A53211C9AA92D001BE6F6 /* TaskListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */; };
 		9F2A53231C9AA96B001BE6F6 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */; };
 		9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53281C9AF7F8001BE6F6 /* WISColor.swift */; };
@@ -353,6 +354,7 @@
 		9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Archive.storyboard; path = Archive/Archive.storyboard; sourceTree = "<group>"; };
 		9F1FA1E61CEB717F001A2F61 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArchiveViewController.swift; path = Archive/ArchiveViewController.swift; sourceTree = "<group>"; };
 		9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskSegment.swift; path = Model/TaskSegment.swift; sourceTree = "<group>"; };
+		9F1FA1EF1CF491F7001A2F61 /* TaskState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskState.swift; path = Model/TaskState.swift; sourceTree = "<group>"; };
 		9F2A53201C9AA92D001BE6F6 /* TaskListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskListCell.xib; path = View/Task/TaskListCell.xib; sourceTree = "<group>"; };
 		9F2A53221C9AA96B001BE6F6 /* TaskListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCell.swift; path = View/Task/TaskListCell.swift; sourceTree = "<group>"; };
 		9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WISRefreshFooter.swift; path = View/Common/WISRefreshFooter.swift; sourceTree = "<group>"; };
@@ -883,6 +885,7 @@
 			children = (
 				9F2A532D1C9FD0B0001BE6F6 /* TaskOperation.swift */,
 				9F1FA1EA1CF341BB001A2F61 /* TaskSegment.swift */,
+				9F1FA1EF1CF491F7001A2F61 /* TaskState.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1541,6 +1544,7 @@
 				9F7C4BCB1C8E6F1300652CDF /* MediaView.swift in Sources */,
 				9FEF50141C78A9B7001A7644 /* UITableView+WIS.swift in Sources */,
 				385C1DE41CE4BC9200F8E393 /* LBXScanView.swift in Sources */,
+				9F1FA1F01CF491F7001A2F61 /* TaskState.swift in Sources */,
 				9F801AA51C85E0FF00F64265 /* String+WIS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

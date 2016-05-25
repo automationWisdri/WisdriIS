@@ -7,29 +7,10 @@
 //
 
 import UIKit
-import CoreLocation
 import MobileCoreServices
 import Photos
 import Proposer
-//import MapKit
 import SVProgressHUD
-
-//let segmentPlaceholder = Segment(id: "0", name: NSLocalizedString("Choose...", comment: ""))
-//
-//struct Segment: Hashable {
-//    
-//    var id: String
-//    var name: String
-//    
-//    var hashValue: Int {
-//        return id.hashValue
-//    }
-//
-//}
-//
-//func ==(lhs: Segment, rhs: Segment) -> Bool {
-//    return lhs.id == rhs.id
-//}
 
 let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNotification"
 
@@ -63,7 +44,7 @@ class NewTaskViewController: BaseViewController {
     private var isNeverInputMessage = true
     private var isDirty = false {
         willSet {
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && !messageTextView.isFirstResponder() {
                 messageTextView.text = infoAboutThisTask
             }
 
@@ -317,10 +298,6 @@ class NewTaskViewController: BaseViewController {
     }
 
     @objc private func post(sender: UIBarButtonItem) {
-        post(again: false)
-    }
-    
-    func post(again again: Bool) {
         
         // 任务描述字段的长度控制
         let messageLength = (messageTextView.text as NSString).length
@@ -330,50 +307,57 @@ class NewTaskViewController: BaseViewController {
             WISAlert.alertSorry(message: message, inViewController: self)
             return
         }
+            
+        self.dismissViewControllerAnimated(true, completion: nil)
+//      SVProgressHUD.showWithStatus("正在提交")
         
-        if !again {
+        // 上传图片
+        WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
+            NSLog("Upload progress is %f", progress.fractionCompleted)
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: NSLocalizedString("Submitting new maintenance task", comment: ""))
             
-            self.dismissViewControllerAnimated(true, completion: nil)
-//            SVProgressHUD.showWithStatus("正在提交")
-            
-            // 上传图片
-            WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-                NSLog("Upload progress is %f", progress.fractionCompleted)
-                SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: NSLocalizedString("Submitting new maintenance task", comment: ""))
-                
-                }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
-                    if completedWithNoError {
-                        // 图片上传成功，新建任务单
-                        let images: [WISFileInfo] = data as! [WISFileInfo]
-                        
-                        for image in images {
-                            self.applicationFileInfo[image.fileName] = image
-                        }
-                        
-                        WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
-                            if completedWithNoError {
-                                SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
-                                NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
-                                // self.dismissViewControllerAnimated(true, completion: nil)
-                                
-                            } else {
-                                WISConfig.errorCode(error)
-                            }
-                        })
-                        
-                    } else {
-                        WISConfig.errorCode(error)
+            }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
+                if completedWithNoError {
+                    // 图片上传成功，新建任务单
+                    let images: [WISFileInfo] = data as! [WISFileInfo]
+                    
+                    for image in images {
+                        self.applicationFileInfo[image.fileName] = image
                     }
-            })
-        }
+                    
+                    WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+                        if completedWithNoError {
+                            SVProgressHUD.setDefaultMaskType(.None)
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
+                            NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
+                            // self.dismissViewControllerAnimated(true, completion: nil)
+                            
+                        } else {
+                            WISConfig.errorCode(error)
+                        }
+                    })
+                    
+                } else {
+                    WISConfig.errorCode(error)
+                }
+        })
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
         hideSegmentPickerView()
+        restoreTextViewPlaceHolder()
+    }
+    
+    private func restoreTextViewPlaceHolder() {
+        messageTextView.resignFirstResponder()
+        
+        if !isDirty && isNeverInputMessage {
+            messageTextView.text = infoAboutThisTask
+            messageTextView.textColor = UIColor.lightGrayColor()
+        }
     }
 }
 
@@ -517,6 +501,7 @@ extension NewTaskViewController: UITextViewDelegate {
 
     func textViewDidChange(textView: UITextView) {
 
+        isNeverInputMessage = NSString(string: textView.text).length == 0
         isDirty = NSString(string: textView.text).length > 0
     }
     
@@ -524,6 +509,7 @@ extension NewTaskViewController: UITextViewDelegate {
         
         hideSegmentPickerView()
     }
+    
 }
 
 // MARK: - UIScrollViewDelegate
@@ -531,9 +517,8 @@ extension NewTaskViewController: UITextViewDelegate {
 extension NewTaskViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
-        messageTextView.resignFirstResponder()
-//        hideSegmentPickerView()
+
+        restoreTextViewPlaceHolder()
     }
 }
 

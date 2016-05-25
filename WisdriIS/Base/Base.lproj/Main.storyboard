@@ -117,7 +117,7 @@
         <!--Profile View Controller-->
         <scene sceneID="FHW-CB-UER">
             <objects>
-                <viewController storyboardIdentifier="EditProfileViewController" id="yzD-CG-1LF" customClass="ProfileViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProfileViewController" automaticallyAdjustsScrollViewInsets="NO" id="yzD-CG-1LF" customClass="ProfileViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cC3-ft-Ldc"/>
                         <viewControllerLayoutGuide type="bottom" id="Dx2-H4-1bd"/>
@@ -127,10 +127,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="f0i-Ju-Upp" customClass="TPKeyboardAvoidingTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="5uK-dd-nZy">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="250"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W1y-yh-5Sw" userLabel="Avatar Image View">
@@ -201,8 +201,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="f0i-Ju-Upp" secondAttribute="trailing" id="SV1-9p-Ifi"/>
-                            <constraint firstAttribute="bottom" secondItem="f0i-Ju-Upp" secondAttribute="bottom" id="Xve-qT-Mwl"/>
-                            <constraint firstItem="f0i-Ju-Upp" firstAttribute="top" secondItem="hrK-le-exj" secondAttribute="top" id="boF-Ey-WTn"/>
+                            <constraint firstAttribute="bottom" secondItem="f0i-Ju-Upp" secondAttribute="bottom" constant="49" id="Xve-qT-Mwl"/>
+                            <constraint firstItem="f0i-Ju-Upp" firstAttribute="top" secondItem="hrK-le-exj" secondAttribute="top" constant="64" id="boF-Ey-WTn"/>
                             <constraint firstItem="f0i-Ju-Upp" firstAttribute="leading" secondItem="hrK-le-exj" secondAttribute="leading" id="tsT-mg-s1L"/>
                         </constraints>
                     </view>

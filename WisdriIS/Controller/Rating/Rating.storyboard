@@ -33,7 +33,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7he-lJ-mPt">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7he-lJ-mPt">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K6-ed-ngC" customClass="CosmosView" customModule="Cosmos">
@@ -92,7 +92,8 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="130" id="9OO-5b-plt"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKq-bP-ECt" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
@@ -233,6 +234,7 @@
                                     <constraint firstItem="klH-d4-3Ah" firstAttribute="leading" secondItem="aob-cZ-rnU" secondAttribute="leading" id="T67-uY-HGd"/>
                                     <constraint firstItem="tpL-zF-EmJ" firstAttribute="top" secondItem="QZf-0g-Ysq" secondAttribute="bottom" constant="5" id="UrI-v5-IHI"/>
                                     <constraint firstItem="c8w-9U-CQ8" firstAttribute="leading" secondItem="aob-cZ-rnU" secondAttribute="leading" id="Xzw-sY-tF4"/>
+                                    <constraint firstAttribute="trailing" secondItem="c8w-9U-CQ8" secondAttribute="trailing" constant="15" id="e2P-Og-UYu"/>
                                     <constraint firstItem="klH-d4-3Ah" firstAttribute="top" secondItem="tpL-zF-EmJ" secondAttribute="bottom" constant="10" id="eJa-kI-UgH"/>
                                     <constraint firstItem="aob-cZ-rnU" firstAttribute="top" secondItem="7he-lJ-mPt" secondAttribute="top" constant="10" id="lI2-86-dxm"/>
                                     <constraint firstItem="QZf-0g-Ysq" firstAttribute="leading" secondItem="aob-cZ-rnU" secondAttribute="leading" id="pQw-oo-fsr"/>

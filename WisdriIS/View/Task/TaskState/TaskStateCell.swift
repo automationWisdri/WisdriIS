@@ -36,7 +36,7 @@ class TaskStateCell: UITableViewCell {
     }
     
     func bind(status: WISMaintenanceTaskState) {
-        userNameLabel.text = status.personInCharge.fullName
+        userNameLabel.text = status.personInCharge.roleName + ": " + status.personInCharge.fullName
         statusNameLabel.text = status.state
         startTimeLabel.text = WISConfig.DATE.stringFromDate(status.startTime) + " 起"
         endTimeLabel.text = WISConfig.DATE.stringFromDate(status.endTime) + " 止"

@@ -78,7 +78,7 @@ class SubmitPlanViewController: BaseViewController {
         willSet {
             postButton.enabled = newValue
             
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && !taskPlanTextView.isFirstResponder() {
                 taskPlanTextView.text = infoAboutThisPlan
             }
             
@@ -126,7 +126,6 @@ class SubmitPlanViewController: BaseViewController {
         default:
             break
         }
-
         
         view.backgroundColor = UIColor.wisBackgroundColor()
         self.automaticallyAdjustsScrollViewInsets = false
@@ -195,10 +194,11 @@ class SubmitPlanViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-//        super.touchesBegan(touches, withEvent: event)
-//    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+        restoreTextViewPlaceHolder()
+    }
     
     @objc private func post(sender: UIBarButtonItem) {
         
@@ -283,9 +283,9 @@ class SubmitPlanViewController: BaseViewController {
         performSegueWithIdentifier("pickUser", sender: nil)
     }
     
-    func singleTapped(gesture: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
+//    func singleTapped(gesture: UITapGestureRecognizer) {
+//        self.view.endEditing(true)
+//    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "pickUser" {
@@ -313,6 +313,14 @@ class SubmitPlanViewController: BaseViewController {
             }
         }
     }
+    
+    private func restoreTextViewPlaceHolder() {
+        taskPlanTextView.resignFirstResponder()
+        if !isDirty && isNeverInputMessage {
+            taskPlanTextView.text = infoAboutThisPlan
+            taskPlanTextView.textColor = UIColor.lightGrayColor()
+        }
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -332,6 +340,7 @@ extension SubmitPlanViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
+        isNeverInputMessage = NSString(string: textView.text).length == 0
         isDirty = NSString(string: textView.text).length > 0
     }
 }
@@ -342,7 +351,8 @@ extension SubmitPlanViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        taskPlanTextView.resignFirstResponder()
+//        taskPlanTextView.resignFirstResponder()
+        restoreTextViewPlaceHolder()
     }
     
     

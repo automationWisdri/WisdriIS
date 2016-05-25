@@ -21,9 +21,10 @@ class TaskDetailViewController: BaseViewController {
     private let taskPlanCellID = "TaskPlanCell"
     private let taskStateCellID = "TaskStateCell"
     
+    private var currentUser: WISUser?
     var wisTask: WISMaintenanceTask?
     var indexInList = 0
-    var superViewController:UIViewController?
+    var superViewController: UIViewController?
     
     var imagesInfo = [String : WISFileInfo]()
     var imagesArray = [UIImage]()
@@ -248,6 +249,23 @@ class TaskDetailViewController: BaseViewController {
             })
         }
         
+        // 生产人员拒绝确认
+        view.declineOperation = { [weak self] in
+            SVProgressHUD.showWithStatus("正在提交")
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝确认", operationType: MaintenanceTaskOperationType.DeclineToConfirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                if completedWithNoError {
+                    
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus("提交成功")
+                    self?.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    
+                    WISConfig.errorCode(error)
+                }
+            })
+        }
+        
         return view
     }()
     
@@ -257,6 +275,7 @@ class TaskDetailViewController: BaseViewController {
         // Do any additional setup after loading the view
         title = NSLocalizedString("Task Detail", comment: "")
         
+        currentUser = WISDataManager.sharedInstance().currentUser
         self.view.backgroundColor = UIColor.wisBackgroundColor()
         
         taskDetailTableView.delegate = self
@@ -409,13 +428,22 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        switch wisTask!.state {
-        case "等待接单.":
-            return 2
-        case "提交维保方案.":
-            return 3
-        default:
-            return 5
+        
+        if currentUser!.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
+            switch wisTask!.state {
+            case TaskStateForOperator.Pending.rawValue:
+                return 2
+            default:
+                return 3
+            }
+        } else {
+            switch wisTask!.state {
+            case TaskStateForOperator.Pending.rawValue:
+                return 2
+            default:
+                //备注信息何时显示？
+                return 5
+            }
         }
     }
     
@@ -427,7 +455,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch section {
         case .TaskBasicInfo:
-            if wisTask?.state == "等待接单." {
+            if wisTask?.state == TaskStateForOperator.Pending.rawValue || wisTask?.state == TaskStateForEngineer.Pending.rawValue {
                 return 2
             } else {
                 return 3
@@ -435,11 +463,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         case .TaskDescription:
             return 1
         case .TaskHandleInfo:
-            if wisTask?.state == "等待接单." {
-                return 0
-            } else {
-                return planCount
-            }
+            return planCount
         case .TaskState:
             return stateCount
         case .Remark:

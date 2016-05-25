@@ -22,7 +22,7 @@ class ArchiveViewController: UIViewController {
         willSet {
             postButton.enabled = newValue
             
-            if !newValue && isNeverInputMessage {
+            if !newValue && isNeverInputMessage && !messageTextView.isFirstResponder() {
                 messageTextView.text = archiveAboutThisTask
             }
             
@@ -91,6 +91,15 @@ class ArchiveViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
+        restoreTextViewPlaceHolder()
+    }
+    
+    private func restoreTextViewPlaceHolder() {
+        messageTextView.resignFirstResponder()
+        if !isDirty && isNeverInputMessage {
+            messageTextView.text = archiveAboutThisTask
+            messageTextView.textColor = UIColor.lightGrayColor()
+        }
     }
 
     /*
@@ -122,6 +131,7 @@ extension ArchiveViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
+        isNeverInputMessage = NSString(string: textView.text).length == 0
         isDirty = NSString(string: textView.text).length > 0
     }
     
@@ -133,6 +143,7 @@ extension ArchiveViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        messageTextView.resignFirstResponder()
+//        messageTextView.resignFirstResponder()
+        restoreTextViewPlaceHolder()
     }
 }

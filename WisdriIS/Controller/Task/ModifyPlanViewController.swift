@@ -35,6 +35,11 @@ class ModifyPlanViewController: BaseViewController {
         return button
     }()
     
+    private let infoAboutThisPlan = NSLocalizedString("Maintenance plan about this Task...", comment: "")
+    
+    private var isNeverInputMessage = false
+    private var isDirty = false
+    
     private let taskMediaCellID = "TaskMediaCell"
     
     // 导入页面的 Segue Identifier
@@ -185,11 +190,24 @@ class ModifyPlanViewController: BaseViewController {
             break
         }
     }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+        restoreTextViewPlaceHolder()
+    }
 
     @objc private func tapToPickUser(sender: UITapGestureRecognizer) {
         performSegueWithIdentifier("pickUser", sender: nil)
     }
 
+    private func restoreTextViewPlaceHolder() {
+        taskPlanTextView.resignFirstResponder()
+        if !isDirty && isNeverInputMessage {
+            taskPlanTextView.text = infoAboutThisPlan
+            taskPlanTextView.textColor = UIColor.lightGrayColor()
+        }
+    }
     
     // MARK: - Navigation
 
@@ -215,13 +233,36 @@ class ModifyPlanViewController: BaseViewController {
 
 }
 
+// MARK: - UITextViewDelegate
+
+extension ModifyPlanViewController: UITextViewDelegate {
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        
+        if !isDirty {
+            textView.text = ""
+        }
+        
+        isNeverInputMessage = false
+        
+        return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        
+        isNeverInputMessage = NSString(string: textView.text).length == 0
+        isDirty = NSString(string: textView.text).length > 0
+    }
+}
+
 // MARK: - UIScrollViewDelegate
 
 extension ModifyPlanViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        taskPlanTextView.resignFirstResponder()
+//        taskPlanTextView.resignFirstResponder()
+        restoreTextViewPlaceHolder()
     }
     
 }

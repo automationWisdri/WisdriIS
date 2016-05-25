@@ -18,7 +18,7 @@
 
 "Albums" = "相册";
 
-"New Task" = "新增维保单";
+"New Task" = "发起维保请求";
 
 "Channel:" = "工艺段";
 
@@ -95,6 +95,10 @@
 "Sorry" = "抱歉";
 
 "OK" = "确定";
+
+"Archive" = "任务归档";
+
+"Comment about this Task..." = "请对本次维保服务进行评价，以便我们不断完善，提高服务质量";
 
 // 点检新增内容
 "Inspection" = "点检";
@@ -238,6 +242,7 @@
 "Notification" = "通知";
 
 "Edit" = "编辑";
+
 "Done" = "完成";
 
 "Notification List" = "通知";
@@ -245,5 +250,5 @@
 "Notification Received" = "接收的通知";
 
 "Notification Content" = "通知内容";
-"Task ID" = "任务编号";
 
+"Task ID" = "任务编号";

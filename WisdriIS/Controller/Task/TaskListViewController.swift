@@ -232,6 +232,7 @@ class TaskListViewController: BaseViewController {
             // beacause of the mechanism of asynchronous networking accessing , the following code always executs before wisTask being updated.
             // it works imperfect. 2016.05.15
             dispatch_async(dispatch_get_main_queue()){
+                // 崩溃
                 self.taskTableView.scrollToRowAtIndexPath(NSIndexPath.init(forRow: self.wisTasks.count - 1, inSection: 0), atScrollPosition: .Top, animated: true)
             }
             break
