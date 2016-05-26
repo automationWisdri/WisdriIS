@@ -27,6 +27,7 @@ class InspectionResultSelectionCell: InspectionDetailViewBaseCell {
         
         inspectionResultTableView.setEditing(true, animated: true)
         inspectionResultTableView.allowsMultipleSelectionDuringEditing = true
+        inspectionResultTableView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

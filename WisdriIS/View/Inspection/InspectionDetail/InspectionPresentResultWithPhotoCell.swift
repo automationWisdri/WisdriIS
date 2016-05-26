@@ -48,6 +48,7 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
         inspectionImagesCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
         inspectionImagesCollectionView.dataSource = self
         inspectionImagesCollectionView.delegate = self
+        inspectionImagesCollectionView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

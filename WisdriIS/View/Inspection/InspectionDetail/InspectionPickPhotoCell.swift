@@ -89,6 +89,7 @@ class InspectionPickPhotoCell : UITableViewCell {
         mediaCollectionView.delegate = self
         mediaCollectionView.showsHorizontalScrollIndicator = false
         mediaCollectionView.hidden = false
+        mediaCollectionView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

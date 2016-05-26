@@ -155,7 +155,10 @@
         
         _networkRequestManager.responseSerializer = [AFJSONResponseSerializer serializer];
         _networkRequestManager.requestSerializer = [AFJSONRequestSerializer serializer];
-        _networkRequestManager.requestSerializer.timeoutInterval = 10;
+        // [_networkRequestManager willChangeValueForKey:@"timeoutInterval"];
+        // _networkRequestManager.requestSerializer.timeoutInterval = 10;
+        // [_networkRequestManager didChangeValueForKey:@"timeoutInterval"];
+        [_networkRequestManager.requestSerializer setTimeoutInterval:10];
         
         ///
         _networkFileDataManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:self.fileHostName]
@@ -163,7 +166,10 @@
         
         _networkFileDataManager.responseSerializer = [AFHTTPResponseSerializer serializer];
         _networkFileDataManager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        _networkFileDataManager.requestSerializer.timeoutInterval = 30;
+        // [_networkFileDataManager willChangeValueForKey:@"timeoutInterval"];
+        // _networkFileDataManager.requestSerializer.timeoutInterval = 10;
+        // [_networkFileDataManager didChangeValueForKey:@"timeoutInterval"];
+        [_networkFileDataManager.requestSerializer setTimeoutInterval:20];
     }
     return self;
 }

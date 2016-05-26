@@ -41,13 +41,15 @@ class TaskDescriptionCell: UITableViewCell {
         
         taskDescriptionTextView.textContainer.lineFragmentPadding = 0
         taskDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
+        taskDescriptionTextView.scrollsToTop = false
+        
         taskImageCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         taskImageCollectionView.showsHorizontalScrollIndicator = false
         taskImageCollectionView.backgroundColor = UIColor.clearColor()
         taskImageCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
         taskImageCollectionView.dataSource = self
         taskImageCollectionView.delegate = self
+        taskImageCollectionView.scrollsToTop = false
 
     }
 

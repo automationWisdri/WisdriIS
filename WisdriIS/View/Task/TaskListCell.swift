@@ -32,7 +32,7 @@ class TaskListCell: UITableViewCell {
         self.taskIDLabel?.text = model.taskID
         self.taskDateLabel?.text = WISConfig.DATE.stringFromDate(model.createdDateTime)
 //        self.taskDescriptionLabel?.text = model.taskApplicationContent
-        taskDescriptionLabel.text = model.taskDescription
+        taskDescriptionLabel.text = model.taskApplicationContent
         
         if model.state == "" {
             self.taskStatusImageView?.image = WISConfig.taskStateImage("未知状态")

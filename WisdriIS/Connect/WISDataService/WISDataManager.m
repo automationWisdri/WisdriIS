@@ -1702,7 +1702,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                       
                                       maintenanceTask.taskID = taskID;
                                       maintenanceTask.taskName = ((NSNull*)task[@"TaskName"] == [NSNull null]) ? @"" : (NSString *)task[@"TaskName"];
-                                      maintenanceTask.taskDescription = ((NSNull*)task[@"Description"] == [NSNull null]) ? @"" : (NSString *)task[@"Description"];
+                                      maintenanceTask.taskApplicationContent = ((NSNull*)task[@"Description"] == [NSNull null]) ? @"" : (NSString *)task[@"Description"];
                                       if (task[@"CreateTime"] && !((NSNull*)task[@"CreateTime"] == [NSNull null])) {
                                           // maintenanceTask.createdDateTime = [dateFormatter dateFromString:task[@"CreateTime"]];
                                           maintenanceTask.createdDateTime = [NSDate dateFromDateTimeString:task[@"CreateTime"]];
@@ -1852,7 +1852,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                       
                                       maintenanceTask.taskID = taskID;
                                       maintenanceTask.taskName = ((NSNull*)task[@"TaskName"] == [NSNull null]) ? @"" : (NSString *)task[@"TaskName"];
-                                      maintenanceTask.taskDescription = ((NSNull*)task[@"Description"] == [NSNull null]) ? @"" : (NSString *)task[@"Description"];
+                                      maintenanceTask.taskApplicationContent = ((NSNull*)task[@"Description"] == [NSNull null]) ? @"" : (NSString *)task[@"Description"];
                                       if (task[@"CreateTime"] && !((NSNull*)task[@"CreateTime"] == [NSNull null])) {
                                           // maintenanceTask.createdDateTime = [dateFormatter dateFromString:task[@"CreateTime"]];
                                           maintenanceTask.createdDateTime = [NSDate dateFromDateTimeString:task[@"CreateTime"]];
@@ -1975,6 +1975,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                       
                       WISUser *taskCreator = [[WISUser alloc] init];
                       WISUser *taskPersonInCharge = [[WISUser alloc] init];
+                      WISMaintenanceTaskRating *taskRating = [[WISMaintenanceTaskRating alloc] init];
                       
                       NSMutableDictionary *validOperations = [NSMutableDictionary dictionary];
                       NSError *err;
@@ -1985,6 +1986,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                               newMaintenanceTask = [[WISMaintenanceTask alloc] init];
                               newMaintenanceTask.taskID = taskID;
                               
+                              // ***********
                               // update valid operations
                               operations = parsedData[@"Privileges"];
                               
@@ -2004,6 +2006,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                               taskDetail = parsedData[@"Detail"];
                               if(!((NSNull *)taskDetail == [NSNull null])) {
                                   
+                                  // ***********
                                   // update creator and person-in-charge
                                   NSDictionary *creator = (NSDictionary *)taskDetail[@"Creator"];
                                   if (creator && !((NSNull *)creator == [NSNull null])) {
@@ -2042,18 +2045,70 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                       // _maintenanceTasks[taskID].personInCharge = nil;
                                   }
                                   
-                                  // update description
+                                  // ***********
+                                  // application content
                                   newMaintenanceTask.taskApplicationContent = ((NSNull*)taskDetail[@"Description"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"Description"];
                                   
+                                  // ***********
+                                  // archiving remark
+                                  newMaintenanceTask.archivingRemark = ((NSNull*)taskDetail[@"ArchivedDescription"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"ArchivedDescription"];
+                                  
+                                  // ***********
+                                  // task comment
+                                  newMaintenanceTask.taskComment = ((NSNull*)taskDetail[@"Comment"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"Comment"];
+                                  
+                                  // ***********
+                                  // task finished remark
+                                  // for the interface in the future
+                                  
+                                  // ***********
+                                  // task dispute procedure remark
+                                  // for the interface in the future
+                                  
+                                  // ***********
                                   // process segment
                                   newMaintenanceTask.processSegmentName = ((NSNull*)taskDetail[@"FaultArea"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"FaultArea"];
                                   
+                                  // ***********
                                   // task name
                                   newMaintenanceTask.taskName = ((NSNull*)taskDetail[@"TaskName"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"TaskName"];
                                   
+                                  // ***********
+                                  // task created time
+                                  if (taskDetail[@"CreateTime"] && !((NSNull *)taskDetail[@"CreateTime"] == [NSNull null])) {
+                                      newMaintenanceTask.createdDateTime = [NSDate dateFromDateTimeString:(NSString *)taskDetail[@"CreateTime"]];
+                                  } else {
+                                      // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                      // plan.estimatedEndingTime = nil;
+                                  }
+                                  
+                                  // ***********
                                   // task status
                                   newMaintenanceTask.state = ((NSNull*)taskDetail[@"TaskStatus"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"TaskStatus"];
                                   
+                                  // ***********
+                                  // task archived state
+                                  NSString *isArchivedString = (NSString *)taskDetail[@"Archived"];
+                                  newMaintenanceTask.archived = ([isArchivedString integerValue] == 0) ? false : true;
+                                  
+                                  // ***********
+                                  // task rating
+                                  NSDictionary *rating = (NSDictionary *)taskDetail[@"Remark"];
+                                  
+                                  if (rating && !((NSNull *)rating == [NSNull null])) {
+                                      taskRating.additionalRemark = ((NSNull*)rating[@"Description"] == [NSNull null]) ? @"" : (NSString *)rating[@"Description"];
+                                      taskRating.totalScore = ((NSNull*)rating[@"Score"] == [NSNull null]) ? 0 : [(NSString *)rating[@"Score"] integerValue];
+                                      taskRating.attitudeScore = ((NSNull*)rating[@"AttitudeScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"AttitudeScore"] integerValue];
+                                      taskRating.qualityScore = ((NSNull*)rating[@"QualityScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"QualityScore"] integerValue];
+                                      taskRating.responseScore = ((NSNull*)rating[@"ResponseScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"ResponseScore"] integerValue];
+                                      
+                                      newMaintenanceTask.taskRating = taskRating;
+                                  } else {
+                                      // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                      // _maintenanceTasks[taskID].personInCharge = nil;
+                                  }
+                                  
+                                  // ***********
                                   //images info - MaintenanceTask
                                   NSArray *imagesURL = (NSArray *)taskDetail[@"FileURL"];
                                   if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
@@ -2079,7 +2134,8 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                       // do nothing, because WISMaintenanceTask initializer has done the initializing job.
                                   }
                                   
-                                  // maintenance plans
+                                  // ***********
+                                  // maintenance plan
                                   NSDictionary *planDic = (NSDictionary *)taskDetail[@"PlanInformation"];
                                   if (planDic && !((NSNull *)planDic == [NSNull null])) {
                                       WISMaintenancePlan *plan = [[WISMaintenancePlan alloc] init];
@@ -2254,6 +2310,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                     
                     WISUser *taskCreator = [[WISUser alloc] init];
                     WISUser *taskPersonInCharge = [[WISUser alloc] init];
+                    WISMaintenanceTaskRating *taskRating = [[WISMaintenanceTaskRating alloc] init];
                     
                     NSMutableDictionary *validOperations = [NSMutableDictionary dictionary];
                     NSError *err;
@@ -2264,6 +2321,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                             newMaintenanceTask = [[WISMaintenanceTask alloc] init];
                             newMaintenanceTask.taskID = taskID;
                             
+                            // ***********
                             // update valid operations
                             operations = parsedData[@"Privileges"];
                             
@@ -2283,6 +2341,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                             taskDetail = parsedData[@"Detail"];
                             if(!((NSNull *)taskDetail == [NSNull null])) {
                                 
+                                // ***********
                                 // update creator and person-in-charge
                                 NSDictionary *creator = (NSDictionary *)taskDetail[@"Creator"];
                                 if (creator && !((NSNull *)creator == [NSNull null])) {
@@ -2321,18 +2380,70 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                     // _maintenanceTasks[taskID].personInCharge = nil;
                                 }
                                 
-                                // update description
+                                // ***********
+                                // application content
                                 newMaintenanceTask.taskApplicationContent = ((NSNull*)taskDetail[@"Description"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"Description"];
                                 
+                                // ***********
+                                // archiving remark
+                                newMaintenanceTask.archivingRemark = ((NSNull*)taskDetail[@"ArchivedDescription"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"ArchivedDescription"];
+                                
+                                // ***********
+                                // task comment
+                                newMaintenanceTask.taskComment = ((NSNull*)taskDetail[@"Comment"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"Comment"];
+                                
+                                // ***********
+                                // task finished remark
+                                // for the interface in the future
+                                
+                                // ***********
+                                // task dispute procedure remark
+                                // for the interface in the future
+                                
+                                // ***********
                                 // process segment
                                 newMaintenanceTask.processSegmentName = ((NSNull*)taskDetail[@"FaultArea"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"FaultArea"];
                                 
+                                // ***********
                                 // task name
                                 newMaintenanceTask.taskName = ((NSNull*)taskDetail[@"TaskName"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"TaskName"];
                                 
+                                // ***********
+                                // task created time
+                                if (taskDetail[@"CreateTime"] && !((NSNull *)taskDetail[@"CreateTime"] == [NSNull null])) {
+                                    newMaintenanceTask.createdDateTime = [NSDate dateFromDateTimeString:(NSString *)taskDetail[@"CreateTime"]];
+                                } else {
+                                    // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                    // plan.estimatedEndingTime = nil;
+                                }
+                                
+                                // ***********
                                 // task state
                                 newMaintenanceTask.state = ((NSNull*)taskDetail[@"TaskStatus"] == [NSNull null]) ? @"" : (NSString *)taskDetail[@"TaskStatus"];
                                 
+                                // ***********
+                                // task archived state
+                                NSString *isArchivedString = (NSString *)taskDetail[@"Archived"];
+                                newMaintenanceTask.archived = ([isArchivedString integerValue] == 0) ? false : true;
+                                
+                                // ***********
+                                // task rating
+                                NSDictionary *rating = (NSDictionary *)taskDetail[@"Remark"];
+                                
+                                if (rating && !((NSNull *)rating == [NSNull null])) {
+                                    taskRating.additionalRemark = ((NSNull*)rating[@"Description"] == [NSNull null]) ? @"" : (NSString *)rating[@"Description"];
+                                    taskRating.totalScore = ((NSNull*)rating[@"Score"] == [NSNull null]) ? 0 : [(NSString *)rating[@"Score"] integerValue];
+                                    taskRating.attitudeScore = ((NSNull*)rating[@"AttitudeScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"AttitudeScore"] integerValue];
+                                    taskRating.qualityScore = ((NSNull*)rating[@"QualityScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"QualityScore"] integerValue];
+                                    taskRating.responseScore = ((NSNull*)rating[@"ResponseScore"] == [NSNull null]) ? 0 : [(NSString *)rating[@"ResponseScore"] integerValue];
+                                    
+                                    newMaintenanceTask.taskRating = taskRating;
+                                } else {
+                                    // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                    // _maintenanceTasks[taskID].personInCharge = nil;
+                                }
+                                
+                                // ***********
                                 // task passed states
                                 NSArray *states = taskDetail[@"TaskProcessInformation"];
                                 
@@ -2364,6 +2475,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                     return [((WISMaintenanceTaskState *)obj1).endTime compare:((WISMaintenanceTaskState *)obj2).endTime];
                                 }];
                                 
+                                // ***********
                                 //images info - MaintenanceTask
                                 NSArray *imagesURL = (NSArray *)taskDetail[@"FileURL"];
                                 if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
@@ -2389,6 +2501,7 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
                                     // do nothing, because WISMaintenanceTask initializer has done the initializing job.
                                 }
                                 
+                                // ***********
                                 // maintenance plans
                                 NSArray *plans = (NSArray *)taskDetail[@"PlanInformations"];
                                 if (plans && !((NSNull *)plans == [NSNull null])) {

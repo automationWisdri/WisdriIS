@@ -11,6 +11,7 @@ import UIKit
 import MobileCoreServices
 import SVProgressHUD
 import KeyboardMan
+import TPKeyboardAvoiding
 
 
 class InspectionDetailViewController: BaseViewController {
@@ -24,7 +25,7 @@ class InspectionDetailViewController: BaseViewController {
     
     let keyboardMan = KeyboardMan()
     
-    @IBOutlet weak var inspectionDetailTableView: UITableView!
+    @IBOutlet weak var inspectionDetailTableView: TPKeyboardAvoidingTableView!
     
     var inspectionTask = WISInspectionTask()
     var indexInList = -1
@@ -116,28 +117,28 @@ class InspectionDetailViewController: BaseViewController {
         inspectionDetailTableView.registerNib(UINib(nibName: inspectionColoredTitleCellID, bundle: nil),
                                               forCellReuseIdentifier: inspectionColoredTitleCellID)
         
-        #if (arch(x86_64) || arch(i386)) && os(iOS)
-            // ignore
-        #else
-            /// code below doesn't work well 2016.05.09
-            keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
-                print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)")
-                if let strongSelf = self {
-                    strongSelf.view.frame.origin.y -= (keyboardHeightIncrement + 50)
-                    strongSelf.view.frame.size.height += (keyboardHeightIncrement + 50)
-                    strongSelf.view.layoutIfNeeded()
-                }
-            }
-            
-            keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
-                print("disappear \(keyboardHeight)\n")
-                if let strongSelf = self {
-                    strongSelf.view.frame.origin.y += (keyboardHeight + 50)
-                    strongSelf.view.frame.size.height -= (keyboardHeight + 50)
-                    strongSelf.view.layoutIfNeeded()
-                }
-            }
-        #endif
+//        #if (arch(x86_64) || arch(i386)) && os(iOS)
+//            // ignore
+//        #else
+//            /// code below doesn't work well 2016.05.09
+//            keyboardMan.animateWhenKeyboardAppear = { [weak self] appearPostIndex, keyboardHeight, keyboardHeightIncrement in
+//                print("appear \(appearPostIndex), \(keyboardHeight), \(keyboardHeightIncrement)")
+//                if let strongSelf = self {
+//                    strongSelf.view.frame.origin.y -= (keyboardHeightIncrement + 50)
+//                    strongSelf.view.frame.size.height += (keyboardHeightIncrement + 50)
+//                    strongSelf.view.layoutIfNeeded()
+//                }
+//            }
+//            
+//            keyboardMan.animateWhenKeyboardDisappear = { [weak self] keyboardHeight in
+//                print("disappear \(keyboardHeight)\n")
+//                if let strongSelf = self {
+//                    strongSelf.view.frame.origin.y += (keyboardHeight + 50)
+//                    strongSelf.view.frame.size.height -= (keyboardHeight + 50)
+//                    strongSelf.view.layoutIfNeeded()
+//                }
+//            }
+//        #endif
         
         getInspectionDetail()
     }

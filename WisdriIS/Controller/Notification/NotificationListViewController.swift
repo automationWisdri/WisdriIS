@@ -22,10 +22,19 @@ class NotificationListViewController : BaseViewController {
     var tableViewEditButton: UIBarButtonItem?
     var superViewController: UIViewController?
     
+    var hasNoNotification: Bool = false {
+        didSet {
+            if hasNoNotification != oldValue {
+                self.notificationTableView.tableFooterView = hasNoNotification ? noNotificationFooterView : UIView()
+                self.navigationItem.rightBarButtonItem = hasNoNotification ? nil : tableViewEditButton
+            }
+        }
+    }
+    
+    private var noNotificationFooterView: InfoView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
         
         notificationTableView.delegate = self
         notificationTableView.dataSource = self
@@ -43,6 +52,7 @@ class NotificationListViewController : BaseViewController {
         // notificationTableView.separatorColor = UIColor.wisCellSeparatorColor()
         // notificationTableView.separatorInset = WISConfig.ContactsCell.separatorInset
         notificationTableView.tableFooterView = UIView()
+        noNotificationFooterView = InfoView(NSLocalizedString("No Notification", comment:""))
         
         // notificationTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
         //     self?.refresh()
@@ -52,9 +62,7 @@ class NotificationListViewController : BaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.notificationTableView.reloadData()
-        }
+        self.updateTableViewInfo()
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,9 +106,7 @@ class NotificationListViewController : BaseViewController {
         self.notificationTableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
          */
         
-        dispatch_async(dispatch_get_main_queue()) {
-            self.notificationTableView.reloadData()
-        }
+        self.updateTableViewInfo()
     }
     
     class func performPushToNotificationListView(superViewController:UIViewController) -> Void {
@@ -111,6 +117,14 @@ class NotificationListViewController : BaseViewController {
         viewController.hidesBottomBarWhenPushed = true
         superViewController.navigationController?.pushViewController(viewController, animated: true)
         // superViewController.tabBarController?.tabBar.hidden = true
+    }
+    
+    private func updateTableViewInfo() {
+        self.hasNoNotification = WISPushNotificationDataManager.sharedInstance().pushNotifications.isEmpty
+        
+        dispatch_async(dispatch_get_main_queue()){
+            self.notificationTableView.reloadData()
+        }
     }
 }
 
@@ -157,6 +171,8 @@ extension NotificationListViewController: UITableViewDataSource, UITableViewDele
         if editingStyle == .Delete {
             WISPushNotificationDataManager.sharedInstance().removePushNotificationByIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.hasNoNotification = WISPushNotificationDataManager.sharedInstance().pushNotifications.isEmpty
+            
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }

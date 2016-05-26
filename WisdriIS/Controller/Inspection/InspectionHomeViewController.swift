@@ -166,12 +166,24 @@ class InspectionHomeViewController: BaseViewController {
         options.menuItemMode = .Underline(height: 1.5, color: UIColor.wisTintColor(), horizontalPadding: 1.5, verticalPadding: 1.5)
         options.font = UIFont.systemFontOfSize(15)
         options.selectedFont = UIFont.systemFontOfSize(16)
+        options.lazyLoadingPage = .Three
         
         options.textColor = UIColor.wisGrayColor()
         options.selectedTextColor = UIColor.wisTintColor()
         
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
+        
+        pagingMenuController.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+        let currentViewController = pagingMenuController.currentViewController as! InspectionListViewController
+        
+        currentViewController.inspectionTableView.scrollsToTop = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -289,7 +301,7 @@ class InspectionHomeViewController: BaseViewController {
     }
     
     
-    func presentBlurEffect(finishedAlpha: CGFloat) -> Void {
+    private func presentBlurEffect(finishedAlpha: CGFloat) -> Void {
         self.blurEffectView!.frame = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.frame)! //self.view.bounds
         self.blurEffectView?.alpha = 0.0
         self.parentViewController?.parentViewController?.view.addSubview(self.blurEffectView!)
@@ -302,7 +314,7 @@ class InspectionHomeViewController: BaseViewController {
     }
     
     
-    func disappearBlurEffect(finishedAlpha: CGFloat) -> Void {
+    private func disappearBlurEffect(finishedAlpha: CGFloat) -> Void {
         UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveLinear, animations: {
             self.blurEffectView?.alpha = finishedAlpha
             }, completion: { finished in
@@ -319,6 +331,18 @@ class InspectionHomeViewController: BaseViewController {
      // Pass the selected object to the new view controller.
      }
      */
+}
+
+
+extension InspectionHomeViewController: PagingMenuControllerDelegate {
+    
+    func didMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+        let didAppearViewController = menuController as! InspectionListViewController
+        let previousViewController = previousMenuController as! InspectionListViewController
+        
+        didAppearViewController.inspectionTableView.scrollsToTop = true
+        previousViewController.inspectionTableView.scrollsToTop = false
+    }
 }
 
 

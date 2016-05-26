@@ -70,6 +70,7 @@ class TaskHomeViewController: BaseViewController {
         options.font = UIFont.systemFontOfSize(15)
         
         options.selectedFont = UIFont.systemFontOfSize(16)
+        options.lazyLoadingPage = .Three
         
         options.textColor = UIColor.wisGrayColor()
         options.selectedTextColor = UIColor.wisTintColor()
@@ -89,8 +90,19 @@ class TaskHomeViewController: BaseViewController {
         
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
+        
+        pagingMenuController.delegate = self
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+        let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
+        
+        currentViewController.taskTableView.scrollsToTop = true
+        currentViewController.getTaskList(currentViewController.taskType!)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -108,4 +120,16 @@ class TaskHomeViewController: BaseViewController {
     }
     */
 
+}
+
+extension TaskHomeViewController: PagingMenuControllerDelegate {
+    
+    func didMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+        let didAppearViewController = menuController as! TaskListViewController
+        let previousViewController = previousMenuController as! TaskListViewController
+        
+        didAppearViewController.taskTableView.scrollsToTop = true
+        didAppearViewController.getTaskList(didAppearViewController.taskType!)
+        previousViewController.taskTableView.scrollsToTop = false
+    }
 }

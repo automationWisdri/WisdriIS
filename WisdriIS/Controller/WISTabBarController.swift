@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PagingMenuController
 
 class WISTabBarController: UITabBarController {
 
@@ -91,55 +92,64 @@ class WISTabBarController: UITabBarController {
 extension WISTabBarController: UITabBarControllerDelegate {
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-
         guard
             let tab = Tab(rawValue: selectedIndex),
             let nvc = viewController as? UINavigationController else {
                 return false
         }
 
-        if tab != previousTab {
+        guard tab == previousTab else {
             return true
         }
 
         // 待完善，增加双击下拉刷新
         if case .Tasks = tab {
-            if let vc = nvc.topViewController as? TaskHomeViewController {
-                guard let taskTableView = (vc.viewControllers.first! as TaskListViewController).taskTableView else {
-                    return true
-                }
-                if taskTableView.wis_isAtTop {
-                    if !hasFirstTapOnTasksWhenItIsAtTop {
-                        hasFirstTapOnTasksWhenItIsAtTop = true
-                        return false
-                    }
-                }
-            }
+//            if let vc = nvc.topViewController as? TaskHomeViewController {
+//                guard let taskTableView = (vc.viewControllers.first! as TaskListViewController).taskTableView else {
+//                    return true
+//                }
+//                if taskTableView.wis_isAtTop {
+//                    if !hasFirstTapOnTasksWhenItIsAtTop {
+//                        hasFirstTapOnTasksWhenItIsAtTop = true
+//                        return false
+//                    }
+//                }
+//            }
         }
 
         return true
     }
 
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-
         guard
             let tab = Tab(rawValue: selectedIndex),
             let nvc = viewController as? UINavigationController else {
                 return
         }
 
-        // 不相等才继续，确保第一次 tap 不做事
-
+        // 相等才继续，确保第一次 tap 不做事
         if tab != previousTab {
             previousTab = tab
             return
         }
 
+        // One tap on tab scroll the tableView to the top
         switch tab {
-
         case .Tasks:
             if let vc = nvc.topViewController as? TaskHomeViewController {
-                guard let taskTableView = (vc.viewControllers.first! as TaskListViewController).taskTableView else {
+                let pageViewController = vc.childViewControllers.first as! PagingMenuController
+                guard let taskTableView = (pageViewController.currentViewController as! TaskListViewController).taskTableView else {
+                    return
+                }
+                if !taskTableView.wis_isAtTop {
+                    taskTableView.wis_scrollsToTop()
+                }
+            }
+            
+        case .Inspection:
+            if let vc = nvc.topViewController as? TaskHomeViewController {
+                let pageViewController = vc.childViewControllers.first as! PagingMenuController
+                guard let taskTableView = (pageViewController.currentViewController as! InspectionListViewController).inspectionTableView else {
                     return
                 }
                 if !taskTableView.wis_isAtTop {

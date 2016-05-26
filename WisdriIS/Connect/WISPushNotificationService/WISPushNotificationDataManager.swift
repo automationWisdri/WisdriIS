@@ -86,7 +86,6 @@ class WISPushNotificationDataManager {
         if pushNotifications.count > 0 {
             pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
         }
-
     }
     
     

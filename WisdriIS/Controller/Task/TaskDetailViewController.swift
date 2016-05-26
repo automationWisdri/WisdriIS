@@ -644,10 +644,10 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = .None
             cell.annotationLabel.text = NSLocalizedString("Remark", comment: "")
             
-            if wisTask!.taskDescription == nil {
+            if wisTask!.taskComment == nil {
                 cell.infoTextView.text = NSLocalizedString("None", comment: "")
             } else {
-                cell.infoTextView.text = wisTask!.taskDescription
+                cell.infoTextView.text = wisTask!.taskComment
             }
             
             return cell
