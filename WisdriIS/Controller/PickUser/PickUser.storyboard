@@ -24,7 +24,7 @@
         <!--Pick User View Controller-->
         <scene sceneID="V65-n0-Pdh">
             <objects>
-                <viewController storyboardIdentifier="PickUserViewController" id="xS2-gX-gSa" customClass="PickUserViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickUserViewController" automaticallyAdjustsScrollViewInsets="NO" id="xS2-gX-gSa" customClass="PickUserViewController" customModule="WisdriIS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZAN-YN-3kC"/>
                         <viewControllerLayoutGuide type="bottom" id="kis-BG-fDe"/>

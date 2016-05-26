@@ -1,9 +1,9 @@
 //
 //  WISConfig.swift
-//  Yep
+//  WisdriIS
 //
-//  Created by NIX on 15/3/17.
-//  Copyright (c) 2015年 Catch Inc. All rights reserved.
+//  Created by Allen on 5/3/16.
+//  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
@@ -136,7 +136,11 @@ class WISConfig {
         return date
     }()
     
-    
+    struct HUDString {
+        static let commiting = NSLocalizedString("Commiting")
+        static let success = NSLocalizedString("Success")
+        static let failure = NSLocalizedString("Failure")
+    }
     
     class func dispatch_sync_safely_main_queue(block: ()->()) {
         if NSThread.isMainThread() {

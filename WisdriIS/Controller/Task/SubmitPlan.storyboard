@@ -39,20 +39,41 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V2q-2Y-ETi">
                                         <rect key="frame" x="0.0" y="265" width="600" height="90"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aig-lt-hJB" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="1D2-zm-B7R"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rXF-zz-JzQ" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="89" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="0xM-0I-UQN"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relevant Users" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2P9-NU-R5v">
                                                 <rect key="frame" x="20" y="10" width="140" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="140" id="Sih-o3-Oho"/>
                                                     <constraint firstAttribute="height" constant="21" id="acA-1f-3fL"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MtO-zv-NVM">
                                                 <rect key="frame" x="20" y="38" width="536" height="42"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textView>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accessory" translatesAutoresizingMaskIntoConstraints="NO" id="fMt-d4-0qY" userLabel="Accessory Image View">
@@ -66,10 +87,16 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="MtO-zv-NVM" firstAttribute="top" secondItem="2P9-NU-R5v" secondAttribute="bottom" constant="7" id="0lH-ay-CYH"/>
+                                            <constraint firstAttribute="trailing" secondItem="aig-lt-hJB" secondAttribute="trailing" id="27H-0T-sU3"/>
+                                            <constraint firstAttribute="bottom" secondItem="rXF-zz-JzQ" secondAttribute="bottom" id="7A2-06-U4t"/>
+                                            <constraint firstItem="rXF-zz-JzQ" firstAttribute="leading" secondItem="V2q-2Y-ETi" secondAttribute="leading" id="8WF-my-wDz"/>
                                             <constraint firstItem="fMt-d4-0qY" firstAttribute="leading" secondItem="MtO-zv-NVM" secondAttribute="trailing" constant="20" id="B74-qf-yIE"/>
                                             <constraint firstItem="2P9-NU-R5v" firstAttribute="top" secondItem="V2q-2Y-ETi" secondAttribute="top" constant="10" id="Mat-JF-trh"/>
                                             <constraint firstAttribute="bottom" secondItem="MtO-zv-NVM" secondAttribute="bottom" constant="10" id="QDx-iZ-46C"/>
+                                            <constraint firstItem="aig-lt-hJB" firstAttribute="top" secondItem="V2q-2Y-ETi" secondAttribute="top" id="RFX-gw-VJj"/>
+                                            <constraint firstItem="aig-lt-hJB" firstAttribute="leading" secondItem="V2q-2Y-ETi" secondAttribute="leading" id="Se6-NU-VnE"/>
                                             <constraint firstAttribute="height" constant="90" id="a5C-ej-83g"/>
+                                            <constraint firstAttribute="trailing" secondItem="rXF-zz-JzQ" secondAttribute="trailing" id="gm6-tv-a97"/>
                                             <constraint firstItem="MtO-zv-NVM" firstAttribute="leading" secondItem="V2q-2Y-ETi" secondAttribute="leading" constant="20" id="lQY-Fd-aOT"/>
                                             <constraint firstItem="2P9-NU-R5v" firstAttribute="leading" secondItem="V2q-2Y-ETi" secondAttribute="leading" constant="20" id="nfY-7B-TF8"/>
                                             <constraint firstItem="fMt-d4-0qY" firstAttribute="centerY" secondItem="V2q-2Y-ETi" secondAttribute="centerY" id="nqC-pP-d6H"/>
@@ -79,13 +106,33 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tA1-Ra-skn">
                                         <rect key="frame" x="0.0" y="375" width="600" height="170"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srX-SF-Xkc" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="HxE-hD-7oz"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPI-qj-ote" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="169" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="dcp-Rj-uF6"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimate Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ms7-GJ-CYp">
                                                 <rect key="frame" x="20" y="10" width="140" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="MXt-TV-oBo"/>
                                                     <constraint firstAttribute="width" constant="140" id="Sqj-aO-Cu9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -104,11 +151,17 @@
                                             <constraint firstItem="6Bu-5u-Oo7" firstAttribute="top" secondItem="ms7-GJ-CYp" secondAttribute="bottom" constant="7" id="3b3-T7-XFx"/>
                                             <constraint firstItem="6Bu-5u-Oo7" firstAttribute="centerX" secondItem="tA1-Ra-skn" secondAttribute="centerX" id="7dS-hR-1YL"/>
                                             <constraint firstItem="ms7-GJ-CYp" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" constant="20" id="A7e-an-k81"/>
+                                            <constraint firstAttribute="bottom" secondItem="pPI-qj-ote" secondAttribute="bottom" id="QCc-kw-IoB"/>
                                             <constraint firstItem="ms7-GJ-CYp" firstAttribute="top" secondItem="tA1-Ra-skn" secondAttribute="top" constant="10" id="RIZ-0b-ifv"/>
                                             <constraint firstItem="6Bu-5u-Oo7" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="SyF-CN-aCO"/>
+                                            <constraint firstAttribute="trailing" secondItem="pPI-qj-ote" secondAttribute="trailing" id="TCB-8z-5UY"/>
+                                            <constraint firstItem="pPI-qj-ote" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="Vck-ju-uiB"/>
                                             <constraint firstAttribute="bottom" secondItem="6Bu-5u-Oo7" secondAttribute="bottom" constant="14" id="Wtb-2o-JeY"/>
                                             <constraint firstAttribute="height" constant="170" id="d9n-Xd-3VS"/>
                                             <constraint firstAttribute="trailing" secondItem="6Bu-5u-Oo7" secondAttribute="trailing" id="dG8-yi-8hi"/>
+                                            <constraint firstItem="srX-SF-Xkc" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="gDU-fB-awR"/>
+                                            <constraint firstItem="srX-SF-Xkc" firstAttribute="top" secondItem="tA1-Ra-skn" secondAttribute="top" id="hiV-Hj-pAH"/>
+                                            <constraint firstAttribute="trailing" secondItem="srX-SF-Xkc" secondAttribute="trailing" id="jUT-BE-ZMW"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owm-eT-29N">
@@ -121,7 +174,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="rSh-OI-3SJ"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xrd-Da-dKd" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
@@ -138,7 +191,7 @@
                                                 <rect key="frame" x="20" y="38" width="560" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jn-db-Oe7">
@@ -147,7 +200,7 @@
                                                     <constraint firstAttribute="height" constant="21" id="66W-KV-LtC"/>
                                                     <constraint firstAttribute="width" constant="140" id="sej-Bm-idS"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

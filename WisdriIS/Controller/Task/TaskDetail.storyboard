@@ -65,6 +65,8 @@
                         <segue destination="r15-8s-1dX" kind="show" identifier="submitPlanOperation" id="k1U-OX-nas"/>
                         <segue destination="QJr-18-bDd" kind="show" identifier="assignUser" id="kqm-uB-hSJ"/>
                         <segue destination="4NZ-oB-8Bj" kind="show" identifier="archiveTask" id="Lxh-0L-OEV"/>
+                        <segue destination="xjB-7a-K9S" kind="show" identifier="startDisputeOperation" id="WlH-F2-sUB"/>
+                        <segue destination="jPJ-iM-odd" kind="show" identifier="continueOperation" id="ywI-LJ-Rnn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bi-YE-bTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -149,7 +151,23 @@
                 <viewControllerPlaceholder storyboardName="Archive" referencedIdentifier="ArchiveViewController" id="4NZ-oB-8Bj" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LI1-DQ-BsZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1081" y="1021"/>
+            <point key="canvasLocation" x="674" y="1171"/>
+        </scene>
+        <!--RemarkViewController-->
+        <scene sceneID="Tii-In-6io">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Remark" referencedIdentifier="RemarkViewController" id="xjB-7a-K9S" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZII-nv-XZs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="926" y="1171"/>
+        </scene>
+        <!--ModifyPlanViewController-->
+        <scene sceneID="WQe-TU-kF1">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ModifyPlan" referencedIdentifier="ModifyPlanViewController" id="jPJ-iM-odd" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eF5-cJ-Hv0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218.5" y="1171"/>
         </scene>
     </scenes>
     <resources>

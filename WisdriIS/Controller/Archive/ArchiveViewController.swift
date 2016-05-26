@@ -42,7 +42,7 @@ class ArchiveViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         title = NSLocalizedString("Archive", comment: "")
-        view.backgroundColor = UIColor.wisBackgroundColor()
+        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         view.userInteractionEnabled = true
         
         navigationItem.rightBarButtonItem = postButton

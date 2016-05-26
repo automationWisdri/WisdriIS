@@ -247,32 +247,43 @@ extension PickUserViewController: UITableViewDataSource, UITableViewDelegate {
             
         case "pickUserForSubmitPlan":
             switch section {
-            case .Engineer: return 10
-            case .Technician: return 10
+            case .Engineer: return 20
+            case .Technician: return 20
             }
         case "pickUserForModifyPlan":
             switch section {
-            case .Engineer: return 10
-            case .Technician: return 10
+            case .Engineer: return 20
+            case .Technician: return 20
             }
-        case "pickUserForPassOperation": return 0
-        case "assignUserForPassOperation": return 0
+        case "pickUserForPassOperation": return 20
+        case "assignUserForPassOperation": return 20
         default: return 0
         }
         
     }
     
-//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//        guard let section = Section(rawValue: section) else {
-//            return ""
-//        }
-//
-//        switch section {
-//        case .Engineer: return "工程师"
-//        case .Technician: return "电工"
-//        }
-//    }
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard let section = Section(rawValue: section) else {
+            return 0
+        }
+        
+        switch segueIdentifier! {
+            
+        case "pickUserForSubmitPlan":
+            switch section {
+            case .Engineer: return 0
+            case .Technician: return 20
+            }
+        case "pickUserForModifyPlan":
+            switch section {
+            case .Engineer: return 0
+            case .Technician: return 20
+            }
+        case "pickUserForPassOperation": return 20
+        case "assignUserForPassOperation": return 20
+        default: return 0
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         

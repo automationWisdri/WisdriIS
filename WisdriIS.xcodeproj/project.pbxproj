@@ -929,8 +929,8 @@
 		9F6436D31CAA09E4007909BE /* PickUser */ = {
 			isa = PBXGroup;
 			children = (
-				9F6436D41CAA0A63007909BE /* PickUserViewController.swift */,
 				9F6436DB1CAA0C93007909BE /* PickUser.storyboard */,
+				9F6436D41CAA0A63007909BE /* PickUserViewController.swift */,
 			);
 			name = PickUser;
 			sourceTree = "<group>";

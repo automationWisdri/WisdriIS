@@ -255,9 +255,6 @@ class LoginViewController: UIViewController {
                 WISUserDefaults.getCurrentUserClockStatus()
                 WISUserDefaults.getWorkShift(NSDate())
                 
-                if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-                    appDelegate.startMainStory()
-                }
                 // **
                 // 注册 client ID, 用于Push Notification
                 // **
@@ -266,6 +263,12 @@ class LoginViewController: UIViewController {
                 } else {
                     WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
                 }
+                
+                delay(1.0, work: {
+                    if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                        appDelegate.startMainStory()
+                    }
+                })
                 
             } else {
                 

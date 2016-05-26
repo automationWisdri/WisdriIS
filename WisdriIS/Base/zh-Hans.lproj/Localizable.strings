@@ -24,7 +24,9 @@
 
 "Choose..." = "请选择...";
 
-"Task can only has 4 photos." = "维保单只能添加 4 张图片";
+"Task can only has 6 photos." = "维保单只能添加 6 张图片";
+
+"Plan can only has 6 photos." = "维保方案只能添加 6 张图片";
 
 "Contacts" = "联系人";
 
@@ -99,6 +101,30 @@
 "Archive" = "任务归档";
 
 "Comment about this Task..." = "请对本次维保服务进行评价，以便我们不断完善，提高服务质量";
+
+"Dispute" = "争议描述";
+
+"Approve" = "同意方案";
+
+"Recheck" = "复审方案";
+
+"Continue" = "继续维保";
+
+"Commiting" = "正在提交";
+
+"Success" = "提交成功";
+
+"Failure" = "提交失败";
+
+"Quick Run" = "快速方案";
+
+"Modify" = "修改方案";
+
+"No other engineers" = "无其他参与人员";
+
+"Remark about this maintenance service" = "有关本维保工作的备注信息...";
+
+"Note about this dispute situation" = "请描述争议问题的缘由，以便提高服务质量";
 
 // 点检新增内容
 "Inspection" = "点检";

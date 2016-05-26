@@ -121,7 +121,7 @@ class NewTaskViewController: BaseViewController {
         super.viewDidLoad()
         
         title = NSLocalizedString("New Task", comment: "")
-        view.backgroundColor = UIColor.wisBackgroundColor()
+        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
         navigationItem.rightBarButtonItem = postButton
 

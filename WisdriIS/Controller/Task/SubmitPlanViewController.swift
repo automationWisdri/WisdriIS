@@ -102,32 +102,21 @@ class SubmitPlanViewController: BaseViewController {
             break
             
         case "submitQuickPlanOperation":
-            title = "快速方案"
+            title = NSLocalizedString("Quick Run")
             isDirty = false
             break
             
         case "modifyPlanOperation":
-            title = "修改方案"
-
-            taskPlanTextView.text = wisPlan?.planDescription
-            
+            title = NSLocalizedString("Modify")
             isDirty = true
-
-            taskParticipants = wisPlan!.participants.copy() as! [WISUser]
-            for user in taskParticipants {
-                print(user.userName)
-            }
-
-            estimateDatePicker.date = wisPlan!.estimatedEndingTime
-            
-            print(wisPlan?.estimatedEndingTime)
+            bind()
             break
             
         default:
             break
         }
         
-        view.backgroundColor = UIColor.wisBackgroundColor()
+        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.userInteractionEnabled = true
         
@@ -157,10 +146,6 @@ class SubmitPlanViewController: BaseViewController {
         relevantUserTextView.textContainer.lineFragmentPadding = 0
         relevantUserTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        if taskParticipants.count == 0 {
-            relevantUserTextView.text = ""
-        }
-        
         let tapToPickUser = UITapGestureRecognizer(target: self, action: #selector(SubmitPlanViewController.tapToPickUser(_:)))
 
         relevantUserView.userInteractionEnabled = true
@@ -168,15 +153,24 @@ class SubmitPlanViewController: BaseViewController {
 
     }
     
+    private func bind() {
+        
+        guard let _ = wisPlan else {
+            return
+        }
+        
+        taskPlanTextView.text = wisPlan!.planDescription
+        relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)
+        estimateDatePicker.date = wisPlan!.estimatedEndingTime
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        relevantUserTextView.text = ""
-        
-        // 有问题，待修改
+        // 用于显示 PickUser 页面返回后，获取的参与人员姓名
         switch taskParticipants.count {
         case 0:
-            relevantUserTextView.text = ""
+            relevantUserTextView.text = NSLocalizedString("No other engineers")
         default:
             for user in taskParticipants {
                 if user == taskParticipants.last {
@@ -203,7 +197,7 @@ class SubmitPlanViewController: BaseViewController {
     @objc private func post(sender: UIBarButtonItem) {
         
         SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus("正在提交")
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
 //        print(estimateDatePicker.date)
         // 上传图片
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
@@ -225,10 +219,10 @@ class SubmitPlanViewController: BaseViewController {
                             self.taskImageInfo[item as! String] = (self.wisPlan!.imagesInfo.valueForKey(item as! String) as! WISFileInfo)
                         }
                         
-                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "修改维保方案", operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
+                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus("修改成功")
+                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                                 self.navigationController?.popViewControllerAnimated(true)
                                 
                             } else {
@@ -239,10 +233,10 @@ class SubmitPlanViewController: BaseViewController {
  
                     case "submitPlanOperation":
                         
-                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "维保方案", operationType: MaintenanceTaskOperationType.SubmitMaintenancePlan, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
+                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.SubmitMaintenancePlan, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus("提交成功")
+                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
@@ -253,10 +247,10 @@ class SubmitPlanViewController: BaseViewController {
             
                     case "submitQuickPlanOperation":
                         
-                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "快速维保方案", operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
+                        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
                             if completedWithNoError {
                                 SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus("提交成功")
+                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                                 self.navigationController?.popViewControllerAnimated(true)
                         
                             } else {
@@ -266,7 +260,7 @@ class SubmitPlanViewController: BaseViewController {
                         
                     default:
                         SVProgressHUD.setDefaultMaskType(.None)
-                        SVProgressHUD.showErrorWithStatus("提交失败")
+                        SVProgressHUD.showErrorWithStatus(WISConfig.HUDString.failure)
                         break
                     }
                     
@@ -351,7 +345,6 @@ extension SubmitPlanViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-//        taskPlanTextView.resignFirstResponder()
         restoreTextViewPlaceHolder()
     }
     
@@ -452,7 +445,7 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
             taskPlanTextView.resignFirstResponder()
             
             if mediaImages.count == 6 {
-                WISAlert.alertSorry(message: NSLocalizedString("Task plan can only has 6 photos.", comment: ""), inViewController: self)
+                WISAlert.alertSorry(message: NSLocalizedString("Plan can only has 6 photos.", comment: ""), inViewController: self)
                 return
             }
             

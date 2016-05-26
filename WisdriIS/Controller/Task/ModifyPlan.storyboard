@@ -39,6 +39,26 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VP7-Gu-U6B">
                                         <rect key="frame" x="0.0" y="265" width="600" height="90"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgZ-eg-I7x" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="359-aC-6I4"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZS9-03-X5G" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="89" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="eeH-ok-Grn"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relevant Users" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQY-KP-qYe">
                                                 <rect key="frame" x="20" y="10" width="140" height="21"/>
                                                 <constraints>
@@ -50,35 +70,53 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rxW-bl-Auw">
-                                                <rect key="frame" x="20" y="38" width="541" height="42"/>
+                                                <rect key="frame" x="20" y="38" width="565" height="42"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textView>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_accessory" translatesAutoresizingMaskIntoConstraints="NO" id="pfh-yi-Clu" userLabel="Accessory Image View">
-                                                <rect key="frame" x="576" y="35" width="11" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="11" id="6Av-fM-Kgc"/>
-                                                    <constraint firstAttribute="height" constant="20" id="eMl-vK-pcT"/>
-                                                </constraints>
-                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ZS9-03-X5G" secondAttribute="bottom" id="0zP-mE-rvE"/>
                                             <constraint firstAttribute="height" constant="90" id="1QM-KZ-JNe"/>
                                             <constraint firstItem="rxW-bl-Auw" firstAttribute="top" secondItem="bQY-KP-qYe" secondAttribute="bottom" constant="7" id="6Ee-Ue-FIs"/>
-                                            <constraint firstItem="pfh-yi-Clu" firstAttribute="centerY" secondItem="VP7-Gu-U6B" secondAttribute="centerY" id="Ioc-yG-nC1"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZS9-03-X5G" secondAttribute="trailing" id="Jfl-ic-L9E"/>
                                             <constraint firstItem="rxW-bl-Auw" firstAttribute="leading" secondItem="VP7-Gu-U6B" secondAttribute="leading" constant="20" id="M4B-wz-lGb"/>
                                             <constraint firstAttribute="bottom" secondItem="rxW-bl-Auw" secondAttribute="bottom" constant="10" id="M62-nZ-U7e"/>
-                                            <constraint firstAttribute="trailing" secondItem="pfh-yi-Clu" secondAttribute="trailing" constant="13" id="UNm-Yl-Bky"/>
+                                            <constraint firstItem="wgZ-eg-I7x" firstAttribute="top" secondItem="VP7-Gu-U6B" secondAttribute="top" id="dlM-Jo-zqk"/>
                                             <constraint firstItem="bQY-KP-qYe" firstAttribute="leading" secondItem="VP7-Gu-U6B" secondAttribute="leading" constant="20" id="iOJ-yp-5Qr"/>
-                                            <constraint firstItem="pfh-yi-Clu" firstAttribute="leading" secondItem="rxW-bl-Auw" secondAttribute="trailing" constant="15" id="rLA-rF-syk"/>
+                                            <constraint firstAttribute="trailing" secondItem="rxW-bl-Auw" secondAttribute="trailing" constant="15" id="mbl-NH-d1q"/>
+                                            <constraint firstItem="wgZ-eg-I7x" firstAttribute="leading" secondItem="VP7-Gu-U6B" secondAttribute="leading" id="npp-xt-lgN"/>
+                                            <constraint firstItem="ZS9-03-X5G" firstAttribute="leading" secondItem="VP7-Gu-U6B" secondAttribute="leading" id="p6A-Sq-CSn"/>
+                                            <constraint firstAttribute="trailing" secondItem="wgZ-eg-I7x" secondAttribute="trailing" id="pkx-mE-f2V"/>
                                             <constraint firstItem="bQY-KP-qYe" firstAttribute="top" secondItem="VP7-Gu-U6B" secondAttribute="top" constant="10" id="tyj-Yg-L6d"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ljo-D5-Ilk" userLabel="Estimate Date View">
                                         <rect key="frame" x="0.0" y="375" width="600" height="170"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1SQ-y0-dWe" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="e5j-gh-r8i"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-4V-1RU" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="169" width="600" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="xFm-c3-0ob"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estimate Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etD-pL-OtM">
                                                 <rect key="frame" x="20" y="10" width="140" height="21"/>
                                                 <constraints>
@@ -102,13 +140,19 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="DtA-Ld-bdS" firstAttribute="centerX" secondItem="Ljo-D5-Ilk" secondAttribute="centerX" id="F4b-Uh-qmh"/>
+                                            <constraint firstItem="5fV-4V-1RU" firstAttribute="leading" secondItem="Ljo-D5-Ilk" secondAttribute="leading" id="Fr9-tB-2cy"/>
+                                            <constraint firstItem="1SQ-y0-dWe" firstAttribute="leading" secondItem="Ljo-D5-Ilk" secondAttribute="leading" id="GHT-PZ-2ol"/>
                                             <constraint firstAttribute="trailing" secondItem="DtA-Ld-bdS" secondAttribute="trailing" id="HTQ-H3-QFb"/>
+                                            <constraint firstAttribute="bottom" secondItem="5fV-4V-1RU" secondAttribute="bottom" id="KKS-xc-rej"/>
+                                            <constraint firstItem="1SQ-y0-dWe" firstAttribute="top" secondItem="Ljo-D5-Ilk" secondAttribute="top" id="Qya-PR-0NU"/>
                                             <constraint firstAttribute="height" constant="170" id="Vs5-fC-L9g"/>
                                             <constraint firstAttribute="bottom" secondItem="DtA-Ld-bdS" secondAttribute="bottom" constant="14" id="Vxz-AU-bOU"/>
                                             <constraint firstItem="etD-pL-OtM" firstAttribute="leading" secondItem="Ljo-D5-Ilk" secondAttribute="leading" constant="20" id="Zbs-NQ-UFB"/>
                                             <constraint firstItem="DtA-Ld-bdS" firstAttribute="top" secondItem="etD-pL-OtM" secondAttribute="bottom" constant="7" id="aQ4-ce-neS"/>
                                             <constraint firstItem="DtA-Ld-bdS" firstAttribute="leading" secondItem="Ljo-D5-Ilk" secondAttribute="leading" id="ciu-J8-rGr"/>
                                             <constraint firstItem="etD-pL-OtM" firstAttribute="top" secondItem="Ljo-D5-Ilk" secondAttribute="top" constant="10" id="e9G-7z-TCj"/>
+                                            <constraint firstAttribute="trailing" secondItem="1SQ-y0-dWe" secondAttribute="trailing" id="sXi-ts-OCf"/>
+                                            <constraint firstAttribute="trailing" secondItem="5fV-4V-1RU" secondAttribute="trailing" id="wIK-0y-QuA"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w2c-Uh-3Bc" userLabel="Plan Info View">
@@ -121,7 +165,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="0wl-dE-qZ2"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="atBottom" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ael-pY-2Sb" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
@@ -137,6 +181,7 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4De-V4-ZBD">
                                                 <rect key="frame" x="20" y="38" width="565" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
@@ -206,6 +251,9 @@
                                         <exclude reference="BCM-g4-ICM"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="SKr-ps-YDv" id="7Jt-uf-ljR"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -219,7 +267,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="8LZ-oO-h14"/>
                     <connections>
-                        <outlet property="accessoryImageView" destination="pfh-yi-Clu" id="vcd-jz-3Hk"/>
                         <outlet property="estimateDateLabel" destination="etD-pL-OtM" id="HAB-mb-mpA"/>
                         <outlet property="estimateDatePicker" destination="DtA-Ld-bdS" id="O0k-J5-cA1"/>
                         <outlet property="mediaCollectionView" destination="2s1-cH-BfK" id="ar5-ul-kOw"/>
@@ -248,7 +295,4 @@
             <point key="canvasLocation" x="971.5" y="302"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="icon_accessory" width="11" height="20"/>
-    </resources>
 </document>

@@ -40,6 +40,9 @@ class TaskDetailViewController: BaseViewController {
     private let modifyPlanSegueIdentifier = "modifyPlanOperation"
     private let approveSegueIdentifier = "approveOperation"
     private let recheckSegueIdentifier = "recheckOperation"
+    private let startDisputeSegueIdentifier = "startDisputeOperation"
+    private let remarkSegueIdentifier = "remarkOperation"
+    private let continueSegueIdentifier = "continueOperation"
     
     private lazy var operationTypesView: OperationTypesView = {
         let view = OperationTypesView()
@@ -69,7 +72,7 @@ class TaskDetailViewController: BaseViewController {
             self?.performSegueWithIdentifier("recheckOperation", sender: nil)
         }
 
-        // 厂级负责人不同意方案
+        // 厂级负责人不同意方案、技术主管不同意生产人员的拒绝确认请求
         view.rejectOperation = { [weak self] in
             SVProgressHUD.showWithStatus("正在提交")
             
@@ -266,6 +269,16 @@ class TaskDetailViewController: BaseViewController {
             })
         }
         
+        // 技术主管发起争议流程
+        view.startDisputeOperation = { [weak self] in
+            self?.performSegueWithIdentifier("startDisputeOperation", sender: nil)
+        }
+        
+        // 技术主管审批继续维保
+        view.continueOperation = { [weak self] in
+            self?.performSegueWithIdentifier("continueOperation", sender: nil)
+        }
+        
         return view
     }()
     
@@ -308,6 +321,7 @@ class TaskDetailViewController: BaseViewController {
     
     func getTaskDetail() {
         // 获取任务详情
+        SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.show()
         
         WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(wisTask?.taskID) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
@@ -328,7 +342,7 @@ class TaskDetailViewController: BaseViewController {
 //                    self.taskImagesFileInfoArray.append(self.wisTask!.imagesInfo.objectForKey(item) as! WISFileInfo)
 //                }
                 
-                // 获取方案图片
+                // 获取方案的数量和状态数量
                 if self.wisTask!.maintenancePlans != nil {
                     self.planCount = self.wisTask!.maintenancePlans.count
                     self.stateCount = self.wisTask!.passedStates.count
@@ -398,6 +412,22 @@ class TaskDetailViewController: BaseViewController {
         case "recheckOperation":
             let vc = segue.destinationViewController as! ModifyPlanViewController
             vc.segueIdentifier = self.recheckSegueIdentifier
+            vc.wisPlan = wisTask!.maintenancePlans.lastObject as? WISMaintenancePlan
+            break
+            
+        case "startDisputeOperation":
+            let vc = segue.destinationViewController as! RemarkViewController
+            vc.segueIdentifier = self.startDisputeSegueIdentifier
+            break
+            
+        case "remarkTask":
+            let vc = segue.destinationViewController as! RemarkViewController
+            vc.segueIdentifier = self.remarkSegueIdentifier
+            break
+            
+        case "continueOperation":
+            let vc = segue.destinationViewController as! ModifyPlanViewController
+            vc.segueIdentifier = self.continueSegueIdentifier
             vc.wisPlan = wisTask!.maintenancePlans.lastObject as? WISMaintenancePlan
             break
             

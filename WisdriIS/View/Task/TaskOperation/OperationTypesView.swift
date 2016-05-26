@@ -107,11 +107,15 @@ class OperationTypesView: UIView {
     var assignOperation: (() -> Void)?
     var acceptAssignedOperation: (() -> Void)?
     var declineOperation: (() -> Void)?
+    var startDisputeOperation: (() -> Void)?
+    var continueOperation: (() -> Void)?
 
     var tableViewBottomConstraint: NSLayoutConstraint?
 
     func showInView(view: UIView) {
 
+        totalHeight = 60 * CGFloat(currentTaskOperations.count)
+        
         frame = view.bounds
         dispatch_async(dispatch_get_main_queue()){
             self.tableView.reloadData()
@@ -199,7 +203,6 @@ class OperationTypesView: UIView {
     }
 
     func makeUI() {
-        totalHeight = 60 * CGFloat(currentTaskOperations.count)
         
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -207,7 +210,7 @@ class OperationTypesView: UIView {
         containerView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
-        let viewsDictionary = [
+        let viewsDictionary: [String: AnyObject] = [
             "containerView": containerView,
             "tableView": tableView,
         ]
@@ -220,9 +223,9 @@ class OperationTypesView: UIView {
         NSLayoutConstraint.activateConstraints(containerViewConstraintsH)
         NSLayoutConstraint.activateConstraints(containerViewConstraintsV)
 
-        // layour for tableView
+        // layout for tableView
 
-        let tableViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|[tableView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let tableViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|[tableView]|", options: [], metrics: nil, views: viewsDictionary)
 
         let tableViewBottomConstraint = NSLayoutConstraint(item: tableView, attribute: .Bottom, relatedBy: .Equal, toItem: containerView, attribute: .Bottom, multiplier: 1.0, constant: self.totalHeight!)
 
@@ -253,65 +256,11 @@ extension OperationTypesView: UIGestureRecognizerDelegate {
 
 extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
 
-    /* 
-    // 参照 MaintenanceTaskOperationType 定义的一个枚举，一是转换枚举的类型，Int -> String，二是定义操作的名称，暂时取消这一想法
-    enum OperationType: String {
-
-        /// 接单
-        case Accept = "2"
-        
-        case Refuse = "3"
-        
-        case Pass = "5"
-        
-        case SubmitPlan = "6"
-        
-        case SubmitQuickPlan = "7"
-        
-        case Complete = "8"
-        /// 同意
-        case Approve = "9"
-        
-        case Recheck = "10"
-        /// 拒绝
-        case Reject = "11"
-        /// 撤销
-        case Repeal = "14"
-        
-        case Cancel
-
-        var title: String {
-            switch self {
-            case .Repeal:
-                return NSLocalizedString("Repeal", comment: "")
-            case .Approve:
-                return NSLocalizedString("Approve", comment: "")
-            case .Reject:
-                return NSLocalizedString("Reject", comment: "")
-            case .Accept:
-                return NSLocalizedString("Accept", comment: "")
-            case .Cancel:
-                return NSLocalizedString("Cancel", comment: "")
-            case .Pass:
-                return NSLocalizedString("Pass", comment:"")
-            case .SubmitPlan:
-                return NSLocalizedString("Submit Plan", comment: "")
-            case .SubmitQuickPlan:
-                return NSLocalizedString("Submit Quick Plan", comment: "")
-            default:
-                return NSLocalizedString("Default", comment: "")
-            }
-        }
-    }
-    */
-
-
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.validOperations.count
         return currentTaskOperations.count
     }
 
@@ -427,6 +376,14 @@ extension OperationTypesView: UITableViewDataSource, UITableViewDelegate {
             case .DeclineToConfirm:
                 hide()
                 declineOperation?()
+                
+            case .StartDisputeProcedure:
+                hide()
+                startDisputeOperation?()
+                
+            case .Continue:
+                hide()
+                continueOperation?()
 
             default:
                 hide()

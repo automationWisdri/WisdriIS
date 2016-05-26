@@ -15,7 +15,8 @@ class RemarkViewController: UIViewController {
     @IBOutlet weak var remarkScrollView: UIScrollView!
     @IBOutlet weak var backgroundView: UIView!
     
-    private let remarkAboutThisTask = "有关本维保任务的备注信息..."
+    private let remarkAboutThisTask = NSLocalizedString("Remark about this maintenance service")
+    private let disputeInfoAboutThisTask = NSLocalizedString("Note about this dispute situation")
     
     private var isNeverInputMessage = true
     private var isDirty = false {
@@ -23,7 +24,17 @@ class RemarkViewController: UIViewController {
             postButton.enabled = newValue
             
             if !newValue && isNeverInputMessage && !messageTextView.isFirstResponder() {
-                messageTextView.text = remarkAboutThisTask
+                switch segueIdentifier! {
+                    
+                case "remarkOperation":
+                    messageTextView.text = remarkAboutThisTask
+                    
+                case "startDisputeOperation":
+                    messageTextView.text = disputeInfoAboutThisTask
+                    
+                default:
+                    break
+                }
             }
             
             messageTextView.textColor = newValue ? UIColor.blackColor() : UIColor.lightGrayColor()
@@ -36,20 +47,31 @@ class RemarkViewController: UIViewController {
         return button
     }()
     
+    // 导入页面的 Segue Identifier
+    var segueIdentifier: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        title = NSLocalizedString("Remark", comment: "")
-        view.backgroundColor = UIColor.wisBackgroundColor()
+        switch segueIdentifier! {
+            
+        case "remarkOperation":
+            title = NSLocalizedString("Remark", comment: "")
+            
+        case "startDisputeOperation":
+            title = NSLocalizedString("Dispute", comment: "")
+            
+        default:
+            break
+        }
+
+        view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         view.userInteractionEnabled = true
         
         navigationItem.rightBarButtonItem = postButton
         
         isDirty = false
-        
-//        remarkScrollView.delegate = self
 
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -67,22 +89,44 @@ class RemarkViewController: UIViewController {
         let messageLength = (messageTextView.text as NSString).length
         
         guard messageLength <= WISConfig.maxTaskTextLength else {
-            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
+            let message = String(format: NSLocalizedString("Info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
             WISAlert.alertSorry(message: message, inViewController: self)
             return
         }
         
-        SVProgressHUD.showWithStatus("正在提交")
-        WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: messageTextView.text, operationType: MaintenanceTaskOperationType.Remark, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
-            if completedWithNoError {
-                SVProgressHUD.showSuccessWithStatus("备注成功")
-                self.navigationController?.popViewControllerAnimated(true)
-                
-            } else {
-                
-                WISConfig.errorCode(error)
-            }
-        })
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+        switch segueIdentifier! {
+            
+        case "remarkOperation":
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: messageTextView.text, operationType: MaintenanceTaskOperationType.Remark, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                if completedWithNoError {
+                    SVProgressHUD.showSuccessWithStatus("备注成功")
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    
+                    WISConfig.errorCode(error)
+                }
+            })
+            
+        case "startDisputeOperation":
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: messageTextView.text, operationType: MaintenanceTaskOperationType.StartDisputeProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                if completedWithNoError {
+                    SVProgressHUD.showSuccessWithStatus("提交成功\n任务已归档")
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    
+                    WISConfig.errorCode(error)
+                }
+            })
+            
+        default:
+            break
+        }
+        
+        
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -94,7 +138,18 @@ class RemarkViewController: UIViewController {
     private func restoreTextViewPlaceHolder() {
         messageTextView.resignFirstResponder()
         if !isDirty && isNeverInputMessage {
-            messageTextView.text = remarkAboutThisTask
+            
+            switch segueIdentifier! {
+                
+            case "remarkOperation":
+                messageTextView.text = remarkAboutThisTask
+                
+            case "startDisputeOperation":
+                messageTextView.text = disputeInfoAboutThisTask
+                
+            default:
+                break
+            }
             messageTextView.textColor = UIColor.lightGrayColor()
         }
     }
@@ -143,12 +198,3 @@ extension RemarkViewController: UIScrollViewDelegate {
         restoreTextViewPlaceHolder()
     }
 }
-
-//extension UIScrollView {
-//    
-//    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        nextResponder()?.touchesBegan(touches, withEvent: event)
-//        super.touchesBegan(touches, withEvent: event)
-//
-//    }
-//}
