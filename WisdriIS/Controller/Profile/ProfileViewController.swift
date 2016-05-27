@@ -209,6 +209,8 @@ class ProfileViewController: BaseViewController {
             }
             */
             
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showWithStatus("正在打卡")
             // if code is validated, update clock status
             WISDataManager.sharedInstance().submitClockActionWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
