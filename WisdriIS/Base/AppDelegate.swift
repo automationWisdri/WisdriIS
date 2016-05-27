@@ -103,17 +103,24 @@ extension AppDelegate: WISNetworkingDelegate {
         let application = UIApplication.sharedApplication()
         if (UIApplicationState.Inactive == application.applicationState)
             || (UIApplicationState.Active == application.applicationState) {
-            SVProgressHUD.setDefaultMaskType(.None)
+            
             switch status {
             case WISNetworkReachabilityStatus.ReachableViaWWAN.rawValue:
-                SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via WWAN"))
+                if ((self.window?.rootViewController?.isKindOfClass(LoginViewController)) == false) {
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via WWAN"))
+                }
                 break
                 
             case WISNetworkReachabilityStatus.ReachableViaWiFi.rawValue:
-                SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via Wi-Fi"))
+                if ((self.window?.rootViewController?.isKindOfClass(LoginViewController)) == false) {
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Reachable via Wi-Fi"))
+                }
                 break
                 
             case WISNetworkReachabilityStatus.NotReachable.rawValue:
+                SVProgressHUD.setDefaultMaskType(.None)
                 SVProgressHUD.showInfoWithStatus(NSLocalizedString("Networking Not Reachable"))
                 break
                 
