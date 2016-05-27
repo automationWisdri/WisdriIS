@@ -41,7 +41,8 @@ class InspectionHomeViewController: BaseViewController {
         
         /// *** right button item on navigationbar
         // inspectionPopoverButton = UIBarButtonItem.init(title: "Menu", style: .Plain, target: self, action: #selector(self.pushScanView(_:)))
-        inspectionPopoverButton = UIBarButtonItem.init(barButtonSystemItem: .Bookmarks, target: self, action: #selector(self.popoverMenu(_:)))
+//        inspectionPopoverButton = UIBarButtonItem.init(barButtonSystemItem: .Bookmarks, target: self, action: #selector(self.popoverMenu(_:)))
+        inspectionPopoverButton = UIBarButtonItem.init(image: UIImage(named: "icon_more"), style: .Plain, target: self, action: #selector(self.popoverMenu(_:)))
         
         if self.currentUser.roleCode == self.roleCodes[RoleCode.Engineer.rawValue] || self.currentUser.roleCode == self.roleCodes[RoleCode.Technician.rawValue]{
             self.navigationItem.rightBarButtonItem = inspectionPopoverButton

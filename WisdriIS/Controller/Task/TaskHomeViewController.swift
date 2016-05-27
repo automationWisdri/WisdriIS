@@ -101,7 +101,7 @@ class TaskHomeViewController: BaseViewController {
         let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
         
         currentViewController.taskTableView.scrollsToTop = true
-        currentViewController.getTaskList(currentViewController.taskType!)
+        currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -129,7 +129,7 @@ extension TaskHomeViewController: PagingMenuControllerDelegate {
         let previousViewController = previousMenuController as! TaskListViewController
         
         didAppearViewController.taskTableView.scrollsToTop = true
-        didAppearViewController.getTaskList(didAppearViewController.taskType!)
+        didAppearViewController.getTaskList(didAppearViewController.taskType!, silentMode: false)
         previousViewController.taskTableView.scrollsToTop = false
     }
 }
