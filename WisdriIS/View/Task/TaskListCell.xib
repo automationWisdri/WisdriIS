@@ -17,40 +17,38 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ean-DX-V6m" userLabel="Task ID Label">
-                        <rect key="frame" x="81" y="10" width="100" height="18"/>
+                        <rect key="frame" x="80" y="8" width="86" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="DLY-CI-0n0"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                        <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWB-bR-B82" userLabel="Task Description Label">
-                        <rect key="frame" x="81" y="31" width="231" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="fND-au-A83"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfh-6q-HTf" userLabel="Task Status Label">
-                        <rect key="frame" x="182" y="10" width="130" height="18"/>
+                        <rect key="frame" x="167" y="8" width="145" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="t1P-0Q-9hx"/>
-                            <constraint firstAttribute="width" constant="130" id="zix-vj-P68"/>
+                            <constraint firstAttribute="width" constant="145" id="zix-vj-P68"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="erV-ht-w9f">
+                        <rect key="frame" x="80" y="27" width="235" height="34"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6f-Sr-vOL" userLabel="Task Date Label">
-                        <rect key="frame" x="202" y="58" width="110" height="15"/>
+                        <rect key="frame" x="202" y="62" width="110" height="10"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="10" id="maF-Ld-OkR"/>
                             <constraint firstAttribute="width" constant="110" id="rQP-Zu-jl7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                        <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bvw-co-0QS" userLabel="Task Status Image View">
@@ -62,23 +60,24 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="h6f-Sr-vOL" secondAttribute="bottom" constant="6.5" id="88E-xO-KH0"/>
+                    <constraint firstItem="erV-ht-w9f" firstAttribute="top" secondItem="pfh-6q-HTf" secondAttribute="bottom" constant="1" id="6sn-D2-r29"/>
+                    <constraint firstItem="ean-DX-V6m" firstAttribute="top" secondItem="ofz-1a-f2g" secondAttribute="top" constant="8" id="9aQ-eN-8Um"/>
+                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="top" secondItem="erV-ht-w9f" secondAttribute="bottom" constant="1" id="AdC-mo-xv1"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="trailing" secondItem="ofz-1a-f2g" secondAttribute="trailingMargin" id="EhE-Zx-zTN"/>
-                    <constraint firstItem="NWB-bR-B82" firstAttribute="top" secondItem="ean-DX-V6m" secondAttribute="bottom" constant="3" id="Fb3-GW-kR5"/>
-                    <constraint firstItem="ean-DX-V6m" firstAttribute="top" secondItem="Bvw-co-0QS" secondAttribute="top" id="HeS-ej-yrX"/>
+                    <constraint firstItem="erV-ht-w9f" firstAttribute="leading" secondItem="ean-DX-V6m" secondAttribute="leading" id="HRq-ry-3LK"/>
                     <constraint firstItem="Bvw-co-0QS" firstAttribute="leading" secondItem="ofz-1a-f2g" secondAttribute="leadingMargin" constant="5" id="M9d-XW-aDd"/>
-                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="trailing" secondItem="NWB-bR-B82" secondAttribute="trailing" id="OX3-eU-IVM"/>
-                    <constraint firstItem="pfh-6q-HTf" firstAttribute="trailing" secondItem="NWB-bR-B82" secondAttribute="trailing" id="SPL-oC-Qnh"/>
-                    <constraint firstItem="Bvw-co-0QS" firstAttribute="centerY" secondItem="ofz-1a-f2g" secondAttribute="centerY" id="UbB-5D-4kx"/>
-                    <constraint firstItem="ean-DX-V6m" firstAttribute="leading" secondItem="Bvw-co-0QS" secondAttribute="trailing" constant="8" symbolic="YES" id="Z82-LL-mXg"/>
-                    <constraint firstItem="ean-DX-V6m" firstAttribute="leading" secondItem="NWB-bR-B82" secondAttribute="leading" id="cPw-Dx-4O5"/>
+                    <constraint firstAttribute="bottom" secondItem="h6f-Sr-vOL" secondAttribute="bottom" constant="7" id="O0G-s5-z5B"/>
+                    <constraint firstItem="ean-DX-V6m" firstAttribute="leading" secondItem="Bvw-co-0QS" secondAttribute="trailing" constant="7" id="Z82-LL-mXg"/>
+                    <constraint firstItem="h6f-Sr-vOL" firstAttribute="trailing" secondItem="pfh-6q-HTf" secondAttribute="trailing" id="ZQ6-4N-2ul"/>
+                    <constraint firstAttribute="trailing" secondItem="erV-ht-w9f" secondAttribute="trailing" constant="5" id="mef-di-cw5"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="top" secondItem="ean-DX-V6m" secondAttribute="top" id="uc7-U1-uem"/>
+                    <constraint firstItem="Bvw-co-0QS" firstAttribute="centerY" secondItem="ofz-1a-f2g" secondAttribute="centerY" id="v2e-3B-5t4"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="leading" secondItem="ean-DX-V6m" secondAttribute="trailing" constant="1" id="v9W-AW-oP7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="taskDateLabel" destination="h6f-Sr-vOL" id="USG-Jk-gWe"/>
-                <outlet property="taskDescriptionLabel" destination="NWB-bR-B82" id="zX4-TB-Qd2"/>
+                <outlet property="taskDescriptionTextView" destination="erV-ht-w9f" id="OiA-ba-TNA"/>
                 <outlet property="taskIDLabel" destination="ean-DX-V6m" id="TTG-SC-cLB"/>
                 <outlet property="taskStatusImageView" destination="Bvw-co-0QS" id="2aj-Uf-jNc"/>
                 <outlet property="taskStatusLabel" destination="pfh-6q-HTf" id="y2e-jR-ZCM"/>

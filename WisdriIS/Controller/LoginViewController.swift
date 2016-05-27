@@ -150,12 +150,12 @@ class LoginViewController: UIViewController {
         forgetPasswordLabel.font = wisFont(12)
         forgetPasswordLabel.text = "忘记密码了?"
         
-        vibrancyView.contentView.addSubview(forgetPasswordLabel)
+//        vibrancyView.contentView.addSubview(forgetPasswordLabel)
         
-        forgetPasswordLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(self.loginButton!.snp_bottom).offset(14)
-            make.right.equalTo(self.loginButton!)
-        }
+//        forgetPasswordLabel.snp_makeConstraints { (make) -> Void in
+//            make.top.equalTo(self.loginButton!.snp_bottom).offset(14)
+//            make.right.equalTo(self.loginButton!)
+//        }
         
         let footLabel = UILabel()
         footLabel.alpha = 0.5
@@ -234,9 +234,9 @@ class LoginViewController: UIViewController {
             return
         }
         
+        SVProgressHUD.showWithStatus("正在登录")
         self.userNameTextField?.resignFirstResponder()
         self.passwordTextField?.resignFirstResponder()
-        SVProgressHUD.showWithStatus("正在登录")
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
@@ -264,7 +264,7 @@ class LoginViewController: UIViewController {
                     WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
                 }
                 
-                delay(1.0, work: {
+                delay(0.5, work: {
                     if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                         appDelegate.startMainStory()
                     }

@@ -172,6 +172,7 @@ class SubmitPlanViewController: BaseViewController {
         case 0:
             relevantUserTextView.text = NSLocalizedString("No other engineers")
         default:
+            relevantUserTextView.text = EMPTY_STRING
             for user in taskParticipants {
                 if user == taskParticipants.last {
                     relevantUserTextView.text = relevantUserTextView.text + user.fullName
