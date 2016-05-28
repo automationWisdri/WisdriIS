@@ -11,7 +11,6 @@
 
 @class UIImage;
 
-
 FOUNDATION_EXPORT NSString * const defaultLocalImageStorageDirectoryKey;
 
 

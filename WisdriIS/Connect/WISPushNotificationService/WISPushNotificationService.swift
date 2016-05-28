@@ -106,8 +106,6 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(OnLineNotificationReceivedNotification, object: String(notificationIndex))
         }
         
-        
-        
         let msg:String = "Receive Payload: \(payloadMsg), taskId:\(taskId), messageId:\(msgId)";
         
         NSLog("\n>>>[GeTuiSdk DidReceivePayload]:%@\n\n",msg);

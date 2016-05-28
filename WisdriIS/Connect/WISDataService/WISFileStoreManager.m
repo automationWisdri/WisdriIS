@@ -34,6 +34,7 @@
     if (self = [super init]) {
         _uploadImageStore = [WISLocalDocumentImageStore uploadImageStoreInstance];
         _downloadImageStore = [WISLocalDocumentImageStore downloadImageStoreInstance];
+        _archivingStore = [WISArchivingStore sharedInstance];
     }
     return self;
 }

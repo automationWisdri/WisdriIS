@@ -84,6 +84,7 @@
 		38A5C0EF1CF3356F008DBD48 /* NotificationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */; };
 		38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */; };
 		38A5C0F41CF33A41008DBD48 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */; };
+		38B1F8E81CF9C59E0054F354 /* WISArchivingStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */; };
 		38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E331CEC3F95003092DA /* InspectionList.storyboard */; };
 		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
 		38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */; };
@@ -324,6 +325,8 @@
 		38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationList.storyboard; sourceTree = "<group>"; };
 		38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationListCell.xib; sourceTree = "<group>"; };
 		38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
+		38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISArchivingStore.h; sourceTree = "<group>"; };
+		38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WISArchivingStore.m; sourceTree = "<group>"; };
 		38E51E331CEC3F95003092DA /* InspectionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionList.storyboard; sourceTree = "<group>"; };
 		38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionHomeViewController.swift; sourceTree = "<group>"; };
 		38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionResultShowSelectionCell.xib; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 		385C1D901CE4BC9200F8E393 /* WISDataService */ = {
 			isa = PBXGroup;
 			children = (
+				38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */,
+				38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */,
 				385C1D911CE4BC9200F8E393 /* DataServiceCommon */,
 				385C1DA81CE4BC9200F8E393 /* DataServiceExceptions */,
 				385C1DAE1CE4BC9200F8E393 /* DataServiceExtensions */,
@@ -1527,6 +1532,7 @@
 				385C1DE51CE4BC9200F8E393 /* LBXScanViewController.swift in Sources */,
 				385C1DEF1CE4BC9200F8E393 /* WISMaintenanceTask.m in Sources */,
 				9F2A53291C9AF7F8001BE6F6 /* WISColor.swift in Sources */,
+				38B1F8E81CF9C59E0054F354 /* WISArchivingStore.m in Sources */,
 				385C1DEC1CE4BC9200F8E393 /* WISFileInfo.m in Sources */,
 				385C1DF41CE4BC9200F8E393 /* WISIncorrectParamsException.m in Sources */,
 				385C1E011CE4BC9200F8E393 /* WISMaintenanceTaskNetworkNotification.m in Sources */,
