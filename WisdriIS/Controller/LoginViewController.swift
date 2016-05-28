@@ -255,6 +255,8 @@ class LoginViewController: UIViewController {
                 WISUserDefaults.getCurrentUserClockStatus()
                 WISUserDefaults.getWorkShift(NSDate())
                 
+                WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
+                
                 // **
                 // 注册 client ID, 用于Push Notification
                 // **
