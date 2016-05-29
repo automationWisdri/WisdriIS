@@ -132,6 +132,8 @@ class TaskListViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.updateCellInTaskList()
         
+        WISUserDefaults.setupSegment()
+        
         // for test
         print("Task List View Controller will appear!")
     }
