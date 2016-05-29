@@ -241,36 +241,13 @@ class LoginViewController: UIViewController {
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
                 SVProgressHUD.showSuccessWithStatus("登录成功")
-                // 待修改
-                WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
-                    if !completedWithNoError {
-                        SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
-                    }
-                })
-                userSegmentList.removeAll()
-                currentClockStatus = .UndefinedClockStatus
-                clockStatusValidated = false
+                WISDataManager.sharedInstance().ArchiveCurrentUserInfo()
                 
-                WISUserDefaults.setupSegment()
-                WISUserDefaults.getCurrentUserClockStatus()
-                WISUserDefaults.getWorkShift(NSDate())
-                
-                WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
-                
-                // **
-                // 注册 client ID, 用于Push Notification
-                // **
-                if let application : UIApplication? = UIApplication.sharedApplication() {
-                    WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(application)
-                } else {
-                    WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
-                }
-                
-                delay(0.5, work: {
-                    if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                    delay(0.5, work: {
                         appDelegate.startMainStory()
-                    }
-                })
+                    })
+                }
                 
             } else {
                 

@@ -16,11 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        self.window = UIWindow()
-        self.window?.frame = UIScreen.mainScreen().bounds
-        self.window?.backgroundColor = UIColor.wisBackgroundColor()
-        self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = LoginViewController()
         
         SVProgressHUD.setForegroundColor(UIColor(white: 1, alpha: 1))
         SVProgressHUD.setBackgroundColor(UIColor(white: 0.15, alpha: 0.85))
@@ -33,10 +28,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         WISDataManager.sharedInstance().networkingDelegate = self
 
+        self.window = UIWindow()
+        self.window?.frame = UIScreen.mainScreen().bounds
+        self.window?.backgroundColor = UIColor.wisBackgroundColor()
+        self.window?.makeKeyAndVisible()
+        
+        if WISDataManager.sharedInstance().preloadArchivedUserInfo() {
+            NSThread.sleepForTimeInterval(1.5)
+            startMainStory()
+        } else {
+            NSThread.sleepForTimeInterval(1.0)
+            self.window?.rootViewController = LoginViewController()
+        }
+        
         return true
     }
     
     func startMainStory() {
+        // 获取用户信息详情
+        WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
+            if !completedWithNoError {
+                SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
+            }
+        })
+        
+        userSegmentList.removeAll()
+        currentClockStatus = .UndefinedClockStatus
+        clockStatusValidated = false
+        
+        WISUserDefaults.setupSegment()
+        WISUserDefaults.getCurrentUserClockStatus()
+        WISUserDefaults.getWorkShift(NSDate())
+        
+        WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
+        
+        // **
+        // 注册 client ID, 用于Push Notification
+        // **
+        if let application : UIApplication? = UIApplication.sharedApplication() {
+            WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(application)
+        } else {
+            WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
         window?.rootViewController = rootViewController
@@ -130,5 +164,3 @@ extension AppDelegate: WISNetworkingDelegate {
         }
     }
 }
-
-

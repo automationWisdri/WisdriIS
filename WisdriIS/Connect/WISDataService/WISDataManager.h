@@ -555,4 +555,14 @@ __attribute__((deprecated("Use \"updateMaintenanceTaskDetailInfoWithTaskID: comp
 + (WISFileInfo *) produceFileInfoWithFileRemoteURL:(NSString *)url;
 
 
+#pragma mark - support method: Archive and Unarchive Current User Info
+
+- (void) updateCurrentUserWithUserInfo:(WISUser *)user;
+
+- (void) ArchiveCurrentUserInfo;
+
+- (void) removeArchivedCurrentUserInfo;
+
+- (BOOL) preloadArchivedUserInfo;
+
 @end

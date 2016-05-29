@@ -529,13 +529,13 @@
 		385C1D901CE4BC9200F8E393 /* WISDataService */ = {
 			isa = PBXGroup;
 			children = (
-				38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */,
-				38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */,
 				385C1D911CE4BC9200F8E393 /* DataServiceCommon */,
 				385C1DA81CE4BC9200F8E393 /* DataServiceExceptions */,
 				385C1DAE1CE4BC9200F8E393 /* DataServiceExtensions */,
 				385C1DB31CE4BC9200F8E393 /* DataServiceNotifications */,
 				385C1DBA1CE4BC9200F8E393 /* DataServiceProtocols */,
+				38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */,
+				38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */,
 				385C1DC01CE4BC9200F8E393 /* WISDataManager.h */,
 				385C1DC11CE4BC9200F8E393 /* WISDataManager.m */,
 				385C1DC21CE4BC9200F8E393 /* WISFileStoreManager.h */,

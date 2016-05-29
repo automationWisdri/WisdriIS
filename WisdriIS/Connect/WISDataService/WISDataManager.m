@@ -20,6 +20,11 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
 //                                                     @"Electrician":@"电工",};
 
 
+NSString *const defaultUserInfoArchivingStorageDirectoryKey = @"defaultUserInfoArchivingStorageDirectory";
+NSString *const preDefinedUserInfoArchivingFolderName = @"UserInfoArchivingCache";
+
+NSString *const currentUserFileName = @"SignedInUserInfo.userInfoArchive";
+NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArchive";
 
 @interface WISDataManager ()
 
@@ -4550,6 +4555,64 @@ NSString *const WISErrorDomain = @"WISErrorDomain";
     return fileInfo;
 }
 
-#pragma mark - support method: image storage
+#pragma mark - support method: Archive and Unarchive Current User Info
+
+- (void) updateCurrentUserWithUserInfo:(WISUser *)user {
+    self.currentUser = [user copy];
+    self.currentUser = self.currentUser;
+}
+
+- (void) ArchiveCurrentUserInfo {
+    [[[WISFileStoreManager defaultManager] archivingStore] setLocalArchivingStorageDirectoryWithFolderName:preDefinedUserInfoArchivingFolderName key:defaultUserInfoArchivingStorageDirectoryKey];
+    
+    NSString *currentUserFileFullPath = [self.defaultUserInfoArchivingStorageDirectory stringByAppendingPathComponent:currentUserFileName];
+    NSString *networkRequestTokenFileFullPath = [self.defaultUserInfoArchivingStorageDirectory stringByAppendingPathComponent:networkRequestTokenFileName];
+    
+    WISUser *userInfo = self.currentUser;
+    NSString *requestToken = self.networkRequestToken;
+    
+    [NSKeyedArchiver archiveRootObject:userInfo toFile:currentUserFileFullPath];
+    [NSKeyedArchiver archiveRootObject:requestToken toFile:networkRequestTokenFileFullPath];
+}
+
+- (void) removeArchivedCurrentUserInfo {
+    NSArray<NSString *> *archivingFilesFullPath = [[[WISFileStoreManager defaultManager] archivingStore] filesFullPathInDirectory:self.defaultUserInfoArchivingStorageDirectory];
+    
+    if (archivingFilesFullPath.count > 0) {
+        for (NSString *fileFullPath in archivingFilesFullPath) {
+            [[NSFileManager defaultManager] removeItemAtPath:fileFullPath error:nil];
+        }
+    }
+}
+
+- (BOOL) preloadArchivedUserInfo {
+    [[[WISFileStoreManager defaultManager] archivingStore] setLocalArchivingStorageDirectoryWithFolderName:preDefinedUserInfoArchivingFolderName key:defaultUserInfoArchivingStorageDirectoryKey];
+    
+    NSArray<NSString *> *archivingFilesFullPath = [[[WISFileStoreManager defaultManager] archivingStore] filesFullPathInDirectory:self.defaultUserInfoArchivingStorageDirectory];
+
+    
+    if (archivingFilesFullPath.count <= 1) {
+        [self removeArchivedCurrentUserInfo];
+        return false;
+        
+    } else {
+        NSString *archivedFileName;
+        for (NSString *fileFullPath in archivingFilesFullPath) {
+            archivedFileName = [fileFullPath lastPathComponent];
+            if ([archivedFileName isEqualToString: currentUserFileName]) {
+                self.currentUser = [[NSKeyedUnarchiver unarchiveObjectWithFile:fileFullPath] copy];
+            } else {
+                self.networkRequestToken = [[NSKeyedUnarchiver unarchiveObjectWithFile:fileFullPath] copy];
+            }
+        }
+    }
+    
+    return true;
+    
+}
+
+- (NSString *) defaultUserInfoArchivingStorageDirectory {
+    return [[[WISFileStoreManager defaultManager] archivingStore] localArchivingStorageDirectoryWithKey:defaultUserInfoArchivingStorageDirectoryKey];
+}
 
 @end
