@@ -110,10 +110,10 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
         
         NSLog("\n>>>[GeTuiSdk DidReceivePayload]:%@\n\n",msg);
         
-        if let application : UIApplication? = UIApplication.sharedApplication() {
-            application?.applicationIconBadgeNumber -= 1
-            print("BadgeNumber after payload data has been received: \(application?.applicationIconBadgeNumber)")
-        }
+        // if let application : UIApplication? = UIApplication.sharedApplication() {
+        //     application?.applicationIconBadgeNumber -= 1
+        //     print("BadgeNumber after payload data has been received: \(application?.applicationIconBadgeNumber)")
+        // }
     }
 }
 
