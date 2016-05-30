@@ -37,7 +37,7 @@ class WISPushNotificationDataManager {
         }
         
         if pushNotifications.count > 0 {
-            pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
+            pushNotifications.sortInPlace(WISPushNotification.arrayBackwardSorter)
         }
     }
     
@@ -84,7 +84,7 @@ class WISPushNotificationDataManager {
         }
         
         if pushNotifications.count > 0 {
-            pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
+            pushNotifications.sortInPlace(WISPushNotification.arrayBackwardSorter)
         }
     }
     
@@ -94,7 +94,7 @@ class WISPushNotificationDataManager {
             return -1
         }
         
-        self.pushNotifications.append(notification)
+        self.pushNotifications.insert(notification, atIndex: 0)
         
         let fileName = notification.notificationContent + notification.notificationReceivedDateTime.toDateStringWithSeparator("") + ".notificationArchive"
         let fileFullPath = defaultLocalPushNotificationArchivingStorageDirectory.stringByAppendingPathComponent(fileName)

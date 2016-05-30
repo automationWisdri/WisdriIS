@@ -213,6 +213,7 @@
 		0D8C085E8B80801B50615C50 /* Pods-WisdriIS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WisdriIS.release.xcconfig"; path = "Pods/Target Support Files/Pods-WisdriIS/Pods-WisdriIS.release.xcconfig"; sourceTree = "<group>"; };
 		380499531CF1CAE200A51064 /* InspectionPresentResultWithPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionPresentResultWithPhotoCell.xib; sourceTree = "<group>"; };
 		380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPresentResultWithPhotoCell.swift; sourceTree = "<group>"; };
+		381480731CFBC72200E57C4E /* WISSorter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WISSorter.h; sourceTree = "<group>"; };
 		383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotification.swift; sourceTree = "<group>"; };
 		383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotificationDataManager.swift; sourceTree = "<group>"; };
 		385C1D841CE4BC9200F8E393 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
@@ -572,6 +573,7 @@
 				385C1DA51CE4BC9200F8E393 /* WISMaintenanceTaskState.m */,
 				385C1DA61CE4BC9200F8E393 /* WISUser.h */,
 				385C1DA71CE4BC9200F8E393 /* WISUser.m */,
+				381480731CFBC72200E57C4E /* WISSorter.h */,
 			);
 			path = DataServiceCommon;
 			sourceTree = "<group>";

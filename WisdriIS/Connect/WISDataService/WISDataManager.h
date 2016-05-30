@@ -35,6 +35,7 @@
 
 
 #import "WISFileStoreManager.h"
+#import "WISSorter.h"
 
 
 #pragma mark - Pre-defined enums and constants

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WISSorter.h"
 
 @class WISUser, WISMaintenancePlan, WISMaintenanceTaskRating, WISFileInfo;
 
@@ -101,5 +102,8 @@ typedef NS_ENUM(NSInteger, MaintenanceTaskType) {
                  andImagesInfo:(NSMutableDictionary<NSString *, WISFileInfo *> *) imagesInfo;
 
 - (void) appendImagsInfo:(NSMutableDictionary<NSString *, WISFileInfo *> *) imagesInfo;
+
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult;
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult;
 
 @end

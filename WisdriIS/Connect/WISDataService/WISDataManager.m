@@ -1721,7 +1721,9 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                       
                                       [updatedData addObject:maintenanceTask];
                                   }
+                                  [updatedData sortWithOptions:NSSortConcurrent usingComparator:[WISMaintenanceTask arrayBackwardSorterWithResult]];
                               }
+                              
                               
                               [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateMaintenanceTaskBriefInfoSucceededNotification
                                                                                   object:updatedData];
@@ -2476,9 +2478,7 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                         }
                                     }
                                 }
-                                [newMaintenanceTask.passedStates sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                                    return [((WISMaintenanceTaskState *)obj1).endTime compare:((WISMaintenanceTaskState *)obj2).endTime];
-                                }];
+                                [newMaintenanceTask.passedStates sortWithOptions:NSSortConcurrent usingComparator:WISMaintenanceTaskState.arrayForwardSorterWithResult];
                                 
                                 // ***********
                                 //images info - MaintenanceTask
@@ -2576,9 +2576,7 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                 } else {
                                     // do nothing, because WISMaintenanceTask initializer has done the initializing job.
                                 }
-                                [newMaintenanceTask.maintenancePlans sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                                    return [((WISMaintenancePlan *)obj1).updatedTime compare:((WISMaintenancePlan *)obj2).updatedTime];
-                                }];
+                                [newMaintenanceTask.maintenancePlans sortWithOptions:NSSortConcurrent usingComparator:WISMaintenancePlan.arrayForwardSorterWithResult];
                             }
                             
                             if (![_maintenanceTasks valueForKey:taskID]) {

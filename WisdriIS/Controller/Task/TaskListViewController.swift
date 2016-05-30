@@ -22,7 +22,7 @@ class TaskListViewController: BaseViewController {
     var updateCellInfoURLSessionTask: NSURLSessionTask?
     
     // for task type: NotArchived and Archived
-    let recordNumberInPage: Int = 50
+    let recordNumberInPage: Int = 20
     var currentPageIndex = 1
     
     private let taskListCellID = "TaskListCell"

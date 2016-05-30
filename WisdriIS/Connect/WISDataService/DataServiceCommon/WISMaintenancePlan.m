@@ -93,4 +93,26 @@ NSString *const imagesInfoOfMaintenancePlanEncodingKey = @"imagesInfoOfMaintenan
 }
 
 
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenancePlan *lhs = (WISMaintenancePlan *)lhsOriginal;
+        WISMaintenancePlan *rhs = (WISMaintenancePlan *)rhsOriginal;
+        
+        return [lhs.updatedTime compare:rhs.updatedTime];
+    };
+    return sorter;
+}
+
+
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenancePlan *lhs = (WISMaintenancePlan *)lhsOriginal;
+        WISMaintenancePlan *rhs = (WISMaintenancePlan *)rhsOriginal;
+        
+        return [rhs.updatedTime compare:lhs.updatedTime];
+    };
+    return sorter;
+}
+
+
 @end

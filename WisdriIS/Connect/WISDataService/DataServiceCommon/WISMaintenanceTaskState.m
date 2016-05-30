@@ -82,4 +82,26 @@ NSString *const statePersonInChargeEncodingKey = @"statePersonInCharge";
     }
 }
 
+
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTaskState *lhs = (WISMaintenanceTaskState *)lhsOriginal;
+        WISMaintenanceTaskState *rhs = (WISMaintenanceTaskState *)rhsOriginal;
+        
+        return [lhs.endTime compare:rhs.endTime];
+    };
+    return sorter;
+}
+
+
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTaskState *lhs = (WISMaintenanceTaskState *)lhsOriginal;
+        WISMaintenanceTaskState *rhs = (WISMaintenanceTaskState *)rhsOriginal;
+        
+        return [rhs.endTime compare:lhs.endTime];
+    };
+    return sorter;
+}
+
 @end
