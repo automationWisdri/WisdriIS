@@ -133,6 +133,28 @@ class TaskHomeViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: MaintenanceTaskUploadingNotification, object: nil)
+        print("Notification \(MaintenanceTaskUploadingNotification) deregistered in \(self) while deiniting")
+        print("\n====================\nTaskHomeViewController deinited\n====================\n")
+    }
+    
+    // MARK: - Notification handler
+    
+    func handleNotification(notification:NSNotification) -> Void {
+        
+        switch notification.name {
+        case OnLineNotificationReceivedNotification, NewTaskSubmittedSuccessfullyNotification:
+            let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+            let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
+            currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+            break
+            
+        default:
+            break
+        }
+    }
+    
     @objc func handleTaskUploadingNotification(notification: NSNotification) {
         guard let state = notification.object else {
             return
@@ -158,7 +180,7 @@ class TaskHomeViewController: BaseViewController {
                 totalUploadingPercentage = totalUploadingPercentage / uploadingTaskDictionary.count
                 
                 self.navigationItem.title = "任务上传...(\(totalUploadingPercentage)%)"
-
+                
             case UploadingState.UploadingCompleted.rawValue:
                 
                 let pagingMenuController = self.childViewControllers.first as! PagingMenuController
@@ -173,11 +195,6 @@ class TaskHomeViewController: BaseViewController {
                 return
             }
         }
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: MaintenanceTaskUploadingNotification, object: nil)
-        print("Notification \(MaintenanceTaskUploadingNotification) deregistered in \(self) while deiniting")
     }
 
     /*

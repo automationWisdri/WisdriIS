@@ -240,32 +240,11 @@ class LoginViewController: UIViewController {
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
-                
-                // 待修改
-                WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
-                    if !completedWithNoError {
-                        SVProgressHUD.showErrorWithStatus("获取用户详细信息错误")
-                    }
-                })
-                userSegmentList.removeAll()
-                currentClockStatus = .UndefinedClockStatus
-                clockStatusValidated = false
-                
-                WISUserDefaults.setupSegment()
-                WISUserDefaults.getCurrentUserClockStatus()
-                WISUserDefaults.getWorkShift(NSDate())
-                
-                // **
-                // 注册 client ID, 用于Push Notification
-                // **
-                if let application : UIApplication? = UIApplication.sharedApplication() {
-                    WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(application)
-                } else {
-                    WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
-                }
                 SVProgressHUD.showSuccessWithStatus("登录成功")
-                delay(0.25, work: {
-                    if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                WISDataManager.sharedInstance().ArchiveCurrentUserInfo()
+                
+                if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+                    delay(0.25, work: {
                         appDelegate.startMainStory()
                     })
                 }
@@ -299,12 +278,6 @@ class LoginViewController: UIViewController {
             }
         })
     }
-    
-    
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-//        super.touchesBegan(touches, withEvent: event)
-//    }
     
 }
 
