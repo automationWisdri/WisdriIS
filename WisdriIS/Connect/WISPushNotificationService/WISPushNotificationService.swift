@@ -103,7 +103,7 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
             let alert = UIAlertView.init(title: NSLocalizedString("Notification", comment: ""), message: payloadMsg, delegate: nil, cancelButtonTitle: NSLocalizedString("Confirm", comment: ""))
             alert.show()
             
-            NSNotificationCenter.defaultCenter().postNotificationName(OnLineNotificationReceivedNotification, object: String(notificationIndex))
+            NSNotificationCenter.defaultCenter().postNotificationName(OnLineNotificationReceivedNotification, object:newNotification)
         }
         
         let msg:String = "Receive Payload: \(payloadMsg), taskId:\(taskId), messageId:\(msgId)";

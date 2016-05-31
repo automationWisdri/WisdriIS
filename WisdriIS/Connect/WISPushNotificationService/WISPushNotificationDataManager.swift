@@ -102,7 +102,7 @@ class WISPushNotificationDataManager {
         
         print("add notification: \(notification.notificationContent) to notification list.")
         
-        return self.pushNotifications.count - 1
+        return 0 //self.pushNotifications.count - 1
     }
     
     func removePushNotificationByIndex(index: Int = 0) -> Bool {
