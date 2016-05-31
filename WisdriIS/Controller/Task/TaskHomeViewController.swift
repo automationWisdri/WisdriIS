@@ -57,6 +57,9 @@ class TaskHomeViewController: BaseViewController {
         print(WISDataManager.sharedInstance().currentUser.roleCode)
         print(currentUser.roleCode)
 
+        let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Filter", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
+        // self.navigationItem.leftBarButtonItem = leftBarItem
+        
         if currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
             self.navigationItem.rightBarButtonItem = nil
         }
@@ -137,7 +140,7 @@ class TaskHomeViewController: BaseViewController {
     }
     
     
-    // MARK: - Notification handler
+    // MARK: - Support Method
     
     func handleNotification(notification:NSNotification) -> Void {
         
@@ -151,6 +154,10 @@ class TaskHomeViewController: BaseViewController {
         default:
             break
         }
+    }
+    
+    func popTaskListFilterPanel(sender: UIBarButtonItem) -> Void {
+        
     }
 
     /*
