@@ -234,9 +234,9 @@ class LoginViewController: UIViewController {
             return
         }
         
-        SVProgressHUD.showWithStatus("正在登录")
         self.userNameTextField?.resignFirstResponder()
         self.passwordTextField?.resignFirstResponder()
+        SVProgressHUD.showWithStatus("正在登录")
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
@@ -244,7 +244,7 @@ class LoginViewController: UIViewController {
                 WISDataManager.sharedInstance().ArchiveCurrentUserInfo()
                 
                 if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-                    delay(0.5, work: {
+                    delay(0.25, work: {
                         appDelegate.startMainStory()
                     })
                 }
@@ -278,12 +278,6 @@ class LoginViewController: UIViewController {
             }
         })
     }
-    
-    
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-//        super.touchesBegan(touches, withEvent: event)
-//    }
     
 }
 

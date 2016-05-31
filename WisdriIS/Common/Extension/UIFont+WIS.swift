@@ -25,4 +25,12 @@ extension UIFont {
     class func textViewFont() -> UIFont {
         return UIFont.systemFontOfSize(14)
     }
+    
+    class func statusBarFont() -> UIFont {
+        if #available(iOS 8.2, *) {
+            return UIFont.systemFontOfSize(12, weight: UIFontWeightLight)
+        } else {
+            return UIFont(name: "HelveticaNeue-Light", size: 12)!
+        }
+    }
 }

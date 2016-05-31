@@ -107,13 +107,13 @@ class WISAlert {
         }
     }
     
-    class func phoneCall(telNumber telNumber: String, mobileNumber: String, inViewController viewController: UIViewController?, withTelCallAction telCallAction: () -> Void, mobileCallAction: () -> Void, cancelAction: () -> Void) {
+    class func phoneCall(title title: String, telNumber: String, mobileNumber: String, inViewController viewController: UIViewController?, withTelCallAction telCallAction: () -> Void, mobileCallAction: () -> Void, cancelAction: () -> Void) {
         
         dispatch_async(dispatch_get_main_queue()) {
             
-            let alertController = UIAlertController(title: "呼叫", message: "请选择号码", preferredStyle: .ActionSheet)
+            let alertController = UIAlertController(title: NSLocalizedString("Call") + ": " + title, message: NSLocalizedString("Choose phone number"), preferredStyle: .ActionSheet)
             
-            let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: .Cancel) { action -> Void in
+            let cancelAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Cancel"), style: .Cancel) { action -> Void in
                 cancelAction()
             }
             alertController.addAction(cancelAction)

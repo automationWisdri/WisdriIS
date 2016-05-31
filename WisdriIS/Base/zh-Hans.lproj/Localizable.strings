@@ -126,6 +126,22 @@
 
 "Note about this dispute situation" = "请描述争议问题的缘由，以便提高服务质量";
 
+"Call" = "呼叫";
+
+"Choose phone number" = "请选择号码";
+
+"Accpet Success" = "接单成功";
+
+"Repeal Success" = "撤单成功";
+
+"Refuse task completion" = "已拒绝维保完成确认";
+
+"Refuse pass request" = "已拒绝转单请求";
+
+"Info is too long!\nUp to %d letters." = "描述字数过多！\n最多%d个字符。";
+
+"Submitting plan" = "正在提交维保方案";
+
 // 点检新增内容
 "Inspection" = "点检";
 

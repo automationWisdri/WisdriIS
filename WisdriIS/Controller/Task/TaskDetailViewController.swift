@@ -74,7 +74,7 @@ class TaskDetailViewController: BaseViewController {
 
         // 厂级负责人不同意方案、技术主管不同意生产人员的拒绝确认请求
         view.rejectOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
             
             let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
             var taskImageInfo = [String : WISFileInfo]()
@@ -82,11 +82,11 @@ class TaskDetailViewController: BaseViewController {
                 taskImageInfo[item as! String] = (imagesInfo.objectForKey(item) as! WISFileInfo)
             }
             
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝", operationType: MaintenanceTaskOperationType.Reject, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Reject, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("提交成功")
+                    SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -98,12 +98,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师完成任务
         view.completeOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "维保完成", operationType: MaintenanceTaskOperationType.TaskComplete, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.TaskComplete, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("提交成功")
+                    SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -120,12 +120,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接受转单
         view.acceptPassOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "接受转单", operationType: MaintenanceTaskOperationType.AcceptPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("接单成功")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Accept Success"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -138,12 +138,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师拒绝接受转单
         view.refusePassOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝转单", operationType: MaintenanceTaskOperationType.RefuseToReceiveTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.RefuseToReceiveTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("已拒绝转单请求")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Refuse pass request"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -156,12 +156,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接受指派转单
         view.acceptAssignedOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "接受指派转单", operationType: MaintenanceTaskOperationType.AcceptAssignedPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptAssignedPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("接受成功")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Accept Success"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -176,7 +176,7 @@ class TaskDetailViewController: BaseViewController {
         view.approveOperation = { [weak self] in
             // 厂级负责人审批同意维保方案
             if WISDataManager.sharedInstance().currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.FactoryManager.rawValue]  {
-                SVProgressHUD.showWithStatus("正在提交")
+                SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
                 
                 let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
                 var taskImageInfo = [String : WISFileInfo]()
@@ -184,11 +184,11 @@ class TaskDetailViewController: BaseViewController {
                     taskImageInfo[item as! String] = (imagesInfo.objectForKey(item) as! WISFileInfo)
                 }
                 
-                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "审批同意", operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: taskImageInfo, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                     
                     if completedWithNoError {
                         SVProgressHUD.setDefaultMaskType(.None)
-                        SVProgressHUD.showSuccessWithStatus("提交成功")
+                        SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
                         self?.navigationController?.popViewControllerAnimated(true)
                     
                     } else {
@@ -220,12 +220,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接单
         view.acceptOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "接单", operationType: MaintenanceTaskOperationType.AcceptMaintenanceTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptMaintenanceTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("接单成功")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Accpet Success"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -237,12 +237,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 生产人员撤单
         view.repealOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "撤单", operationType: MaintenanceTaskOperationType.Cancel, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Cancel, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("撤单成功")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Repeal Success"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -254,12 +254,12 @@ class TaskDetailViewController: BaseViewController {
         
         // 生产人员拒绝确认
         view.declineOperation = { [weak self] in
-            SVProgressHUD.showWithStatus("正在提交")
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: "拒绝确认", operationType: MaintenanceTaskOperationType.DeclineToConfirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.DeclineToConfirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus("提交成功")
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Refuse task completion"))
                     self?.navigationController?.popViewControllerAnimated(true)
                     
                 } else {
@@ -294,6 +294,8 @@ class TaskDetailViewController: BaseViewController {
         taskDetailTableView.delegate = self
         taskDetailTableView.dataSource = self
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handlePlanUploadingNotification(_:)), name: MaintenancePlanUploadingNotification, object: nil)
+        
         taskDetailTableView.registerNib(UINib(nibName: taskDetailSingleInfoCellID, bundle: nil), forCellReuseIdentifier: taskDetailSingleInfoCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskDetailDoubleInfoCellID, bundle: nil), forCellReuseIdentifier: taskDetailDoubleInfoCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskDetailLargeInfoCellID, bundle: nil), forCellReuseIdentifier: taskDetailLargeInfoCellID)
@@ -310,7 +312,7 @@ class TaskDetailViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        getTaskDetail()
+        getTaskDetail(silentMode: false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -318,19 +320,29 @@ class TaskDetailViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func getTaskDetail() {
+    func getTaskDetail(silentMode silentMode: Bool) {
         // 获取任务详情
-        SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.show()
-        
+        if !silentMode {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.show()
+        }
         WISDataManager.sharedInstance().updateMaintenanceTaskDetailInfoWithTaskID(wisTask?.taskID) { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completedWithNoError {
                 self.wisTask = updatedData as? WISMaintenanceTask
                 currentTask = self.wisTask
                 WISUserDefaults.getCurrentTaskOperations()
                 
-                if currentTaskOperations.first?.operationName != NSLocalizedString("NULL Operation")  {
-                    self.navigationItem.rightBarButtonItem?.enabled = true
+                if let progress = uploadingPlanDictionary[self.wisTask!.taskID] {
+                    let uploadingPercentage = Int(progress.fractionCompleted * 100)
+                    self.navigationItem.title = "方案上传...(\(uploadingPercentage)%)"
+                    self.navigationItem.rightBarButtonItem?.enabled = false
+                } else {
+                    self.navigationItem.title = NSLocalizedString("Task Detail", comment: "")
+                    if currentTaskOperations.first?.operationName != NSLocalizedString("NULL Operation") {
+                        self.navigationItem.rightBarButtonItem?.enabled = true
+                    } else {
+                        self.navigationItem.rightBarButtonItem?.enabled = false
+                    }
                 }
 
                 // 获取任务图片
@@ -346,9 +358,9 @@ class TaskDetailViewController: BaseViewController {
                     self.planCount = self.wisTask!.maintenancePlans.count
                     self.stateCount = self.wisTask!.passedStates.count
                 }
-                
-                SVProgressHUD.dismiss()
-                
+                if !silentMode {
+                    SVProgressHUD.dismiss()
+                }
                 dispatch_async(dispatch_get_main_queue()) {
                     self.taskDetailTableView.reloadData()
                 }
@@ -363,6 +375,43 @@ class TaskDetailViewController: BaseViewController {
         if let window = view.window {
             operationTypesView.showInView(window)
         }
+    }
+    
+    @objc func handlePlanUploadingNotification(notification: NSNotification) {
+        guard let state = notification.object else {
+            return
+        }
+
+        dispatch_async(dispatch_get_main_queue()) {
+            switch state as! String {
+            case UploadingState.UploadingStart.rawValue:
+                if let _ = uploadingPlanDictionary[self.wisTask!.taskID] {
+                    self.navigationItem.title = "方案上传..."
+                    self.navigationItem.rightBarButtonItem?.enabled = false
+                }
+            case UploadingState.UploadingPending.rawValue:
+                if let progress = uploadingPlanDictionary[self.wisTask!.taskID] {
+                    if progress.fractionCompleted > 0 {
+                        let uploadingPercentage = Int(progress.fractionCompleted * 100)
+                        self.navigationItem.title = "方案上传...(\(uploadingPercentage)%)"
+                    }
+                    self.navigationItem.rightBarButtonItem?.enabled = false
+                }
+            case UploadingState.UploadingCompleted.rawValue:
+                guard let _ = uploadingPlanDictionary[self.wisTask!.taskID] else {
+                    self.navigationItem.title = NSLocalizedString("Task Detail", comment: "")
+                    self.getTaskDetail(silentMode: true)
+                    return
+                }
+            default:
+                return
+            }
+        }
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: MaintenancePlanUploadingNotification, object: nil)
+        print("Notification \(MaintenancePlanUploadingNotification) deregistered in \(self) while deiniting")
     }
 
     // MARK: - Navigation
@@ -674,7 +723,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 // Phone Call Alert 有待进一步完善
                 cell.tapToCallAction = {
                     if let telNumber = self.wisTask!.creator.telephoneNumber, mobileNumber = self.wisTask!.creator.cellPhoneNumber {
-                        WISAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                        WISAlert.phoneCall(title: self.wisTask!.creator.fullName, telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
                             let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, mobileCallAction: {
@@ -692,7 +741,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 cell.tapToCallAction = {
                     if let telNumber = self.wisTask!.personInCharge.telephoneNumber, mobileNumber = self.wisTask!.personInCharge.cellPhoneNumber {
-                        WISAlert.phoneCall(telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
+                        WISAlert.phoneCall(title: self.wisTask!.personInCharge.fullName, telNumber: telNumber, mobileNumber: mobileNumber, inViewController: self, withTelCallAction: {
                             let phoneCallURL = NSURL(string: "tel://" + telNumber)!
                             UIApplication.sharedApplication().openURL(phoneCallURL)
                             }, mobileCallAction: {
@@ -832,8 +881,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             return 60
             
         default:
-            
-            return 10
+            return 0
         }
     }
     

@@ -12,7 +12,8 @@ import Photos
 import Proposer
 import SVProgressHUD
 
-let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNotification"
+public let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNotification"
+public let MaintenanceTaskUploadingNotification = "MaintenanceTaskUploadingNotification"
 
 class NewTaskViewController: BaseViewController {
 
@@ -303,19 +304,25 @@ class NewTaskViewController: BaseViewController {
         let messageLength = (messageTextView.text as NSString).length
         
         guard messageLength <= WISConfig.maxTaskTextLength else {
-            let message = String(format: NSLocalizedString("Task info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
+            let message = String(format: NSLocalizedString("Info is too long!\nUp to %d letters.", comment: ""), WISConfig.maxTaskTextLength)
             WISAlert.alertSorry(message: message, inViewController: self)
             return
         }
             
         self.dismissViewControllerAnimated(true, completion: nil)
-//      SVProgressHUD.showWithStatus("正在提交")
         
-        // 上传图片
+        let uploadingTaskKey = String(uploadingTaskDictionary.count + 1)
+        uploadingTaskDictionary[uploadingTaskKey] = NSProgress()
+        
+        let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingStart.rawValue)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
+        
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-            NSLog("Upload progress is %f", progress.fractionCompleted)
-            SVProgressHUD.setDefaultMaskType(.None)
-            SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: NSLocalizedString("Submitting new maintenance task", comment: ""))
+            NSLog("Upload progress is %.2f", progress.fractionCompleted)
+
+            uploadingTaskDictionary[uploadingTaskKey] = progress
+            let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
             
             }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
@@ -327,11 +334,16 @@ class NewTaskViewController: BaseViewController {
                     }
                     
                     WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+                        
+                        uploadingTaskDictionary.removeValueForKey(uploadingTaskKey)
+                        let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+                        NSNotificationCenter.defaultCenter().postNotification(notification)
+                        
                         if completedWithNoError {
+
                             SVProgressHUD.setDefaultMaskType(.None)
                             SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
                             NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
-                            // self.dismissViewControllerAnimated(true, completion: nil)
                             
                         } else {
                             WISConfig.errorCode(error)
@@ -339,6 +351,9 @@ class NewTaskViewController: BaseViewController {
                     })
                     
                 } else {
+                    uploadingTaskDictionary.removeValueForKey(uploadingTaskKey)
+                    let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+                    NSNotificationCenter.defaultCenter().postNotification(notification)
                     WISConfig.errorCode(error)
                 }
         })

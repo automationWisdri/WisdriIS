@@ -44,9 +44,9 @@ class TaskStateCell: UITableViewCell {
         if let string = startTimeLabel.text {
             self.startTimeLabelLeadingConstraint.constant = calculateOffset(string)
         }
-        if let string = endTimeLabel.text {
-            self.endTimeLabelLeadingConstraint.constant = calculateOffset(string)
-        }
+//        if let string = endTimeLabel.text {
+//            self.endTimeLabelLeadingConstraint.constant = calculateOffset(string)
+//        }
     }
     
     func calculateOffset(string: String) -> CGFloat {

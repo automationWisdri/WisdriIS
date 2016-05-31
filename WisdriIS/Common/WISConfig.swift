@@ -46,6 +46,8 @@ class WISConfig {
     }
 
     static let appURLString = "itms-apps://itunes.apple.com/app/id" + "......"
+    
+    static let appIdentifier = "WisdriIS"
 
     static let forcedHideActivityIndicatorTimeInterval: NSTimeInterval = 30
 

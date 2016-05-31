@@ -66,13 +66,13 @@ class ModifyPlanViewController: BaseViewController {
         switch segueIdentifier! {
             
         case "approveOperation":
-            title = NSLocalizedString("Approve Task")
+            title = NSLocalizedString("Approve")
             
         case "recheckOperation":
-            title = NSLocalizedString("Recheck Task")
+            title = NSLocalizedString("Recheck")
             
         case "continueOperation":
-            title = NSLocalizedString("Continue Task")
+            title = NSLocalizedString("Continue")
             break
             
         default:

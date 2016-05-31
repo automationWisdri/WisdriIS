@@ -13,7 +13,7 @@ import SVProgressHUD
 class TaskHomeViewController: BaseViewController {
     
     var viewControllers = [TaskListViewController]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\n====================\nTaskHomeViewController did load\n====================\n")
@@ -30,6 +30,8 @@ class TaskHomeViewController: BaseViewController {
             })
             return
         }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleTaskUploadingNotification(_:)), name: MaintenanceTaskUploadingNotification, object: nil)
         
         let storyboard = UIStoryboard(name: "TaskList", bundle: nil)
         
@@ -134,8 +136,9 @@ class TaskHomeViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
     deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: MaintenanceTaskUploadingNotification, object: nil)
+        print("Notification \(MaintenanceTaskUploadingNotification) deregistered in \(self) while deiniting")
         print("\n====================\nTaskHomeViewController deinited\n====================\n")
     }
     
