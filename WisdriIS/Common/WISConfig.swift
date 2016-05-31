@@ -74,7 +74,7 @@ class WISConfig {
     }
     
     struct TaskListCell {
-        static let separatorInset = UIEdgeInsets(top: 0, left: 80, bottom: 0, right: 0)
+        static let separatorInset = UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)
     }
 
     struct ContactsCell {
@@ -156,17 +156,52 @@ class WISConfig {
     
     class func taskStateImage(state: String) -> UIImage {
         
-        guard !state.isEmpty else {
-            return UIImage(named: "icon_current_location")!
+        if state.isEmpty {
+            return UIImage(named: "icon_fault")!
         }
         
-        switch configureStateText(state) {
-        case TaskStateForEngineer.ForSubmit.rawValue:
-            return UIImage(named: "icon_subscribe_notify")!
+        if state.contains(".转单中") || state.contains(".等待接单") {
+            return UIImage(named: "icon_passing")!
+        }
+        
+        switch state {
+            
+        // For operator
+        case TaskStateForOperator.Pending.rawValue:
+            return UIImage(named: "icon_waiting")!
+        case TaskStateForOperator.Processing.rawValue:
+            return UIImage(named: "icon_processing")!
+        case TaskStateForOperator.ForEvaluate.rawValue:
+            return UIImage(named: "icon_rating")!
+        
+        // For engineer
         case TaskStateForEngineer.Pending.rawValue:
-            return UIImage(named: "icon_current_location")!
+            return UIImage(named: "icon_pending")!
+        case TaskStateForEngineer.ForSubmit.rawValue:
+            return UIImage(named: "icon_submit")!
+        case TaskStateForEngineer.ForTechApprove.rawValue:
+            return UIImage(named: "icon_waiting")!
+        case TaskStateForEngineer.ForManagerApprove.rawValue:
+            return UIImage(named: "icon_waiting")!
+        case TaskStateForEngineer.Processing.rawValue:
+            return UIImage(named: "icon_processing")!
+        case TaskStateForEngineer.ForAffirm.rawValue:
+            return UIImage(named: "icon_finish")!
+//        case TaskStateForEngineer.PassOn.rawValue:
+//            return UIImage(named: "icon_passing")!
+//        case TaskStateForEngineer.PassOnForAccept.rawValue:
+//            return UIImage(named: "icon_passing")!
+            
+        // For manager
+        case TaskStateForManager.Finish.rawValue:
+            return UIImage(named: "icon_finish")!
+        case TaskStateForManager.ForArchive.rawValue:
+            return UIImage(named: "icon_for_archive")!
+        case TaskStateForManager.Archived.rawValue:
+            return UIImage(named: "icon_archived")!
+            
         default:
-            return UIImage(named: "icon_minicard")!
+            return UIImage(named: "icon_fault")!
             
         }
     }

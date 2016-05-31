@@ -43,4 +43,6 @@ enum TaskStateForEngineer: String {
 
 enum TaskStateForManager: String {
     case Finish = "已完成"
+    case ForArchive = "任务待归档"
+    case Archived = "任务已归档"
 }

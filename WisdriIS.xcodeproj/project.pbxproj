@@ -114,6 +114,7 @@
 		9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */; };
 		9F169F731C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */; };
 		9F1B315A1CFC263A004A8038 /* UploadingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B31591CFC263A004A8038 /* UploadingItem.swift */; };
+		9F1B315C1CFDD2EC004A8038 /* TaskIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F1B315B1CFDD2EC004A8038 /* TaskIcon.xcassets */; };
 		9F1FA1E21CEB019E001A2F61 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E01CEB019E001A2F61 /* About.storyboard */; };
 		9F1FA1E31CEB019E001A2F61 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */; };
 		9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */; };
@@ -355,6 +356,7 @@
 		9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailViewController.swift; path = WisdriIS/Controller/Task/TaskDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+WISAutomaticHeightCell.swift"; sourceTree = "<group>"; };
 		9F1B31591CFC263A004A8038 /* UploadingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadingItem.swift; path = Model/UploadingItem.swift; sourceTree = "<group>"; };
+		9F1B315B1CFDD2EC004A8038 /* TaskIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TaskIcon.xcassets; sourceTree = "<group>"; };
 		9F1FA1E01CEB019E001A2F61 /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = About.storyboard; path = About/About.storyboard; sourceTree = "<group>"; };
 		9F1FA1E11CEB019E001A2F61 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = About/AboutViewController.swift; sourceTree = "<group>"; };
 		9F1FA1E51CEB717F001A2F61 /* Archive.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Archive.storyboard; path = Archive/Archive.storyboard; sourceTree = "<group>"; };
@@ -1196,6 +1198,7 @@
 				9F6437271CAC224C007909BE /* login-bg-iphone-3.jpg */,
 				9FEF502E1C7AFE18001A7644 /* Images.xcassets */,
 				9FEF4FE71C76D4B9001A7644 /* Assets.xcassets */,
+				9F1B315B1CFDD2EC004A8038 /* TaskIcon.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1348,6 +1351,7 @@
 				385C1E311CE4BD2700F8E393 /* InspectionResultDescriptionCell.xib in Resources */,
 				9F7C4BAC1C88324F00652CDF /* TaskDetailSingleInfoCell.xib in Resources */,
 				9F055BA11CD797E50077184B /* Password.storyboard in Resources */,
+				9F1B315C1CFDD2EC004A8038 /* TaskIcon.xcassets in Resources */,
 				9F7C4BB41C8924F400652CDF /* TaskDetail.storyboard in Resources */,
 				9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */,
 				38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */,
