@@ -40,8 +40,8 @@ class InspectionHomeViewController: BaseViewController {
         print("Notification \(QRCodeScanedSuccessfullyNotification) registered in InspectionHomeViewController while loading view")
         
         /// *** right button item on navigationbar
-        // inspectionPopoverButton = UIBarButtonItem.init(title: "Menu", style: .Plain, target: self, action: #selector(self.pushScanView(_:)))
-//        inspectionPopoverButton = UIBarButtonItem.init(barButtonSystemItem: .Bookmarks, target: self, action: #selector(self.popoverMenu(_:)))
+
+        // inspectionPopoverButton = UIBarButtonItem.init(barButtonSystemItem: .Bookmarks, target: self, action: #selector(self.popoverMenu(_:)))
         inspectionPopoverButton = UIBarButtonItem.init(image: UIImage(named: "icon_more"), style: .Plain, target: self, action: #selector(self.popoverMenu(_:)))
         
         if self.currentUser.roleCode == self.roleCodes[RoleCode.Engineer.rawValue] || self.currentUser.roleCode == self.roleCodes[RoleCode.Technician.rawValue]{
@@ -101,7 +101,7 @@ class InspectionHomeViewController: BaseViewController {
         
         /// *** blurEffect
         blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight)) as UIVisualEffectView
-        // blurEffectView?.alpha = 0.85
+        blurEffectView?.backgroundColor = UIColor.lightGrayColor()
         
         let storyboard = UIStoryboard(name: "InspectionList", bundle: nil)
         
@@ -290,7 +290,7 @@ class InspectionHomeViewController: BaseViewController {
         inspectionPopoverPresentationController!.sourceView = self.view
         var frame:CGRect = sender.valueForKey("view")!.frame
         frame.origin.y += 20
-        frame.origin.x -= 4
+        frame.origin.x -= 6
         inspectionPopoverPresentationController!.sourceRect = frame
         
         inspectionPopoverMenuController!.menuTableView?.reloadData()

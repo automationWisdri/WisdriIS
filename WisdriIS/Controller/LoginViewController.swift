@@ -267,8 +267,8 @@ class LoginViewController: UIViewController {
                 delay(0.25, work: {
                     if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                         appDelegate.startMainStory()
-                    }
-                })
+                    })
+                }
                 
             } else {
                 

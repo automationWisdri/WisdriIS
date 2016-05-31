@@ -17,19 +17,18 @@ class WISPushNotificationDataManager {
     static func sharedInstance() -> WISPushNotificationDataManager { return WISPushNotificationDataManager.sharedPushNotificationDataManagerInstance }
     private static let sharedPushNotificationDataManagerInstance = WISPushNotificationDataManager(archivingStorageFolderName: WISPushNotificationDataManager.cacheFolderName())
     
-    private var localPushNotificationArchivingStorageDirectories = [String : String]()
-    
     var pushNotifications = [WISPushNotification]()
     
     private init(archivingStorageFolderName folderName: String) {
         print("WISPushNotificationDataManager initializing!")
         
-        setDefaultLocalArchivingStorageDirectory(folderName)
+        WISFileStoreManager.defaultManager().archivingStore.setLocalArchivingStorageDirectoryWithFolderName(folderName, key: defaultLocalPushNotificationArchivingStorageDirectoryKey)
+        
         if WISPushNotificationDataManager.userName == "" {
             WISPushNotificationDataManager.userName = WISDataManager.sharedInstance().currentUser.userName
         }
         
-        let archivingFilesFullPath = filesFullPathIn(Directory: defaultLocalPushNotificationArchivingStorageDirectory)
+        let archivingFilesFullPath = WISFileStoreManager.defaultManager().archivingStore.filesFullPathInDirectory(defaultLocalPushNotificationArchivingStorageDirectory)
         
         if archivingFilesFullPath.count > 0 {
             for fileFullPath in archivingFilesFullPath {
@@ -38,7 +37,7 @@ class WISPushNotificationDataManager {
         }
         
         if pushNotifications.count > 0 {
-            pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
+            pushNotifications.sortInPlace(WISPushNotification.arrayBackwardSorter)
         }
     }
     
@@ -65,16 +64,17 @@ class WISPushNotificationDataManager {
         return false
     }
     
-    
     func reloadDataWithUserName(name: String) -> Void {
         guard name != WISPushNotificationDataManager.userName else {
             return
         }
         
         WISPushNotificationDataManager.userName = name
-        setDefaultLocalArchivingStorageDirectory(WISPushNotificationDataManager.cacheFolderName())
+        WISFileStoreManager.defaultManager().archivingStore.setLocalArchivingStorageDirectoryWithFolderName(WISPushNotificationDataManager.cacheFolderName(), key: defaultLocalPushNotificationArchivingStorageDirectoryKey)
         
-        let archivingFilesFullPath = filesFullPathIn(Directory: defaultLocalPushNotificationArchivingStorageDirectory)
+        // setDefaultLocalArchivingStorageDirectory(WISPushNotificationDataManager.cacheFolderName())
+        
+        let archivingFilesFullPath = WISFileStoreManager.defaultManager().archivingStore.filesFullPathInDirectory(defaultLocalPushNotificationArchivingStorageDirectory)
         
         pushNotifications.removeAll()
         if archivingFilesFullPath.count > 0 {
@@ -84,10 +84,9 @@ class WISPushNotificationDataManager {
         }
         
         if pushNotifications.count > 0 {
-            pushNotifications.sortInPlace(WISPushNotification.arrayForwardSorter)
+            pushNotifications.sortInPlace(WISPushNotification.arrayBackwardSorter)
         }
     }
-    
     
     func addPushNotification(notification: WISPushNotification) -> Int {
         // 如果是重复的通知项目, 就不再添加
@@ -95,7 +94,7 @@ class WISPushNotificationDataManager {
             return -1
         }
         
-        self.pushNotifications.append(notification)
+        self.pushNotifications.insert(notification, atIndex: 0)
         
         let fileName = notification.notificationContent + notification.notificationReceivedDateTime.toDateStringWithSeparator("") + ".notificationArchive"
         let fileFullPath = defaultLocalPushNotificationArchivingStorageDirectory.stringByAppendingPathComponent(fileName)
@@ -103,7 +102,7 @@ class WISPushNotificationDataManager {
         
         print("add notification: \(notification.notificationContent) to notification list.")
         
-        return self.pushNotifications.count - 1
+        return 0 //self.pushNotifications.count - 1
     }
     
     func removePushNotificationByIndex(index: Int = 0) -> Bool {
@@ -127,47 +126,47 @@ class WISPushNotificationDataManager {
     }
     
     // MARK: - storage support method
-    private func setDefaultLocalArchivingStorageDirectory(folderName: String) -> Void {
-        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        
-        let documentDirectory = documentDirectories.first
-        let archivingStorageDirectory = documentDirectory?.stringByAppendingPathComponent(folderName)
-        
-        if (!(NSFileManager.defaultManager().fileExistsAtPath(archivingStorageDirectory!))) {
-            do {
-                try  NSFileManager.defaultManager().createDirectoryAtPath(archivingStorageDirectory!, withIntermediateDirectories: false, attributes: nil)
-            } catch {
-                // do nothing
-            }
-        }
-        self.localPushNotificationArchivingStorageDirectories[defaultLocalPushNotificationArchivingStorageDirectoryKey] = archivingStorageDirectory
-    }
+//    private func setDefaultLocalArchivingStorageDirectory(folderName: String) -> Void {
+//        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+//        
+//        let documentDirectory = documentDirectories.first
+//        let archivingStorageDirectory = documentDirectory?.stringByAppendingPathComponent(folderName)
+//        
+//        if (!(NSFileManager.defaultManager().fileExistsAtPath(archivingStorageDirectory!))) {
+//            do {
+//                try  NSFileManager.defaultManager().createDirectoryAtPath(archivingStorageDirectory!, withIntermediateDirectories: false, attributes: nil)
+//            } catch {
+//                // do nothing
+//            }
+//        }
+//        self.localPushNotificationArchivingStorageDirectories[defaultLocalPushNotificationArchivingStorageDirectoryKey] = archivingStorageDirectory
+//    }
     
     var defaultLocalPushNotificationArchivingStorageDirectory: String {
-        return self.localPushNotificationArchivingStorageDirectories[defaultLocalPushNotificationArchivingStorageDirectoryKey]!
+        return WISFileStoreManager.defaultManager().archivingStore.localArchivingStorageDirectoryWithKey(defaultLocalPushNotificationArchivingStorageDirectoryKey)
     }
     
-    func defaultLocalArchivingStoragePathWithArchivingFileName(fileName: String) -> String {
+    func defaultLocalPushNotificationArchivingStoragePathWithFileName(fileName: String) -> String {
         return self.defaultLocalPushNotificationArchivingStorageDirectory.stringByAppendingPathComponent(fileName)
     }
     
-    func filesFullPathIn(Directory directory: String) -> [String] {
-        var filesName = [String]()
-        var filesFullPath = [String]()
-        do {
-            try filesName = NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory)
-        } catch {
-            // do nothing
-        }
-        
-        if filesName.count > 0 {
-            for fileName in filesName {
-                let fileFullPath = directory.stringByAppendingPathComponent(fileName)
-                if NSFileManager.defaultManager().fileExistsAtPath(fileFullPath) {
-                    filesFullPath.append(fileFullPath)
-                }
-            }
-        }
-        return filesFullPath
-    }
+//    func filesFullPathIn(Directory directory: String) -> [String] {
+//        var filesName = [String]()
+//        var filesFullPath = [String]()
+//        do {
+//            try filesName = NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory)
+//        } catch {
+//            // do nothing
+//        }
+//        
+//        if filesName.count > 0 {
+//            for fileName in filesName {
+//                let fileFullPath = directory.stringByAppendingPathComponent(fileName)
+//                if NSFileManager.defaultManager().fileExistsAtPath(fileFullPath) {
+//                    filesFullPath.append(fileFullPath)
+//                }
+//            }
+//        }
+//        return filesFullPath
+//    }
 }

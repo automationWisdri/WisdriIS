@@ -10,6 +10,7 @@
 #define WISMaintenanceTaskState_h
 
 #import <Foundation/Foundation.h>
+#import "WISSorter.h"
 
 #endif /* WISMaintenanceTaskState_h */
 
@@ -30,5 +31,8 @@
 
 + (BOOL) arraySortForwardByEndTimeWithLhs:(WISMaintenanceTaskState *)lhs rhs: (WISMaintenanceTaskState *)rhs;
 + (BOOL) arraySortBackwardByEndTimeWithLhs:(WISMaintenanceTaskState *)lhs rhs: (WISMaintenanceTaskState *)rhs;
+
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult;
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult;
 
 @end

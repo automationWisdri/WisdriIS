@@ -22,7 +22,7 @@ class TaskListViewController: BaseViewController {
     var updateCellInfoURLSessionTask: NSURLSessionTask?
     
     // for task type: NotArchived and Archived
-    let recordNumberInPage: Int = 50
+    let recordNumberInPage: Int = 20
     var currentPageIndex = 1
     
     private let taskListCellID = "TaskListCell"
@@ -49,7 +49,6 @@ class TaskListViewController: BaseViewController {
         
         // observing notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: WISNetworkStatusChangedNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: NewTaskSubmittedSuccessfullyNotification, object: nil)
         
         taskTableView.delegate = self
         taskTableView.dataSource = self
@@ -66,7 +65,7 @@ class TaskListViewController: BaseViewController {
 //        taskTableView.addSubview(buttonView)
         
         // for test
-        print("Task List View Controller did load!")
+        print("Task List View Controller with taskType: " + self.taskType!.rawValue.description + " did load!")
         
         self.taskTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.headerRefresh()
@@ -102,7 +101,6 @@ class TaskListViewController: BaseViewController {
         
         self.currentPageIndex = 1
         refreshInitalPage()
-
     }
     
     func refreshInitalPage() {
@@ -131,6 +129,8 @@ class TaskListViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.updateCellInTaskList()
+        
+        WISUserDefaults.setupSegment()
         
         // for test
         print("Task List View Controller will appear!")
@@ -269,6 +269,7 @@ class TaskListViewController: BaseViewController {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: WISNetworkStatusChangedNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NewTaskSubmittedSuccessfullyNotification, object: nil)
+        print("Task List View Controller with taskType: " + self.taskType!.rawValue.description + " deinited")
     }
     
     private func updateTableViewInfo() {

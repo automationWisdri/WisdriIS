@@ -9,22 +9,20 @@
 import UIKit
 
 
-private let defaultLocalArchivingStorageDirectoryKey = "defaultLocalArchivingStorageDirectory"
+private let defaultLocalInspectionArchivingStorageDirectoryKey = "defaultLocalInspectionArchivingStorageDirectory"
 
 class WISInsepctionDataManager {
     
     // MARK: Shared Instances
     static func sharedInstance() -> WISInsepctionDataManager { return WISInsepctionDataManager.sharedInspectionDataManagerInstance }
-    private static let sharedInspectionDataManagerInstance = WISInsepctionDataManager(archivingStorageFolderName: "ArchivingCache")
-    
-    private var localArchivingStorageDirectories = [String : String]()
+    private static let sharedInspectionDataManagerInstance = WISInsepctionDataManager(archivingStorageFolderName: "InspectionArchivingCache")
     
     private init(archivingStorageFolderName folderName: String) {
         print("WISInsepctionDataManager initializing!")
         
-        setDefaultLocalArchivingStorageDirectory(folderName)
+        WISFileStoreManager.defaultManager().archivingStore.setLocalArchivingStorageDirectoryWithFolderName(folderName, key: defaultLocalInspectionArchivingStorageDirectoryKey)
         
-        let archivingFilesFullPath = filesFullPathIn(Directory: defaultLocalArchivingStorageDirectory)
+        let archivingFilesFullPath = WISFileStoreManager.defaultManager().archivingStore.filesFullPathInDirectory(defaultLocalArchivingStorageDirectory)
         
         if archivingFilesFullPath.count > 0 {
             for fileFullPath in archivingFilesFullPath {
@@ -310,48 +308,12 @@ class WISInsepctionDataManager {
     
     
     // MARK: - storage support method
-    private func setDefaultLocalArchivingStorageDirectory(folderName: String) -> Void {
-        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        
-        let documentDirectory = documentDirectories.first
-        let archivingStorageDirectory = documentDirectory?.stringByAppendingPathComponent(folderName)
-        
-        if (!(NSFileManager.defaultManager().fileExistsAtPath(archivingStorageDirectory!))) {
-            do {
-            try  NSFileManager.defaultManager().createDirectoryAtPath(archivingStorageDirectory!, withIntermediateDirectories: false, attributes: nil)
-            } catch {
-                // do nothing
-            }
-        }
-        self.localArchivingStorageDirectories[defaultLocalArchivingStorageDirectoryKey] = archivingStorageDirectory
-    }
-    
     var defaultLocalArchivingStorageDirectory: String {
-        return self.localArchivingStorageDirectories[defaultLocalArchivingStorageDirectoryKey]!
+        return WISFileStoreManager.defaultManager().archivingStore.localArchivingStorageDirectoryWithKey(defaultLocalInspectionArchivingStorageDirectoryKey)
     }
     
     func defaultLocalArchivingStoragePathWithArchivingFileName(fileName: String) -> String {
         return self.defaultLocalArchivingStorageDirectory.stringByAppendingPathComponent(fileName)
-    }
-    
-    func filesFullPathIn(Directory directory: String) -> [String] {
-        var filesName = [String]()
-        var filesFullPath = [String]()
-        do {
-           try filesName = NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory)
-        } catch {
-            // do nothing
-        }
-        
-        if filesName.count > 0 {
-            for fileName in filesName {
-                let fileFullPath = directory.stringByAppendingPathComponent(fileName)
-                if NSFileManager.defaultManager().fileExistsAtPath(fileFullPath) {
-                    filesFullPath.append(fileFullPath)
-                }
-            }
-        }
-        return filesFullPath
     }
 }
 

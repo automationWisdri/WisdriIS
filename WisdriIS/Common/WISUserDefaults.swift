@@ -26,7 +26,7 @@ var workShifts = [String: Int]()
 class WISUserDefaults {
     
     class func setupSegment() {
-        guard userSegmentList.isEmpty == true else {
+        guard userSegmentList.count <= 1 else {
             return
         }
         

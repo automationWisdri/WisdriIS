@@ -16,7 +16,7 @@ class TaskHomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TaskHomeViewController did load")
+        print("\n====================\nTaskHomeViewController did load\n====================\n")
 
         // Do any additional setup after loading the view.
         title = NSLocalizedString("Task List", comment: "")
@@ -95,16 +95,38 @@ class TaskHomeViewController: BaseViewController {
         
         pagingMenuController.delegate = self
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
 
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: NewTaskSubmittedSuccessfullyNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleNotification(_:)), name: OnLineNotificationReceivedNotification, object: nil)
         
         let pagingMenuController = self.childViewControllers.first as! PagingMenuController
         let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
         
         currentViewController.taskTableView.scrollsToTop = true
         currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+        
+        print("\n====================\nTaskHomeViewController did Appear\n====================\n")
     }
+    
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NewTaskSubmittedSuccessfullyNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: OnLineNotificationReceivedNotification, object: nil)
+        
+        print("\n====================\nTaskHomeViewController did Disappear\n====================\n")
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -170,6 +192,8 @@ class TaskHomeViewController: BaseViewController {
 
 }
 
+    // MARK: - extension - PagingMenuControllerDelegate
+
 extension TaskHomeViewController: PagingMenuControllerDelegate {
     
     func didMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
@@ -177,7 +201,7 @@ extension TaskHomeViewController: PagingMenuControllerDelegate {
         let previousViewController = previousMenuController as! TaskListViewController
         
         didAppearViewController.taskTableView.scrollsToTop = true
-        didAppearViewController.getTaskList(didAppearViewController.taskType!, silentMode: false)
+        didAppearViewController.getTaskList(didAppearViewController.taskType!, silentMode: true)
         previousViewController.taskTableView.scrollsToTop = false
     }
 }

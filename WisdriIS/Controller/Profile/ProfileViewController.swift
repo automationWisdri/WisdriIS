@@ -482,10 +482,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             WISAlert.confirmOrCancel(title: NSLocalizedString("Notice", comment: ""), message: NSLocalizedString("Do you want to logout?", comment: ""), confirmTitle: NSLocalizedString("Yes", comment: ""), cancelTitle: NSLocalizedString("Cancel", comment: ""), inViewController: self, withConfirmAction: { () -> Void in
                 
 //                WISDataManager.sharedInstance().clearCacheOfImages()
-
+                
+                WISDataManager.sharedInstance().removeArchivedCurrentUserInfo()
+                
                 if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                     appDelegate.window?.rootViewController = LoginViewController()
                 }
+                
 
             }, cancelAction: { () -> Void in
             })

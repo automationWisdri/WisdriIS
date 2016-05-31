@@ -57,8 +57,7 @@ class WISPushNotification: NSObject, NSCoding {
         }
     }
     
-    
-    class func dictionarySortForward (lhs: (String, WISPushNotification), rhs: (String, WISPushNotification)) -> Bool {
+    static let dictionaryForwardSorter: ((String, WISPushNotification), (String, WISPushNotification)) -> Bool = { (lhs, rhs) -> Bool in
         let lhsNotificationReceivedDateTime = lhs.1.notificationReceivedDateTime
         let rhsNotificationReceivedDateTime = rhs.1.notificationReceivedDateTime
         let result = lhsNotificationReceivedDateTime.compare(rhsNotificationReceivedDateTime)
@@ -69,7 +68,7 @@ class WISPushNotification: NSObject, NSCoding {
         }
     }
     
-    class func dictionarySortBackward (lhs: (String, WISPushNotification), rhs: (String, WISPushNotification)) -> Bool {
+    static let dictionaryBackwardSorter: ((String, WISPushNotification), (String, WISPushNotification)) -> Bool = { (lhs, rhs) -> Bool in
         let lhsNotificationReceivedDateTime = lhs.1.notificationReceivedDateTime
         let rhsNotificationReceivedDateTime = rhs.1.notificationReceivedDateTime
         let result = lhsNotificationReceivedDateTime.compare(rhsNotificationReceivedDateTime)
@@ -79,4 +78,5 @@ class WISPushNotification: NSObject, NSCoding {
             return false
         }
     }
+    
 }

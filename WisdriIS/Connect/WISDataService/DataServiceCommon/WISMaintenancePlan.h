@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WISSorter.h"
 
 @class WISFileInfo, WISUser;
 
@@ -28,5 +29,8 @@
 
 + (BOOL) arraySortForwardWithLhs:(WISMaintenancePlan *)lhs rhs: (WISMaintenancePlan *)rhs;
 + (BOOL) arraySortBackwardWithLhs:(WISMaintenancePlan *)lhs rhs: (WISMaintenancePlan *)rhs;
+
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult;
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult;
 
 @end

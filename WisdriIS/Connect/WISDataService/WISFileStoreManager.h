@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "WISImageStore.h"
+#import "WISArchivingStore.h"
 
 @interface WISFileStoreManager : NSObject
 
 @property (weak) id<WISImageStoreDelegate> uploadImageStore;
 @property (weak) id<WISImageStoreDelegate> downloadImageStore;
+
+@property (weak) WISArchivingStore *archivingStore;
 
 + (instancetype)defaultManager;
 

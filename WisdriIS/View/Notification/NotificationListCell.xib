@@ -33,14 +33,14 @@
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mb2-4j-ZW2">
-                        <rect key="frame" x="101" y="32" width="266" height="40"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mb2-4j-ZW2">
+                        <rect key="frame" x="102" y="32" width="265" height="40"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <string key="text">line 1
 line 2</string>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" address="YES"/>
+                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" address="YES" calendarEvent="YES"/>
                     </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="notification received dateTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJP-aa-SPe" userLabel="Time Label">
                         <rect key="frame" x="40" y="82" width="160" height="17"/>
@@ -59,7 +59,6 @@ line 2</string>
                 <constraints>
                     <constraint firstItem="GJP-aa-SPe" firstAttribute="leading" secondItem="zqd-Rv-JQI" secondAttribute="trailing" constant="4" id="2zJ-yi-oqj"/>
                     <constraint firstItem="5Xo-fz-IJa" firstAttribute="leading" secondItem="en0-JL-HiG" secondAttribute="leadingMargin" constant="10" id="8ob-Yc-KEr"/>
-                    <constraint firstItem="Mb2-4j-ZW2" firstAttribute="leading" secondItem="VtM-US-jxI" secondAttribute="trailing" constant="8" id="9g3-3h-fuo"/>
                     <constraint firstItem="zqd-Rv-JQI" firstAttribute="width" secondItem="zqd-Rv-JQI" secondAttribute="height" multiplier="1:1" id="DAg-0X-2Re"/>
                     <constraint firstItem="dTM-Ij-Gtp" firstAttribute="leading" secondItem="5Xo-fz-IJa" secondAttribute="trailing" constant="9" id="G6l-vw-feE"/>
                     <constraint firstItem="VtM-US-jxI" firstAttribute="leading" secondItem="en0-JL-HiG" secondAttribute="leadingMargin" constant="10" id="K1U-6m-PwI"/>
@@ -67,6 +66,7 @@ line 2</string>
                     <constraint firstItem="Mb2-4j-ZW2" firstAttribute="trailing" secondItem="en0-JL-HiG" secondAttribute="trailingMargin" id="Rba-1d-qx7"/>
                     <constraint firstItem="dTM-Ij-Gtp" firstAttribute="trailing" secondItem="en0-JL-HiG" secondAttribute="trailingMargin" id="fiB-q8-9DI"/>
                     <constraint firstAttribute="bottomMargin" secondItem="zqd-Rv-JQI" secondAttribute="bottom" constant="0.5" id="lYe-Zi-bPX"/>
+                    <constraint firstItem="Mb2-4j-ZW2" firstAttribute="leading" secondItem="dTM-Ij-Gtp" secondAttribute="leading" id="tBR-t9-dY3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

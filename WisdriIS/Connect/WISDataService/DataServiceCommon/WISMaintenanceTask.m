@@ -182,4 +182,26 @@ NSString *const maintenanceTaskImagesInfoEncodingID = @"maintenanceTaskImagesInf
     self.imagesInfo = self.imagesInfo;
 }
 
+
++ (arrayForwardSorterWithResult) arrayForwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
+        WISMaintenanceTask *rhs = (WISMaintenanceTask *)rhsOriginal;
+        
+        return [lhs.createdDateTime compare:rhs.createdDateTime];
+    };
+    return sorter;
+}
+
+
++ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult {
+    arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
+        WISMaintenanceTask *rhs = (WISMaintenanceTask *)rhsOriginal;
+        
+        return [rhs.createdDateTime compare:lhs.createdDateTime];
+    };
+    return sorter;
+}
+
 @end
