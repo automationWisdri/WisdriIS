@@ -13,7 +13,7 @@ import SVProgressHUD
 class TaskHomeViewController: BaseViewController {
     
     var viewControllers = [TaskListViewController]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("TaskHomeViewController did load")
@@ -30,6 +30,8 @@ class TaskHomeViewController: BaseViewController {
             })
             return
         }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleTaskUploadingNotification(_:)), name: MaintenanceTaskUploadingNotification, object: nil)
         
         let storyboard = UIStoryboard(name: "TaskList", bundle: nil)
         
@@ -109,6 +111,52 @@ class TaskHomeViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleTaskUploadingNotification(notification: NSNotification) {
+        guard let state = notification.object else {
+            return
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            switch state as! String {
+            case UploadingState.UploadingStart.rawValue:
+                if uploadingTaskDictionary.count > 0 {
+                    self.navigationItem.title = "任务上传..."
+                }
+            case UploadingState.UploadingPending.rawValue:
+                guard uploadingTaskDictionary.count > 0 else {
+                    return
+                }
+                
+                var totalUploadingPercentage: Int = 0
+                
+                for (_, progress) in uploadingTaskDictionary {
+                    totalUploadingPercentage += Int(progress.fractionCompleted * 100)
+                }
+                
+                totalUploadingPercentage = totalUploadingPercentage / uploadingTaskDictionary.count
+                
+                self.navigationItem.title = "任务上传...(\(totalUploadingPercentage)%)"
+
+            case UploadingState.UploadingCompleted.rawValue:
+                
+                let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+                let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
+                currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+                
+                if uploadingTaskDictionary.count == 0 {
+                    self.navigationItem.title = NSLocalizedString("Task List", comment: "")
+                }
+                
+            default:
+                return
+            }
+        }
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: MaintenanceTaskUploadingNotification, object: nil)
+        print("Notification \(MaintenanceTaskUploadingNotification) deregistered in \(self) while deiniting")
+    }
 
     /*
     // MARK: - Navigation

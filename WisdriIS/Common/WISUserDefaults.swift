@@ -17,6 +17,8 @@ var currentClockStatus: ClockStatus = .UndefinedClockStatus {
     }
 }
 
+var uploadingPlanDictionary = [String : NSProgress]()
+var uploadingTaskDictionary = [String : NSProgress]()
 var clockStatusValidated = false
 
 var workShifts = [String: Int]()
@@ -104,9 +106,9 @@ class WISUserDefaults {
         
         switch taskParticipants.count {
         case 0:
-            relevantUserText = "无其他参与人员"
+            relevantUserText = NSLocalizedString("No other engineers")
         default:
-            relevantUserText = ""
+            relevantUserText = EMPTY_STRING
             for user in taskParticipants {
                 
                 if user as! NSObject == taskParticipants.lastObject as! WISUser {
@@ -115,7 +117,6 @@ class WISUserDefaults {
                     relevantUserText = user.fullName + "， " + relevantUserText
                 }
             }
-//            relevantUserText = "参与人员:  " + relevantUserText
         }
         
         return relevantUserText

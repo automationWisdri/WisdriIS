@@ -12,12 +12,16 @@ import MobileCoreServices
 import SVProgressHUD
 import Proposer
 
+public let MaintenancePlanUploadingNotification = "MaintenancePlanUploadingNotification"
+
 class SubmitPlanViewController: BaseViewController {
 
     // View elements
+    @IBOutlet weak var taskPlanView: UIView!
     @IBOutlet weak var taskPlanLabel: UILabel!
     @IBOutlet weak var taskPlanTextView: UITextView!
 
+    @IBOutlet weak var estimateDateView: UIView!
     @IBOutlet weak var estimateDateLabel: UILabel!
     @IBOutlet weak var estimateDatePicker: UIDatePicker!
 
@@ -62,7 +66,9 @@ class SubmitPlanViewController: BaseViewController {
     private let taskMediaAddCellID = "TaskMediaAddCell"
     private let taskMediaCellID = "TaskMediaCell"
     
-    // 获取已有的维保方案
+    // 当前提交方案对应的任务编号
+    private var taskID: String?
+    // 获取已有的最新一条维保方案
     var wisPlan: WISMaintenancePlan?
     // 获取 PickUser 页面返回的用户数组，用于 “参与人员” TextView 的显示
     var taskParticipants = [WISUser]()
@@ -93,6 +99,8 @@ class SubmitPlanViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        taskID = currentTask!.taskID
         
         switch segueIdentifier! {
             
@@ -197,15 +205,33 @@ class SubmitPlanViewController: BaseViewController {
     
     @objc private func post(sender: UIBarButtonItem) {
         
-        SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
-//        print(estimateDatePicker.date)
-        // 上传图片
+        self.taskPlanTextView.resignFirstResponder()
+        self.taskPlanView.userInteractionEnabled = false
+        self.relevantUserView.userInteractionEnabled = false
+        self.estimateDateView.userInteractionEnabled = false
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        
+        // 上传图片，发送正在上传的通知
+        uploadingPlanDictionary[taskID!] = NSProgress()
+        
+        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingStart.rawValue)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-            NSLog("Upload progress is %f", progress.fractionCompleted)
+            NSLog("Upload progress is %.2f", progress.fractionCompleted)
+//            SVProgressHUD.setDefaultMaskType(.None)
+//            SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: WISConfig.HUDString.commiting)
+            
+            // 发送上传进度的通知
+            uploadingPlanDictionary[self.taskID!] = progress
+            let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
+            
             }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
-                    // 图片上传成功，提交维保方案
+                    // 图片上传成功，获取图片信息，并提交维保方案
                     let images: Array<WISFileInfo> = data as! Array<WISFileInfo>
                     
                     for image in images {
@@ -221,42 +247,23 @@ class SubmitPlanViewController: BaseViewController {
                         }
                         
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
-                            if completedWithNoError {
-                                SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
-                                self.navigationController?.popViewControllerAnimated(true)
-                                
-                            } else {
-                                
-                                WISConfig.errorCode(error)
-                            }
+
+                            self.submitPlanOperationCompletion(completedWithNoError, error: error)
                         }
  
                     case "submitPlanOperation":
                         
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.SubmitMaintenancePlan, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
-                            if completedWithNoError {
-                                SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
-                                self.navigationController?.popViewControllerAnimated(true)
-                        
-                            } else {
-                                WISConfig.errorCode(error)
-                            }
+
+                            self.submitPlanOperationCompletion(completedWithNoError, error: error)
                         }
                         break
             
                     case "submitQuickPlanOperation":
                         
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.StartFastProcedure, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in
-                            if completedWithNoError {
-                                SVProgressHUD.setDefaultMaskType(.None)
-                                SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
-                                self.navigationController?.popViewControllerAnimated(true)
-                        
-                            } else {
-                                WISConfig.errorCode(error)
-                            }
+
+                            self.submitPlanOperationCompletion(completedWithNoError, error: error)
                         }
                         
                     default:
@@ -266,6 +273,10 @@ class SubmitPlanViewController: BaseViewController {
                     }
                     
                 } else {
+                    // 发送上传结束的通知
+                    uploadingPlanDictionary.removeValueForKey(self.taskID!)
+                    let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+                    NSNotificationCenter.defaultCenter().postNotification(notification)
                     WISConfig.errorCode(error)
                 }
             })
@@ -273,16 +284,26 @@ class SubmitPlanViewController: BaseViewController {
     
     }
     
-    @objc private func tapToPickUser(sender: UITapGestureRecognizer) {
+    private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError) {
+        // 发送上传结束的通知
+        uploadingPlanDictionary.removeValueForKey(taskID!)
+        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+        NSNotificationCenter.defaultCenter().postNotification(notification)
         
-        performSegueWithIdentifier("pickUser", sender: nil)
+        if completedWithNoError {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showSuccessWithStatus("方案提交成功")
+        } else {
+            WISConfig.errorCode(error)
+        }
     }
     
-//    func singleTapped(gesture: UITapGestureRecognizer) {
-//        self.view.endEditing(true)
-//    }
+    @objc private func tapToPickUser(sender: UITapGestureRecognizer) {
+        performSegueWithIdentifier("pickUser", sender: nil)
+    }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "pickUser" {
             let vc = segue.destinationViewController as! PickUserViewController
             vc.segueIdentifier = self.pickUserSegueIdentifier

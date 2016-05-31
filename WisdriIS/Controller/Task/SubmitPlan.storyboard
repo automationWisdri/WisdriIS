@@ -305,6 +305,7 @@
                         <outlet property="accessoryImageView" destination="fMt-d4-0qY" id="8KK-Va-eiR"/>
                         <outlet property="estimateDateLabel" destination="ms7-GJ-CYp" id="iaN-Hf-vMv"/>
                         <outlet property="estimateDatePicker" destination="6Bu-5u-Oo7" id="PlG-iu-NdI"/>
+                        <outlet property="estimateDateView" destination="tA1-Ra-skn" id="z5k-gE-rzr"/>
                         <outlet property="mediaCollectionView" destination="87V-Y3-Oju" id="YWd-8x-EiC"/>
                         <outlet property="mediaCollectionViewHeightConstraint" destination="amk-QP-5lT" id="6qs-PW-Mbz"/>
                         <outlet property="relevantUserLabel" destination="2P9-NU-R5v" id="kNk-6U-lo6"/>
@@ -315,6 +316,7 @@
                         <outlet property="taskPlanLabel" destination="3Jn-db-Oe7" id="1mA-DC-u3f"/>
                         <outlet property="taskPlanTextView" destination="Tfq-70-txR" id="DsS-by-PfT"/>
                         <outlet property="taskPlanTopLine" destination="CeH-xG-eaF" id="eK1-Od-21D"/>
+                        <outlet property="taskPlanView" destination="owm-eT-29N" id="z99-Vj-ZqH"/>
                         <segue destination="zq8-7A-qyZ" kind="show" identifier="pickUser" id="kYX-5N-E9T"/>
                         <segue destination="4Fv-pC-Ae9" kind="show" identifier="showPickPhotos" id="Jjq-ih-Cdk"/>
                     </connections>

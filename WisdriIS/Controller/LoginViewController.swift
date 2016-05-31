@@ -234,13 +234,13 @@ class LoginViewController: UIViewController {
             return
         }
         
-        SVProgressHUD.showWithStatus("正在登录")
         self.userNameTextField?.resignFirstResponder()
         self.passwordTextField?.resignFirstResponder()
+        SVProgressHUD.showWithStatus("正在登录")
         
         WISDataManager.sharedInstance().signInWithUserName(userName, andPassword: password, completionHandler: { (completedWithNoError, error) -> Void in
             if (completedWithNoError) {
-                SVProgressHUD.showSuccessWithStatus("登录成功")
+                
                 // 待修改
                 WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
                     if !completedWithNoError {
@@ -263,8 +263,8 @@ class LoginViewController: UIViewController {
                 } else {
                     WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
                 }
-                
-                delay(0.5, work: {
+                SVProgressHUD.showSuccessWithStatus("登录成功")
+                delay(0.25, work: {
                     if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
                         appDelegate.startMainStory()
                     }

@@ -178,6 +178,14 @@ class TaskListViewController: BaseViewController {
                     SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
                 }
             } else {
+                if self.taskTableView.mj_header.isRefreshing() {
+                    self.taskTableView.mj_header.endRefreshing()
+                }
+                if self.taskTableView.mj_footer != nil {
+                    if self.taskTableView.mj_footer.isRefreshing() {
+                        self.taskTableView.mj_footer.endRefreshing()
+                    }
+                }
                 WISConfig.errorCode(error)
             }
         }
@@ -218,6 +226,14 @@ class TaskListViewController: BaseViewController {
                     SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
                 }
             } else {
+                if self.taskTableView.mj_header.isRefreshing() {
+                    self.taskTableView.mj_header.endRefreshing()
+                }
+                if self.taskTableView.mj_footer != nil {
+                    if self.taskTableView.mj_footer.isRefreshing() {
+                        self.taskTableView.mj_footer.endRefreshing()
+                    }
+                }
                 WISConfig.errorCode(error)
             }
         }
