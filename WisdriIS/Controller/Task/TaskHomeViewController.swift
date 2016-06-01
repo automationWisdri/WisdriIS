@@ -59,7 +59,7 @@ class TaskHomeViewController: BaseViewController {
         print(WISDataManager.sharedInstance().currentUser.roleCode)
         print(currentUser.roleCode)
 
-        let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Filter", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
+        // let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Filter", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
         // self.navigationItem.leftBarButtonItem = leftBarItem
         
         if currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
@@ -142,8 +142,7 @@ class TaskHomeViewController: BaseViewController {
         print("\n====================\nTaskHomeViewController deinited\n====================\n")
     }
     
-    
-    // MARK: - Support Method
+    // MARK: - Notification handler
     
     func handleNotification(notification:NSNotification) -> Void {
         
@@ -159,8 +158,46 @@ class TaskHomeViewController: BaseViewController {
         }
     }
     
-    func popTaskListFilterPanel(sender: UIBarButtonItem) -> Void {
+    @objc func handleTaskUploadingNotification(notification: NSNotification) {
+        guard let state = notification.object else {
+            return
+        }
         
+        dispatch_async(dispatch_get_main_queue()) {
+            switch state as! String {
+            case UploadingState.UploadingStart.rawValue:
+                if uploadingTaskDictionary.count > 0 {
+                    self.navigationItem.title = "任务上传..."
+                }
+            case UploadingState.UploadingPending.rawValue:
+                guard uploadingTaskDictionary.count > 0 else {
+                    return
+                }
+                
+                var totalUploadingPercentage: Int = 0
+                
+                for (_, progress) in uploadingTaskDictionary {
+                    totalUploadingPercentage += Int(progress.fractionCompleted * 100)
+                }
+                
+                totalUploadingPercentage = totalUploadingPercentage / uploadingTaskDictionary.count
+                
+                self.navigationItem.title = "任务上传...(\(totalUploadingPercentage)%)"
+                
+            case UploadingState.UploadingCompleted.rawValue:
+                
+                let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+                let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
+                currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+                
+                if uploadingTaskDictionary.count == 0 {
+                    self.navigationItem.title = NSLocalizedString("Task List", comment: "")
+                }
+                
+            default:
+                return
+            }
+        }
     }
 
     /*

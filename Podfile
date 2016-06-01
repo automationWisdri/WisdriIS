@@ -15,6 +15,7 @@ def pods
     pod 'AFNetworking', '~> 3.0'
     pod 'Cosmos'
     pod 'Navi'
+    pod 'LMDropdownView'
 end
 
 target 'WisdriIS' do
