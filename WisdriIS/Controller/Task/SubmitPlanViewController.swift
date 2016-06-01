@@ -211,24 +211,26 @@ class SubmitPlanViewController: BaseViewController {
         self.estimateDateView.userInteractionEnabled = false
         self.navigationItem.rightBarButtonItem?.enabled = false
         
-        // 上传图片，发送正在上传的通知
-        uploadingPlanDictionary[taskID!] = NSProgress()
-        
-        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingStart.rawValue)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
+        if mediaImages.count > 0 {
+            // 上传图片，发送正在上传的通知
+            uploadingPlanDictionary[taskID!] = NSProgress()
+            let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingStart.rawValue)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
+        }
         
         self.navigationController?.popViewControllerAnimated(true)
         
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-            NSLog("Upload progress is %.2f", progress.fractionCompleted)
-//            SVProgressHUD.setDefaultMaskType(.None)
-//            SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: WISConfig.HUDString.commiting)
-            
-            // 发送上传进度的通知
-            uploadingPlanDictionary[self.taskID!] = progress
-            let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
-            NSNotificationCenter.defaultCenter().postNotification(notification)
-            
+            if self.mediaImages.count > 0 {
+                NSLog("Upload progress is %.2f", progress.fractionCompleted)
+//                SVProgressHUD.setDefaultMaskType(.None)
+//                SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: WISConfig.HUDString.commiting)
+                
+                // 发送上传进度的通知
+                uploadingPlanDictionary[self.taskID!] = progress
+                let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+                NSNotificationCenter.defaultCenter().postNotification(notification)
+            }
             }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
                     // 图片上传成功，获取图片信息，并提交维保方案
@@ -273,10 +275,12 @@ class SubmitPlanViewController: BaseViewController {
                     }
                     
                 } else {
-                    // 发送上传结束的通知
-                    uploadingPlanDictionary.removeValueForKey(self.taskID!)
-                    let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
-                    NSNotificationCenter.defaultCenter().postNotification(notification)
+                    if self.mediaImages.count > 0 {
+                        // 发送上传结束的通知
+                        uploadingPlanDictionary.removeValueForKey(self.taskID!)
+                        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+                        NSNotificationCenter.defaultCenter().postNotification(notification)
+                    }
                     WISConfig.errorCode(error)
                 }
             })
@@ -285,11 +289,12 @@ class SubmitPlanViewController: BaseViewController {
     }
     
     private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError) {
-        // 发送上传结束的通知
-        uploadingPlanDictionary.removeValueForKey(taskID!)
-        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
-        
+        if mediaImages.count > 0 {
+            // 发送上传结束的通知
+            uploadingPlanDictionary.removeValueForKey(taskID!)
+            let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
+        }
         if completedWithNoError {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showSuccessWithStatus("方案提交成功")

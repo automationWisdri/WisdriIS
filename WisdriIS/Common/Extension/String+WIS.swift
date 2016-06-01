@@ -67,7 +67,7 @@ extension String {
         return NSMakeRange(utf16view.startIndex.distanceTo(from), from.distanceTo(to))
     }
 }
-
+/*
 extension String {
 
     func wis_mentionWordInIndex(index: Int) -> (wordString: String, mentionWordRange: Range<Index>)? {
@@ -165,4 +165,4 @@ extension String {
         return nil
     }
 }
-
+*/

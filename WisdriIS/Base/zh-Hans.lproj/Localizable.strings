@@ -142,6 +142,12 @@
 
 "Submitting plan" = "正在提交维保方案";
 
+"Creator" = "创建人";
+
+"In Charge" = "责任人";
+
+"Index" = "编号";
+
 // 点检新增内容
 "Inspection" = "点检";
 
