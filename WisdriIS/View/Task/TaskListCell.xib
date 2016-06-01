@@ -13,11 +13,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fiy-it-k7H" id="ofz-1a-f2g">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ean-DX-V6m" userLabel="Task ID Label">
-                        <rect key="frame" x="80" y="8" width="86" height="18"/>
+                        <rect key="frame" x="50" y="8" width="116" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="DLY-CI-0n0"/>
                         </constraints>
@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="erV-ht-w9f">
-                        <rect key="frame" x="80" y="27" width="235" height="34"/>
+                        <rect key="frame" x="50" y="27" width="265" height="34"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
@@ -52,9 +52,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bvw-co-0QS" userLabel="Task Status Image View">
-                        <rect key="frame" x="13" y="10" width="60" height="60"/>
+                        <rect key="frame" x="13" y="11" width="30" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="3KY-U7-nEK"/>
+                            <constraint firstAttribute="width" constant="30" id="3KY-U7-nEK"/>
                             <constraint firstAttribute="width" secondItem="Bvw-co-0QS" secondAttribute="height" multiplier="1:1" id="QQI-sF-rnF"/>
                         </constraints>
                     </imageView>
@@ -71,8 +71,8 @@
                     <constraint firstItem="h6f-Sr-vOL" firstAttribute="trailing" secondItem="pfh-6q-HTf" secondAttribute="trailing" id="ZQ6-4N-2ul"/>
                     <constraint firstAttribute="trailing" secondItem="erV-ht-w9f" secondAttribute="trailing" constant="5" id="mef-di-cw5"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="top" secondItem="ean-DX-V6m" secondAttribute="top" id="uc7-U1-uem"/>
-                    <constraint firstItem="Bvw-co-0QS" firstAttribute="centerY" secondItem="ofz-1a-f2g" secondAttribute="centerY" id="v2e-3B-5t4"/>
                     <constraint firstItem="pfh-6q-HTf" firstAttribute="leading" secondItem="ean-DX-V6m" secondAttribute="trailing" constant="1" id="v9W-AW-oP7"/>
+                    <constraint firstItem="Bvw-co-0QS" firstAttribute="top" secondItem="ofz-1a-f2g" secondAttribute="top" constant="11" id="xPI-4Y-aOQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
