@@ -122,13 +122,10 @@ class RatingViewController: BaseViewController {
     
     @objc private func post(sender: UIBarButtonItem) {
         
-        SVProgressHUD.showWithStatus("正在提交")
+        ratingCommentTextView.resignFirstResponder()
+        // 此时页面没有跳转，不允许用户操作
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
         let wisTaskRating = WISMaintenanceTaskRating(totalScore: Int(ratingSummaryCosmos.rating), attitudeScore: Int(ratingDetailThreeCosmos.rating), responseScore: Int(ratingDetailTwoCosmos.rating), qualityScore: Int(ratingDetailOneCosmos.rating), andAdditionalRemark: ratingCommentTextView.text)
-//        wisTaskRating.totalScore = Int(ratingSummaryCosmos.rating)
-//        wisTaskRating.additionalRemark = ratingCommentTextView.text
-//        wisTaskRating.attitudeScore = Int(ratingDetailThreeCosmos.rating)
-//        wisTaskRating.qualityScore = Int(ratingDetailOneCosmos.rating)
-//        wisTaskRating.responseScore = Int(ratingDetailTwoCosmos.rating)
         
         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "评价", operationType: MaintenanceTaskOperationType.Confirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: wisTaskRating) { (completedWithNoError, error) in
             if completedWithNoError {

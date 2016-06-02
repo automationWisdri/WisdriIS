@@ -186,7 +186,10 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
-                WISConfig.errorCode(error)
+                self.updateTableViewInfo()
+                if !silentMode {
+                    WISConfig.errorCode(error)
+                }
             }
         }
     }
@@ -234,7 +237,10 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
-                WISConfig.errorCode(error)
+                self.updateTableViewInfo()
+                if !silentMode {
+                    WISConfig.errorCode(error)
+                }
             }
         }
     }

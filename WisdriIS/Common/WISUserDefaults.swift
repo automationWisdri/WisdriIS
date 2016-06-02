@@ -18,7 +18,7 @@ var currentClockStatus: ClockStatus = .UndefinedClockStatus {
 }
 
 var uploadingPlanDictionary = [String : NSProgress]()
-var uploadingTaskDictionary = [String : NSProgress]()
+var uploadingTaskDictionary = [Int : NSProgress]()
 var clockStatusValidated = false
 
 var workShifts = [String: Int]()
@@ -112,6 +112,28 @@ class WISUserDefaults {
             for user in taskParticipants {
                 
                 if user as! NSObject == taskParticipants.lastObject as! WISUser {
+                    relevantUserText = relevantUserText + user.fullName
+                } else {
+                    relevantUserText = user.fullName + "， " + relevantUserText
+                }
+            }
+        }
+        
+        return relevantUserText
+    }
+    
+    class func getRelevantUserText(participants: Array<WISUser>) -> String {
+        
+        let taskParticipants = participants
+        var relevantUserText: String
+        
+        switch taskParticipants.count {
+        case 0:
+            relevantUserText = NSLocalizedString("No other engineers")
+        default:
+            relevantUserText = EMPTY_STRING
+            for user in taskParticipants {
+                if user == taskParticipants.last {
                     relevantUserText = relevantUserText + user.fullName
                 } else {
                     relevantUserText = user.fullName + "， " + relevantUserText

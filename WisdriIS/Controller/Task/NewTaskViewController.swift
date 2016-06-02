@@ -14,6 +14,7 @@ import SVProgressHUD
 
 public let NewTaskSubmittedSuccessfullyNotification = "NewTaskSubmittedSuccessfullyNotification"
 public let MaintenanceTaskUploadingNotification = "MaintenanceTaskUploadingNotification"
+public var uploadingTaskCount: Int = 0
 
 class NewTaskViewController: BaseViewController {
 
@@ -301,6 +302,7 @@ class NewTaskViewController: BaseViewController {
     @objc private func post(sender: UIBarButtonItem) {
         
         // 任务描述字段的长度控制
+        var uploadingTaskKey = 0
         let messageLength = (messageTextView.text as NSString).length
         
         guard messageLength <= WISConfig.maxTaskTextLength else {
@@ -311,53 +313,70 @@ class NewTaskViewController: BaseViewController {
             
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        let uploadingTaskKey = String(uploadingTaskDictionary.count + 1)
-        uploadingTaskDictionary[uploadingTaskKey] = NSProgress()
-        
-        let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingStart.rawValue)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
-        
-        WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-            NSLog("Upload progress is %.2f", progress.fractionCompleted)
-
-            uploadingTaskDictionary[uploadingTaskKey] = progress
-            let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+        // 如果有图片上传，注册通知 TaskUploading
+        if mediaImages.count > 0 {
+            uploadingTaskCount += 1
+            uploadingTaskKey = uploadingTaskCount + 1
+            uploadingTaskDictionary[uploadingTaskKey] = NSProgress()
+            let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingStart.rawValue)
             NSNotificationCenter.defaultCenter().postNotification(notification)
-            
-            }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
-                if completedWithNoError {
-                    // 图片上传成功，新建任务单
-                    let images: [WISFileInfo] = data as! [WISFileInfo]
-                    
-                    for image in images {
-                        self.applicationFileInfo[image.fileName] = image
-                    }
-                    
-                    WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+        
+            WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
+                
+                NSLog("Task \(uploadingTaskKey)'s uploading progress is %.2f", progress.fractionCompleted)
+                uploadingTaskDictionary[uploadingTaskKey] = progress
+                let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+                NSNotificationCenter.defaultCenter().postNotification(notification)
+                
+                }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
+                    if completedWithNoError {
+                        // 图片上传成功，新建任务单
+                        let images: [WISFileInfo] = data as! [WISFileInfo]
                         
+                        for image in images {
+                            self.applicationFileInfo[image.fileName] = image
+                        }
+                        
+                        WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: self.applicationFileInfo, completionHandler: { (completedWithNoError, error) -> Void in
+                            
+                            uploadingTaskDictionary.removeValueForKey(uploadingTaskKey)
+                            let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+                            NSNotificationCenter.defaultCenter().postNotification(notification)
+                            
+                            if completedWithNoError {
+
+                                SVProgressHUD.setDefaultMaskType(.None)
+                                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
+                                NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
+                                
+                            } else {
+                                WISConfig.errorCode(error, customInformation: "发起维保请求失败")
+                            }
+                        })
+                        
+                    } else {
+                        // 上传失败，发布上传结束通知，反馈错误提示
                         uploadingTaskDictionary.removeValueForKey(uploadingTaskKey)
                         let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
                         NSNotificationCenter.defaultCenter().postNotification(notification)
-                        
-                        if completedWithNoError {
-
-                            SVProgressHUD.setDefaultMaskType(.None)
-                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
-                            NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
-                            
-                        } else {
-                            WISConfig.errorCode(error)
-                        }
-                    })
+                        WISConfig.errorCode(error, customInformation: "上传图片失败")
+                    }
+            })
+            
+        } else {
+            // 如果无图片上传，新建维保单
+            WISDataManager.sharedInstance().applyNewMaintenanceTaskWithApplicationContent(self.messageTextView.text, processSegmentID: self.pickedSegment?.id, applicationImageInfo: nil, completionHandler: { (completedWithNoError, error) -> Void in
+                if completedWithNoError {
+                    
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("New maintenance task submitted successfully", comment: ""))
+                    NSNotificationCenter.defaultCenter().postNotificationName(NewTaskSubmittedSuccessfullyNotification, object: nil, userInfo: nil)
                     
                 } else {
-                    uploadingTaskDictionary.removeValueForKey(uploadingTaskKey)
-                    let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
-                    NSNotificationCenter.defaultCenter().postNotification(notification)
                     WISConfig.errorCode(error)
                 }
-        })
-        
+            })
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

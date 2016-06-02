@@ -20,6 +20,7 @@ class TaskDetailViewController: BaseViewController {
     private let taskDescriptionCellID = "TaskDescriptionCell"
     private let taskPlanCellID = "TaskPlanCell"
     private let taskStateCellID = "TaskStateCell"
+    private let taskRateCellID = "TaskRateCell"
     
     private var currentUser: WISUser?
     var wisTask: WISMaintenanceTask?
@@ -32,6 +33,7 @@ class TaskDetailViewController: BaseViewController {
     var planImagesFileInfoArray = [WISFileInfo]()
     private var planCount = 0
     private var stateCount = 0
+    private var getTaskDetailToken = false
     
     private let pickUserSegueIdentifier = "pickUserForPassOperation"
     private let assignUserSegueIdentifier = "assignUserForPassOperation"
@@ -285,7 +287,11 @@ class TaskDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view
+        // Request Data
+        getTaskDetail(silentMode: false)
+        getTaskDetailToken = true
+        
+        // MakeUI
         title = NSLocalizedString("Task Detail", comment: "")
         
         currentUser = WISDataManager.sharedInstance().currentUser
@@ -302,6 +308,7 @@ class TaskDetailViewController: BaseViewController {
         taskDetailTableView.registerNib(UINib(nibName: taskDescriptionCellID, bundle: nil), forCellReuseIdentifier: taskDescriptionCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskPlanCellID, bundle: nil), forCellReuseIdentifier: taskPlanCellID)
         taskDetailTableView.registerNib(UINib(nibName: taskStateCellID, bundle: nil), forCellReuseIdentifier: taskStateCellID)
+        taskDetailTableView.registerNib(UINib(nibName: taskRateCellID, bundle: nil), forCellReuseIdentifier: taskRateCellID)
         
         taskDetailTableView.tableFooterView = UIView()
     }
@@ -312,7 +319,11 @@ class TaskDetailViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        getTaskDetail(silentMode: false)
+        
+        if !getTaskDetailToken {
+            getTaskDetail(silentMode: true)
+        }
+        getTaskDetailToken = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -498,6 +509,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         case TaskHandleInfo
         case TaskState
         case Remark
+        case Rating
     }
     
     private enum BasicInfoRow: Int {
@@ -515,15 +527,29 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             default:
                 return 3
             }
-        } else {
+        }
+        
+        if currentUser!.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.TechManager.rawValue]
+            || currentUser!.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.FieldManager.rawValue] {
             switch wisTask!.state {
             case TaskStateForOperator.Pending.rawValue:
                 return 2
+            case TaskStateForManager.ForArchive.rawValue, TaskStateForManager.Archived.rawValue:
+                return 6
             default:
-                //备注信息何时显示？
                 return 5
             }
         }
+        
+        // 除生产人员、前方部长、技术主管外的其它角色
+        switch wisTask!.state {
+        case TaskStateForOperator.Pending.rawValue:
+            return 2
+        default:
+            //备注信息何时显示？
+            return 5
+        }
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -547,6 +573,12 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             return stateCount
         case .Remark:
             return 1
+        case .Rating:
+            if wisTask!.state == TaskStateForManager.ForArchive.rawValue || wisTask!.state == TaskStateForManager.Archived.rawValue {
+                return 1
+            } else {
+                return 0
+            }
         }
     }
     
@@ -571,6 +603,8 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             return 20
         case .Remark:
             return 20
+        case .Rating:
+            return 0
         }
     }
     
@@ -581,6 +615,8 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch section {
         case .Remark:
+            return 20
+        case .Rating:
             return 20
         default:
             return 0
@@ -604,7 +640,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailSingleInfoCellID) as! TaskDetailSingleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "创建人"
+                cell.annotationLabel.text = NSLocalizedString("Creator")
                 if wisTask!.creator == nil {
                     cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                 } else {
@@ -622,7 +658,7 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailSingleInfoCellID) as! TaskDetailSingleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "责任人"
+                cell.annotationLabel.text = NSLocalizedString("In Charge")
                 if wisTask!.personInCharge == nil {
                     cell.annotationInfoLabel.text = NSLocalizedString("None", comment: "")
                 } else {
@@ -640,9 +676,9 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCellWithIdentifier(taskDetailDoubleInfoCellID) as! TaskDetailDoubleInfoCell
                 
                 cell.selectionStyle = .None
-                cell.annotationLabel.text = "编号"
+                cell.annotationLabel.text = NSLocalizedString("Index")
                 cell.annotationInfoLabel.text = wisTask?.taskID
-                cell.infoLabel.text = wisTask?.state
+                cell.infoLabel.text = WISConfig.configureStateText(wisTask!.state)
                 
                 return cell
                 
@@ -697,6 +733,16 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 cell.infoTextView.text = wisTask!.taskComment
             }
+            
+            return cell
+            
+        case .Rating:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(taskRateCellID) as! TaskRateCell
+            
+            cell.selectionStyle = .None
+            
+            cell.bind(wisTask!.taskRating)
             
             return cell
         }
@@ -859,19 +905,16 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
             
         case Section.TaskBasicInfo.rawValue:
-            
             return 44
             
         case Section.TaskDescription.rawValue:
             
             let cell = tableView.dequeueReusableCellWithIdentifier(taskDescriptionCellID) as! TaskDescriptionCell
-            
             return cell.calHeightOfCell(wisTask!)
             
         case Section.TaskHandleInfo.rawValue:
             
             let cell = tableView.dequeueReusableCellWithIdentifier(taskPlanCellID) as! TaskPlanCell
-
             return cell.calHeightOfCell((wisTask!.maintenancePlans[indexPath.row] as! WISMaintenancePlan))
             
         case Section.Remark.rawValue:
@@ -879,6 +922,11 @@ extension TaskDetailViewController: UITableViewDataSource, UITableViewDelegate {
             
         case Section.TaskState.rawValue:
             return 60
+            
+        case Section.Rating.rawValue:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(taskRateCellID) as! TaskRateCell
+            return cell.calHeightOfCell(wisTask!.taskRating)
             
         default:
             return 0

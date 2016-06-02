@@ -187,6 +187,8 @@
 		9F801ADF1C86C46F00F64265 /* TaskSectionPickerItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */; };
 		9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */; };
 		9F801AE31C86C82100F64265 /* UIImageView+WIS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F801AE21C86C82100F64265 /* UIImageView+WIS.swift */; };
+		9F852AE81CFF02DB0027AB92 /* TaskRateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F852AE61CFF02DB0027AB92 /* TaskRateCell.swift */; };
+		9F852AE91CFF02DB0027AB92 /* TaskRateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F852AE71CFF02DB0027AB92 /* TaskRateCell.xib */; };
 		9F8FEE661CD0542E00D2B043 /* ModifyPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F8FEE651CD0542E00D2B043 /* ModifyPlan.storyboard */; };
 		9F8FEE681CD0546100D2B043 /* ModifyPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8FEE671CD0546100D2B043 /* ModifyPlanViewController.swift */; };
 		9F99A7681CC48AAA00E1F92D /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F99A7671CC48AAA00E1F92D /* CodeScanViewController.swift */; };
@@ -438,6 +440,8 @@
 		9F801ADE1C86C46F00F64265 /* TaskSectionPickerItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskSectionPickerItemView.swift; path = View/TaskSectionPickerItemView.swift; sourceTree = "<group>"; };
 		9F801AE01C86C6E400F64265 /* HorizontalLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HorizontalLineView.swift; path = View/HorizontalLineView.swift; sourceTree = "<group>"; };
 		9F801AE21C86C82100F64265 /* UIImageView+WIS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+WIS.swift"; sourceTree = "<group>"; };
+		9F852AE61CFF02DB0027AB92 /* TaskRateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskRateCell.swift; path = View/Task/TaskRate/TaskRateCell.swift; sourceTree = "<group>"; };
+		9F852AE71CFF02DB0027AB92 /* TaskRateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskRateCell.xib; path = View/Task/TaskRate/TaskRateCell.xib; sourceTree = "<group>"; };
 		9F8FEE651CD0542E00D2B043 /* ModifyPlan.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ModifyPlan.storyboard; sourceTree = "<group>"; };
 		9F8FEE671CD0546100D2B043 /* ModifyPlanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyPlanViewController.swift; sourceTree = "<group>"; };
 		9F99A7671CC48AAA00E1F92D /* CodeScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeScanViewController.swift; sourceTree = "<group>"; };
@@ -987,6 +991,7 @@
 		9F7C4BAA1C8830C700652CDF /* Task */ = {
 			isa = PBXGroup;
 			children = (
+				9F852AE51CFF02A20027AB92 /* TaskRate */,
 				9F055C6C1CDC72760077184B /* TaskState */,
 				9F336DAE1CCF02C200844CB1 /* TaskPlan */,
 				9F2A532A1C9F8E74001BE6F6 /* TaskOperation */,
@@ -1111,6 +1116,15 @@
 			);
 			name = TaskMediaAdd;
 			path = View/TaskMediaAdd;
+			sourceTree = "<group>";
+		};
+		9F852AE51CFF02A20027AB92 /* TaskRate */ = {
+			isa = PBXGroup;
+			children = (
+				9F852AE61CFF02DB0027AB92 /* TaskRateCell.swift */,
+				9F852AE71CFF02DB0027AB92 /* TaskRateCell.xib */,
+			);
+			name = TaskRate;
 			sourceTree = "<group>";
 		};
 		9F99A7661CC48AAA00E1F92D /* CodeScan */ = {
@@ -1371,6 +1385,7 @@
 				9F7C4BAC1C88324F00652CDF /* TaskDetailSingleInfoCell.xib in Resources */,
 				9F055BA11CD797E50077184B /* Password.storyboard in Resources */,
 				9F1B315C1CFDD2EC004A8038 /* TaskIcon.xcassets in Resources */,
+				9F852AE91CFF02DB0027AB92 /* TaskRateCell.xib in Resources */,
 				9F7C4BB41C8924F400652CDF /* TaskDetail.storyboard in Resources */,
 				9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */,
 				38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */,
@@ -1459,6 +1474,7 @@
 				385C1DF71CE4BC9200F8E393 /* WISInspectionTaskDataNotification.m in Sources */,
 				9F801AE11C86C6E400F64265 /* HorizontalLineView.swift in Sources */,
 				9F055C781CE061AE0077184B /* InfoView.swift in Sources */,
+				9F852AE81CFF02DB0027AB92 /* TaskRateCell.swift in Sources */,
 				9F801ABF1C8681B300F64265 /* UIImage+WIS.swift in Sources */,
 				9F801ABD1C867FAF00F64265 /* PHImageRequestOptions+WIS.swift in Sources */,
 				9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */,

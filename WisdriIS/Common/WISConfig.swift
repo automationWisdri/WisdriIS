@@ -250,8 +250,8 @@ class WISConfig {
         guard state.contains(seperator) else {
             return state
         }
-        
-        // 报错，Cannot decrement startIndex
+        /* 初版，算法有一定缺陷
+         * 报错，Cannot decrement startIndex
         let rangeOfLastCharacter = state.endIndex.advancedBy(-1) ..< state.endIndex // Range(start: state.endIndex.advancedBy(-1), end: state.endIndex)
         
         let rangeOfSeperator = state.rangeOfString(seperator)
@@ -261,7 +261,22 @@ class WISConfig {
         } else {
             return String(state.characters.suffixFrom(rangeOfSeperator!.endIndex))
         }
+         */
+        let stateStringArray = state.componentsSeparatedByString(seperator)
         
+        guard stateStringArray.count == 2 else {
+            return state
+        }
+        
+        let stateStringPrefix = stateStringArray.first!
+        let stateStringSuffix = stateStringArray.last!
+        
+        if stateStringSuffix.isEmpty {
+            return stateStringPrefix
+        } else {
+//            return stateStringPrefix + "(\(stateStringSuffix))"
+            return stateStringPrefix + "(转单中)"
+        }
     }
 }
 
