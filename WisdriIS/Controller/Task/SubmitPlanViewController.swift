@@ -281,11 +281,12 @@ class SubmitPlanViewController: BaseViewController {
     }
     
     private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError?) {
-        // 发送上传结束的通知
-        uploadingPlanDictionary.removeValueForKey(taskID!)
-        let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
-        NSNotificationCenter.defaultCenter().postNotification(notification)
-        
+        if mediaImages.count > 0 {
+            // 发送上传结束的通知
+            uploadingPlanDictionary.removeValueForKey(taskID!)
+            let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
+            NSNotificationCenter.defaultCenter().postNotification(notification)
+        }
         if completedWithNoError {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showSuccessWithStatus("方案提交成功")
