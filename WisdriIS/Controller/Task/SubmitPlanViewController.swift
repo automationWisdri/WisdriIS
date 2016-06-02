@@ -168,27 +168,20 @@ class SubmitPlanViewController: BaseViewController {
         }
         
         taskPlanTextView.text = wisPlan!.planDescription
-        relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)
+//        relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)
         estimateDatePicker.date = wisPlan!.estimatedEndingTime
+        
+        for participant in wisPlan!.participants {
+            self.taskParticipants.append(participant as! WISUser)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         // 用于显示 PickUser 页面返回后，获取的参与人员姓名
-        switch taskParticipants.count {
-        case 0:
-            relevantUserTextView.text = NSLocalizedString("No other engineers")
-        default:
-            relevantUserTextView.text = EMPTY_STRING
-            for user in taskParticipants {
-                if user == taskParticipants.last {
-                    relevantUserTextView.text = relevantUserTextView.text + user.fullName
-                } else {
-                    relevantUserTextView.text = user.fullName + "， " + relevantUserTextView.text
-                }
-            }
-        }
+        // 或用于显示修改维保方案时，获取已有方案的参与人员姓名
+        relevantUserTextView.text = WISUserDefaults.getRelevantUserText(taskParticipants)
         
     }
     
@@ -218,14 +211,13 @@ class SubmitPlanViewController: BaseViewController {
             NSNotificationCenter.defaultCenter().postNotification(notification)
         }
         
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
         self.navigationController?.popViewControllerAnimated(true)
         
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
             if self.mediaImages.count > 0 {
-                NSLog("Upload progress is %.2f", progress.fractionCompleted)
-//                SVProgressHUD.setDefaultMaskType(.None)
-//                SVProgressHUD.showProgress(Float(progress.fractionCompleted), status: WISConfig.HUDString.commiting)
-                
+                NSLog("Task \(self.taskID!)'s plan is uploading, progress is %.2f", progress.fractionCompleted)
                 // 发送上传进度的通知
                 uploadingPlanDictionary[self.taskID!] = progress
                 let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
@@ -288,7 +280,7 @@ class SubmitPlanViewController: BaseViewController {
     
     }
     
-    private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError) {
+    private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError?) {
         if mediaImages.count > 0 {
             // 发送上传结束的通知
             uploadingPlanDictionary.removeValueForKey(taskID!)
@@ -299,7 +291,7 @@ class SubmitPlanViewController: BaseViewController {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showSuccessWithStatus("方案提交成功")
         } else {
-            WISConfig.errorCode(error)
+            WISConfig.errorCode(error!)
         }
     }
     

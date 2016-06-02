@@ -49,8 +49,7 @@ class ModifyPlanViewController: BaseViewController {
     // 获取已有的维保方案
     var wisPlan: WISMaintenancePlan?
     
-    // 页面加载时获取 WISMaintenancePlan.participants
-    // 获取 PickUser 页面返回的用户数组，用于 “参与人员” TextView 的显示
+    // 页面加载时获取 WISMaintenancePlan.participants，将 NSMutableArray 转换为 Array，对应 maintenanceTaskOperationWithTaskID 的 maintenancePlanParticipants
     var taskParticipants = [WISUser]()
     // wisFileInfos 用于 CollcetionView 中图片等显示
     private var wisFileInfos = [WISFileInfo]()
@@ -113,6 +112,8 @@ class ModifyPlanViewController: BaseViewController {
     private func bind() {
         
         guard let _ = wisPlan else {
+            relevantUserTextView.text = NSLocalizedString("No other engineers")
+            estimateDatePicker.date = NSDate()
             return
         }
         
@@ -125,6 +126,10 @@ class ModifyPlanViewController: BaseViewController {
         
         relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)
         estimateDatePicker.date = wisPlan!.estimatedEndingTime
+        
+        for participant in wisPlan!.participants {
+            self.taskParticipants.append(participant as! WISUser)
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
