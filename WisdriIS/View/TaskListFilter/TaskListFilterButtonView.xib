@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="TaskListFilterButtonView" id="DNV-sL-wh2" userLabel="TaskListFilterGroupContentView" customClass="TaskListFilterButtonView" customModule="WisdriIS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPh-eP-Eet">
+                    <rect key="frame" x="160" y="0.0" width="160" height="40"/>
+                    <state key="normal" title="OK"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDN-du-4XH">
+                    <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
+                    <state key="normal" title="Cancel"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="iDN-du-4XH" secondAttribute="bottom" id="FaM-bb-gIH"/>
+                <constraint firstItem="BPh-eP-Eet" firstAttribute="top" secondItem="DNV-sL-wh2" secondAttribute="top" id="VcO-0H-JBq"/>
+                <constraint firstItem="iDN-du-4XH" firstAttribute="top" secondItem="DNV-sL-wh2" secondAttribute="top" id="i08-bB-fdz"/>
+                <constraint firstAttribute="bottom" secondItem="BPh-eP-Eet" secondAttribute="bottom" id="pV2-7U-POn"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancelButton" destination="iDN-du-4XH" id="34X-i3-YsZ"/>
+                <outlet property="okButton" destination="BPh-eP-Eet" id="NET-oy-iZ1"/>
+            </connections>
+            <point key="canvasLocation" x="114" y="285"/>
+        </view>
+    </objects>
+</document>

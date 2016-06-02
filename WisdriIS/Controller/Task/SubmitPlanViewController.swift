@@ -284,7 +284,7 @@ class SubmitPlanViewController: BaseViewController {
     
     }
     
-    private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError) {
+    private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError?) {
         // 发送上传结束的通知
         uploadingPlanDictionary.removeValueForKey(taskID!)
         let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingCompleted.rawValue)
@@ -294,7 +294,7 @@ class SubmitPlanViewController: BaseViewController {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showSuccessWithStatus("方案提交成功")
         } else {
-            WISConfig.errorCode(error)
+            WISConfig.errorCode(error!)
         }
     }
     

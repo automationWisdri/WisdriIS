@@ -40,7 +40,6 @@ class InspectionResultSelectionCell: InspectionDetailViewBaseCell {
         if model.inspectionResult != .NotSelected {
             inspectionResultTableView.selectRowAtIndexPath(NSIndexPath.init(forRow: model.inspectionResult.rawValue - 1, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.None)
         }
-        
     }
     
     override func bringBackData(inout model: WISInspectionTask) {

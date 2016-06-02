@@ -8,18 +8,39 @@
 
 import UIKit
 import PagingMenuController
+import LMDropdownView
 import SVProgressHUD
 
 class TaskHomeViewController: BaseViewController {
     
     var viewControllers = [TaskListViewController]()
+    var originalTitle = NSLocalizedString("Task List", comment: "")
+    
+    // for show new task uploading title
+    let newTaskUploadingTitleHeader = NSLocalizedString("New Task Uploading...", comment: "")
+    
+    var taskListGroupType: TaskListGroupType = .None {
+        didSet {
+            if taskListGroupType != oldValue {
+                // uploading list
+            }
+        }
+    }
+    
+    // for drop down filter view
+    var filterDropDownView: LMDropdownView = LMDropdownView()
+    var filterContentView: TaskListFilterContentView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\n====================\nTaskHomeViewController did load\n====================\n")
-
+        
         // Do any additional setup after loading the view.
-        title = NSLocalizedString("Task List", comment: "")
+        self.navigationItem.title = originalTitle
+        
+        let tempNavigationBackButton = UIBarButtonItem()
+        tempNavigationBackButton.title = self.originalTitle
+        self.navigationItem.backBarButtonItem = tempNavigationBackButton
         
         guard let currentUser = WISDataManager.sharedInstance().currentUser else {
             SVProgressHUD.showErrorWithStatus("获取登录信息失败\n请检查网络情况后重新登录")
@@ -33,6 +54,9 @@ class TaskHomeViewController: BaseViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleTaskUploadingNotification(_:)), name: MaintenanceTaskUploadingNotification, object: nil)
         
+        //
+        // LOADING TASK LIST IN PAGE VIEW *****
+        //
         let storyboard = UIStoryboard(name: "TaskList", bundle: nil)
         
         let taskListForApproval = storyboard.instantiateViewControllerWithIdentifier("TaskListViewController") as! TaskListViewController
@@ -59,8 +83,9 @@ class TaskHomeViewController: BaseViewController {
         print(WISDataManager.sharedInstance().currentUser.roleCode)
         print(currentUser.roleCode)
 
-        // let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Filter", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
-        // self.navigationItem.leftBarButtonItem = leftBarItem
+        // 在实现筛选功能前, 暂时叫 "分组"
+        let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Group", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
+        self.navigationItem.leftBarButtonItem = leftBarItem
         
         if currentUser.roleCode != WISDataManager.sharedInstance().roleCodes[RoleCode.Operator.rawValue] {
             self.navigationItem.rightBarButtonItem = nil
@@ -97,6 +122,23 @@ class TaskHomeViewController: BaseViewController {
         pagingMenuController.setup(viewControllers: viewControllers, options: options)
         
         pagingMenuController.delegate = self
+        
+        //
+        // FILTER VIEW *****
+        //
+        self.filterContentView = TaskListFilterContentView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), min(CGRectGetHeight(self.view.bounds) - 50, 450)), parentViewController: self, initialGroupSelection: TaskListGroupType.None)
+        
+        self.filterDropDownView.delegate = self
+        
+        // Customize Dropdown style
+        self.filterDropDownView.closedScale = 1.0
+        self.filterDropDownView.blurRadius = 3;
+        self.filterDropDownView.blackMaskAlpha = 0.2;
+        self.filterDropDownView.animationDuration = 0.5;
+        self.filterDropDownView.animationBounceHeight = 0.0;
+        
+        self.filterDropDownView.delegate = self
+        self.filterContentView?.delegate = self
     }
     
     
@@ -167,7 +209,7 @@ class TaskHomeViewController: BaseViewController {
             switch state as! String {
             case UploadingState.UploadingStart.rawValue:
                 if uploadingTaskDictionary.count > 0 {
-                    self.navigationItem.title = "任务上传..."
+                    self.navigationItem.title = self.newTaskUploadingTitleHeader
                 }
             case UploadingState.UploadingPending.rawValue:
                 guard uploadingTaskDictionary.count > 0 else {
@@ -182,7 +224,7 @@ class TaskHomeViewController: BaseViewController {
                 
                 totalUploadingPercentage = totalUploadingPercentage / uploadingTaskDictionary.count
                 
-                self.navigationItem.title = "任务上传...(\(totalUploadingPercentage)%)"
+                self.navigationItem.title = self.newTaskUploadingTitleHeader + "(\(totalUploadingPercentage)%)"
                 
             case UploadingState.UploadingCompleted.rawValue:
                 
@@ -191,7 +233,7 @@ class TaskHomeViewController: BaseViewController {
                 currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
                 
                 if uploadingTaskDictionary.count == 0 {
-                    self.navigationItem.title = NSLocalizedString("Task List", comment: "")
+                    self.navigationItem.title = self.originalTitle
                 }
                 
             default:
@@ -223,5 +265,79 @@ extension TaskHomeViewController: PagingMenuControllerDelegate {
         didAppearViewController.taskTableView.scrollsToTop = true
         didAppearViewController.getTaskList(didAppearViewController.taskType!, silentMode: true)
         previousViewController.taskTableView.scrollsToTop = false
+    }
+}
+
+
+    // MARK: - extension - Drop down control
+
+extension TaskHomeViewController {
+    
+    func popTaskListFilterPanel(sender: UIBarButtonItem) -> Void {
+        showDropDownViewFromDirection(.Top)
+    }
+    
+    func showDropDownViewFromDirection(direction: LMDropdownViewDirection) -> Void {
+            self.filterDropDownView.direction = direction;
+        
+        if self.filterDropDownView.isOpen {
+            self.filterDropDownView.hide()
+        
+        } else {
+            switch direction {
+            case .Top:
+                self.filterDropDownView.contentBackgroundColor = UIColor.wisBorderColor()
+                self.filterDropDownView.showFromNavigationController(self.navigationController, withContentView: self.filterContentView)
+                break
+                
+            default:
+                break
+            }
+        }
+    }
+}
+
+extension TaskHomeViewController: LMDropdownViewDelegate {
+    // nothing yet
+}
+
+extension TaskHomeViewController: TaskListFilterContentViewDelegate {
+    func taskListFilterContentViewConfirmed(groupType: TaskListGroupType) {
+        print("OK Button pressed")
+        print("Selected group type is " + groupType.stringOfType)
+        if self.filterDropDownView.isOpen {
+            self.filterDropDownView.hide()
+            
+        }
+    }
+    
+    func taskListFilterContentViewCancelled() {
+        print("Cancel Button pressed")
+        if self.filterDropDownView.isOpen {
+            self.filterDropDownView.hide()
+            
+        }
+    }
+}
+
+
+enum TaskListGroupType: Int {
+    case None = 0
+    case ByPersonInCharge = 1
+    case ByTaskState = 2
+    
+    static let count: Int = {
+        return 3
+    }()
+    
+    var stringOfType: String {
+        switch self {
+        case .None:
+            return NSLocalizedString("None", comment: "")
+        case .ByPersonInCharge:
+            return NSLocalizedString("By person in charge", comment: "")
+        case .ByTaskState:
+            return NSLocalizedString("By task state", comment: "")
+        }
     }
 }

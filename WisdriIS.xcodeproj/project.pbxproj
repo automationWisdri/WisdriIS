@@ -84,6 +84,9 @@
 		38A5C0EF1CF3356F008DBD48 /* NotificationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */; };
 		38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */; };
 		38A5C0F41CF33A41008DBD48 /* NotificationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */; };
+		38A97CCC1CFE825C00E0EA53 /* TaskListFilterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A97CCB1CFE825C00E0EA53 /* TaskListFilterContentView.swift */; };
+		38A97CCE1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A97CCD1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib */; };
+		38A97CD01CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A97CCF1CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift */; };
 		38B1F8E81CF9C59E0054F354 /* WISArchivingStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */; };
 		38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E331CEC3F95003092DA /* InspectionList.storyboard */; };
 		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
@@ -328,6 +331,9 @@
 		38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationList.storyboard; sourceTree = "<group>"; };
 		38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationListCell.xib; sourceTree = "<group>"; };
 		38A5C0F31CF33A41008DBD48 /* NotificationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListCell.swift; sourceTree = "<group>"; };
+		38A97CCB1CFE825C00E0EA53 /* TaskListFilterContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListFilterContentView.swift; sourceTree = "<group>"; };
+		38A97CCD1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskListFilterGroupContentView.xib; sourceTree = "<group>"; };
+		38A97CCF1CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListFilterGroupContentView.swift; sourceTree = "<group>"; };
 		38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISArchivingStore.h; sourceTree = "<group>"; };
 		38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WISArchivingStore.m; sourceTree = "<group>"; };
 		38E51E331CEC3F95003092DA /* InspectionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionList.storyboard; sourceTree = "<group>"; };
@@ -790,6 +796,17 @@
 			path = View/Notification;
 			sourceTree = "<group>";
 		};
+		38A97CCA1CFE820A00E0EA53 /* TaskListFilter */ = {
+			isa = PBXGroup;
+			children = (
+				38A97CCB1CFE825C00E0EA53 /* TaskListFilterContentView.swift */,
+				38A97CCF1CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift */,
+				38A97CCD1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib */,
+			);
+			name = TaskListFilter;
+			path = View/TaskListFilter;
+			sourceTree = "<group>";
+		};
 		9F055B9A1CD73B530077184B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +922,7 @@
 		9F4B215B1C7C2FF400D15B8E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				38A97CCA1CFE820A00E0EA53 /* TaskListFilter */,
 				38A5C0F01CF3391F008DBD48 /* Notification */,
 				385C1E051CE4BD2700F8E393 /* Inspection */,
 				9F055C761CE061AE0077184B /* InfoView */,
@@ -1319,6 +1337,7 @@
 				385C1E2D1CE4BD2700F8E393 /* InspectionDeviceTypeInformationCell.xib in Resources */,
 				9F055BB01CDC2DFB0077184B /* ProfileInfo.storyboard in Resources */,
 				9F801ABB1C867EC600F64265 /* PhotoCell.xib in Resources */,
+				38A97CCE1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib in Resources */,
 				9F6436DC1CAA0C93007909BE /* PickUser.storyboard in Resources */,
 				38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */,
 				385C1E361CE4BD2700F8E393 /* InspectionListCell.xib in Resources */,
@@ -1499,6 +1518,7 @@
 				9F801A9D1C8594AC00F64265 /* ProfileLessInfoCell.swift in Sources */,
 				9F055D351CE458500077184B /* WISRefreshFooter.swift in Sources */,
 				385C1DE21CE4BC9200F8E393 /* LBXScanLineAnimation.swift in Sources */,
+				38A97CD01CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift in Sources */,
 				9F055BB21CDC2E180077184B /* ProfileInfoViewController.swift in Sources */,
 				9F801ABA1C867EC600F64265 /* PhotoCell.swift in Sources */,
 				380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */,
@@ -1528,6 +1548,7 @@
 				385C1E321CE4BD2700F8E393 /* InspectionResultSelectionCell.swift in Sources */,
 				385C1DEE1CE4BC9200F8E393 /* WISMaintenancePlan.m in Sources */,
 				9F1FA1E81CEB717F001A2F61 /* ArchiveViewController.swift in Sources */,
+				38A97CCC1CFE825C00E0EA53 /* TaskListFilterContentView.swift in Sources */,
 				9F055B991CD3ABC80077184B /* UIScrollView+WIS.swift in Sources */,
 				9F1FA1E91CEF0962001A2F61 /* InspectionResultShowSelectionCell.swift in Sources */,
 				9F055BA31CD7980A0077184B /* PasswordViewController.swift in Sources */,
