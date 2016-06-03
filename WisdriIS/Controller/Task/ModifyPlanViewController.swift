@@ -143,7 +143,7 @@ class ModifyPlanViewController: BaseViewController {
     
     @objc private func post(sender: UIBarButtonItem) {
         
-        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
         switch self.segueIdentifier! {
             
         case "approveOperation":

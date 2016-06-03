@@ -38,13 +38,13 @@ class TaskListCell: UITableViewCell {
         self.taskDescriptionTextView.text = model.taskApplicationContent
 //        taskDescriptionTextView.text = "asifjojrfeojrfpoekrfpoekrpgoepjgpejgpejrgpowkrpfokwpoefkwpoejfpowjefpwjefpwjepfojwpeofkpwoefpowjefpowjefpjwe"
         
-        if model.state == "" {
-            self.taskStatusImageView?.image = WISConfig.taskStateImage("未知状态")
-            self.taskStatusLabel?.text = "未知状态"
-        } else {
+//        if model.state == "" {
+//            self.taskStatusImageView?.image = WISConfig.taskStateImage("未知状态")
+//            self.taskStatusLabel?.text = "未知状态"
+//        } else {
             self.taskStatusImageView?.image = WISConfig.taskStateImage(model.state)
             self.taskStatusLabel?.text = WISConfig.configureStateText(model.state)
-        }
+//        }
         
     }
 

@@ -212,7 +212,7 @@ class SubmitPlanViewController: BaseViewController {
         }
         
         SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
         self.navigationController?.popViewControllerAnimated(true)
         
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in

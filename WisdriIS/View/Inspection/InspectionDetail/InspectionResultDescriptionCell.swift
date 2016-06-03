@@ -11,6 +11,7 @@ import UIKit
 class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
     static let cellHeight: CGFloat = 120.0
     
+    @IBOutlet weak var inspectionResultDescriptionTitleMark: UIImageView!
     @IBOutlet weak var inspectionResultDescriptionTitleLabel: UILabel!
     @IBOutlet weak var inspectionResultDescriptionTextView: UITextView!
     
@@ -51,9 +52,20 @@ class InspectionResultDescriptionCell: InspectionDetailViewBaseCell {
         inspectionResultDescriptionTextView.editable = editable
         if inspectionResultDescriptionTextView.editable {
             // inspectionResultDescriptionTextView.text = ""
+            inspectionResultDescriptionTitleMark.hidden = false
+            dispatch_async(dispatch_get_main_queue()) {
+                self.inspectionResultDescriptionTitleLabel.frame = CGRectMake(18, 8, 180, 22)
+            }
+            
         } else {
             inspectionResultDescriptionTextView.text = model.inspectionResultDescription
+            inspectionResultDescriptionTitleMark.hidden = true
+            dispatch_async(dispatch_get_main_queue()) {
+                self.inspectionResultDescriptionTitleLabel.frame = CGRectMake(18, 8, 180, 22)
+            }
         }
+        // self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     override func bringBackData(inout model: WISInspectionTask) {

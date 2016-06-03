@@ -76,7 +76,7 @@ class TaskDetailViewController: BaseViewController {
 
         // 厂级负责人不同意方案、技术主管不同意生产人员的拒绝确认请求
         view.rejectOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             
             let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
             var taskImageInfo = [String : WISFileInfo]()
@@ -100,7 +100,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师完成任务
         view.completeOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.TaskComplete, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
@@ -122,7 +122,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接受转单
         view.acceptPassOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
@@ -140,7 +140,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师拒绝接受转单
         view.refusePassOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.RefuseToReceiveTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
@@ -158,7 +158,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接受指派转单
         view.acceptAssignedOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptAssignedPassOnTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 
                 if completedWithNoError {
@@ -178,7 +178,7 @@ class TaskDetailViewController: BaseViewController {
         view.approveOperation = { [weak self] in
             // 厂级负责人审批同意维保方案
             if WISDataManager.sharedInstance().currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.FactoryManager.rawValue]  {
-                SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+                SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
                 
                 let imagesInfo = (currentTask?.maintenancePlans.lastObject as! WISMaintenancePlan).imagesInfo
                 var taskImageInfo = [String : WISFileInfo]()
@@ -222,7 +222,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 工程师接单
         view.acceptOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.AcceptMaintenanceTask, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     
@@ -239,7 +239,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 生产人员撤单
         view.repealOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Cancel, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     
@@ -256,7 +256,7 @@ class TaskDetailViewController: BaseViewController {
         
         // 生产人员拒绝确认
         view.declineOperation = { [weak self] in
-            SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+            SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
             WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask!.taskID, remark: nil, operationType: MaintenanceTaskOperationType.DeclineToConfirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
                 if completedWithNoError {
                     

@@ -94,7 +94,7 @@ class RemarkViewController: UIViewController {
             return
         }
         
-        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
         switch segueIdentifier! {
             
         case "remarkOperation":

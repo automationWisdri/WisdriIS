@@ -139,7 +139,7 @@ class WISConfig {
     }()
     
     struct HUDString {
-        static let commiting = NSLocalizedString("Commiting")
+        static let committing = NSLocalizedString("Committing")
         static let success = NSLocalizedString("Success")
         static let failure = NSLocalizedString("Failure")
     }
@@ -246,6 +246,10 @@ class WISConfig {
     class func configureStateText(state: String) -> String {
         
         let seperator = "."
+        
+        guard state != "" else {
+            return "未知状态"
+        }
         
         guard state.contains(seperator) else {
             return state

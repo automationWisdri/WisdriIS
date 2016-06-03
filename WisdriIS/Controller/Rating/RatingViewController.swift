@@ -124,7 +124,7 @@ class RatingViewController: BaseViewController {
         
         ratingCommentTextView.resignFirstResponder()
         // 此时页面没有跳转，不允许用户操作
-        SVProgressHUD.showWithStatus(WISConfig.HUDString.commiting)
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
         let wisTaskRating = WISMaintenanceTaskRating(totalScore: Int(ratingSummaryCosmos.rating), attitudeScore: Int(ratingDetailThreeCosmos.rating), responseScore: Int(ratingDetailTwoCosmos.rating), qualityScore: Int(ratingDetailOneCosmos.rating), andAdditionalRemark: ratingCommentTextView.text)
         
         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: "评价", operationType: MaintenanceTaskOperationType.Confirm, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: nil, taskImageInfo: nil, taskRating: wisTaskRating) { (completedWithNoError, error) in

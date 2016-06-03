@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -16,32 +17,46 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Result" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWF-uO-T9G" userLabel="Annotation Label">
-                        <rect key="frame" x="18" y="8" width="88" height="22"/>
+                        <rect key="frame" x="18" y="8" width="180" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Result Description" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-Cf-ZI5">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Result Description" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-Cf-ZI5">
                         <rect key="frame" x="18" y="38" width="294" height="73.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_message" translatesAutoresizingMaskIntoConstraints="NO" id="Qcl-Nb-DR8">
+                        <rect key="frame" x="290" y="8" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Krl-1l-bO9"/>
+                            <constraint firstAttribute="width" secondItem="Qcl-Nb-DR8" secondAttribute="height" multiplier="1:1" id="tCE-Sg-ONf"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" constant="10" id="1tv-NZ-Qyj"/>
-                    <constraint firstItem="CWF-uO-T9G" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" constant="10" id="BGt-1V-On4"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="trailing" secondItem="inn-8k-f9K" secondAttribute="trailingMargin" id="BNL-p3-EfC"/>
+                    <constraint firstItem="Qcl-Nb-DR8" firstAttribute="width" secondItem="Qcl-Nb-DR8" secondAttribute="height" multiplier="1:1" id="C97-7J-7iL"/>
+                    <constraint firstItem="CWF-uO-T9G" firstAttribute="top" secondItem="inn-8k-f9K" secondAttribute="topMargin" id="FVu-Es-GCa"/>
+                    <constraint firstItem="NXS-Cf-ZI5" firstAttribute="top" secondItem="Qcl-Nb-DR8" secondAttribute="bottom" constant="8" id="IyY-3X-vKk"/>
+                    <constraint firstItem="Qcl-Nb-DR8" firstAttribute="trailing" secondItem="inn-8k-f9K" secondAttribute="trailingMargin" id="Om8-I9-eHx"/>
                     <constraint firstItem="NXS-Cf-ZI5" firstAttribute="bottom" secondItem="inn-8k-f9K" secondAttribute="bottomMargin" id="SuY-pc-Udw"/>
-                    <constraint firstItem="CWF-uO-T9G" firstAttribute="top" secondItem="inn-8k-f9K" secondAttribute="topMargin" id="VNR-2R-gOJ"/>
-                    <constraint firstItem="NXS-Cf-ZI5" firstAttribute="top" secondItem="CWF-uO-T9G" secondAttribute="bottom" constant="8" id="vW9-Zc-27m"/>
+                    <constraint firstItem="Qcl-Nb-DR8" firstAttribute="top" secondItem="inn-8k-f9K" secondAttribute="topMargin" id="YtO-AP-BJl"/>
+                    <constraint firstItem="CWF-uO-T9G" firstAttribute="leading" secondItem="inn-8k-f9K" secondAttribute="leadingMargin" constant="10" id="x7C-RB-Lbs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="inspectionResultDescriptionTextView" destination="NXS-Cf-ZI5" id="L8i-nE-5s5"/>
                 <outlet property="inspectionResultDescriptionTitleLabel" destination="CWF-uO-T9G" id="t93-vL-Kl1"/>
+                <outlet property="inspectionResultDescriptionTitleMark" destination="Qcl-Nb-DR8" id="qVA-h2-pKA"/>
             </connections>
             <point key="canvasLocation" x="212" y="255"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon_message" width="120" height="120"/>
+    </resources>
 </document>
