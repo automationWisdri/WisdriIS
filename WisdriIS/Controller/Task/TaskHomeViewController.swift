@@ -65,15 +65,19 @@ class TaskHomeViewController: BaseViewController {
         let taskListNotArchived = storyboard.instantiateViewControllerWithIdentifier("TaskListViewController") as! TaskListViewController
         
         taskListForApproval.taskType = MaintenanceTaskType.ForApproval
+        taskListForApproval.groupType = .None
         taskListForApproval.title = "待审批"
 
         taskListNormal.taskType = MaintenanceTaskType.Normal
+        taskListNormal.groupType = .None
         taskListNormal.title = "处理中"
         
         taskListArchived.taskType = MaintenanceTaskType.Archived
+        taskListArchived.groupType = .None
         taskListArchived.title = "已归档"
         
         taskListNotArchived.taskType = MaintenanceTaskType.NotArchived
+        taskListNotArchived.groupType = .None
         taskListNotArchived.title = "待归档"
         
 //        var viewControllers = [TaskListViewController]()
@@ -137,6 +141,8 @@ class TaskHomeViewController: BaseViewController {
         self.filterDropDownView.animationDuration = 0.5;
         self.filterDropDownView.animationBounceHeight = 0.0;
         
+        self.filterDropDownView.contentBackgroundColor = UIColor.whiteColor()
+        
         self.filterDropDownView.delegate = self
         self.filterContentView?.delegate = self
     }
@@ -157,7 +163,7 @@ class TaskHomeViewController: BaseViewController {
         let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
         
         currentViewController.taskTableView.scrollsToTop = true
-        currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+        currentViewController.getTaskList(currentViewController.taskType!, groupType: currentViewController.groupType, silentMode: true)
         
         print("\n====================\nTaskHomeViewController did Appear\n====================\n")
     }
@@ -192,7 +198,7 @@ class TaskHomeViewController: BaseViewController {
         case OnLineNotificationReceivedNotification, NewTaskSubmittedSuccessfullyNotification:
             let pagingMenuController = self.childViewControllers.first as! PagingMenuController
             let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
-            currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+            currentViewController.getTaskList(currentViewController.taskType!, groupType: currentViewController.groupType, silentMode: true)
             break
             
         default:
@@ -230,7 +236,7 @@ class TaskHomeViewController: BaseViewController {
                 
                 let pagingMenuController = self.childViewControllers.first as! PagingMenuController
                 let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
-                currentViewController.getTaskList(currentViewController.taskType!, silentMode: true)
+                currentViewController.getTaskList(currentViewController.taskType!, groupType: currentViewController.groupType, silentMode: true)
                 
                 if uploadingTaskDictionary.count == 0 {
                     self.navigationItem.title = self.originalTitle
@@ -263,7 +269,7 @@ extension TaskHomeViewController: PagingMenuControllerDelegate {
         let previousViewController = previousMenuController as! TaskListViewController
         
         didAppearViewController.taskTableView.scrollsToTop = true
-        didAppearViewController.getTaskList(didAppearViewController.taskType!, silentMode: true)
+        didAppearViewController.getTaskList(didAppearViewController.taskType!, groupType: didAppearViewController.groupType, silentMode: true)
         previousViewController.taskTableView.scrollsToTop = false
     }
 }
@@ -286,7 +292,6 @@ extension TaskHomeViewController {
         } else {
             switch direction {
             case .Top:
-                self.filterDropDownView.contentBackgroundColor = UIColor.wisBorderColor()
                 self.filterDropDownView.showFromNavigationController(self.navigationController, withContentView: self.filterContentView)
                 break
                 
@@ -297,18 +302,36 @@ extension TaskHomeViewController {
     }
 }
 
+
 extension TaskHomeViewController: LMDropdownViewDelegate {
-    // nothing yet
+    func dropdownViewWillShow(dropdownView: LMDropdownView!) {
+        self.filterContentView?.prepareView()
+    }
 }
 
+
+    // MARK: - extension - Drop down data delivery
+
 extension TaskHomeViewController: TaskListFilterContentViewDelegate {
+    
     func taskListFilterContentViewConfirmed(groupType: TaskListGroupType) {
         print("OK Button pressed")
         print("Selected group type is " + groupType.stringOfType)
         if self.filterDropDownView.isOpen {
             self.filterDropDownView.hide()
-            
         }
+        
+        for viewController in self.viewControllers {
+            viewController.groupType = groupType
+        }
+        
+        let pagingMenuController = self.childViewControllers.first as! PagingMenuController
+        let currentViewController = pagingMenuController.currentViewController as! TaskListViewController
+        
+        currentViewController.groupTaskList(groupType)
+        currentViewController.sortTaskList()
+        currentViewController.updateTableViewInfo()
+        
     }
     
     func taskListFilterContentViewCancelled() {
@@ -323,17 +346,20 @@ extension TaskHomeViewController: TaskListFilterContentViewDelegate {
 
 enum TaskListGroupType: Int {
     case None = 0
-    case ByPersonInCharge = 1
-    case ByTaskState = 2
+    case ByProcessSegment = 1
+    case ByPersonInCharge = 2
+    case ByTaskState = 3
     
     static let count: Int = {
-        return 3
+        return 4
     }()
     
     var stringOfType: String {
         switch self {
         case .None:
             return NSLocalizedString("None", comment: "")
+        case .ByProcessSegment:
+            return NSLocalizedString("By process segment", comment: "")
         case .ByPersonInCharge:
             return NSLocalizedString("By person in charge", comment: "")
         case .ByTaskState:

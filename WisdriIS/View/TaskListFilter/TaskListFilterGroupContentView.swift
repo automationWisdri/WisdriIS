@@ -21,8 +21,22 @@ class TaskListFilterGroupContentView: UIView {
 
     @IBOutlet weak var groupSelectionTableView: UITableView!
     
-    var currentSelectedIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-    
+    var currentSelectedIndexPath = NSIndexPath(forRow: 0, inSection: 0) {
+        didSet {
+            if currentSelectedIndexPath.row != oldValue.row {
+                let newSelectedCell = self.groupSelectionTableView.cellForRowAtIndexPath(currentSelectedIndexPath)
+                let oldSelectedCell = self.groupSelectionTableView.cellForRowAtIndexPath(oldValue)
+                
+                newSelectedCell?.accessoryType = .Checkmark
+                newSelectedCell?.selected = true
+                
+                oldSelectedCell?.accessoryType = .None
+                oldSelectedCell?.selected = false
+                
+            }
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,6 +48,10 @@ class TaskListFilterGroupContentView: UIView {
         // groupSelectionTableView.allowsMultipleSelection = false
         // groupSelectionTableView.allowsMultipleSelectionDuringEditing = false
         groupSelectionTableView.scrollsToTop = false
+    }
+    
+    func bindData(initialGroupType: TaskListGroupType) {
+        self.currentSelectedIndexPath = NSIndexPath(forRow: initialGroupType.rawValue, inSection: 0)
     }
 }
 
@@ -76,36 +94,20 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
             return UITableViewCell()
         }
         
-        switch groupType {
-        // None
-        case .None:
-            // let cell = tableView.dequeueReusableCellWithIdentifier(self.inspectionSelectionCellID) as UITableViewCell!
-            let cell = UITableViewCell(style: .Value1, reuseIdentifier: self.groupSelectionCellID)
+        let cell = UITableViewCell(style: .Value1, reuseIdentifier: self.groupSelectionCellID)
+        cell.selectionStyle = .None
+        cell.textLabel!.text = groupType.stringOfType
+        cell.indentationLevel = 1
+        
+        if indexPath.row == currentSelectedIndexPath.row {
             cell.accessoryType = .Checkmark
-            cell.selectionStyle = .None
-            cell.textLabel!.text = groupType.stringOfType
             cell.selected = true
-            self.currentSelectedIndexPath = indexPath
-            return cell
-            
-        // By person in charge
-        case .ByPersonInCharge:
-            let cell = UITableViewCell(style: .Value1, reuseIdentifier: self.groupSelectionCellID)
+        } else {
             cell.accessoryType = .None
-            cell.selectionStyle = .None
-            cell.textLabel!.text = groupType.stringOfType
             cell.selected = false
-            return cell
-          
-        // By task state
-        case .ByTaskState:
-            let cell = UITableViewCell(style: .Value1, reuseIdentifier: self.groupSelectionCellID)
-            cell.accessoryType = .None
-            cell.selectionStyle = .None
-            cell.textLabel!.text = groupType.stringOfType
-            cell.selected = false
-            return cell
         }
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

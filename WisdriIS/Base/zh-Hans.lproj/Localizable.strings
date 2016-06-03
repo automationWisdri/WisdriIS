@@ -110,7 +110,7 @@
 
 "Continue" = "继续维保";
 
-"Commiting" = "正在提交";
+"Committing" = "正在提交";
 
 "Success" = "提交成功";
 
@@ -318,6 +318,8 @@
 "Group" = "分组";
 
 "Group Type" = "分组选项";
+
+"By process segment" = "按工艺段";
 
 "By person in charge" = "按责任人";
 

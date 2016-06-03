@@ -14,3 +14,6 @@
 
 typedef NSComparisonResult (^arrayForwardSorterWithResult)(id lhs, id rhs);
 typedef NSComparisonResult (^arrayBackwardSorterWithResult)(id lhs, id rhs);
+
+typedef BOOL (^arrayForwardSorterWithBOOL)(id lhs, id rhs);
+typedef BOOL (^arrayBackwardSorterWithBOOL)(id lhs, id rhs);

@@ -182,7 +182,6 @@ NSString *const maintenanceTaskImagesInfoEncodingID = @"maintenanceTaskImagesInf
     self.imagesInfo = self.imagesInfo;
 }
 
-
 + (arrayForwardSorterWithResult) arrayForwardSorterWithResult {
     arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
         WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
@@ -194,13 +193,45 @@ NSString *const maintenanceTaskImagesInfoEncodingID = @"maintenanceTaskImagesInf
 }
 
 
-+ (arrayForwardSorterWithResult) arrayBackwardSorterWithResult {
++ (arrayBackwardSorterWithResult) arrayBackwardSorterWithResult {
     arrayForwardSorterWithResult sorter = ^(id lhsOriginal, id rhsOriginal) {
         WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
         WISMaintenanceTask *rhs = (WISMaintenanceTask *)rhsOriginal;
         
         return [rhs.createdDateTime compare:lhs.createdDateTime];
     };
+    return sorter;
+}
+
++ (arrayForwardSorterWithBOOL) arrayForwardWithBOOL {
+    arrayForwardSorterWithBOOL sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
+        WISMaintenanceTask *rhs = (WISMaintenanceTask *)rhsOriginal;
+        
+        NSComparisonResult result = [lhs.createdDateTime compare:rhs.createdDateTime];
+        if (result == NSOrderedAscending || result == NSOrderedSame) {
+            return YES;
+        } else {
+            return NO;
+        }
+    };
+    
+    return sorter;
+}
+
++ (arrayBackwardSorterWithBOOL) arrayBackwardWithBOOL {
+    arrayBackwardSorterWithBOOL sorter = ^(id lhsOriginal, id rhsOriginal) {
+        WISMaintenanceTask *lhs = (WISMaintenanceTask *)lhsOriginal;
+        WISMaintenanceTask *rhs = (WISMaintenanceTask *)rhsOriginal;
+        
+        NSComparisonResult result = [lhs.createdDateTime compare:rhs.createdDateTime];
+        if (result == NSOrderedDescending || result == NSOrderedSame) {
+            return YES;
+        } else {
+            return NO;
+        }
+    };
+    
     return sorter;
 }
 

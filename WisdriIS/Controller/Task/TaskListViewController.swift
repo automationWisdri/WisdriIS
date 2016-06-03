@@ -17,6 +17,11 @@ class TaskListViewController: BaseViewController {
     var taskType: MaintenanceTaskType?
 
     var wisTasks = [WISMaintenanceTask]()
+    
+    // typealias taskInGroup = [WISMaintenanceTask]!
+    var wisTasksInGroup = [String : [WISMaintenanceTask]!]()
+    var wisTasksInGroupArrangedTitles = [String]()
+    
     var currentOperatingCellIndex = -1
     var currentUpdateCellType: TaskListCellUpdatingType = .DoNothing
     var updateCellInfoURLSessionTask: NSURLSessionTask?
@@ -24,6 +29,8 @@ class TaskListViewController: BaseViewController {
     // for task type: NotArchived and Archived
     let recordNumberInPage: Int = 20
     var currentPageIndex = 1
+    
+    var groupType: TaskListGroupType = .None
     
     private let taskListCellID = "TaskListCell"
 
@@ -60,7 +67,7 @@ class TaskListViewController: BaseViewController {
 //        view.backgroundColor = UIColor.wisBackgroundColor()
         
         taskTableView.separatorColor = UIColor.wisCellSeparatorColor()
-        taskTableView.separatorInset = WISConfig.TaskListCell.separatorInset
+        // taskTableView.separatorInset = WISConfig.TaskListCell.separatorInset
         taskTableView.tableFooterView = UIView()
 //        taskTableView.addSubview(buttonView)
         
@@ -119,11 +126,11 @@ class TaskListViewController: BaseViewController {
             }
         }
         self.currentPageIndex = 1
-        getTaskList(taskType!, silentMode: false)
+        getTaskList(taskType!, groupType: self.groupType, silentMode: false)
     }
     
     func footerRefresh() {
-        getTaskList(taskType!, silentMode: false)
+        getTaskList(taskType!, groupType: self.groupType, silentMode: false)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -144,19 +151,19 @@ class TaskListViewController: BaseViewController {
         // getTaskList(taskType!)
     }
     
-    func getTaskList(taskType: MaintenanceTaskType, silentMode: Bool) -> Void {
+    func getTaskList(taskType: MaintenanceTaskType, groupType: TaskListGroupType, silentMode: Bool) -> Void {
         switch taskType {
         case .ForApproval, .Normal:
-            self.getOnTheGoTaskList(taskType, silentMode: silentMode)
+            self.getOnTheGoTaskList(taskType, groupType: groupType, silentMode: silentMode)
         case .NotArchived, .Archived:
-            self.getFinshedTaskList(taskType, pageIndex: self.currentPageIndex, numberOfRecordsInPage: self.recordNumberInPage, silentMode: silentMode)
+            self.getFinshedTaskList(taskType, groupType: groupType, pageIndex: self.currentPageIndex, numberOfRecordsInPage: self.recordNumberInPage, silentMode: silentMode)
         default:
             break
         }
     }
     
     
-    private func getOnTheGoTaskList(taskType: MaintenanceTaskType, silentMode: Bool) -> Void {
+    private func getOnTheGoTaskList(taskType: MaintenanceTaskType, groupType: TaskListGroupType, silentMode: Bool) -> Void {
         
         if !silentMode {
             SVProgressHUD.setDefaultMaskType(.None)
@@ -169,6 +176,8 @@ class TaskListViewController: BaseViewController {
                 for task in tasks {
                     self.wisTasks.append(task)
                 }
+                self.groupTaskList(groupType)
+                self.sortTaskList()
                 
                 self.taskTableView.mj_header.endRefreshing()
                 self.updateTableViewInfo()
@@ -177,6 +186,7 @@ class TaskListViewController: BaseViewController {
                     SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
                 }
+                
             } else {
                 if self.taskTableView.mj_header.isRefreshing() {
                     self.taskTableView.mj_header.endRefreshing()
@@ -195,7 +205,7 @@ class TaskListViewController: BaseViewController {
     }
     
     
-    private func getFinshedTaskList(taskType: MaintenanceTaskType, pageIndex:Int, numberOfRecordsInPage:Int, silentMode: Bool) -> Void {
+    private func getFinshedTaskList(taskType: MaintenanceTaskType, groupType: TaskListGroupType, pageIndex:Int, numberOfRecordsInPage:Int, silentMode: Bool) -> Void {
         if !silentMode {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showWithStatus(NSLocalizedString("Updating maintenance task list", comment: ""))
@@ -211,6 +221,8 @@ class TaskListViewController: BaseViewController {
                 for task in tasks {
                     self.wisTasks.append(task)
                 }
+                self.groupTaskList(groupType)
+                self.sortTaskList()
                 
                 self.currentPageIndex += 1
                 
@@ -228,6 +240,7 @@ class TaskListViewController: BaseViewController {
                     SVProgressHUD.setDefaultMaskType(.None)
                     SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
                 }
+                
             } else {
                 if self.taskTableView.mj_header.isRefreshing() {
                     self.taskTableView.mj_header.endRefreshing()
@@ -245,6 +258,90 @@ class TaskListViewController: BaseViewController {
         }
     }
     
+    func groupTaskList(groupType: TaskListGroupType) -> Void {
+        switch groupType {
+        case .None:
+            self.wisTasksInGroup.removeAll()
+            self.wisTasksInGroupArrangedTitles = [""]
+            self.wisTasksInGroup = ["": wisTasks]
+            self.wisTasksInGroupArrangedTitles = self.wisTasksInGroup.keys.sort( < )
+            
+        case .ByProcessSegment:
+            self.wisTasksInGroup.removeAll()
+            self.wisTasksInGroupArrangedTitles.removeAll()
+            
+            for task in self.wisTasks {
+                if !self.wisTasksInGroupArrangedTitles.contains(task.processSegmentName) {
+                    self.wisTasksInGroupArrangedTitles.append(task.processSegmentName)
+                }
+            }
+            if self.wisTasksInGroupArrangedTitles.count > 0 {
+                self.wisTasksInGroupArrangedTitles.sortInPlace( < )
+            }
+            
+            for processSegmentName in self.wisTasksInGroupArrangedTitles {
+                let filteredTask = self.wisTasks.filter({ $0.processSegmentName == processSegmentName })
+                self.wisTasksInGroup[processSegmentName] = filteredTask
+            }
+            break
+
+            
+        case .ByPersonInCharge:
+            self.wisTasksInGroup.removeAll()
+            self.wisTasksInGroupArrangedTitles.removeAll()
+            
+            for task in self.wisTasks {
+                if !self.wisTasksInGroupArrangedTitles.contains(task.personInCharge.fullName) {
+                    self.wisTasksInGroupArrangedTitles.append(task.personInCharge.fullName)
+                }
+            }
+            if self.wisTasksInGroupArrangedTitles.count > 0 {
+                self.wisTasksInGroupArrangedTitles.sortInPlace( < )
+            }
+            
+            for fullName in self.wisTasksInGroupArrangedTitles {
+                let filteredTask = self.wisTasks.filter({ $0.personInCharge.fullName == fullName })
+                self.wisTasksInGroup[fullName] = filteredTask
+            }
+            break
+            
+        case .ByTaskState:
+            self.wisTasksInGroup.removeAll()
+            self.wisTasksInGroupArrangedTitles.removeAll()
+            
+            for task in self.wisTasks {
+                if !self.wisTasksInGroupArrangedTitles.contains(WISConfig.configureStateText(task.state)) {
+                    self.wisTasksInGroupArrangedTitles.append(WISConfig.configureStateText(task.state))
+                }
+            }
+            if self.wisTasksInGroupArrangedTitles.count > 0 {
+                self.wisTasksInGroupArrangedTitles.sortInPlace( < )
+            }
+            
+            for state in self.wisTasksInGroupArrangedTitles {
+                let filteredTask = self.wisTasks.filter({ WISConfig.configureStateText($0.state) == state })
+                self.wisTasksInGroup[state] = filteredTask
+            }
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    func sortTaskList() -> Void {
+        guard self.wisTasksInGroupArrangedTitles.count > 0 else {
+            return
+        }
+        
+        for index in 0...self.wisTasksInGroupArrangedTitles.count - 1 {
+            let key = self.wisTasksInGroupArrangedTitles[index]
+            var tasksInGroup: [WISMaintenanceTask] = self.wisTasksInGroup[key]!
+            tasksInGroup.sortInPlace(WISMaintenanceTask.arrayBackwardWithBOOL())
+            self.wisTasksInGroup[key] = tasksInGroup
+        }
+    }
+    
     
     func handleNotification(notification:NSNotification) -> Void {
         
@@ -254,7 +351,7 @@ class TaskListViewController: BaseViewController {
             break
             
         case NewTaskSubmittedSuccessfullyNotification:
-            getOnTheGoTaskList(taskType!, silentMode: false)
+            getOnTheGoTaskList(taskType!, groupType: self.groupType, silentMode: false)
             // beacause of the mechanism of asynchronous networking accessing , the following code always executs before wisTask being updated.
             // it works imperfect. 2016.05.15
 //            dispatch_async(dispatch_get_main_queue()){
@@ -278,7 +375,7 @@ class TaskListViewController: BaseViewController {
         print("Task List View Controller with taskType: " + self.taskType!.rawValue.description + " deinited")
     }
     
-    private func updateTableViewInfo() {
+    func updateTableViewInfo() {
         self.updateCellInfoURLSessionTask = nil
         self.noRecords = self.wisTasks.isEmpty
         dispatch_async(dispatch_get_main_queue()) {
@@ -319,7 +416,7 @@ class TaskListViewController: BaseViewController {
             break
             
         case .AddNewCell:
-            getOnTheGoTaskList(taskType!, silentMode: false)
+            getOnTheGoTaskList(taskType!, groupType: self.groupType, silentMode: false)
             break
             
         case .RemoveCell:
@@ -359,31 +456,67 @@ class TaskListViewController: BaseViewController {
 extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.wisTasksInGroupArrangedTitles.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of Rows: \(wisTasks.count)")
-        return wisTasks.count
+        guard wisTasksInGroup.count > 0 else {
+            return 0
+        }
+        
+        return self.wisTasksInGroup[self.wisTasksInGroupArrangedTitles[section]]!.count
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard wisTasksInGroup.count > 0 else {
+            return nil
+        }
+        
+        if self.wisTasksInGroupArrangedTitles[section] == "" {
+            return nil
+        } else {
+            return self.wisTasksInGroupArrangedTitles[section]
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if wisTasksInGroupArrangedTitles.count == 1 && wisTasksInGroupArrangedTitles[0] == "" {
+            return CGFloat.min
+        } else {
+            return 50
+        }
+        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return tableView.wis_heightForCellWithIdentifier(TaskTableViewCell.self, indexPath: indexPath) { (cell) -> Void in
-//            cell.bind(self.wisTasks[indexPath.row])
-//        }
         return 80
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard indexPath.row < self.wisTasks.count else {
-            return getCell(tableView, cell: TaskListCell.self, indexPath: NSIndexPath(forRow: self.wisTasks.count - 1, inSection: 0))
+        guard indexPath.section < self.wisTasksInGroupArrangedTitles.count else {
+            return UITableViewCell()
+        }
+        
+        let tasksInGroup = self.wisTasksInGroup[self.wisTasksInGroupArrangedTitles[indexPath.section]]!
+        guard indexPath.row < tasksInGroup.count else {
+            return getCell(tableView, cell: TaskListCell.self, indexPath: NSIndexPath(forRow: tasksInGroup.count - 1, inSection: indexPath.section))
         }
         
         let cell = getCell(tableView, cell: TaskListCell.self, indexPath: indexPath)
         print("index of Cell: \(indexPath.row)")
-        cell.bind(self.wisTasks[indexPath.row])
+        cell.bind(tasksInGroup[indexPath.row])
         return cell
     }
+    
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.whiteColor()
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.font = UIFont.boldSystemFontOfSize(15)
+        // headerView.textLabel?.font = UIFont.italicSystemFontOfSize(15)
+        headerView.textLabel?.textColor = UIColor.grayColor()
+    }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let wisTask = self.wisTasks[indexPath.row]
@@ -391,9 +524,9 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         defer {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
-        
         performSegueWithIdentifier("showTaskDetail", sender: indexPath.row)
     }
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showTaskDetail" {

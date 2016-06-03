@@ -106,4 +106,7 @@ typedef NS_ENUM(NSInteger, MaintenanceTaskType) {
 + (arrayForwardSorterWithResult) arrayForwardSorterWithResult;
 + (arrayForwardSorterWithResult) arrayBackwardSorterWithResult;
 
++ (arrayForwardSorterWithBOOL) arrayForwardWithBOOL;
++ (arrayBackwardSorterWithBOOL) arrayBackwardWithBOOL;
+
 @end
