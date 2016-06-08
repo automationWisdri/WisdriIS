@@ -16,6 +16,7 @@ def pods
     pod 'Cosmos'
     pod 'Navi'
     pod 'LMDropdownView'
+    pod 'TagListView', '~> 1.0'
 end
 
 target 'WisdriIS' do

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V0y-q8-Uqr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V0y-q8-Uqr">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -114,7 +114,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tA1-Ra-skn">
-                                        <rect key="frame" x="0.0" y="375" width="600" height="170"/>
+                                        <rect key="frame" x="0.0" y="375" width="600" height="190"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srX-SF-Xkc" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
@@ -127,7 +127,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPI-qj-ote" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="169" width="600" height="1"/>
+                                                <rect key="frame" x="0.0" y="189" width="600" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="dcp-Rj-uF6"/>
@@ -147,9 +147,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6Bu-5u-Oo7">
-                                                <rect key="frame" x="0.0" y="38" width="600" height="118"/>
+                                                <rect key="frame" x="0.0" y="38" width="600" height="142"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="118" id="JHl-w2-Q2K"/>
+                                                    <constraint firstAttribute="height" constant="142" id="JHl-w2-Q2K"/>
                                                 </constraints>
                                                 <date key="date" timeIntervalSinceReferenceDate="480609796.389431">
                                                     <!--2016-03-25 14:43:16 +0000-->
@@ -174,9 +174,9 @@
                                             <constraint firstItem="6Bu-5u-Oo7" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="SyF-CN-aCO"/>
                                             <constraint firstAttribute="trailing" secondItem="pPI-qj-ote" secondAttribute="trailing" id="TCB-8z-5UY"/>
                                             <constraint firstItem="pPI-qj-ote" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="Vck-ju-uiB"/>
-                                            <constraint firstAttribute="bottom" secondItem="6Bu-5u-Oo7" secondAttribute="bottom" constant="14" id="Wtb-2o-JeY"/>
+                                            <constraint firstAttribute="bottom" secondItem="6Bu-5u-Oo7" secondAttribute="bottom" constant="10" id="Wtb-2o-JeY"/>
                                             <constraint firstItem="wC4-kD-CZy" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" constant="20" id="c5L-d3-rSZ"/>
-                                            <constraint firstAttribute="height" constant="170" id="d9n-Xd-3VS"/>
+                                            <constraint firstAttribute="height" constant="190" id="d9n-Xd-3VS"/>
                                             <constraint firstAttribute="trailing" secondItem="6Bu-5u-Oo7" secondAttribute="trailing" id="dG8-yi-8hi"/>
                                             <constraint firstItem="srX-SF-Xkc" firstAttribute="leading" secondItem="tA1-Ra-skn" secondAttribute="leading" id="gDU-fB-awR"/>
                                             <constraint firstItem="srX-SF-Xkc" firstAttribute="top" secondItem="tA1-Ra-skn" secondAttribute="top" id="hiV-Hj-pAH"/>
