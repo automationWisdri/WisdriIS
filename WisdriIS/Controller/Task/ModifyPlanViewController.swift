@@ -13,6 +13,7 @@ class ModifyPlanViewController: BaseViewController {
 
     @IBOutlet weak var taskPlanLabel: UILabel!
     @IBOutlet weak var taskPlanTextView: UITextView!
+    @IBOutlet weak var taskPlanInfoViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var estimateDateLabel: UILabel!
     @IBOutlet weak var estimateDatePicker: UIDatePicker!
@@ -93,14 +94,6 @@ class ModifyPlanViewController: BaseViewController {
         
         mediaCollectionView.backgroundColor = UIColor.clearColor()
         
-        mediaCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
-        mediaCollectionView.contentInset.left = WISConfig.MediaCollection.leftEdgeInset
-        mediaCollectionView.dataSource = self
-        mediaCollectionView.delegate = self
-        mediaCollectionView.showsHorizontalScrollIndicator = false
-        mediaCollectionView.hidden = false
-        mediaCollectionViewHeightConstraint.constant = 80
-        
         relevantUserTextView.textContainer.lineFragmentPadding = 0
         relevantUserTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
@@ -118,10 +111,26 @@ class ModifyPlanViewController: BaseViewController {
         }
         
         taskPlanTextView.text = wisPlan!.planDescription
+        print(taskPlanTextView.text)
         
-        for item : AnyObject in self.wisPlan!.imagesInfo.allKeys {
-            self.wisFileInfos.append(self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
-            self.imagesInfo[item as! String] = (self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
+        if self.wisPlan!.imagesInfo.count > 0 {
+            
+            mediaCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
+            mediaCollectionView.contentInset.left = WISConfig.MediaCollection.leftEdgeInset
+            mediaCollectionView.dataSource = self
+            mediaCollectionView.delegate = self
+            mediaCollectionView.showsHorizontalScrollIndicator = false
+            mediaCollectionView.hidden = false
+            mediaCollectionViewHeightConstraint.constant = 80
+            
+            for item : AnyObject in self.wisPlan!.imagesInfo.allKeys {
+                self.wisFileInfos.append(self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
+                self.imagesInfo[item as! String] = (self.wisPlan!.imagesInfo.objectForKey(item) as! WISFileInfo)
+            }
+            
+        } else {
+            mediaCollectionView.hidden = true
+            taskPlanInfoViewHeightConstraint.constant = 225 - 80 - 13
         }
         
         relevantUserTextView.text = WISUserDefaults.getRelevantUserText(wisPlan!.participants)

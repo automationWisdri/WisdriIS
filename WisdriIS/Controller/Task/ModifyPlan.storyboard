@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LSi-IR-gSN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LSi-IR-gSN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -105,7 +105,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ljo-D5-Ilk" userLabel="Estimate Date View">
-                                        <rect key="frame" x="0.0" y="375" width="600" height="170"/>
+                                        <rect key="frame" x="0.0" y="375" width="600" height="190"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1SQ-y0-dWe" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
@@ -118,7 +118,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-4V-1RU" customClass="HorizontalLineView" customModule="WisdriIS" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="169" width="600" height="1"/>
+                                                <rect key="frame" x="0.0" y="189" width="600" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="xFm-c3-0ob"/>
@@ -144,10 +144,10 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="DtA-Ld-bdS">
-                                                <rect key="frame" x="0.0" y="38" width="600" height="118"/>
+                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="DtA-Ld-bdS">
+                                                <rect key="frame" x="0.0" y="38" width="600" height="142"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="118" id="cTZ-g7-Cy9"/>
+                                                    <constraint firstAttribute="height" constant="142" id="cTZ-g7-Cy9"/>
                                                 </constraints>
                                                 <date key="date" timeIntervalSinceReferenceDate="480609796.389431">
                                                     <!--2016-03-25 14:43:16 +0000-->
@@ -163,8 +163,8 @@
                                             <constraint firstItem="etD-pL-OtM" firstAttribute="leading" secondItem="vnI-zt-hSL" secondAttribute="trailing" constant="4" id="IZa-Kt-LfK"/>
                                             <constraint firstAttribute="bottom" secondItem="5fV-4V-1RU" secondAttribute="bottom" id="KKS-xc-rej"/>
                                             <constraint firstItem="1SQ-y0-dWe" firstAttribute="top" secondItem="Ljo-D5-Ilk" secondAttribute="top" id="Qya-PR-0NU"/>
-                                            <constraint firstAttribute="height" constant="170" id="Vs5-fC-L9g"/>
-                                            <constraint firstAttribute="bottom" secondItem="DtA-Ld-bdS" secondAttribute="bottom" constant="14" id="Vxz-AU-bOU"/>
+                                            <constraint firstAttribute="height" constant="190" id="Vs5-fC-L9g"/>
+                                            <constraint firstAttribute="bottom" secondItem="DtA-Ld-bdS" secondAttribute="bottom" constant="10" id="Vxz-AU-bOU"/>
                                             <constraint firstItem="DtA-Ld-bdS" firstAttribute="top" secondItem="etD-pL-OtM" secondAttribute="bottom" constant="7" id="aQ4-ce-neS"/>
                                             <constraint firstItem="DtA-Ld-bdS" firstAttribute="leading" secondItem="Ljo-D5-Ilk" secondAttribute="leading" id="ciu-J8-rGr"/>
                                             <constraint firstItem="etD-pL-OtM" firstAttribute="top" secondItem="Ljo-D5-Ilk" secondAttribute="top" constant="10" id="e9G-7z-TCj"/>
@@ -200,6 +200,9 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4De-V4-ZBD">
                                                 <rect key="frame" x="20" y="38" width="565" height="80"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="80" id="5eC-Eq-S8c"/>
+                                                </constraints>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -250,7 +253,6 @@
                                             <constraint firstItem="oIT-Im-8Eb" firstAttribute="top" secondItem="w2c-Uh-3Bc" secondAttribute="top" id="haq-tc-KIU"/>
                                             <constraint firstItem="ael-pY-2Sb" firstAttribute="top" secondItem="2s1-cH-BfK" secondAttribute="bottom" constant="13" id="jUM-hf-ZdR"/>
                                             <constraint firstAttribute="trailing" secondItem="4De-V4-ZBD" secondAttribute="trailing" constant="15" id="kkX-7r-reT"/>
-                                            <constraint firstItem="2s1-cH-BfK" firstAttribute="top" secondItem="4De-V4-ZBD" secondAttribute="bottom" constant="13" id="nqg-la-9DL"/>
                                             <constraint firstAttribute="bottom" secondItem="ael-pY-2Sb" secondAttribute="bottom" id="u4O-a1-e8v"/>
                                             <constraint firstItem="Vai-aE-qD2" firstAttribute="top" secondItem="w2c-Uh-3Bc" secondAttribute="top" constant="9" id="ygL-PI-HDW"/>
                                             <constraint firstItem="4De-V4-ZBD" firstAttribute="leading" secondItem="w2c-Uh-3Bc" secondAttribute="leading" constant="20" id="zTn-by-cso"/>
@@ -304,6 +306,7 @@
                         <outlet property="relevantUserTextView" destination="rxW-bl-Auw" id="151-NR-xAx"/>
                         <outlet property="relevantUserView" destination="VP7-Gu-U6B" id="rnj-TE-wQ4"/>
                         <outlet property="taskPlanBottomLine" destination="ael-pY-2Sb" id="tzB-CL-SMn"/>
+                        <outlet property="taskPlanInfoViewHeightConstraint" destination="WhF-Kl-5rr" id="1mX-Vs-Z0R"/>
                         <outlet property="taskPlanLabel" destination="m6E-V9-xpu" id="oW2-r8-TtG"/>
                         <outlet property="taskPlanTextView" destination="4De-V4-ZBD" id="Z15-1K-nob"/>
                         <outlet property="taskPlanTopLine" destination="oIT-Im-8Eb" id="sBE-H2-Pkl"/>
