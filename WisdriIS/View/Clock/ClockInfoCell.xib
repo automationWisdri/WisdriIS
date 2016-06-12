@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Annotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-Hu-Zvx" userLabel="Annotation Label">
@@ -21,7 +21,7 @@
                             <constraint firstAttribute="height" constant="20" id="KYr-uP-1fF"/>
                             <constraint firstAttribute="width" constant="80" id="xox-oK-x45"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -31,11 +31,11 @@
                             <constraint firstAttribute="height" constant="21" id="K12-VD-mtp"/>
                             <constraint firstAttribute="width" constant="150" id="qHb-6w-ZqP"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_clock_active" translatesAutoresizingMaskIntoConstraints="NO" id="ncZ-fB-jFy">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ncZ-fB-jFy">
                         <rect key="frame" x="20" y="11" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="Sbu-Cs-V4I"/>
@@ -54,12 +54,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="annotationLabel" destination="d7s-Hu-Zvx" id="cvz-SX-1vy"/>
+                <outlet property="clockImageView" destination="ncZ-fB-jFy" id="3Xn-nF-Lfc"/>
                 <outlet property="infoLabel" destination="9N9-ww-jpD" id="M4I-5A-16s"/>
             </connections>
             <point key="canvasLocation" x="335" y="284"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="icon_clock_active" width="80" height="80"/>
-    </resources>
 </document>

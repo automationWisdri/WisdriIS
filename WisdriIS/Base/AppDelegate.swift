@@ -41,6 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = LoginViewController()
         }
         
+        #if DEBUG
+            let fpsLabel = WISFPSLabel(frame: CGRectMake(SCREEN_WIDTH - 90, 0, 55, 20))
+            self.window?.addSubview(fpsLabel)
+        #endif
+        
         return true
     }
     
@@ -58,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         WISUserDefaults.setupSegment()
         WISUserDefaults.getCurrentUserClockStatus()
-        WISUserDefaults.getWorkShift(NSDate())
+        WISUserDefaults.getWorkShift(NSDate(), range: .Year)
         
         WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
         

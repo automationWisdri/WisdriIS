@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qAd-BE-mGk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qAd-BE-mGk">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -315,7 +315,7 @@
                                 <rect key="frame" x="0.0" y="398" width="600" height="30"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqc-i8-tvu" userLabel="Night Shift View">
-                                        <rect key="frame" x="488" y="2" width="48" height="25"/>
+                                        <rect key="frame" x="488" y="0.0" width="48" height="25"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_rectangle_border" translatesAutoresizingMaskIntoConstraints="NO" id="L7n-7r-GTr">
                                                 <rect key="frame" x="0.0" y="3" width="18" height="18"/>
@@ -356,7 +356,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s5R-XX-Vs5" userLabel="Rest Shift View">
-                                        <rect key="frame" x="537" y="2" width="48" height="25"/>
+                                        <rect key="frame" x="537" y="0.0" width="48" height="25"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_rectangle_border" translatesAutoresizingMaskIntoConstraints="NO" id="Ebz-Dt-J7P">
                                                 <rect key="frame" x="0.0" y="3" width="18" height="18"/>
@@ -397,7 +397,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zew-Hl-9o3" userLabel="Day Shift View">
-                                        <rect key="frame" x="438" y="2" width="48" height="25"/>
+                                        <rect key="frame" x="438" y="0.0" width="48" height="25"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_rectangle_border" translatesAutoresizingMaskIntoConstraints="NO" id="8wc-Qe-RwD">
                                                 <rect key="frame" x="0.0" y="3" width="18" height="18"/>
@@ -441,12 +441,12 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Bmi-t2-RXi"/>
-                                    <constraint firstItem="zew-Hl-9o3" firstAttribute="centerY" secondItem="GUx-vF-zrn" secondAttribute="centerY" id="HyF-T6-hpg"/>
+                                    <constraint firstItem="zew-Hl-9o3" firstAttribute="top" secondItem="GUx-vF-zrn" secondAttribute="top" id="DC6-zK-NIQ"/>
                                     <constraint firstItem="s5R-XX-Vs5" firstAttribute="leading" secondItem="aqc-i8-tvu" secondAttribute="trailing" constant="1" id="IHv-by-3Wt"/>
+                                    <constraint firstItem="s5R-XX-Vs5" firstAttribute="top" secondItem="GUx-vF-zrn" secondAttribute="top" id="S2b-Ly-KRX"/>
                                     <constraint firstAttribute="trailing" secondItem="s5R-XX-Vs5" secondAttribute="trailing" constant="15" id="SgS-0e-o7N"/>
-                                    <constraint firstItem="s5R-XX-Vs5" firstAttribute="centerY" secondItem="GUx-vF-zrn" secondAttribute="centerY" id="ZRT-Fi-MYN"/>
+                                    <constraint firstItem="aqc-i8-tvu" firstAttribute="top" secondItem="GUx-vF-zrn" secondAttribute="top" id="igV-v0-TAA"/>
                                     <constraint firstItem="aqc-i8-tvu" firstAttribute="leading" secondItem="zew-Hl-9o3" secondAttribute="trailing" constant="2" id="lnd-YC-kKE"/>
-                                    <constraint firstItem="aqc-i8-tvu" firstAttribute="centerY" secondItem="GUx-vF-zrn" secondAttribute="centerY" id="z3G-sM-gnz"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-Tm-k7t" userLabel="Shift Table View">
@@ -496,7 +496,7 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="c8m-6b-SSN" firstAttribute="centerX" secondItem="rmA-dl-7rx" secondAttribute="centerX" id="7ik-iV-QCE"/>
+                                <constraint firstItem="c8m-6b-SSN" firstAttribute="centerX" secondItem="rmA-dl-7rx" secondAttribute="centerX" id="O1J-yR-wO0"/>
                                 <constraint firstItem="c8m-6b-SSN" firstAttribute="centerY" secondItem="rmA-dl-7rx" secondAttribute="centerY" id="kcK-Ni-9sB"/>
                             </constraints>
                         </view>

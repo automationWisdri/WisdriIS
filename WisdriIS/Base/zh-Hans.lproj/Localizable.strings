@@ -148,6 +148,16 @@
 
 "Index" = "编号";
 
+"No clock records" = "该日期无打卡记录";
+
+"Clock in" = "上班打卡";
+
+"Clock out" = "下班打卡";
+
+"Undefined" = "未定义";
+
+"Today" = "今天";
+
 // 点检新增内容
 "Inspection" = "点检";
 

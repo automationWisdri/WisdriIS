@@ -113,6 +113,7 @@
 		9F055D341CE4584D0077184B /* WISRefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53251C9AF596001BE6F6 /* WISRefreshHeader.swift */; };
 		9F055D351CE458500077184B /* WISRefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */; };
 		9F055D361CE458870077184B /* WISSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50011C78A99E001A7644 /* WISSettings.swift */; };
+		9F14B3421D0D57E7008C5F1B /* WISFPSLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F14B3411D0D57E7008C5F1B /* WISFPSLabel.swift */; };
 		9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F681C7EF35100D1298C /* TaskListViewController.swift */; };
 		9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */; };
 		9F169F731C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */; };
@@ -360,6 +361,7 @@
 		9F055C731CE034690077184B /* ClockInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClockInfoCell.xib; path = View/Clock/ClockInfoCell.xib; sourceTree = "<group>"; };
 		9F055C771CE061AE0077184B /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		9F055D371CE45E550077184B /* swiftScan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = swiftScan.framework; path = "../../../Library/Developer/Xcode/DerivedData/WisdriIS-fjambupqdfeqtgbfsuhldrttyxgz/Build/Products/Debug-iphonesimulator/swiftScan.framework"; sourceTree = "<group>"; };
+		9F14B3411D0D57E7008C5F1B /* WISFPSLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISFPSLabel.swift; sourceTree = "<group>"; };
 		9F169F681C7EF35100D1298C /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListViewController.swift; path = WisdriIS/Controller/Task/TaskListViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailViewController.swift; path = WisdriIS/Controller/Task/TaskDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+WISAutomaticHeightCell.swift"; sourceTree = "<group>"; };
@@ -1204,6 +1206,7 @@
 				9FEF50011C78A99E001A7644 /* WISSettings.swift */,
 				9F801ADC1C86BC5700F64265 /* WISAlert.swift */,
 				9FA4C37B1C995AF600BA4115 /* WISUserDefaults.swift */,
+				9F14B3411D0D57E7008C5F1B /* WISFPSLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1596,6 +1599,7 @@
 				9F055C741CE034690077184B /* ClockInfoCell.swift in Sources */,
 				9F7C4BCB1C8E6F1300652CDF /* MediaView.swift in Sources */,
 				9FEF50141C78A9B7001A7644 /* UITableView+WIS.swift in Sources */,
+				9F14B3421D0D57E7008C5F1B /* WISFPSLabel.swift in Sources */,
 				385C1DE41CE4BC9200F8E393 /* LBXScanView.swift in Sources */,
 				9F1FA1F01CF491F7001A2F61 /* TaskState.swift in Sources */,
 				9F801AA51C85E0FF00F64265 /* String+WIS.swift in Sources */,
@@ -1733,6 +1737,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WisdriIS/Connect/GtSdkLib",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisdri.WisdriIndustrialService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

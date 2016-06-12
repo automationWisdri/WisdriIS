@@ -10,6 +10,7 @@ import UIKit
 import CVCalendar
 import SVProgressHUD
 import SwiftDate
+import Ruler
 
 class ShiftViewController: UIViewController {
 
@@ -27,7 +28,13 @@ class ShiftViewController: UIViewController {
     
     private var clockRecords = [WISClockRecord]()
     
-    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("该日期无打卡记录", comment: ""))
+    private lazy var todayButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: NSLocalizedString("Today", comment: ""), style: .Plain, target: self, action: #selector(ShiftViewController.todayMonthView))
+        button.enabled = true
+        return button
+    }()
+    
+    private lazy var noRecordsFooterView: InfoView = InfoView(NSLocalizedString("No clock records", comment: ""))
     
     private var noRecords = false {
         didSet {
@@ -42,7 +49,9 @@ class ShiftViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        monthLabel.text = "排班 ｜ " + CVDate(date: NSDate()).globalDescription
+        monthLabel.text = NSLocalizedString("Shift") + " ｜ " + CVDate(date: NSDate()).globalDescription
+        // 增加了 TodayButton 后，Title 会往左偏移一点，后续待解决
+        navigationItem.rightBarButtonItem = todayButton
         shiftTableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
         shiftTableView.tableFooterView = UIView()
         
@@ -65,6 +74,9 @@ class ShiftViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc private func todayMonthView() {
+        self.calendarView.toggleCurrentDayView()
+    }
 
     /*
     // MARK: - Navigation
@@ -76,8 +88,10 @@ class ShiftViewController: UIViewController {
     }
     */
     
+    // 获取从 startDate 至 endDate 之间的打卡记录
     private func getClockRecords(startDate: NSDate, endDate: NSDate) {
         
+        SVProgressHUD.setDefaultMaskType(.None)
         SVProgressHUD.show()
         WISDataManager.sharedInstance().updateClockRecordsWithStartDate(startDate, endDate: endDate) { (completedWithNoError, error, classNameOfDataAsString, data) in
             if completedWithNoError {
@@ -90,14 +104,22 @@ class ShiftViewController: UIViewController {
                     self.clockRecords.append(record)
                 }
                 
+                if self.clockRecords.isEmpty {
+                    self.shiftTableView.contentOffset = CGPoint(x: 0, y: Ruler.iPhoneVertical(95, 50, 0, 0).value)
+                } else {
+                    self.shiftTableView.contentOffset = CGPoint()
+                }
+                
                 self.noRecords = self.clockRecords.isEmpty
                 self.shiftTableView.reloadData()
+                
             } else {
                 WISConfig.errorCode(error)
             }
         }
     }
     
+    // Deprecated
     private func convertDateToDayView(date: NSDate) -> CVCalendarDayView {
         
         let date = date
@@ -134,10 +156,38 @@ extension ShiftViewController: CVCalendarViewDelegate {
     }
     
     func didSelectDayView(dayView: CVCalendarDayView, animationDidFinish: Bool) {
-        print("\(dayView.date.commonDescription) is selected!")
+//        print("\(dayView.date.commonDescription) is selected!")
+
+        // 获取选择当天的打卡记录
         selectedDay = dayView
-        
         getClockRecords(selectedDay.date.convertedDate()!, endDate: selectedDay.date.convertedDate()!)
+        
+        // 获取当月、去年、明年的排班记录
+        // 十分丑陋的实现方式，待优化
+        let dayOfSelectDay = dayView.date.day
+        let monthOfSelectDay = dayView.date.month
+        let yearOfSelectYear = dayView.date.year
+        
+        let dateOfSelectDay = NSDate(year: yearOfSelectYear , month: monthOfSelectDay, day: dayOfSelectDay)
+        if workShifts[dateOfSelectDay.toString()!] == nil {
+            WISUserDefaults.getWorkShift(dateOfSelectDay, range: .Month)
+        }
+        
+        if monthOfSelectDay <= 3 {
+            let previewYear = NSDate(year: yearOfSelectYear - 1, month: monthOfSelectDay, day: dayOfSelectDay)
+            if workShifts[previewYear.toString()!] == nil {
+                WISUserDefaults.getWorkShift(previewYear, range: .Year)
+            }
+        }
+        
+        if monthOfSelectDay >= 10 {
+            let nextYear = NSDate(year: yearOfSelectYear + 1, month: monthOfSelectDay, day: dayOfSelectDay)
+            if workShifts[nextYear.toString()!] == nil {
+                WISUserDefaults.getWorkShift(nextYear, range: .Year)
+            }
+        }
+        
+        
     }
     
     func presentedDateUpdated(date: CVDate) {
@@ -155,7 +205,7 @@ extension ShiftViewController: CVCalendarViewDelegate {
             updatedMonthLabel.textColor = monthLabel.textColor
             updatedMonthLabel.font = monthLabel.font
             updatedMonthLabel.textAlignment = .Center
-            updatedMonthLabel.text = "排班 ｜ " + date.globalDescription
+            updatedMonthLabel.text = NSLocalizedString("Shift") + " ｜ " + date.globalDescription
             updatedMonthLabel.sizeToFit()
             updatedMonthLabel.alpha = 0
             updatedMonthLabel.center = self.monthLabel.center
@@ -238,16 +288,16 @@ extension ShiftViewController: CVCalendarViewDelegate {
         }
     }
     
+    // ShouldMoveOnHighlightingOnDayView 为 True 时，今天的 dotMarker 会显示在 DayView 的上方
+    // 改为 false 以解决该 Bug
     func dotMarker(shouldMoveOnHighlightingOnDayView dayView: CVCalendarDayView) -> Bool {
-        return true
+        return false
     }
     
     func dotMarker(sizeOnDayView dayView: DayView) -> CGFloat {
         return 15
     }
  
-    
-
     /*
     func selectionViewPath() -> ((CGRect) -> (UIBezierPath)) {
         return { UIBezierPath(rect: CGRectMake(0, 0, $0.width, $0.height)) }
@@ -376,32 +426,24 @@ extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
         
         let record = clockRecords[indexPath.row]
 
-        cell.infoLabel.text = WISConfig.DATE.stringFromDate(record.clockActionTime)
+        cell.infoLabel.text = record.clockActionTime.toDateTimeString()
         
         switch record.clockAction {
         case .In:
-            cell.annotationLabel.text = "上班打卡"
+            cell.clockImageView.image = UIImage(named: "icon_clock_active")
+            cell.annotationLabel.text = NSLocalizedString("Clock in")
         case .Off:
-            cell.annotationLabel.text = "下班打卡"
+            cell.clockImageView.image = UIImage(named: "icon_clock")
+            cell.annotationLabel.text = NSLocalizedString("Clock out")
         default:
-            cell.annotationLabel.text = "未定义"
+            cell.clockImageView.image = UIImage(named: "icon_fault")
+            cell.annotationLabel.text = NSLocalizedString("Undefined")
         }
         
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        defer {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        }
-
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 50
     }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
-    }
+
 }

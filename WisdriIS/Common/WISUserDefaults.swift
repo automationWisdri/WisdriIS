@@ -23,6 +23,13 @@ var clockStatusValidated = false
 
 var workShifts = [String: Int]()
 
+enum WorkShiftRange: Int {
+    case Day = 0
+    case Week
+    case Month
+    case Year
+}
+
 class WISUserDefaults {
     
     class func setupSegment() {
@@ -39,6 +46,8 @@ class WISUserDefaults {
                     let segment = Segment(id: id, name: name)
                     userSegmentList.append(segment)
                 }
+            } else {
+                WISConfig.errorCode(error, customInformation: "获取工艺段失败")
             }
         })
     }
@@ -63,38 +72,56 @@ class WISUserDefaults {
                 currentClockStatus = ClockStatus(rawValue: (data as! Int))!
                 
             } else {
-                // 待处理
+                // 无法获得任务操作方法，是否需要给用户提示？
+//                WISConfig.errorCode(error, customInformation: "获取任务操作失败")
             }
         }
     }
     
-    class func getWorkShift(date: NSDate) {
+    /// 获取排班记录
+    /// 根据传入的日期和范围，获取日期当天、当周、当月、当年的排班记录
+    class func getWorkShift(date: NSDate, range: WorkShiftRange) {
         
-//        let now = date.startOf(.Month)
-        let now = date.startOf(.Year)
+        var now: NSDate
+        var recordNumber: Int
+        
+        switch range {
+        case .Day:
+            now = date
+            recordNumber = 1
+            
+        case .Week:
+            now = date.startOf(.Weekday)
+            recordNumber = 7
+            
+        case .Month:
+            now = date.startOf(.Month)
+            recordNumber = now.monthDays
+            
+        case .Year:
+            now = date.startOf(.Year)
+            recordNumber = 365
+        }
+
 //        let previewsMonthDate = 1.months.agoFromDate(now)
 //        let nextMonthDate = 1.months.fromNow()
 //        let recordNumber = previewsMonthDate.monthDays + now.monthDays + nextMonthDate.monthDays
-//        print("请求查询 \(recordNumber) 条记录")
-        WISDataManager.sharedInstance().updateWorkShiftsWithStartDate(now, recordNumber: 365) { (completedWithNoError, error, classNameOfDataAsString, data) in
+
+        WISDataManager.sharedInstance().updateWorkShiftsWithStartDate(now, recordNumber: recordNumber) { (completedWithNoError, error, classNameOfDataAsString, data) in
             if completedWithNoError {
                 
                 let shifts = data as! Array<Int>
-                
-//                workShifts.removeAll()
-//                print("查询到 \(shifts.count) 条记录")
+
                 var i = 0
                 for shift in shifts {
                     
                     let date = i.days.fromDate(now)
                     workShifts[date.toString()!] = shift
-//                    print("第 \(i) 条记录：\(date.toString()!), \(workShifts[date.toString()!])")
-
                     i += 1
                 }
                 
             } else {
-                // 待修改
+                WISConfig.errorCode(error, customInformation: "查询排班记录失败")
             }
         }
     }

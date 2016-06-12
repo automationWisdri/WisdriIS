@@ -12,6 +12,7 @@ class ClockInfoCell: UITableViewCell {
 
     @IBOutlet weak var annotationLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var clockImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
