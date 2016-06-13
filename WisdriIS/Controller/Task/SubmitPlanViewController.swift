@@ -320,7 +320,7 @@ class SubmitPlanViewController: BaseViewController {
                 
                 for image in images {
                     self?.mediaImages.append(image)
-                    photoFileName = "task_image_" + String(image.hash)
+                    photoFileName = "plan_image_" + String(image.hash)
                     self?.imagesDictionary[photoFileName!] = image
                 }
             }
@@ -512,6 +512,10 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
             self.presentViewController(pickAlertController, animated: true, completion: nil)
             
         case 0:
+            
+            let imageToRemove = mediaImages[indexPath.item]
+            let photoFileName = "plan_image_" + String(imageToRemove.hash)
+            imagesDictionary.removeValueForKey(photoFileName)
             
             mediaImages.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
