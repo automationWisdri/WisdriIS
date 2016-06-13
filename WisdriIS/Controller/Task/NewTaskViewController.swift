@@ -457,6 +457,10 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
             
         case 0:
             
+            let imageToRemove = mediaImages[indexPath.item]
+            let photoFileName = "task_image_" + String(imageToRemove.hash)
+            imagesDictionary.removeValueForKey(photoFileName)
+            
             mediaImages.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
             
