@@ -32,9 +32,9 @@ class WISFPSLabel: UILabel {
         self.textAlignment = .Center
         self.userInteractionEnabled = false
         self.textColor = UIColor.blackColor()
-        self.backgroundColor = UIColor.wisBackgroundColor()
+        self.backgroundColor = UIColor.clearColor()
 //        self.font = UIFont(name: "Menlo", size: 12)
-        self.font = UIFont.boldSystemFontOfSize(12)
+        self.font = UIFont.systemFontOfSize(12)
         self.hidden = false
         
         weak var weakSelf = self

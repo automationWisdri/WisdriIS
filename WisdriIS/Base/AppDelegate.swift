@@ -41,11 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = LoginViewController()
         }
         
-        #if DEBUG
-            let fpsLabel = WISFPSLabel(frame: CGRectMake(SCREEN_WIDTH - 90, 0, 55, 20))
-            self.window?.addSubview(fpsLabel)
-        #endif
-        
         return true
     }
     
@@ -79,6 +74,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
         window?.rootViewController = rootViewController
+        
+        #if DEBUG
+            let fpsLabel = WISFPSLabel(frame: CGRectMake(SCREEN_WIDTH - 45, 13, 45, 20))
+            self.window?.addSubview(fpsLabel)
+        #endif
     }
     
     func didDisappearProgressHUD() {
