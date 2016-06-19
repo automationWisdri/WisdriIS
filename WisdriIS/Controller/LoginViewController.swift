@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         
         let wisSummaryLabel = UILabel()
         wisSummaryLabel.font = wisFont(23)
-        wisSummaryLabel.text = "工业云服务"
+        wisSummaryLabel.text = "工业维保平台"
         vibrancyView.contentView.addSubview(wisSummaryLabel)
         wisSummaryLabel.snp_makeConstraints{ (make) -> Void in
             make.centerX.equalTo(vibrancyView)
@@ -77,6 +77,10 @@ class LoginViewController: UIViewController {
         self.userNameTextField!.autocorrectionType = .No
         self.userNameTextField!.tag = 1
         self.userNameTextField?.delegate = self
+        
+        if let currentUser = WISDataManager.sharedInstance().currentUser {
+            self.userNameTextField!.text = currentUser.userName
+        }
         
         let userNameIconImageView = UIImageView(image: UIImage(named: "icon_account")!.imageWithRenderingMode(.AlwaysTemplate))
         userNameIconImageView.frame = CGRectMake(0, 0, 34, 22)

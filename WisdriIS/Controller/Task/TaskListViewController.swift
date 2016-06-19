@@ -323,9 +323,7 @@ class TaskListViewController: BaseViewController {
                 self.wisTasksInGroup[state] = filteredTask
             }
             break
-            
-        default:
-            break
+
         }
     }
     
