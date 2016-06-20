@@ -21,5 +21,8 @@ NSString *const WISUpdateDeviceTypesInfoFailedNotification = @"WISUpdateDeviceTy
 NSString *const WISUpdateOverDueInspectionsInfoSucceededNotification = @"WISUpdateOverDueInspectionsInfoSucceededNotification";
 NSString *const WISUpdateOverDueInspectionsInfoFailedNotification = @"WISUpdateOverDueInspectionsInfoFailedNotification";
 
+NSString *const WISUpdateHistoricalInspectionsInfoSucceededNotification = @"WISUpdateHistoricalInspectionsInfoSucceededNotification";
+NSString *const WISUpdateHistoricalInspectionsInfoFailedNotification = @"WISUpdateHistoricalInspectionsInfoFailedNotification";
+
 NSString *const WISSubmitInspectionsResultSucceededNotification = @"WISSubmitInspectionsResultSucceededNotification";
 NSString *const WISSubmitInspectionsResultFailedNotification = @"WISSubmitInspectionsResultFailedNotification";

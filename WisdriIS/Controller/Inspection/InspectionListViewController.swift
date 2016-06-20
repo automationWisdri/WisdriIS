@@ -33,6 +33,12 @@ class InspectionListViewController : BaseViewController {
     var showMoreInformation = false
     var inspectionOperationEnabled = false
     
+    // for inspection type: Historical
+    let recordNumberInPage: Int = 5
+    var currentPageIndex = 1
+    
+    var groupType: InspectionListGroupType = .None
+    
     var hasNoRecord: Bool = false {
         didSet {
             if hasNoRecord != oldValue {
@@ -59,7 +65,7 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.registerNib(UINib(nibName: inspectionListCellID, bundle: nil), forCellReuseIdentifier: inspectionListCellID)
         
         inspectionTableView.separatorColor = UIColor.wisCellSeparatorColor()
-        inspectionTableView.separatorInset = WISConfig.TaskListCell.separatorInset
+        // inspectionTableView.separatorInset = WISConfig.TaskListCell.separatorInset
         inspectionTableView.tableFooterView = UIView()
         
         switch self.inspectionTaskType {
@@ -69,9 +75,23 @@ class InspectionListViewController : BaseViewController {
         }
         
         inspectionTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
-            self?.refresh()
+            self?.headerRefresh()
             })
-        self.refreshPage()
+        
+        if self.inspectionTaskType == .Historical {
+            let footer = WISRefreshFooter(refreshingBlock: {[weak self] () -> Void in
+                self?.footerRefresh()
+                })
+            footer.centerOffset = -4
+            footer.pullingPercent = 10.0
+            self.inspectionTableView.mj_footer = footer
+        } else {
+            self.inspectionTableView.mj_footer = nil
+        }
+        
+        self.currentPageIndex = 1
+        
+        self.refreshInitialPage()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -85,15 +105,27 @@ class InspectionListViewController : BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func refreshPage(){
+    func refreshInitialPage(){
         inspectionTableView.mj_header.beginRefreshing()
     }
     
+    func loadNextPage() {
+        inspectionTableView.mj_footer.beginRefreshing()
+    }
     
-    func refresh(){
+    func headerRefresh() {
         if WISDataManager.sharedInstance().networkReachabilityStatus != .NotReachable {
+            // 如果有上拉“加载更多”正在执行，则取消它
+            if inspectionTableView.mj_footer != nil {
+                if inspectionTableView.mj_footer.isRefreshing() {
+                    inspectionTableView.mj_footer.endRefreshing()
+                }
+            }
+            self.currentPageIndex = 1
+            
             loadDeviceTypes()
-            loadInspectionTaskList()
+            loadInspectionTaskList(self.inspectionTaskType, groupType: self.groupType, silentMode: false)
+            
         } else {
             SVProgressHUD.setDefaultMaskType(.None)
             SVProgressHUD.showErrorWithStatus(NSLocalizedString("Networking Not Reachable"))
@@ -102,21 +134,10 @@ class InspectionListViewController : BaseViewController {
         inspectionTableView.mj_header.endRefreshing()
     }
     
+    func footerRefresh() {
+        loadInspectionTaskList(self.inspectionTaskType, groupType: self.groupType, silentMode: false)
+    }
     
-    //
-    
-    
-    
-    //    func performSegueToInspectionDetailView(inspectionTask:WISInspectionTask, needToScanCode:Bool, enableOperation:Bool) -> Void {
-    //        let board = UIStoryboard.init(name: "InspectionDetail", bundle: NSBundle.mainBundle())
-    //        let viewController = board.instantiateViewControllerWithIdentifier("InspectionDetailViewController") as! InspectionDetailViewController
-    //        viewController.inspectionTask = inspectionTask
-    //        viewController.isQRCodeMatched = !needToScanCode
-    //        // 需要根据角色来区分是否详细任务信息是否可编辑
-    //        viewController.operationEnabled = enableOperation
-    //
-    //        self.navigationController?.pushViewController(viewController, animated: true)
-    //    }
     
     func loadDeviceTypes() {
         WISDataManager.sharedInstance().updateDeviceTypesInfoWithCompletionHandler { (completedWithNoError, error, classNameOfUpdatedDataAsString, updatedData) in
@@ -144,20 +165,22 @@ class InspectionListViewController : BaseViewController {
         }
     }
     
-    func loadInspectionTaskList() {
-        switch self.inspectionTaskType {
-        case .OnTheGo: loadOnTheGoInspectionTaskList()
-        case .Historical: loadHistoricalInspectionTaskList()
-        case .OverDue: loadOverDueInspectionTaskList()
+    func loadInspectionTaskList(inspectionType: InspectionTaskType, groupType: InspectionListGroupType, silentMode: Bool) -> Void {
+        switch inspectionType {
+        case .OnTheGo: loadOnTheGoInspectionTaskList(inspectionType, groupType: groupType, silentMode: silentMode)
+        case .Historical: loadHistoricalInspectionTaskList(inspectionType, groupType: groupType, pageIndex: self.currentPageIndex, numberOfRecordsInPage: self.recordNumberInPage, silentMode: silentMode)
+        case .OverDue: loadOverDueInspectionTaskList(inspectionType, groupType: groupType, silentMode: silentMode)
         }
     }
     
     
-    func loadOnTheGoInspectionTaskList() {
-        SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus(NSLocalizedString("Updating on the go inspection task list", comment: ""))
+    func loadOnTheGoInspectionTaskList(inspectionType: InspectionTaskType, groupType: InspectionListGroupType, silentMode: Bool) {
+        if !silentMode {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showWithStatus(NSLocalizedString("Updating on the go inspection task list", comment: ""))
+        }
         
-        WISDataManager.sharedInstance().updateInspectionsInfoWithCompletionHandler { (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+        WISDataManager.sharedInstance().updateInspectionsInfoWithCompletionHandler { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
                 WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
@@ -175,10 +198,12 @@ class InspectionListViewController : BaseViewController {
                     }
                 }
                 
-                self.updateTableViewInfo()
+                self!.updateTableViewInfo()
                 
-                SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("On the go inspection task list updated successfully", comment: ""))
+                if !silentMode {
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("On the go inspection task list updated successfully", comment: ""))
+                }
                 
             } else {
                 switch error.code {
@@ -195,19 +220,77 @@ class InspectionListViewController : BaseViewController {
         }
     }
     
-    func loadHistoricalInspectionTaskList() {
-        // SVProgressHUD.setDefaultMaskType(.None)
-        // SVProgressHUD.showWithStatus(NSLocalizedString("Updating historical inspection task list", comment: ""))
+    func loadHistoricalInspectionTaskList(inspectionType: InspectionTaskType, groupType: InspectionListGroupType, pageIndex:Int, numberOfRecordsInPage:Int, silentMode: Bool) {
+        if !silentMode {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showWithStatus(NSLocalizedString("Updating historical inspection task list", comment: ""))
+        }
+        
+        let startDate = NSDate.init().add(0, months: 0, weeks: 0, days: -30, hours: 0, minutes: 0, seconds: 0, nanoseconds: 0)
+        let endDate = NSDate.init()
+        
+        WISDataManager.sharedInstance().updateHistoricalInspectionsInfoWithStartDate(startDate, endDate: endDate, recordNumberInPage: self.recordNumberInPage, pageIndex: self.currentPageIndex) { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+            if completionWithNoError {
+                let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
+                
+                if pageIndex < 2 {
+                    WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.removeAll()
+                }
+                
+                if inspectionTasks.count > 0 {
+                    for inspectionTask in inspectionTasks {
+                        let task = inspectionTask.copy() as! WISInspectionTask
+                        
+                        if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
+                            task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
+                        }
+                        WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.append(task)
+                    }
+                }
+                
+                self!.currentPageIndex += 1
+                
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
+                    }
+                }
+                self!.updateTableViewInfo()
+                
+                if !silentMode {
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Historical inspection task list updated successfully", comment: ""))
+                }
+                
+            } else {
+                switch error.code {
+                case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showErrorWithStatus(NSLocalizedString("Networking state abnormal, please try again later!", comment: ""))
+                    break
+                    
+                default:
+                    WISConfig.errorCode(error)
+                    break
+                }
+            }
+        }
     }
     
-    func loadOverDueInspectionTaskList() {
-        SVProgressHUD.setDefaultMaskType(.None)
-        SVProgressHUD.showWithStatus(NSLocalizedString("Updating over due inspection task list", comment: ""))
+    func loadOverDueInspectionTaskList(inspectionType: InspectionTaskType, groupType: InspectionListGroupType, silentMode: Bool) {
+        if !silentMode {
+            SVProgressHUD.setDefaultMaskType(.None)
+            SVProgressHUD.showWithStatus(NSLocalizedString("Updating over due inspection task list", comment: ""))
+        }
         
-        WISDataManager.sharedInstance().updateOverDueInspectionsInfoWithCompletionHandler { (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
+        WISDataManager.sharedInstance().updateOverDueInspectionsInfoWithCompletionHandler { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
                 WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
+                
                 if inspectionTasks.count > 0 {
                     for inspectionTask in inspectionTasks {
                         let task = inspectionTask.copy() as! WISInspectionTask
@@ -219,10 +302,12 @@ class InspectionListViewController : BaseViewController {
                     }
                 }
                 
-                self.updateTableViewInfo()
+                self!.updateTableViewInfo()
                 
-                SVProgressHUD.setDefaultMaskType(.None)
-                SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Over due inspection task list updated successfully", comment: ""))
+                if !silentMode {
+                    SVProgressHUD.setDefaultMaskType(.None)
+                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Over due inspection task list updated successfully", comment: ""))
+                }
                 
             } else {
                 switch error.code {
@@ -277,11 +362,20 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let inspectionTasks: [WISInspectionTask]
+        let isHistoricalInspection: Bool
         
         switch self.inspectionTaskType {
-        case .OnTheGo: inspectionTasks = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks
-        case .Historical: inspectionTasks = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks
-        case .OverDue: inspectionTasks = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks
+        case .OnTheGo:
+            inspectionTasks = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks
+            isHistoricalInspection = false
+            
+        case .Historical:
+            inspectionTasks = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks
+            isHistoricalInspection = true
+            
+        case .OverDue:
+            inspectionTasks = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks
+            isHistoricalInspection = false
         }
         
         guard indexPath.row < inspectionTasks.count else {
@@ -289,7 +383,7 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
         }
         
         let cell = getCell(tableView, cell: InspectionListCell.self, indexPath: indexPath)
-        cell.bindData(inspectionTasks[indexPath.row])
+        cell.bindData(inspectionTasks[indexPath.row], historicalInspection: isHistoricalInspection)
         return cell
     }
     

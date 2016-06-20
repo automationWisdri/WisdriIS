@@ -32,7 +32,6 @@ class TaskListFilterGroupContentView: UIView {
                 
                 oldSelectedCell?.accessoryType = .None
                 oldSelectedCell?.selected = false
-                
             }
         }
     }
@@ -42,6 +41,8 @@ class TaskListFilterGroupContentView: UIView {
         // Initialization code
         groupSelectionTableView.dataSource = self
         groupSelectionTableView.delegate = self
+        
+        groupSelectionTableView.separatorColor = UIColor.wisCellSeparatorColor()
         
         groupSelectionTableView.setEditing(false, animated: true)
         // groupSelectionTableView.allowsSelection = true
@@ -95,9 +96,9 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
         }
         
         let cell = UITableViewCell(style: .Value1, reuseIdentifier: self.groupSelectionCellID)
-        cell.selectionStyle = .None
         cell.textLabel!.text = groupType.stringOfType
         cell.indentationLevel = 1
+        cell.selectionStyle = .Default
         
         if indexPath.row == currentSelectedIndexPath.row {
             cell.accessoryType = .Checkmark
@@ -112,6 +113,7 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard indexPath.row != currentSelectedIndexPath.row else {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             return
         }
         
@@ -125,5 +127,13 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
         oldSelectedCell?.selected = false
         
         currentSelectedIndexPath = indexPath
+        
+        defer {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .None
     }
 }

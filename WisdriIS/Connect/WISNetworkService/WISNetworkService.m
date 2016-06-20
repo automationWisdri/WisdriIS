@@ -106,6 +106,7 @@
                                 @"UpdateInspectionsInfo",
                                 @"UpdateDeviceTypesInfo",
                                 @"UpdateOverDueInspectionsInfo",
+                                @"UpdateHistoricalInspectionsInfo",
                                 
                                 @"SubmitInspectionResult",
                                 
@@ -139,6 +140,7 @@
                               self.commandStrings[UpdateInspectionsInfo]:@"/Inspection/GetInspections",
                               self.commandStrings[UpdateDeviceTypesInfo]:@"/Inspection/GetAllDeviceTypes",
                               self.commandStrings[UpdateOverDueInspectionsInfo]:@"/Inspection/GetOverDueInspections",
+                              self.commandStrings[UpdateHistoricalInspectionsInfo]:@"/Inspection/GetHistoryInspections",
                               
                               self.commandStrings[SubmitInspectionResult]:@"/Inspection/SubmitInspection",
                               
@@ -309,7 +311,12 @@
         case UpdateDeviceTypesInfo:
             // ** fall-through **
         case UpdateOverDueInspectionsInfo:
-            // ** fall-through **
+            break;
+            
+        case UpdateHistoricalInspectionsInfo:
+            [path appendFormat:@"%@startDate=%@&endDate=%@&pageSize=%@&pageIndex=%@", @"?", uriSettings[0], uriSettings[1], uriSettings[2], uriSettings[3]];
+            break;
+            
         case SubmitInspectionResult:
             break;
         
@@ -604,6 +611,17 @@
                         }
                         break;
                         
+                        /// 获取历史点检任务(多个)信息
+                    case UpdateHistoricalInspectionsInfo:
+                        [[NSNotificationCenter defaultCenter]
+                         postNotificationName:WISUpdateHistoricalInspectionsInfoResponsedNotification
+                         object:(NSData *)responsedData];
+                        
+                        if ([self.opDelegate respondsToSelector:@selector(networkService:DidUpdateHistoricalInspectionsInfoAndResponsedWithData:)]) {
+                            [self.opDelegate networkService:self DidUpdateHistoricalInspectionsInfoAndResponsedWithData:responsedData];
+                        }
+                        break;
+                        
                         /// 提交设备点检结果
                     case SubmitInspectionResult:
                         [[NSNotificationCenter defaultCenter]
@@ -623,6 +641,8 @@
             NSLog(@"responsedDataOriginal: %@", [[NSString alloc] initWithData:responsedData encoding:NSUTF8StringEncoding]);
             handler(requestType, responsedData, nil);
         }
+        NSLog(@"\nTask Info:%@\n%@", [task.currentRequest URL], [task.currentRequest allHTTPHeaderFields]);
+        
         [self decreaseNetworkActivityCount];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

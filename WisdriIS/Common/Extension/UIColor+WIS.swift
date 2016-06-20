@@ -73,6 +73,10 @@ extension UIColor {
     class func wisCellSeparatorColor() -> UIColor {
         return UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
     }
+    
+    class func wisGroupHeaderColor() -> UIColor {
+        return UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.85)
+    }
 
     class func wisCellAccessoryImageViewTintColor() -> UIColor {
         return UIColor.lightGrayColor()

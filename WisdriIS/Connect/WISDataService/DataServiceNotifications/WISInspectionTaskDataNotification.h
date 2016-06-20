@@ -25,5 +25,8 @@ FOUNDATION_EXPORT NSString *const WISUpdateDeviceTypesInfoFailedNotification;
 FOUNDATION_EXPORT NSString *const WISUpdateOverDueInspectionsInfoSucceededNotification;
 FOUNDATION_EXPORT NSString *const WISUpdateOverDueInspectionsInfoFailedNotification;
 
+FOUNDATION_EXPORT NSString *const WISUpdateHistoricalInspectionsInfoSucceededNotification;
+FOUNDATION_EXPORT NSString *const WISUpdateHistoricalInspectionsInfoFailedNotification;
+
 FOUNDATION_EXPORT NSString *const WISSubmitInspectionsResultSucceededNotification;
 FOUNDATION_EXPORT NSString *const WISSubmitInspectionsResultFailedNotification;

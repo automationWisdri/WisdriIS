@@ -91,7 +91,7 @@ extension UIImageView {
         var imagesInfo = [String : WISFileInfo]()
         imagesInfo[file.fileName] = file
         
-        WISDataManager.sharedInstance().obtainImageOfMaintenanceTaskWithTaskID(currentTask!.taskID, imagesInfo: imagesInfo, downloadProgressIndicator: { progress in
+        WISDataManager.sharedInstance().obtainImageOfMaintenanceTaskWithTaskID(currentTask?.taskID, imagesInfo: imagesInfo, downloadProgressIndicator: { progress in
 //            print("imagesInfo 获取成功，正在下载图片")
             // NSLog("Download progress is %f", progress.fractionCompleted)
             }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in

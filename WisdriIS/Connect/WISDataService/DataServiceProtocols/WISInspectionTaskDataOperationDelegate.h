@@ -31,6 +31,10 @@
 - (void) updateOverDueInspectionsInfoSucceeded;
 - (void) updateOverDueInspectionsInfoFailedWithError:(NSError *) error;
 
+/// Update historical inspections info
+- (void) updateHistoricalInspectionsInfoSucceeded;
+- (void) updateHistoricalInspectionsInfoFailedWithError:(NSError *) error;
+
 /// Submit inspection result
 - (void) submitInspectionsResultSucceeded;
 - (void) submitInspectionsResultFailedWithError:(NSError *) error;
@@ -55,6 +59,11 @@
 /// Update over due inspections info
 - (void) updateOverDueInspectionsInfoSucceededWithResponsedData:(NSData *) responsedData;
 - (void) updateOverDueInspectionsInfoFailedWithError:(NSError *) error
+                                    andResponsedData:(NSData *) responsedData;
+
+/// Update historical inspections info
+- (void) updateHistoricalInspectionsInfoSucceededWithResponsedData:(NSData *) responsedData;
+- (void) updateHistoricalInspectionsInfoFailedWithError:(NSError *) error
                                     andResponsedData:(NSData *) responsedData;
 
 /// Submit inspection result

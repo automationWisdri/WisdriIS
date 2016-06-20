@@ -12,5 +12,6 @@ NSString *const WISUpdateInspectionInfoResponsedNotification = @"WISUpdateInspec
 NSString *const WISUpdateInspectionsInfoResponsedNotification = @"WISUpdateInspectionsInfoResponsedNotification";
 NSString *const WISUpdateDeviceTypesInfoResponsedNotification = @"WISUpdateDeviceTypesInfoResponsedNotification";
 NSString *const WISUpdateOverDueInspectionsInfoResponsedNotification = @"WISUpdateOverDueInspectionsInfoResponsedNotification";
+NSString *const WISUpdateHistoricalInspectionsInfoResponsedNotification = @"WISUpdateHistoricalInspectionsInfoResponsedNotification";
 
 NSString *const WISSubmitInspectionResultResponsedNotification = @"WISSubmitInspectionResultResponsedNotification";

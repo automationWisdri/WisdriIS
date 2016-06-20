@@ -1714,6 +1714,42 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                       }
                                       maintenanceTask.state = ((NSNull*)task[@"Status"] == [NSNull null]) ? @"" : (NSString *)task[@"Status"];
                                       maintenanceTask.taskType = taskTypeID;
+                                      maintenanceTask.processSegmentName = ((NSNull*)task[@"FaultArea"] == [NSNull null]) ? @"" : (NSString *)task[@"FaultArea"];
+                                      
+                                      WISUser *taskPersonInCharge = [[WISUser alloc] init];
+                                      NSDictionary *personInCharge = (NSDictionary *)task[@"Manager"];
+                                      
+                                      if (personInCharge && !((NSNull *)personInCharge == [NSNull null])) {
+                                          taskPersonInCharge.userName = ((NSNull*)personInCharge[@"UserName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"UserName"];
+                                          taskPersonInCharge.fullName = ((NSNull*)personInCharge[@"Name"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Name"];
+                                          taskPersonInCharge.roleCode = ((NSNull*)personInCharge[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleCode"];
+                                          taskPersonInCharge.roleName = ((NSNull*)personInCharge[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleName"];
+                                          taskPersonInCharge.cellPhoneNumber = ((NSNull*)personInCharge[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"MobilePhone"];
+                                          taskPersonInCharge.telephoneNumber = ((NSNull*)personInCharge[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Telephone"];
+                                          
+                                          /// IMAGES INFO
+                                          NSArray *imagesURL = (NSArray *)personInCharge[@"ImageURL"];
+                                          if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
+                                              for (NSString *url in imagesURL) {
+                                                  WISFileInfo *imageInfo = [WISDataManager produceFileInfoWithFileRemoteURL:url];
+                                                  
+                                                  if (![taskPersonInCharge.imagesInfo valueForKey:imageInfo.fileName]) {
+                                                      [taskPersonInCharge.imagesInfo setValue:imageInfo forKey:imageInfo.fileName];
+                                                  }
+                                              }
+                                              
+                                          } else {
+                                              // do nothing, because WISMaintenanceTask initializer has done the initializing job.
+                                          }
+                                          
+                                          maintenanceTask.personInCharge = taskPersonInCharge;
+                                          
+                                          if (![self.users valueForKey:taskPersonInCharge.userName])
+                                              [self.users setValue:taskPersonInCharge forKey:taskPersonInCharge.userName];
+                                      } else {
+                                          // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                          // _maintenanceTasks[taskID].personInCharge = nil;
+                                      }
 
                                       if (![self.maintenanceTasks valueForKey:taskID]) {
                                           [self.maintenanceTasks setValue:maintenanceTask forKey:taskID];
@@ -1866,12 +1902,35 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                       }
                                       maintenanceTask.state = ((NSNull*)task[@"Status"] == [NSNull null]) ? @"" : (NSString *)task[@"Status"];
                                       maintenanceTask.taskType = taskTypeID;
+                                      maintenanceTask.processSegmentName = ((NSNull*)task[@"FaultArea"] == [NSNull null]) ? @"" : (NSString *)task[@"FaultArea"];
+                                      
+                                      WISUser *taskPersonInCharge = [[WISUser alloc] init];
+                                      NSDictionary *personInCharge = (NSDictionary *)task[@"Manager"];
+                                      
+                                      if (personInCharge && !((NSNull *)personInCharge == [NSNull null])) {
+                                          taskPersonInCharge.userName = ((NSNull*)personInCharge[@"UserName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"UserName"];
+                                          taskPersonInCharge.fullName = ((NSNull*)personInCharge[@"Name"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Name"];
+                                          taskPersonInCharge.roleCode = ((NSNull*)personInCharge[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleCode"];
+                                          taskPersonInCharge.roleName = ((NSNull*)personInCharge[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleName"];
+                                          taskPersonInCharge.cellPhoneNumber = ((NSNull*)personInCharge[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"MobilePhone"];
+                                          taskPersonInCharge.telephoneNumber = ((NSNull*)personInCharge[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Telephone"];
+                                          
+                                          maintenanceTask.personInCharge = taskPersonInCharge;
+                                          
+                                          if (![self.users valueForKey:taskPersonInCharge.userName])
+                                              [self.users setValue:taskPersonInCharge forKey:taskPersonInCharge.userName];
+                                      } else {
+                                          // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                          // _maintenanceTasks[taskID].personInCharge = nil;
+                                      }
+                                      
                                       if (![self.maintenanceTasks valueForKey:taskID]) {
                                           [self.maintenanceTasks setValue:maintenanceTask forKey:taskID];
                                       }
                                       
                                       [updatedData addObject:maintenanceTask];
                                   }
+                                  [updatedData sortWithOptions:NSSortConcurrent usingComparator:[WISMaintenanceTask arrayBackwardSorterWithResult]];
                               }
                               
                               [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateFinishedMaintenanceTaskBriefInfoSucceededNotification
@@ -2952,6 +3011,7 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
 //                                         }
                                          [updatedData addObject:inspectionTask];
                                      }
+                                     [updatedData sortWithOptions:NSSortConcurrent usingComparator:[WISInspectionTask arrayForwardSorterByExpirationTimeWithResult]];
                                  }
                              }
                              
@@ -3243,6 +3303,7 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                                         //                                         }
                                         [updatedData addObject:inspectionTask];
                                     }
+                                    [updatedData sortWithOptions:NSSortConcurrent usingComparator:[WISInspectionTask arrayForwardSorterByExpirationTimeWithResult]];
                                 }
                             }
                             
@@ -3275,6 +3336,217 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
     }
     return dataTask;
 
+}
+
+
+- (NSURLSessionDataTask *) updateHistoricalInspectionsInfoWithStartDate:(NSDate *)startDate
+                                                                endDate:(NSDate *)endDate
+                                                     recordNumberInPage:(NSInteger)numberInPage
+                                                              pageIndex:(NSInteger)index
+                                                      completionHandler:(WISInspectionTaskUpdateInfoHandler)handler {
+    NSDictionary * updateParams = nil;
+    NSURLSessionDataTask *dataTask = nil;
+    
+    if ([self.currentUser.userName isEqual: @""] || self.currentUser.userName == nil
+        || [self.networkRequestToken isEqual: @""] || self.networkRequestToken == nil) {
+        
+        NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeNoCurrentUserInfo andCallbackError:nil];
+        handler(FALSE, err, @"", nil);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateOverDueInspectionsInfoFailedNotification object:(NSError *)err];
+        if ([self.inspectionTaskOpDelegate respondsToSelector:@selector(updateHistoricalInspectionsInfoFailedWithError:)]) {
+            [self.inspectionTaskOpDelegate updateHistoricalInspectionsInfoFailedWithError:err];
+        }
+        
+    } else {
+        
+        updateParams = [NSDictionary dictionaryWithObjectsAndKeys:self.currentUser.userName, @"UserName",
+                        self.networkRequestToken, @"PassWord", nil];
+        NSArray<NSString *> *settings = [NSArray arrayWithObjects:
+                                         [startDate toDateStringWithSeparator:@"/"],
+                                         [endDate toDateStringWithSeparator:@"/"],
+                                         [NSString stringWithFormat:@"%ld", (long)numberInPage],
+                                         [NSString stringWithFormat:@"%ld", (long)index],
+                                         nil];
+        
+        dataTask = [self.networkService dataRequestWithRequestType:UpdateHistoricalInspectionsInfo
+                                                            params:updateParams
+                                                     andUriSetting:settings
+        completionHandler:^(RequestType requestType, NSData *responsedData, NSError *error) {
+            if (!responsedData) {
+                NSLog(@"Update Historical Inspections Info 请求异常，原因: %@", @"返回的数据为空");
+                
+                NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeResponsedNULLData andCallbackError:error];
+                handler(FALSE, err, @"", nil);
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateHistoricalInspectionsInfoFailedNotification object:(NSError *)err];
+                if ([self.inspectionTaskOpDelegate respondsToSelector:@selector(updateHistoricalInspectionsInfoFailedWithError:)]) {
+                    [self.inspectionTaskOpDelegate updateHistoricalInspectionsInfoFailedWithError:err];
+                }
+                
+            } else {
+                
+                NSError *parseError;
+                NSDictionary *parsedData = nil;
+                
+                parsedData = [NSJSONSerialization JSONObjectWithData:responsedData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&parseError];
+                
+                if (!parsedData || parseError) {
+                    NSLog(@"Update Historical Inspections Info 操作解析内容失败，原因: %@", parseError);
+                    
+                    NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeIncorrectResponsedDataFormat andCallbackError:parseError];
+                    handler(FALSE, err, @"", nil);
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateHistoricalInspectionsInfoFailedNotification object:(NSError *)err];
+                    if ([self.inspectionTaskOpDelegate respondsToSelector:@selector(updateHistoricalInspectionsInfoFailedWithError:)]) {
+                        [self.inspectionTaskOpDelegate updateHistoricalInspectionsInfoFailedWithError:err];
+                    }
+                    
+                } else {
+                    
+                    RequestResult result = (RequestResult)[parsedData[@"Result"] integerValue];
+                    
+                    // **
+                    // Let the caller of this method manages device type list
+                    // **
+                    // [self.inspectionTasks removeAllObjects];
+                    
+                    NSArray *inspections = nil;
+                    NSError *err;
+                    NSMutableArray *updatedData = [NSMutableArray array];
+                    
+                    switch (result) {
+                        case RequestSuccessful:
+                            inspections = parsedData[@"Inspections"];
+                            
+                            if (inspections && !((NSNull *)inspections == [NSNull null])) {
+                                if (inspections.count > 0) {
+                                    for(NSDictionary *inspection in inspections) {
+                                        WISInspectionTask *inspectionTask = [[WISInspectionTask alloc]init];
+                                        
+                                        // DEVICE INFORMATION
+                                        inspectionTask.device.deviceID = [NSString stringWithFormat:@"%@", inspection[@"DeviceId"]];
+                                        inspectionTask.device.deviceName = ((NSNull*)inspection[@"DeviceName"] == [NSNull null]) ? @"" : (NSString *)inspection[@"DeviceName"];
+                                        inspectionTask.device.deviceCode = ((NSNull*)inspection[@"DeviceCode"] == [NSNull null]) ? @"" : (NSString *)inspection[@"DeviceCode"];
+                                        inspectionTask.device.putIntoServiceTime = ((NSNull*)inspection[@"DeviceServiceTime"] == [NSNull null]) ? [NSDate date] : [NSDate dateFromDateTimeString:(NSString *)inspection[@"DeviceServiceTime"]];
+                                        inspectionTask.device.company = ((NSNull*)inspection[@"CompanyName"] == [NSNull null]) ? @"" : (NSString *)inspection[@"CompanyName"];
+                                        inspectionTask.device.processSegment = ((NSNull*)inspection[@"AreaName"] == [NSNull null]) ? @"" : (NSString *)inspection[@"AreaName"];
+                                        inspectionTask.device.remark = ((NSNull*)inspection[@"DeviceRemark"] == [NSNull null]) ? @"" : (NSString *)inspection[@"DeviceRemark"];
+                                        
+                                        // DEVICE TYPE INFORMATION
+                                        inspectionTask.device.deviceType.deviceTypeID = [NSString stringWithFormat:@"%@", inspection[@"DeviceTypeId"]];
+                                        inspectionTask.device.deviceType.deviceTypeName = ((NSNull*)inspection[@"DeviceTypeName"] == [NSNull null]) ? @"" : (NSString *)inspection[@"DeviceTypeName"];
+                                        inspectionTask.device.deviceType.inspectionCycle = ((NSNull*)inspection[@"CycleTime"] == [NSNull null]) ? 0 : [(NSString *)inspection[@"CycleTime"] integerValue];
+                                        inspectionTask.device.deviceType.inspectionInformation = ((NSNull*)inspection[@"InspectionHint"] == [NSNull null]) ? @"" : (NSString *)inspection[@"InspectionHint"];
+                                        
+                                        // **
+                                        // Let the caller of this method manages device type list
+                                        // **
+                                        //                                         if (self.deviceTypes != nil) {
+                                        //                                             if ([self.deviceTypes valueForKey:inspectionTask.device.deviceType.deviceTypeID]) {
+                                        //                                                 NSString *deviceTypeID = inspectionTask.device.deviceType.deviceTypeID;
+                                        //                                                 inspectionTask.device.deviceType = [self.deviceTypes[deviceTypeID] copy];
+                                        //                                             }
+                                        //                                         }
+                                        
+                                        
+                                        // INSPECTION INFORMATION
+                                        inspectionTask.lastInspectionFinishedTimePlusCycleTime = ((NSNull*)inspection[@"DeadLine"] == [NSNull null]) ? [NSDate date] : [NSDate dateFromDateTimeString:(NSString *)inspection[@"DeadLine"]];
+                                        inspectionTask.inspectionFinishedTime = ((NSNull*)inspection[@"InspectionTime"] == [NSNull null]) ? [NSDate date] : [NSDate dateFromDateTimeString:(NSString *)inspection[@"InspectionTime"]];
+                                        inspectionTask.inspectionResult = ((NSNull*)inspection[@"Result"] == [NSNull null]) ? NotSelected : (InspectionResult)[(NSString *)inspection[@"Result"] integerValue];
+                                        inspectionTask.inspectionResultDescription = ((NSNull*)inspection[@"Comment"] == [NSNull null]) ? @"" : (NSString *)inspection[@"Comment"];
+                                        
+                                        WISUser *taskPersonInCharge = [[WISUser alloc] init];
+                                        NSDictionary *personInCharge = (NSDictionary *)inspection[@"PersonInCharge"];
+                                        
+                                        if (personInCharge && !((NSNull *)personInCharge == [NSNull null])) {
+                                            taskPersonInCharge.userName = ((NSNull*)personInCharge[@"UserName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"UserName"];
+                                            taskPersonInCharge.fullName = ((NSNull*)personInCharge[@"Name"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Name"];
+                                            taskPersonInCharge.roleCode = ((NSNull*)personInCharge[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleCode"];
+                                            taskPersonInCharge.roleName = ((NSNull*)personInCharge[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"RoleName"];
+                                            taskPersonInCharge.cellPhoneNumber = ((NSNull*)personInCharge[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"MobilePhone"];
+                                            taskPersonInCharge.telephoneNumber = ((NSNull*)personInCharge[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)personInCharge[@"Telephone"];
+                                            
+                                            /// IMAGES INFO
+                                            NSArray *imagesURL = (NSArray *)personInCharge[@"ImageURL"];
+                                            if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
+                                                for (NSString *url in imagesURL) {
+                                                    WISFileInfo *imageInfo = [WISDataManager produceFileInfoWithFileRemoteURL:url];
+                                                    
+                                                    if (![taskPersonInCharge.imagesInfo valueForKey:imageInfo.fileName]) {
+                                                        [taskPersonInCharge.imagesInfo setValue:imageInfo forKey:imageInfo.fileName];
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                // do nothing, because WISMaintenanceTask initializer has done the initializing job.
+                                            }
+                                            
+                                            inspectionTask.personInCharge = taskPersonInCharge;
+                                            
+                                        } else {
+                                            // do nothing, because WISMaintenanceTask initializer has done the initial job.
+                                            // _maintenanceTasks[taskID].personInCharge = nil;
+                                        }
+                                        
+                                        NSMutableDictionary <NSString *, WISFileInfo *> *imagesInfo = [NSMutableDictionary dictionary];
+                                        NSArray *photoUrls = inspection[@"PhotoUrls"];
+                                        if (photoUrls && !((NSNull *)photoUrls == [NSNull null])) {
+                                            if (photoUrls.count > 0) {
+                                                for (NSString *url in photoUrls) {
+                                                    WISFileInfo *imageInfo = [WISDataManager produceFileInfoWithFileRemoteURL:url];
+                                                    
+                                                    if (![imagesInfo valueForKey:imageInfo.fileName]) {
+                                                        [imagesInfo setValue:imageInfo forKey:imageInfo.fileName];
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        inspectionTask.imagesInfo = imagesInfo;
+                                        
+                                        // **
+                                        // Let the caller of this method manages device type list
+                                        // **
+                                        //                                         if (![self.inspectionTasks valueForKey:inspectionTask.device.deviceID]) {
+                                        //                                             [self.inspectionTasks setValue:inspectionTask forKey:inspectionTask.device.deviceID];
+                                        //                                         }
+                                        [updatedData addObject:inspectionTask];
+                                    }
+                                    [updatedData sortWithOptions:NSSortConcurrent usingComparator:[WISInspectionTask arrayBackwardSorterByFinishedTimeWithResult]];
+                                }
+                            }
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateHistoricalInspectionsInfoSucceededNotification
+                                                                                object:updatedData];
+                            
+                            if ([self.inspectionTaskOpDelegate respondsToSelector:@selector(updateHistoricalInspectionsInfoSucceeded)]) {
+                                [self.inspectionTaskOpDelegate updateHistoricalInspectionsInfoSucceeded];
+                            }
+                            handler(YES, nil, NSStringFromClass([updatedData class]), updatedData);
+                            break;
+                            
+                        case RequestFailed:
+                            err = [self produceErrorObjectWithWISErrorCode:ErrorCodeInvalidOperation andCallbackError:nil];
+                            handler(FALSE, err, @"", nil);
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:WISUpdateHistoricalInspectionsInfoFailedNotification object:(NSError *)err];
+                            
+                            if ([self.inspectionTaskOpDelegate respondsToSelector:@selector(updateHistoricalInspectionsInfoFailedWithError:)]) {
+                                [self.inspectionTaskOpDelegate updateHistoricalInspectionsInfoFailedWithError:err];
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+        }];
+    }
+    return dataTask;
+    
 }
 
 

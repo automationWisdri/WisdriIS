@@ -13,6 +13,9 @@
 #import "WISDevice.h"
 #import "WISDeviceType.h"
 #import "WISFileInfo.h"
+#import "WISUser.h"
+
+#import "WISSorter.h"
 
 #endif /* WISInspectionTask_h */
 
@@ -32,7 +35,9 @@ typedef NS_ENUM(NSInteger, InspectionResult) {
 @property (readwrite, strong) NSDate *lastInspectionFinishedTimePlusCycleTime;
 /// 点检任务完成时间 - 由APP端生成
 @property (readwrite, strong) NSDate *inspectionFinishedTime;
+
 /// 点检结果
+@property (readwrite, strong) WISUser *personInCharge;
 @property (readwrite) InspectionResult inspectionResult;
 @property (readwrite, strong) NSMutableDictionary<NSString *, WISFileInfo *> *imagesInfo;
 @property (readwrite, strong) NSString *inspectionResultDescription;
@@ -42,9 +47,10 @@ typedef NS_ENUM(NSInteger, InspectionResult) {
 
 - (instancetype)initWithDevice:(WISDevice *)device lastInspectionFinishedTimePlusCycleTime:(NSDate *)lastInspectionFinishedTimePlusCycleTime
         inspectionFinishedTime:(NSDate *)inspectionFinishedTime
+      insepctionPersonInCharge:(WISUser *)personInCharge
               inspectionResult:(InspectionResult)inspectionResult
                     imagesInfo:(NSMutableDictionary<NSString *, WISFileInfo *> *)imagesInfo
-      andInspectionResultDescription:(NSString *)inspectionResultDescription;
+andInspectionResultDescription:(NSString *)inspectionResultDescription;
 
 
 #pragma mark - computed properties
@@ -56,6 +62,18 @@ typedef NS_ENUM(NSInteger, InspectionResult) {
 - (void) appendImagsInfoWithFileName:(NSString *)name andImageInfo:(WISFileInfo *)info;
 
 - (void) appendImagesInfo:(id)imagesInfo;
+
+#pragma mark - sorter
+
++ (arrayForwardSorterWithResult) arrayForwardSorterByFinishedTimeWithResult;
++ (arrayForwardSorterWithResult) arrayBackwardSorterByFinishedTimeWithResult;
++ (arrayForwardSorterWithResult) arrayForwardSorterByFinishedTimeWithBool;
++ (arrayForwardSorterWithResult) arrayBackwardSorterByFinishedTimeWithBool;
+
++ (arrayForwardSorterWithResult) arrayForwardSorterByExpirationTimeWithResult;
++ (arrayForwardSorterWithResult) arrayBackwardSorterByExpirationTimeWithResult;
++ (arrayForwardSorterWithBOOL) arrayForwardByExpirationTimeWithBOOL;
++ (arrayForwardSorterWithBOOL) arrayBackwardByExpirationTimeWithBOOL;
 
 @end
 

@@ -284,15 +284,16 @@ class TaskListViewController: BaseViewController {
                 self.wisTasksInGroup[processSegmentName] = filteredTask
             }
             break
-
             
         case .ByPersonInCharge:
             self.wisTasksInGroup.removeAll()
             self.wisTasksInGroupArrangedTitles.removeAll()
             
             for task in self.wisTasks {
-                if !self.wisTasksInGroupArrangedTitles.contains(task.personInCharge.fullName) {
-                    self.wisTasksInGroupArrangedTitles.append(task.personInCharge.fullName)
+                let name = task.personInCharge.fullName == "" ? NSLocalizedString("None", comment: "") : task.personInCharge.fullName
+                
+                if !self.wisTasksInGroupArrangedTitles.contains(name) {
+                    self.wisTasksInGroupArrangedTitles.append(name)
                 }
             }
             if self.wisTasksInGroupArrangedTitles.count > 0 {
@@ -300,7 +301,14 @@ class TaskListViewController: BaseViewController {
             }
             
             for fullName in self.wisTasksInGroupArrangedTitles {
-                let filteredTask = self.wisTasks.filter({ $0.personInCharge.fullName == fullName })
+                let filteredTask = self.wisTasks.filter({
+                    if fullName == NSLocalizedString("None", comment: "") {
+                        return $0.personInCharge.fullName == ""
+                    } else {
+                        return $0.personInCharge.fullName == fullName
+                    }
+                })
+                
                 self.wisTasksInGroup[fullName] = filteredTask
             }
             break
@@ -483,7 +491,7 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         if wisTasksInGroupArrangedTitles.count == 1 && wisTasksInGroupArrangedTitles[0] == "" {
             return CGFloat.min
         } else {
-            return 50
+            return 26
         }
         
     }
@@ -510,7 +518,7 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = UIColor.whiteColor()
+        view.tintColor = UIColor.wisGroupHeaderColor()
         let headerView = view as! UITableViewHeaderFooterView
         headerView.textLabel?.font = UIFont.boldSystemFontOfSize(15)
         // headerView.textLabel?.font = UIFont.italicSystemFontOfSize(15)

@@ -25,7 +25,7 @@ class InspectionHomeViewController: BaseViewController {
     var inspectionSearchBar: UISearchBar?
     // 模糊效果
     var blurEffectView: UIVisualEffectView?
-    let alphaOfBlurEffect: CGFloat = 0.85
+    let alphaOfBlurEffect: CGFloat = 0.80
     
     private var codeScanNotificationToken : String?
 
@@ -305,7 +305,8 @@ class InspectionHomeViewController: BaseViewController {
     private func presentBlurEffect(finishedAlpha: CGFloat) -> Void {
         self.blurEffectView!.frame = ((UIApplication.sharedApplication().delegate as? AppDelegate)?.window?.frame)! //self.view.bounds
         self.blurEffectView?.alpha = 0.0
-        self.parentViewController?.parentViewController?.view.addSubview(self.blurEffectView!)
+        // self.parentViewController?.parentViewController?.view.addSubview(self.blurEffectView!)
+        self.view.addSubview(self.blurEffectView!)
         
         UIView.animateWithDuration(0.15, delay: 0.0, options: .CurveLinear, animations: {
             self.blurEffectView?.alpha = finishedAlpha
@@ -313,7 +314,6 @@ class InspectionHomeViewController: BaseViewController {
                 // do nothing
         })
     }
-    
     
     private func disappearBlurEffect(finishedAlpha: CGFloat) -> Void {
         UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveLinear, animations: {
@@ -361,5 +361,21 @@ extension InspectionHomeViewController: UIPopoverPresentationControllerDelegate 
     
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
         print("popoverPresentationControllerDidDismissPopover")
+    }
+}
+
+
+enum InspectionListGroupType: Int {
+    case None = 0
+    
+    static let count: Int = {
+        return 1
+    }()
+    
+    var stringOfType: String {
+        switch self {
+        case .None:
+            return NSLocalizedString("None", comment: "")
+        }
     }
 }

@@ -289,7 +289,7 @@
 
 "Inspection Images" = "点检图片";
 
-"Totally %d images uploaded in this inspection task" = "点检任务共有%d张图片";
+"Totally %d images uploaded in this inspection task" = "点检任务共上传%d张图片";
 
 "No image uploaded in this inspection task" = "点检任务未上传图片";
 
@@ -334,3 +334,7 @@
 "By person in charge" = "按责任人";
 
 "By task state" = "按任务状态";
+
+"Finished Time" = "完成时间";
+
+"Expiration Time" = "逾期时间";

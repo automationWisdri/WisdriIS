@@ -549,6 +549,12 @@ __attribute__((deprecated("Use \"updateMaintenanceTaskDetailInfoWithTaskID: comp
 
 - (NSURLSessionDataTask *) updateOverDueInspectionsInfoWithCompletionHandler:(WISInspectionTaskUpdateInfoHandler) handler;
 
+- (NSURLSessionDataTask *) updateHistoricalInspectionsInfoWithStartDate:(NSDate *)startDate
+                                                                endDate:(NSDate *)endDate
+                                                     recordNumberInPage:(NSInteger)numberInPage
+                                                              pageIndex:(NSInteger)index
+                                                      completionHandler:(WISInspectionTaskUpdateInfoHandler)handler;
+
 - (NSURLSessionDataTask *) submitInspectionResult:(NSArray<WISInspectionTask *> *)inspectionTasks completionHandler:(WISInspectionTaskOperationHandler) handler;
 
 #pragma mark - Tool Method

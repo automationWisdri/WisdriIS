@@ -19,6 +19,7 @@
 - (void) networkService: (id)sender DidUpdateInspectionsInfoAndResponsedWithData: (NSData *)responsedData;
 - (void) networkService: (id)sender DidUpdateDeviceTypesInfoAndResponsedWithData: (NSData *)responsedData;
 - (void) networkService: (id)sender DidUpdateOverDueInspectionsInfoAndResponsedWithData: (NSData *)responsedData;
+- (void) networkService: (id)sender DidUpdateHistoricalInspectionsInfoAndResponsedWithData: (NSData *)responsedData;
 
 - (void) networkService: (id)sender DidSubmitInspectionResultAndResponsedWithData: (NSData *)responsedData;
 

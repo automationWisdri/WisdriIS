@@ -48,6 +48,7 @@ typedef NS_ENUM (NSUInteger, RequestType) {
     UpdateInspectionsInfo,
     UpdateDeviceTypesInfo,
     UpdateOverDueInspectionsInfo,
+    UpdateHistoricalInspectionsInfo,
     
     SubmitInspectionResult,
     

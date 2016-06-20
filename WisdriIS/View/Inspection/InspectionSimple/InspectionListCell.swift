@@ -24,9 +24,13 @@ class InspectionListCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func bindData(model: WISInspectionTask) {
+    func bindData(model: WISInspectionTask, historicalInspection: Bool) {
         self.inspectionDeviceName.text = model.device.deviceName
-        self.inspectionExpirationDate.text = WISConfig.DATE.stringFromDate(model.lastInspectionFinishedTimePlusCycleTime)
+        if historicalInspection {
+            self.inspectionExpirationDate.text = NSLocalizedString("Finished Time", comment: "") + ": " + WISConfig.DATE.stringFromDate(model.inspectionFinishedTime)
+        } else {
+            self.inspectionExpirationDate.text = NSLocalizedString("Expiration Time", comment: "") + ": " + WISConfig.DATE.stringFromDate(model.lastInspectionFinishedTimePlusCycleTime)
+        }
         self.inspectionDeviceTypeName.text = model.device.deviceType.deviceTypeName
         // self.taskStatusImageView?.image = WISConfig.taskStateImage(model.state)
         self.inspectionDeviceProcessSegment.text = model.device.processSegment

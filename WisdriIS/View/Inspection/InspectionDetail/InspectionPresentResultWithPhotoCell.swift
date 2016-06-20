@@ -9,8 +9,8 @@
 import UIKit
 
 class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
-    private static let cellWithImageHeight: CGFloat = 180.0
-    private static let cellWithNoImageHeight: CGFloat = 100.0
+    private static let cellWithImageHeight: CGFloat = 190.0
+    private static let cellWithNoImageHeight: CGFloat = 105.0
     
     @IBOutlet weak var inspectionResultTitleLabel: UILabel!
     @IBOutlet weak var inspectionResultLabel: UILabel!
@@ -18,7 +18,7 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
     @IBOutlet weak var inspectionImagesCollectionView: UICollectionView!
     @IBOutlet weak var inspectionFinishedTimeLabel: UILabel!
     
-    let taskMediaCellID = "TaskMediaCell"
+    let inspectionMediaCellID = "TaskMediaCell"
     
     private var inspectionImageFileInfos = [WISFileInfo]()
     
@@ -42,10 +42,10 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
         super.awakeFromNib()
         // Initialization code
         
-        inspectionImagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 15)
+        inspectionImagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         inspectionImagesCollectionView.showsHorizontalScrollIndicator = false
         inspectionImagesCollectionView.backgroundColor = UIColor.clearColor()
-        inspectionImagesCollectionView.registerNib(UINib(nibName: taskMediaCellID, bundle: nil), forCellWithReuseIdentifier: taskMediaCellID)
+        inspectionImagesCollectionView.registerNib(UINib(nibName: inspectionMediaCellID, bundle: nil), forCellWithReuseIdentifier: inspectionMediaCellID)
         inspectionImagesCollectionView.dataSource = self
         inspectionImagesCollectionView.delegate = self
         inspectionImagesCollectionView.scrollsToTop = false
@@ -76,13 +76,15 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
             print("No image")
             self.inspectionImagesCollectionView.hidden = true
             self.inspectionImagesTitleLabel.text = NSLocalizedString("No image uploaded in this inspection task", comment:"")
+            self.inspectionImagesTitleLabel.textColor = UIColor.wisGrayColor()
             // self.inspectionImagesTitleLabel.font = UIFont.systemFontOfSize(15.0)
         } else {
             print("Totally \(model.imagesInfo.count) image(s)")
             self.inspectionImageFileInfos = model.imagesInfo.allValues as! [WISFileInfo]
             self.inspectionImagesCollectionView.hidden = false
-            self.inspectionImagesTitleLabel.text = String.localizedStringWithFormat("Totally %d images uploaded in this inspection task", model.imagesInfo.count)
-            self.inspectionImagesTitleLabel.font = UIFont.systemFontOfSize(17.0)
+            self.inspectionImagesTitleLabel.text = String.localizedStringWithFormat(NSLocalizedString("Totally %d images uploaded in this inspection task", comment:""), model.imagesInfo.count)
+            self.inspectionImagesTitleLabel.textColor = UIColor.blackColor()
+            // self.inspectionImagesTitleLabel.font = UIFont.systemFontOfSize(16.0)
             
             inspectionImagesCollectionView.reloadData()
         }
@@ -103,7 +105,7 @@ extension InspectionPresentResultWithPhotoCell: UICollectionViewDataSource, UICo
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(taskMediaCellID, forIndexPath: indexPath) as! TaskMediaCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(inspectionMediaCellID, forIndexPath: indexPath) as! TaskMediaCell
         
         if self.inspectionImageFileInfos.count != 0 {
             cell.configureWithFileInfo(self.inspectionImageFileInfos[indexPath.item])
