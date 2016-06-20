@@ -47,6 +47,7 @@ class SubmitPlanViewController: BaseViewController {
     private lazy var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
+        imagePicker.sourceType = .PhotoLibrary
         imagePicker.mediaTypes = [kUTTypeImage as String]
         imagePicker.allowsEditing = false
         return imagePicker
@@ -312,7 +313,6 @@ class SubmitPlanViewController: BaseViewController {
         if segue.identifier == "showPickPhotos" {
             
             let vc = segue.destinationViewController as! PickPhotosViewController
-            var photoFileName: String?
             
             vc.pickedImageSet = Set(imageAssets)
             vc.imageLimit = mediaImages.count
@@ -320,8 +320,8 @@ class SubmitPlanViewController: BaseViewController {
                 
                 for image in images {
                     self?.mediaImages.append(image)
-                    photoFileName = "plan_image_" + String(image.hash)
-                    self?.imagesDictionary[photoFileName!] = image
+                    let photoFileName = "plan_image_" + String(image.hash)
+                    self?.imagesDictionary[photoFileName] = image
                 }
             }
         }
@@ -380,13 +380,14 @@ extension SubmitPlanViewController: UIImagePickerControllerDelegate, UINavigatio
             
             switch mediaType {
                 
-            case kUTTypeImage as! String:
+            case String(kUTTypeImage):
                 
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                    //                    let imageURL = info[UIImagePickerControllerReferenceURL] as? String
                     
                     if mediaImages.count <= 5 {
                         mediaImages.append(image)
+                        let photoFileName = "plan_image_" + String(image.hash)
+                        self.imagesDictionary[photoFileName] = image
                     }
                 }
                 

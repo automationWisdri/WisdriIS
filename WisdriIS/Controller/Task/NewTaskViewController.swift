@@ -72,6 +72,7 @@ class NewTaskViewController: BaseViewController {
     private lazy var imagePicker: UIImagePickerController = {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
+        imagePicker.sourceType = .PhotoLibrary
         imagePicker.mediaTypes = [kUTTypeImage as String]
         imagePicker.allowsEditing = false
         return imagePicker
@@ -197,7 +198,7 @@ class NewTaskViewController: BaseViewController {
         if segue.identifier == "showPickPhotos" {
             
             let vc = segue.destinationViewController as! PickPhotosViewController
-            var photoFileName: String?
+//            var photoFileName: String?
             
             vc.pickedImageSet = Set(imageAssets)
             vc.imageLimit = mediaImages.count
@@ -206,8 +207,8 @@ class NewTaskViewController: BaseViewController {
                 for image in images {
                     self?.mediaImages.append(image)
                     
-                    photoFileName = "task_image_" + String(image.hashValue)
-                    self?.imagesDictionary[photoFileName!] = image
+                    let photoFileName = "task_image_" + String(image.hashValue)
+                    self?.imagesDictionary[photoFileName] = image
                 }
             }
         }
@@ -605,12 +606,15 @@ extension NewTaskViewController: UIImagePickerControllerDelegate, UINavigationCo
             
             switch mediaType {
                 
-            case kUTTypeImage as! String:
+            case String(kUTTypeImage):
                 
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
-                    if mediaImages.count <= 3 {
+                    if mediaImages.count <= 5 {
                         mediaImages.append(image)
+                        
+                        let photoFileName = "task_image_" + String(image.hashValue)
+                        self.imagesDictionary[photoFileName] = image
                     }
                 }
                 
