@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if WISDataManager.sharedInstance().preloadArchivedUserInfo() {
             NSThread.sleepForTimeInterval(1.5)
-            startMainStory()
+            startStory()
         } else {
             NSThread.sleepForTimeInterval(1.0)
             self.window?.rootViewController = LoginViewController()
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func startMainStory() {
+    func startStory() {
         // 获取用户信息详情
         WISDataManager.sharedInstance().updateCurrentUserDetailInformationWithCompletionHandler({ (completedWithNoError, error, classNameOfDataAsString, data) in
             if !completedWithNoError {
@@ -71,14 +71,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
         }
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
-        window?.rootViewController = rootViewController
+        let currentUser = WISDataManager.sharedInstance().currentUser
+        let roleCodes = WISDataManager.sharedInstance().roleCodes
+        if currentUser.roleCode == roleCodes[RoleCode.Operator.rawValue] {
+            startStoryWithName("Task")
+        } else if currentUser.roleCode == roleCodes[RoleCode.Engineer.rawValue]
+            || currentUser.roleCode == roleCodes[RoleCode.Technician.rawValue] {
+            startStoryWithName("TaskAndInspection")
+        } else {
+            startStoryWithName("Main")
+        }
         
         #if DEBUG
-            let fpsLabel = WISFPSLabel(frame: CGRectMake(SCREEN_WIDTH - 45, 13, 45, 20))
-            self.window?.addSubview(fpsLabel)
+//            let fpsLabel = WISFPSLabel(frame: CGRectMake(SCREEN_WIDTH - 45, 13, 45, 20))
+//            self.window?.addSubview(fpsLabel)
         #endif
+    }
+    
+    func startStoryWithName(storyName: String) {
+        let storyboard = UIStoryboard(name: storyName, bundle: nil)
+        let rootViewController = storyboard.instantiateViewControllerWithIdentifier("MainTabBarController") as! UITabBarController
+        window?.rootViewController = rootViewController
     }
     
     func didDisappearProgressHUD() {

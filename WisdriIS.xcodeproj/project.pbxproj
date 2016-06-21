@@ -117,6 +117,8 @@
 		9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F681C7EF35100D1298C /* TaskListViewController.swift */; };
 		9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */; };
 		9F169F731C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */; };
+		9F1AB3E31D19853A00C7AA80 /* Task.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AB3E11D19853A00C7AA80 /* Task.storyboard */; };
+		9F1AB3E61D1985DF00C7AA80 /* TaskAndInspection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1AB3E41D1985DF00C7AA80 /* TaskAndInspection.storyboard */; };
 		9F1B315A1CFC263A004A8038 /* UploadingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1B31591CFC263A004A8038 /* UploadingItem.swift */; };
 		9F1B315C1CFDD2EC004A8038 /* TaskIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F1B315B1CFDD2EC004A8038 /* TaskIcon.xcassets */; };
 		9F1FA1E21CEB019E001A2F61 /* About.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FA1E01CEB019E001A2F61 /* About.storyboard */; };
@@ -365,6 +367,8 @@
 		9F169F681C7EF35100D1298C /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListViewController.swift; path = WisdriIS/Controller/Task/TaskListViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailViewController.swift; path = WisdriIS/Controller/Task/TaskDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F721C80ADF600D1298C /* UITableView+WISAutomaticHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+WISAutomaticHeightCell.swift"; sourceTree = "<group>"; };
+		9F1AB3E21D19853A00C7AA80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base/Base.lproj/Task.storyboard; sourceTree = "<group>"; };
+		9F1AB3E51D1985DF00C7AA80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base/Base.lproj/TaskAndInspection.storyboard; sourceTree = "<group>"; };
 		9F1B31591CFC263A004A8038 /* UploadingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadingItem.swift; path = Model/UploadingItem.swift; sourceTree = "<group>"; };
 		9F1B315B1CFDD2EC004A8038 /* TaskIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TaskIcon.xcassets; sourceTree = "<group>"; };
 		9F1FA1E01CEB019E001A2F61 /* About.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = About.storyboard; path = About/About.storyboard; sourceTree = "<group>"; };
@@ -1166,6 +1170,8 @@
 				9FEF4FF21C7756E3001A7644 /* Controller */,
 				9FEF4FE01C76D4B9001A7644 /* AppDelegate.swift */,
 				9FEF4FE41C76D4B9001A7644 /* Main.storyboard */,
+				9F1AB3E11D19853A00C7AA80 /* Task.storyboard */,
+				9F1AB3E41D1985DF00C7AA80 /* TaskAndInspection.storyboard */,
 				9FEF4FE91C76D4B9001A7644 /* LaunchScreen.storyboard */,
 				9FEF4FEC1C76D4B9001A7644 /* Info.plist */,
 				9F7C4B9D1C86E09900652CDF /* Localizable.strings */,
@@ -1344,6 +1350,7 @@
 				385C1E331CE4BD2700F8E393 /* InspectionResultSelectionCell.xib in Resources */,
 				9F7C4BA91C88168900652CDF /* ContactsCell.xib in Resources */,
 				9F055B9F1CD791170077184B /* ProfilePasswordCell.xib in Resources */,
+				9F1AB3E61D1985DF00C7AA80 /* TaskAndInspection.storyboard in Resources */,
 				9F055C701CDC72D40077184B /* TaskStateCell.xib in Resources */,
 				9F801AA31C8594B800F64265 /* TaskDetailLargeInfoCell.xib in Resources */,
 				9FEF4FE81C76D4B9001A7644 /* Assets.xcassets in Resources */,
@@ -1362,6 +1369,7 @@
 				9F801AB51C867D8D00F64265 /* PickPhotos.storyboard in Resources */,
 				385C1E511CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard in Resources */,
 				9F7C4BC91C8E6E1300652CDF /* MediaViewCell.xib in Resources */,
+				9F1AB3E31D19853A00C7AA80 /* Task.storyboard in Resources */,
 				9F801AAE1C867D6200F64265 /* NewTask.storyboard in Resources */,
 				385C1DE01CE4BC9200F8E393 /* CodeScan.bundle in Resources */,
 				9F7C4BAE1C8837F000652CDF /* TaskDetailDoubleInfoCell.xib in Resources */,
@@ -1609,6 +1617,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		9F1AB3E11D19853A00C7AA80 /* Task.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F1AB3E21D19853A00C7AA80 /* Base */,
+			);
+			name = Task.storyboard;
+			sourceTree = "<group>";
+		};
+		9F1AB3E41D1985DF00C7AA80 /* TaskAndInspection.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F1AB3E51D1985DF00C7AA80 /* Base */,
+			);
+			name = TaskAndInspection.storyboard;
+			sourceTree = "<group>";
+		};
 		9F7C4B9D1C86E09900652CDF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

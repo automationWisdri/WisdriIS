@@ -76,14 +76,28 @@ class WISTabBarController: UITabBarController {
         */
 
         // Set Titles
-
+        
         if let items = tabBar.items {
-            for i in 0 ..< items.count {
-                let item = items[i]
-                item.title = Tab(rawValue: i)?.title
+            
+            if items.count == 2 {
+                items[0].title = Tab.Tasks.title
+                items[1].title = Tab.Profile.title
+            }
+            
+            if items.count == 3 {
+                items[0].title = Tab.Tasks.title
+                items[1].title = Tab.Inspection.title
+                items[2].title = Tab.Profile.title
+            }
+
+            if items.count == 4 {
+                for i in 0 ..< items.count {
+                    let item = items[i]
+                    item.title = Tab(rawValue: i)?.title
+                }
             }
         }
-
+        
     }
 }
 
@@ -92,10 +106,10 @@ class WISTabBarController: UITabBarController {
 extension WISTabBarController: UITabBarControllerDelegate {
 
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        guard
-            let tab = Tab(rawValue: selectedIndex),
-            let nvc = viewController as? UINavigationController else {
-                return false
+        
+        guard let tab = Tab(rawValue: selectedIndex),
+              let _ = viewController as? UINavigationController else {
+            return false
         }
 
         guard tab == previousTab else {
@@ -121,24 +135,28 @@ extension WISTabBarController: UITabBarControllerDelegate {
     }
 
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        guard
-            let tab = Tab(rawValue: selectedIndex),
-            let nvc = viewController as? UINavigationController else {
-                return
-        }
-
-        // 相等才继续，确保第一次 tap 不做事
-        if tab != previousTab {
-            previousTab = tab
+        
+//        guard let tab = Tab(rawValue: selectedIndex),
+        guard let items = tabBar.items,
+              let nvc = viewController as? UINavigationController else {
             return
         }
+        
+        let tab = items[selectedIndex]
+
+        // 相等才继续，确保第一次 tap 不做事
+//        if tab != previousTab {
+//            previousTab = tab
+//            return
+//        }
 
         // One tap on tab scroll the tableView to the top
-        switch tab {
-        case .Tasks:
+        switch tab.title! {
+            
+        case NSLocalizedString("Tasks"):
             if let vc = nvc.topViewController as? TaskHomeViewController {
-                let pageViewController = vc.childViewControllers.first as! PagingMenuController
-                guard let taskTableView = (pageViewController.currentViewController as! TaskListViewController).taskTableView else {
+                guard let pageViewController = vc.childViewControllers.first as? PagingMenuController,
+                      let taskTableView = (pageViewController.currentViewController as! TaskListViewController).taskTableView else {
                     return
                 }
                 if !taskTableView.wis_isAtTop {
@@ -146,27 +164,34 @@ extension WISTabBarController: UITabBarControllerDelegate {
                 }
             }
             
-        case .Inspection:
-            if let vc = nvc.topViewController as? TaskHomeViewController {
-                let pageViewController = vc.childViewControllers.first as! PagingMenuController
-                guard let taskTableView = (pageViewController.currentViewController as! InspectionListViewController).inspectionTableView else {
+        case NSLocalizedString("Inspection"):
+            if let vc = nvc.topViewController as? InspectionHomeViewController {
+                guard let pageViewController = vc.childViewControllers.first as? PagingMenuController,
+                      let inspectionTableView = (pageViewController.currentViewController as! InspectionListViewController).inspectionTableView else {
                     return
                 }
-                if !taskTableView.wis_isAtTop {
-                    taskTableView.wis_scrollsToTop()
+                if !inspectionTableView.wis_isAtTop {
+                    inspectionTableView.wis_scrollsToTop()
                 }
             }
+            
+        case NSLocalizedString("Shift"):
+            break
 
-        case .Profile:
+        case NSLocalizedString("Profile"):
             if let vc = nvc.topViewController as? ProfileViewController {
-                if !vc.editProfileTableView.wis_isAtTop {
-                    vc.editProfileTableView.wis_scrollsToTop()
+                guard let editProfileTable = vc.editProfileTableView else {
+                    return
+                }
+                if !editProfileTable.wis_isAtTop {
+                    editProfileTable.wis_scrollsToTop()
                 }
             }
             
         default:
             return
         }
+        
     }
 }
 

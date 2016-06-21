@@ -83,9 +83,11 @@ class TaskHomeViewController: BaseViewController {
 //        var viewControllers = [TaskListViewController]()
         
         // for test
-        print("RoleCodes: " + WISDataManager.sharedInstance().roleCodes.description)
-        print(WISDataManager.sharedInstance().currentUser.roleCode)
-        print(currentUser.roleCode)
+        #if DEBUG
+            print("RoleCodes: " + WISDataManager.sharedInstance().roleCodes.description)
+            print(WISDataManager.sharedInstance().currentUser.roleCode)
+            print(currentUser.roleCode)
+        #endif
 
         // 在实现筛选功能前, 暂时叫 "分组"
         let leftBarItem = UIBarButtonItem.init(title: NSLocalizedString("Group", comment: ""), style: .Plain, target: self, action: #selector(self.popTaskListFilterPanel(_:)))
