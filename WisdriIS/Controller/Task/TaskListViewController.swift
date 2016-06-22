@@ -151,6 +151,8 @@ class TaskListViewController: BaseViewController {
         // getTaskList(taskType!)
     }
     
+    // MARK: - Network Requesting
+    
     func getTaskList(taskType: MaintenanceTaskType, groupType: TaskListGroupType, silentMode: Bool) -> Void {
         switch taskType {
         case .ForApproval, .Normal:
@@ -161,7 +163,6 @@ class TaskListViewController: BaseViewController {
             break
         }
     }
-    
     
     private func getOnTheGoTaskList(taskType: MaintenanceTaskType, groupType: TaskListGroupType, silentMode: Bool) -> Void {
         
@@ -196,6 +197,9 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
+                self.groupTaskList(groupType)
+                self.sortTaskList()
+                
                 self.updateTableViewInfo()
                 if !silentMode {
                     WISConfig.errorCode(error)
@@ -250,6 +254,9 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
+                self.groupTaskList(groupType)
+                self.sortTaskList()
+                
                 self.updateTableViewInfo()
                 if !silentMode {
                     WISConfig.errorCode(error)
@@ -257,6 +264,8 @@ class TaskListViewController: BaseViewController {
             }
         }
     }
+    
+    // MARK: - Task List Grouping
     
     func groupTaskList(groupType: TaskListGroupType) -> Void {
         switch groupType {
@@ -457,7 +466,7 @@ class TaskListViewController: BaseViewController {
     }
 }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source, delegate
 
 extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     
