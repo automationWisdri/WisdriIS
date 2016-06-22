@@ -60,6 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WISUserDefaults.getCurrentUserClockStatus()
         WISUserDefaults.getWorkShift(NSDate(), range: .Year)
         
+        // Reset Data of Inspection section
+        WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
+        WISInspectionDataManager.sharedInstance().historicalInspectionTasks.removeAll()
+        WISInspectionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
+        
         WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
         
         // **

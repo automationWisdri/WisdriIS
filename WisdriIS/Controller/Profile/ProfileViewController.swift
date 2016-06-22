@@ -294,8 +294,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
             switch indexPath.row {
 
+            /// ROW NAME
             case InfoRow.Name.rawValue:
-
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
 
                 cell.annotationLabel.text = NSLocalizedString("Name", comment: "")
@@ -311,8 +311,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
                 return cell
 
+            /// ROW PHONE
             case InfoRow.Phone.rawValue:
-
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
 
                 cell.annotationLabel.text = NSLocalizedString("Phone Number", comment: "")
@@ -327,7 +327,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return cell
 
             case InfoRow.Password.rawValue:
-
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
 
                 cell.annotationLabel.text = "修改密码"
@@ -337,7 +336,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
                 return cell
                 
+            /// ROW SCAN
             case InfoRow.Scan.rawValue:
+                guard currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Engineer.rawValue]
+                    || currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue] else {
+                        return ProfileLessInfoCell()
+                }
                 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
                 
@@ -361,6 +365,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 return cell
                 
+            /// ROW NOTIFICATION
             case InfoRow.Notification.rawValue:
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
                 
@@ -371,8 +376,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 return cell
                 
+            /// ROW ABOUT
             case InfoRow.About.rawValue:
-                
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
                 
                 cell.annotationLabel.text = "关于"
@@ -415,7 +420,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return 60
                 
             case InfoRow.Scan.rawValue:
-                return 60
+                if currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Engineer.rawValue]
+                    || currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue] {
+                    return 60
+                }
+                return CGFloat.min
                 
             case InfoRow.Notification.rawValue:
                 return 60
@@ -442,9 +451,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
 
         switch indexPath.section {
-
+        /// SECTION INFO
         case Section.Info.rawValue:
-
             switch indexPath.row {
                 
             case InfoRow.Name.rawValue:
@@ -477,6 +485,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 break
             }
 
+        /// SECTION LOGOUT
         case Section.LogOut.rawValue:
 
             WISAlert.confirmOrCancel(title: NSLocalizedString("Notice", comment: ""), message: NSLocalizedString("Do you want to logout?", comment: ""), confirmTitle: NSLocalizedString("Yes", comment: ""), cancelTitle: NSLocalizedString("Cancel", comment: ""), inViewController: self, withConfirmAction: { () -> Void in
@@ -489,8 +498,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                     appDelegate.window?.rootViewController = LoginViewController()
                 }
                 
-
-            }, cancelAction: { () -> Void in
+                }, cancelAction: { () -> Void in
             })
 
         default:

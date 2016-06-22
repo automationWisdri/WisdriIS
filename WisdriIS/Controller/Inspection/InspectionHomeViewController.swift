@@ -219,12 +219,12 @@ class InspectionHomeViewController: BaseViewController {
             let processSegment = scanResultAsArray[5]
             let deviceTypeID = scanResultAsArray[6]
             
-            let index = WISInsepctionDataManager.sharedInstance().indexOfInspectionTaskInListByDeviceID(deviceID, inspectionTaskType: .OnTheGo)
+            let index = WISInspectionDataManager.sharedInstance().indexOfInspectionTaskInListByDeviceID(deviceID, inspectionTaskType: .OnTheGo)
             
             SVProgressHUD.show()
             
             if index > -1 {
-                InspectionDetailViewController.performPushToInspectionDetailView(self, inspectionTask: WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks[index], index: index, showMoreInformation: true, enableOperation: true)
+                InspectionDetailViewController.performPushToInspectionDetailView(self, inspectionTask: WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks[index], index: index, showMoreInformation: true, enableOperation: true)
                 
             } else {
                 var newInspectionTask = WISInspectionTask()
@@ -246,7 +246,7 @@ class InspectionHomeViewController: BaseViewController {
                             newInspectionTask.device.processSegment = processSegment
                         }
                         
-                        let deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[deviceTypeID]
+                        let deviceType = WISInspectionDataManager.sharedInstance().deviceTypes[deviceTypeID]
                         
                         if deviceType != nil {
                             newInspectionTask.device.deviceType = deviceType!.copy() as! WISDeviceType
@@ -264,7 +264,7 @@ class InspectionHomeViewController: BaseViewController {
                     newInspectionTask.device.processSegment = processSegment
                     
                     
-                    let deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[deviceTypeID]
+                    let deviceType = WISInspectionDataManager.sharedInstance().deviceTypes[deviceTypeID]
                     
                     if deviceType != nil {
                         newInspectionTask.device.deviceType = deviceType!.copy() as! WISDeviceType

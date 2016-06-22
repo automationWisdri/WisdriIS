@@ -11,11 +11,11 @@ import UIKit
 
 private let defaultLocalInspectionArchivingStorageDirectoryKey = "defaultLocalInspectionArchivingStorageDirectory"
 
-class WISInsepctionDataManager {
+class WISInspectionDataManager {
     
     // MARK: Shared Instances
-    static func sharedInstance() -> WISInsepctionDataManager { return WISInsepctionDataManager.sharedInspectionDataManagerInstance }
-    private static let sharedInspectionDataManagerInstance = WISInsepctionDataManager(archivingStorageFolderName: "InspectionArchivingCache")
+    static func sharedInstance() -> WISInspectionDataManager { return WISInspectionDataManager.sharedInspectionDataManagerInstance }
+    private static let sharedInspectionDataManagerInstance = WISInspectionDataManager(archivingStorageFolderName: "InspectionArchivingCache")
     
     private init(archivingStorageFolderName folderName: String) {
         print("WISInsepctionDataManager initializing!")
@@ -30,7 +30,7 @@ class WISInsepctionDataManager {
             }
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WISInsepctionDataManager.networkingStatusChanges(_:)), name: WISNetworkStatusChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WISInspectionDataManager.networkingStatusChanges(_:)), name: WISNetworkStatusChangedNotification, object: nil)
         
         startInspectionTaskUploading()
     }

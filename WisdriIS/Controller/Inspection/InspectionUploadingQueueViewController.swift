@@ -57,7 +57,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
         // inspectionUploadingQueueTableView.tableHeaderView = inspectionSearchBar
         
         self.noRecordFooterView = InfoView(NSLocalizedString("No finished inspection task waiting for uploading", comment: ""))
-        self.hasNoRecord = WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
+        self.hasNoRecord = WISInspectionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
         
         inspectionUploadingQueueTableView.mj_header = WISRefreshHeader(refreshingBlock: {[weak self] () -> Void in
             self?.refresh()
@@ -110,7 +110,7 @@ class InspectionUploadingQueueViewController: BaseViewController {
     
     func startInspectionTaskUploading(sender: UIBarButtonItem?) -> Void {
         print("start inspection task uploading button pressed!")
-        WISInsepctionDataManager.sharedInstance().startInspectionTaskUploading()
+        WISInspectionDataManager.sharedInstance().startInspectionTaskUploading()
     }
     
     func inspectionTaskUploadingStateDidChanged(notification: NSNotification) -> Void {
@@ -134,14 +134,14 @@ class InspectionUploadingQueueViewController: BaseViewController {
                         self.inspectionUploadingQueueTableView.deleteRowsAtIndexPaths([NSIndexPath.init(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
                         self.inspectionUploadingQueueTableView.endUpdates()
                         self.inspectionUploadingQueueTableView.setEditing(false, animated: true)
-                        self.hasNoRecord = WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
+                        self.hasNoRecord = WISInspectionDataManager.sharedInstance().inspectionTasksUploadingQueue.isEmpty
                     }
                     break
                     
                 default:
                     dispatch_async(dispatch_get_main_queue()){
                         self.inspectionUploadingQueueTableView.beginUpdates()
-                        cell!.bindData(WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue[0])
+                        cell!.bindData(WISInspectionDataManager.sharedInstance().inspectionTasksUploadingQueue[0])
                         self.inspectionUploadingQueueTableView.endUpdates()
                     }
                     break
@@ -179,7 +179,7 @@ extension InspectionUploadingQueueViewController: UITableViewDataSource, UITable
     
     /// Number of Rows in each section
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue.count
+        return WISInspectionDataManager.sharedInstance().inspectionTasksUploadingQueue.count
     }
     
     /// Set height of header in section
@@ -195,7 +195,7 @@ extension InspectionUploadingQueueViewController: UITableViewDataSource, UITable
     /// Set Cells in section
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = getCell(tableView, cell: InspectionUploadingQueueCell.self, indexPath: indexPath)
-        cell.bindData(WISInsepctionDataManager.sharedInstance().inspectionTasksUploadingQueue[indexPath.row])
+        cell.bindData(WISInspectionDataManager.sharedInstance().inspectionTasksUploadingQueue[indexPath.row])
         cell.selectionStyle = .None
         return cell
     }

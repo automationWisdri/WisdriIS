@@ -50,12 +50,14 @@ class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
     
     /** 注册用户通知(推送) */
     private func registerUserNotification(application: UIApplication?) {
-        let result = UIDevice.currentDevice().systemVersion.compare("8.0.0", options: NSStringCompareOptions.NumericSearch)
-        if (result != NSComparisonResult.OrderedAscending) {
+        // let result = UIDevice.currentDevice().systemVersion.compare("8.0.0", options: NSStringCompareOptions.NumericSearch)
+        // if (result != NSComparisonResult.OrderedAscending) {
+        if #available(iOS 8.0.0, *) {
             UIApplication.sharedApplication().registerForRemoteNotifications()
             
             let userSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
+            
         } else {
             UIApplication.sharedApplication().registerForRemoteNotificationTypes([.Alert, .Sound, .Badge])
         }

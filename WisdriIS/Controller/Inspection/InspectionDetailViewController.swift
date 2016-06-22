@@ -606,7 +606,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             
                             self!.inspectionTask!.inspectionFinishedTime = NSDate.init(timeIntervalSinceNow: NSTimeInterval.init(0.0))
                             
-                            WISInsepctionDataManager.sharedInstance().addInspectionTaskToUploadingQueue(self!.inspectionTask!, images: imagesInDictionary)
+                            WISInspectionDataManager.sharedInstance().addInspectionTaskToUploadingQueue(self!.inspectionTask!, images: imagesInDictionary)
                             
                             // if submit successfully
                             WISAlert.alert(
@@ -617,7 +617,7 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                                 
                                 withDismissAction: { () -> Void in
                                     if self!.indexInList > -1 {
-                                        WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAtIndex(self!.indexInList)
+                                        WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.removeAtIndex(self!.indexInList)
                                     }
                                     self!.navigationController?.popViewControllerAnimated(true)
                                 })
