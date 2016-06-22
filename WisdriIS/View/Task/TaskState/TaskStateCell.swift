@@ -20,9 +20,9 @@ class TaskStateCell: UITableViewCell {
     
     let timeLabelTextAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(12)]
     
-    let timeLabelWidth: CGFloat = 121
+    let timeLabelWidth: CGFloat = 125
     
-    let timeLabelLeadingBase: CGFloat = 2
+    let timeLabelLeadingBase: CGFloat = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()

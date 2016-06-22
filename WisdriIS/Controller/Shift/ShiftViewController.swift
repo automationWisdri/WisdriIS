@@ -20,6 +20,8 @@ class ShiftViewController: UIViewController {
     @IBOutlet weak var shiftTableView: UITableView!
     @IBOutlet weak var monthLabel: UILabel!
     
+    @IBOutlet weak var calendarViewHeightConstraint: NSLayoutConstraint!
+    
     private let cellIdentifier = "ClockInfoCell"
 
     private var animationFinished = true
@@ -445,5 +447,22 @@ extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50
     }
-
+   
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        let hideCalendar: (() -> Void)? = {
+        
+            let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+            
+            if translation.y > 0 {
+//                self.calendarView.frame.origin.y = self.calendarView.frame.origin.y - 200
+                self.calendarViewHeightConstraint.constant = 300
+            } else if translation.y < 0 {
+//                self.calendarView.frame.origin.y = 98
+                self.calendarViewHeightConstraint.constant = 100
+            }
+        }
+        
+        Ruler.iPhoneVertical(hideCalendar, hideCalendar, nil, nil)
+    }
 }

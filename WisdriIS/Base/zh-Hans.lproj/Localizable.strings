@@ -158,6 +158,10 @@
 
 "Today" = "今天";
 
+"No phone number recorded" = "该用户未提供联系电话";
+
+"Edit Info" = "修改信息";
+
 // 点检新增内容
 "Inspection" = "点检";
 

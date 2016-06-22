@@ -1,19 +1,15 @@
 //
-//  ClockInfoCell.swift
+//  ShiftCell.swift
 //  WisdriIS
 //
-//  Created by Allen on 5/9/16.
+//  Created by Allen on 6/22/16.
 //  Copyright © 2016 Wisdri. All rights reserved.
 //
 
 import UIKit
 
-class ClockInfoCell: UITableViewCell {
+class ShiftCell: UITableViewCell {
 
-    @IBOutlet weak var annotationLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
-    @IBOutlet weak var clockImageView: UIImageView!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
