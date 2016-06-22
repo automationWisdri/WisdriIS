@@ -29,7 +29,7 @@ class ProfileInfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        title = "修改信息"
+        title = NSLocalizedString("Edit Info")
         
         view.backgroundColor = UIColor.wisBackgroundColor()
         navigationItem.rightBarButtonItem = postButton
@@ -99,7 +99,7 @@ class ProfileInfoViewController: UIViewController {
                 return
             }
             
-            if mobileCell.infoTextField.text?.Length > 0 {
+            if mobileCell.infoTextField.text?.Length == 11 {
                 mobileNumber = mobileCell.infoTextField.text!
                 // 格式判断待完善
                 wisUserForUpdate.cellPhoneNumber = mobileNumber
@@ -127,7 +127,7 @@ class ProfileInfoViewController: UIViewController {
             return
         }
         
-        SVProgressHUD.showWithStatus("正在提交")
+        SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
         WISDataManager.sharedInstance().submitUserDetailInfoWithNewInfo(wisUserForUpdate!) { (completedWithNoError, error, classNameOfDataAsString, data) in
             if completedWithNoError {
                 SVProgressHUD.showSuccessWithStatus("修改成功")
@@ -215,7 +215,6 @@ extension ProfileInfoViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         return 60
     }
     

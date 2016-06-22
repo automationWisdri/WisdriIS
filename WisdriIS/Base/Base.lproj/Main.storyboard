@@ -503,6 +503,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="calendarView" destination="Bre-Tw-ESv" id="iD0-Ld-A4H"/>
+                        <outlet property="calendarViewHeightConstraint" destination="mFG-LB-UZR" id="efv-u2-DNm"/>
                         <outlet property="menuView" destination="iyW-pC-qbg" id="BwO-hS-ByU"/>
                         <outlet property="monthLabel" destination="c8m-6b-SSN" id="1Rp-Wz-8jH"/>
                         <outlet property="shiftTableView" destination="cIv-Tm-k7t" id="2Q5-dV-SFZ"/>

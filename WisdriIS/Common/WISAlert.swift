@@ -111,22 +111,32 @@ class WISAlert {
         
         dispatch_async(dispatch_get_main_queue()) {
             
-            let alertController = UIAlertController(title: NSLocalizedString("Call") + ": " + title, message: NSLocalizedString("Choose phone number"), preferredStyle: .ActionSheet)
+            var alertController: UIAlertController
+            
+            if telNumber.isEmpty && mobileNumber.isEmpty {
+                alertController = UIAlertController(title: NSLocalizedString("Sorry"), message: NSLocalizedString("No phone number recorded"), preferredStyle: .Alert)
+            } else {
+                alertController = UIAlertController(title: NSLocalizedString("Call") + ": " + title, message: NSLocalizedString("Choose phone number"), preferredStyle: .ActionSheet)
+            }
             
             let cancelAction: UIAlertAction = UIAlertAction(title: NSLocalizedString("Cancel"), style: .Cancel) { action -> Void in
                 cancelAction()
             }
             alertController.addAction(cancelAction)
             
-            let telCallAction: UIAlertAction = UIAlertAction(title: telNumber, style: .Default) { action -> Void in
-                telCallAction()
+            if !telNumber.isEmpty {
+                let telCallAction: UIAlertAction = UIAlertAction(title: telNumber, style: .Default) { action -> Void in
+                    telCallAction()
+                }
+                alertController.addAction(telCallAction)
             }
-            alertController.addAction(telCallAction)
             
-            let mobileCallAction: UIAlertAction = UIAlertAction(title: mobileNumber, style: .Default) { action -> Void in
-                mobileCallAction()
+            if !mobileNumber.isEmpty {
+                let mobileCallAction: UIAlertAction = UIAlertAction(title: mobileNumber, style: .Default) { action -> Void in
+                    mobileCallAction()
+                }
+                alertController.addAction(mobileCallAction)
             }
-            alertController.addAction(mobileCallAction)
             
             viewController?.presentViewController(alertController, animated: true, completion: nil)
         }

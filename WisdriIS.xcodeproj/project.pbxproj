@@ -113,6 +113,8 @@
 		9F055D341CE4584D0077184B /* WISRefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53251C9AF596001BE6F6 /* WISRefreshHeader.swift */; };
 		9F055D351CE458500077184B /* WISRefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2A53241C9AF596001BE6F6 /* WISRefreshFooter.swift */; };
 		9F055D361CE458870077184B /* WISSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEF50011C78A99E001A7644 /* WISSettings.swift */; };
+		9F147A521D1A82E100F2D033 /* ShiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F147A501D1A82E100F2D033 /* ShiftCell.swift */; };
+		9F147A531D1A82E100F2D033 /* ShiftCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F147A511D1A82E100F2D033 /* ShiftCell.xib */; };
 		9F14B3421D0D57E7008C5F1B /* WISFPSLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F14B3411D0D57E7008C5F1B /* WISFPSLabel.swift */; };
 		9F169F691C7EF35100D1298C /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F681C7EF35100D1298C /* TaskListViewController.swift */; };
 		9F169F6D1C7FF9AA00D1298C /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */; };
@@ -363,6 +365,8 @@
 		9F055C731CE034690077184B /* ClockInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClockInfoCell.xib; path = View/Clock/ClockInfoCell.xib; sourceTree = "<group>"; };
 		9F055C771CE061AE0077184B /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		9F055D371CE45E550077184B /* swiftScan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = swiftScan.framework; path = "../../../Library/Developer/Xcode/DerivedData/WisdriIS-fjambupqdfeqtgbfsuhldrttyxgz/Build/Products/Debug-iphonesimulator/swiftScan.framework"; sourceTree = "<group>"; };
+		9F147A501D1A82E100F2D033 /* ShiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShiftCell.swift; path = View/Shift/ShiftCell.swift; sourceTree = "<group>"; };
+		9F147A511D1A82E100F2D033 /* ShiftCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShiftCell.xib; path = View/Shift/ShiftCell.xib; sourceTree = "<group>"; };
 		9F14B3411D0D57E7008C5F1B /* WISFPSLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISFPSLabel.swift; sourceTree = "<group>"; };
 		9F169F681C7EF35100D1298C /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListViewController.swift; path = WisdriIS/Controller/Task/TaskListViewController.swift; sourceTree = SOURCE_ROOT; };
 		9F169F6C1C7FF9AA00D1298C /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskDetailViewController.swift; path = WisdriIS/Controller/Task/TaskDetailViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -882,6 +886,15 @@
 			path = View/InfoView;
 			sourceTree = "<group>";
 		};
+		9F147A4F1D1A824D00F2D033 /* Shift */ = {
+			isa = PBXGroup;
+			children = (
+				9F147A501D1A82E100F2D033 /* ShiftCell.swift */,
+				9F147A511D1A82E100F2D033 /* ShiftCell.xib */,
+			);
+			name = Shift;
+			sourceTree = "<group>";
+		};
 		9F1FA1DF1CEB00B9001A2F61 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,6 +945,7 @@
 		9F4B215B1C7C2FF400D15B8E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9F147A4F1D1A824D00F2D033 /* Shift */,
 				38A97CCA1CFE820A00E0EA53 /* TaskListFilter */,
 				38A5C0F01CF3391F008DBD48 /* Notification */,
 				385C1E051CE4BD2700F8E393 /* Inspection */,
@@ -1401,6 +1415,7 @@
 				9F1FA1E71CEB717F001A2F61 /* Archive.storyboard in Resources */,
 				38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */,
 				9F801AC71C86906300F64265 /* TaskMediaCell.xib in Resources */,
+				9F147A531D1A82E100F2D033 /* ShiftCell.xib in Resources */,
 				9F99A76D1CC7B88A00E1F92D /* TaskList.storyboard in Resources */,
 				9FEF4FE61C76D4B9001A7644 /* Main.storyboard in Resources */,
 				9F6437281CAC224C007909BE /* login-bg-iphone-3.jpg in Resources */,
@@ -1585,6 +1600,7 @@
 				385C1DF61CE4BC9200F8E393 /* NSError+WISExtension.m in Sources */,
 				9FEF4FE11C76D4B9001A7644 /* AppDelegate.swift in Sources */,
 				385C1DFB1CE4BC9200F8E393 /* WISFileStoreManager.m in Sources */,
+				9F147A521D1A82E100F2D033 /* ShiftCell.swift in Sources */,
 				385C1DF21CE4BC9200F8E393 /* WISUser.m in Sources */,
 				385C1E031CE4BC9200F8E393 /* WISNetworkService.m in Sources */,
 				385C1DE51CE4BC9200F8E393 /* LBXScanViewController.swift in Sources */,

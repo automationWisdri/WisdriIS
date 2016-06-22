@@ -260,9 +260,59 @@ class TaskHomeViewController: BaseViewController {
     }
     */
 
+    /*
+    private func hideTabBar() {
+        
+        guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+        
+        let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
+        
+        let screenRect = UIScreen.mainScreen().bounds
+        let fHeight = screenRect.size.height
+        
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.01)
+        
+        for view in tabBarController.view.subviews {
+            if view.isKindOfClass(UITabBar) {
+                view.frame = CGRectMake(view.frame.origin.x, fHeight, view.frame.size.width, view.frame.size.height)
+            } else {
+                view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, fHeight)
+                view.backgroundColor = UIColor.clearColor()
+            }
+        }
+        UIView.commitAnimations()
+    }
+    
+    private func showTabBar() {
+        
+        guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+        
+        let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
+        
+        let screenRect = UIScreen.mainScreen().bounds
+        let fHeight = screenRect.size.height - 49
+        
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.01)
+        
+        for view in tabBarController.view.subviews {
+            if view.isKindOfClass(UITabBar) {
+                view.frame = CGRectMake(view.frame.origin.x, fHeight, view.frame.size.width, view.frame.size.height)
+            } else {
+                view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, fHeight)
+            }
+        }
+        UIView.commitAnimations()
+    }
+    */
 }
 
-    // MARK: - extension - PagingMenuControllerDelegate
+// MARK: - extension - PagingMenuControllerDelegate
 
 extension TaskHomeViewController: PagingMenuControllerDelegate {
     
@@ -277,7 +327,7 @@ extension TaskHomeViewController: PagingMenuControllerDelegate {
 }
 
 
-    // MARK: - extension - Drop down control
+// MARK: - extension - Drop down control
 
 extension TaskHomeViewController {
     
@@ -286,12 +336,12 @@ extension TaskHomeViewController {
     }
     
     func showDropDownViewFromDirection(direction: LMDropdownViewDirection) -> Void {
-            self.filterDropDownView.direction = direction;
-        
+        self.filterDropDownView.direction = direction;
+
         if self.filterDropDownView.isOpen {
             self.filterDropDownView.hide()
-        
         } else {
+            
             switch direction {
             case .Top:
                 self.filterDropDownView.showFromNavigationController(self.navigationController, withContentView: self.filterContentView)
@@ -300,19 +350,38 @@ extension TaskHomeViewController {
             default:
                 break
             }
+            
+            guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+                return
+            }
+            
+            let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
+            
+            tabBarController.tabBar.hidden = true
         }
     }
 }
 
-
 extension TaskHomeViewController: LMDropdownViewDelegate {
+    
     func dropdownViewWillShow(dropdownView: LMDropdownView!) {
         self.filterContentView?.prepareView()
+    }
+    
+    func dropdownViewDidHide(dropdownView: LMDropdownView!) {
+        
+        guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
+            return
+        }
+        
+        let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
+        
+        tabBarController.tabBar.hidden = false
     }
 }
 
 
-    // MARK: - extension - Drop down data delivery
+// MARK: - extension - Drop down data delivery
 
 extension TaskHomeViewController: TaskListFilterContentViewDelegate {
     

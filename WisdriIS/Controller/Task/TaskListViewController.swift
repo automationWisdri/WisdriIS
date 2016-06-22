@@ -525,22 +525,26 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let wisTask = self.wisTasks[indexPath.row]
+//        let wisTask = self.wisTasks[indexPath.row]
+        let tasksInGroup = self.wisTasksInGroup[self.wisTasksInGroupArrangedTitles[indexPath.section]]!
+        let wisTask = tasksInGroup[indexPath.row]
         
         defer {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
-        performSegueWithIdentifier("showTaskDetail", sender: indexPath.row)
+//        performSegueWithIdentifier("showTaskDetail", sender: indexPath.row)
+        performSegueWithIdentifier("showTaskDetail", sender: wisTask)
     }
 
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showTaskDetail" {
             let vc = segue.destinationViewController as! TaskDetailViewController
-            vc.indexInList = sender as! Int
-            self.currentOperatingCellIndex = vc.indexInList
+//            vc.indexInList = sender as! Int
+//            self.currentOperatingCellIndex = vc.indexInList
             self.currentUpdateCellType = .DoNothing
-            vc.wisTask = self.wisTasks[vc.indexInList] as WISMaintenanceTask
+            vc.wisTask = sender as? WISMaintenanceTask
+//            vc.wisTask = self.wisTasks[vc.indexInList] as WISMaintenanceTask
             vc.superViewController = self
         }
     }
