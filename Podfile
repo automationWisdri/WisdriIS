@@ -17,6 +17,7 @@ def pods
     pod 'Navi'
     pod 'LMDropdownView'
     pod 'TagListView', '~> 1.0'
+    pod 'PgyUpdate'
 end
 
 target 'WisdriIS' do

@@ -5,3 +5,4 @@
 //#import <UIKit/UIKit.h>
 #import "WISDataManager.h"
 #import "GeTuiSdk.h"
+#import <PgyUpdate/PgyUpdateManager.h>

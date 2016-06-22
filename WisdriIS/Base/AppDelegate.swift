@@ -76,6 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
         }
         
+        checkPgyUpdate()
+        
         let currentUser = WISDataManager.sharedInstance().currentUser
         let roleCodes = WISDataManager.sharedInstance().roleCodes
         if currentUser.roleCode == roleCodes[RoleCode.Operator.rawValue] {
@@ -101,6 +103,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func didDisappearProgressHUD() {
         SVProgressHUD.setDefaultMaskType(.Clear)
+    }
+    
+    func checkPgyUpdate() {
+        let appIdOnPgy = "b731898876536b52752f99e978c370af"
+        PgyUpdateManager.sharedPgyManager().startManagerWithAppId(appIdOnPgy)
+        PgyUpdateManager.sharedPgyManager().checkUpdate()
     }
 
     func applicationWillResignActive(application: UIApplication) {
