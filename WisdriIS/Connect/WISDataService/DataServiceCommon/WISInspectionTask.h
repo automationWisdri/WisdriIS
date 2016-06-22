@@ -67,8 +67,8 @@ andInspectionResultDescription:(NSString *)inspectionResultDescription;
 
 + (arrayForwardSorterWithResult) arrayForwardSorterByFinishedTimeWithResult;
 + (arrayForwardSorterWithResult) arrayBackwardSorterByFinishedTimeWithResult;
-+ (arrayForwardSorterWithResult) arrayForwardSorterByFinishedTimeWithBool;
-+ (arrayForwardSorterWithResult) arrayBackwardSorterByFinishedTimeWithBool;
++ (arrayForwardSorterWithResult) arrayForwardSorterByFinishedTimeWithBOOL;
++ (arrayForwardSorterWithResult) arrayBackwardSorterByFinishedTimeWithBOOL;
 
 + (arrayForwardSorterWithResult) arrayForwardSorterByExpirationTimeWithResult;
 + (arrayForwardSorterWithResult) arrayBackwardSorterByExpirationTimeWithResult;

@@ -28,10 +28,7 @@ class TaskListFilterGroupContentView: UIView {
                 let oldSelectedCell = self.groupSelectionTableView.cellForRowAtIndexPath(oldValue)
                 
                 newSelectedCell?.accessoryType = .Checkmark
-                newSelectedCell?.selected = true
-                
                 oldSelectedCell?.accessoryType = .None
-                oldSelectedCell?.selected = false
             }
         }
     }
@@ -102,10 +99,9 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
         
         if indexPath.row == currentSelectedIndexPath.row {
             cell.accessoryType = .Checkmark
-            cell.selected = true
+            
         } else {
             cell.accessoryType = .None
-            cell.selected = false
         }
         
         return cell
@@ -121,10 +117,7 @@ extension TaskListFilterGroupContentView: UITableViewDataSource, UITableViewDele
         let oldSelectedCell = tableView.cellForRowAtIndexPath(currentSelectedIndexPath)
         
         newSelectedCell?.accessoryType = .Checkmark
-        newSelectedCell?.selected = true
-        
         oldSelectedCell?.accessoryType = .None
-        oldSelectedCell?.selected = false
         
         currentSelectedIndexPath = indexPath
         

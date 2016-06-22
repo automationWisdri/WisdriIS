@@ -53,7 +53,6 @@ class InspectionListViewController : BaseViewController {
         super.viewDidLoad()
         
         // self.inspectionSearchBar.delegate = self
-        
         inspectionTableView.delegate = self
         inspectionTableView.dataSource = self
         
@@ -147,7 +146,7 @@ class InspectionListViewController : BaseViewController {
                 
                 if deviceTypes!.count > 0 {
                     for deviceType in deviceTypes! {
-                        WISInsepctionDataManager.sharedInstance().deviceTypes[deviceType.deviceTypeID] = deviceType
+                        WISInspectionDataManager.sharedInstance().deviceTypes[deviceType.deviceTypeID] = deviceType
                     }
                 }
                 
@@ -183,18 +182,27 @@ class InspectionListViewController : BaseViewController {
         WISDataManager.sharedInstance().updateInspectionsInfoWithCompletionHandler { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
-                WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
+                WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
                 if inspectionTasks.count > 0 {
                     for inspectionTask in inspectionTasks {
                         let task = inspectionTask.copy() as! WISInspectionTask
                         let deviceID = task.device.deviceID
-                        guard !WISInsepctionDataManager.sharedInstance().uploadingQueueContainsInspectionTaskByDeviceID(deviceID) else {
+                        guard !WISInspectionDataManager.sharedInstance().uploadingQueueContainsInspectionTaskByDeviceID(deviceID) else {
                             continue
                         }
-                        if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
-                            task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
+                        if WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
+                            task.device.deviceType = WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
                         }
-                        WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.append(task)
+                        WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.append(task)
+                    }
+                }
+                
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
                     }
                 }
                 
@@ -206,6 +214,17 @@ class InspectionListViewController : BaseViewController {
                 }
                 
             } else {
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
+                    }
+                }
+                
+                self!.updateTableViewInfo()
+                
                 switch error.code {
                 case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
                     SVProgressHUD.setDefaultMaskType(.None)
@@ -234,17 +253,17 @@ class InspectionListViewController : BaseViewController {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
                 
                 if pageIndex < 2 {
-                    WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.removeAll()
+                    WISInspectionDataManager.sharedInstance().historicalInspectionTasks.removeAll()
                 }
                 
                 if inspectionTasks.count > 0 {
                     for inspectionTask in inspectionTasks {
                         let task = inspectionTask.copy() as! WISInspectionTask
                         
-                        if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
-                            task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
+                        if WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
+                            task.device.deviceType = WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
                         }
-                        WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.append(task)
+                        WISInspectionDataManager.sharedInstance().historicalInspectionTasks.append(task)
                     }
                 }
                 
@@ -266,6 +285,16 @@ class InspectionListViewController : BaseViewController {
                 }
                 
             } else {
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
+                    }
+                }
+                self!.updateTableViewInfo()
+                
                 switch error.code {
                 case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
                     SVProgressHUD.setDefaultMaskType(.None)
@@ -289,16 +318,25 @@ class InspectionListViewController : BaseViewController {
         WISDataManager.sharedInstance().updateOverDueInspectionsInfoWithCompletionHandler { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {
                 let inspectionTasks: [WISInspectionTask] = updatedData as! [WISInspectionTask]
-                WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
+                WISInspectionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
                 
                 if inspectionTasks.count > 0 {
                     for inspectionTask in inspectionTasks {
                         let task = inspectionTask.copy() as! WISInspectionTask
                         
-                        if WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
-                            task.device.deviceType = WISInsepctionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
+                        if WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID] != nil {
+                            task.device.deviceType = WISInspectionDataManager.sharedInstance().deviceTypes[task.device.deviceType.deviceTypeID]?.copy() as! WISDeviceType
                         }
-                        WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.append(task)
+                        WISInspectionDataManager.sharedInstance().overDueInspectionTasks.append(task)
+                    }
+                }
+                
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
                     }
                 }
                 
@@ -310,6 +348,17 @@ class InspectionListViewController : BaseViewController {
                 }
                 
             } else {
+                if self!.inspectionTableView.mj_header.isRefreshing() {
+                    self!.inspectionTableView.mj_header.endRefreshing()
+                }
+                if self!.inspectionTableView.mj_footer != nil {
+                    if self!.inspectionTableView.mj_footer.isRefreshing() {
+                        self!.inspectionTableView.mj_footer.endRefreshing()
+                    }
+                }
+                
+                self!.updateTableViewInfo()
+                
                 switch error.code {
                 case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
                     SVProgressHUD.setDefaultMaskType(.None)
@@ -326,9 +375,9 @@ class InspectionListViewController : BaseViewController {
     
     private func updateTableViewInfo() {
         switch self.inspectionTaskType {
-        case .OnTheGo: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.isEmpty
-        case .Historical: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.isEmpty
-        case .OverDue: self.hasNoRecord = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.isEmpty
+        case .OnTheGo: self.hasNoRecord = WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.isEmpty
+        case .Historical: self.hasNoRecord = WISInspectionDataManager.sharedInstance().historicalInspectionTasks.isEmpty
+        case .OverDue: self.hasNoRecord = WISInspectionDataManager.sharedInstance().overDueInspectionTasks.isEmpty
         }
         
         dispatch_async(dispatch_get_main_queue()){
@@ -350,9 +399,9 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.inspectionTaskType {
-        case .OnTheGo: return WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks.count
-        case .Historical: return WISInsepctionDataManager.sharedInstance().historicalInspectionTasks.count
-        case .OverDue: return WISInsepctionDataManager.sharedInstance().overDueInspectionTasks.count
+        case .OnTheGo: return WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.count
+        case .Historical: return WISInspectionDataManager.sharedInstance().historicalInspectionTasks.count
+        case .OverDue: return WISInspectionDataManager.sharedInstance().overDueInspectionTasks.count
         }
     }
     
@@ -366,15 +415,15 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
         
         switch self.inspectionTaskType {
         case .OnTheGo:
-            inspectionTasks = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks
+            inspectionTasks = WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks
             isHistoricalInspection = false
             
         case .Historical:
-            inspectionTasks = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks
+            inspectionTasks = WISInspectionDataManager.sharedInstance().historicalInspectionTasks
             isHistoricalInspection = true
             
         case .OverDue:
-            inspectionTasks = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks
+            inspectionTasks = WISInspectionDataManager.sharedInstance().overDueInspectionTasks
             isHistoricalInspection = false
         }
         
@@ -392,9 +441,9 @@ extension InspectionListViewController: UITableViewDataSource, UITableViewDelega
         let task: WISInspectionTask
         
         switch self.inspectionTaskType {
-        case .OnTheGo: task = WISInsepctionDataManager.sharedInstance().onTheGoInspectionTasks[indexPath.row]
-        case .Historical: task = WISInsepctionDataManager.sharedInstance().historicalInspectionTasks[indexPath.row]
-        case .OverDue: task = WISInsepctionDataManager.sharedInstance().overDueInspectionTasks[indexPath.row]
+        case .OnTheGo: task = WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks[indexPath.row]
+        case .Historical: task = WISInspectionDataManager.sharedInstance().historicalInspectionTasks[indexPath.row]
+        case .OverDue: task = WISInspectionDataManager.sharedInstance().overDueInspectionTasks[indexPath.row]
         }
         
         defer {

@@ -60,6 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WISUserDefaults.getCurrentUserClockStatus()
         WISUserDefaults.getWorkShift(NSDate(), range: .Year)
         
+        // Reset Data of Inspection section
+        WISInspectionDataManager.sharedInstance().onTheGoInspectionTasks.removeAll()
+        WISInspectionDataManager.sharedInstance().historicalInspectionTasks.removeAll()
+        WISInspectionDataManager.sharedInstance().overDueInspectionTasks.removeAll()
+        
         WISPushNotificationDataManager.sharedInstance().reloadDataWithUserName(WISDataManager.sharedInstance().currentUser.userName)
         
         // **
@@ -70,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             WISPushNotificationService.sharedInstance().startPushNotificationServiceWithApplication(nil)
         }
+        
+        checkPgyUpdate()
         
         let currentUser = WISDataManager.sharedInstance().currentUser
         let roleCodes = WISDataManager.sharedInstance().roleCodes
@@ -96,6 +103,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func didDisappearProgressHUD() {
         SVProgressHUD.setDefaultMaskType(.Clear)
+    }
+    
+    func checkPgyUpdate() {
+        let appIdOnPgy = "b731898876536b52752f99e978c370af"
+        PgyUpdateManager.sharedPgyManager().startManagerWithAppId(appIdOnPgy)
+        PgyUpdateManager.sharedPgyManager().checkUpdate()
     }
 
     func applicationWillResignActive(application: UIApplication) {
