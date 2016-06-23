@@ -34,6 +34,8 @@ class WISTabBarController: UITabBarController {
     }
 
     private var previousTab = Tab.Tasks
+//    private var previousTab = tabBar.items[0]
+    private var previousItem: UITabBarItem?
 
     private var checkDoubleTapOnTasksTimer: NSTimer?
     private var hasFirstTapOnTasksWhenItIsAtTop = false {
@@ -78,6 +80,8 @@ class WISTabBarController: UITabBarController {
         // Set Titles
         
         if let items = tabBar.items {
+            
+            previousItem = items[0]
             
             if items.count == 2 {
                 items[0].title = Tab.Tasks.title
@@ -142,16 +146,16 @@ extension WISTabBarController: UITabBarControllerDelegate {
             return
         }
         
-        let tab = items[selectedIndex]
+        let item = items[selectedIndex]
 
         // 相等才继续，确保第一次 tap 不做事
-//        if tab != previousTab {
-//            previousTab = tab
-//            return
-//        }
+        if item != previousItem {
+            previousItem = item
+            return
+        }
 
         // One tap on tab scroll the tableView to the top
-        switch tab.title! {
+        switch item.title! {
             
         case NSLocalizedString("Tasks"):
             if let vc = nvc.topViewController as? TaskHomeViewController {

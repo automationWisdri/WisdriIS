@@ -237,8 +237,10 @@ class SubmitPlanViewController: BaseViewController {
 
                     case "modifyPlanOperation":
                         
-                        for item: AnyObject in self.wisPlan!.imagesInfo.allKeys {
-                            self.taskImageInfo[item as! String] = (self.wisPlan!.imagesInfo.valueForKey(item as! String) as! WISFileInfo)
+                        if let _ = self.wisPlan {
+                            for item: AnyObject in self.wisPlan!.imagesInfo.allKeys {
+                                self.taskImageInfo[item as! String] = (self.wisPlan!.imagesInfo.valueForKey(item as! String) as! WISFileInfo)
+                            }
                         }
                         
                         WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Modify, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: self.estimateDatePicker.date, maintenancePlanDescription: self.taskPlanTextView.text, maintenancePlanParticipants: self.taskParticipants, taskImageInfo: self.taskImageInfo, taskRating: nil) { (completedWithNoError, error) in

@@ -111,7 +111,7 @@ class ModifyPlanViewController: BaseViewController {
         }
         
         taskPlanTextView.text = wisPlan!.planDescription
-        print(taskPlanTextView.text)
+//        print(taskPlanTextView.text)
         
         if self.wisPlan!.imagesInfo.count > 0 {
             
@@ -153,33 +153,79 @@ class ModifyPlanViewController: BaseViewController {
     @objc private func post(sender: UIBarButtonItem) {
         
         SVProgressHUD.showWithStatus(WISConfig.HUDString.committing)
+        
+        var estimateDateIsModify = true
+        var taskPlanDescriptionIsModify = true
+        
+        // 判断方案完成时间是否有修改
+        if let originalDate = wisPlan?.estimatedEndingTime {
+            if originalDate == estimateDatePicker.date {
+                estimateDateIsModify = false
+            }
+        }
+        
+        // 判断方案描述是否有修改
+        if let originalPlan = wisPlan?.planDescription {
+            if originalPlan == taskPlanTextView.text {
+                taskPlanDescriptionIsModify = false
+            }
+        }
+        
         switch self.segueIdentifier! {
             
         case "approveOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
-                if completedWithNoError {
-                    SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
-                    // self.navigationController?.popViewControllerAnimated(true)
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                    
-                } else {
-                    WISConfig.errorCode(error)
+            
+            if taskPlanDescriptionIsModify || estimateDateIsModify {
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
+                    if completedWithNoError {
+                        SVProgressHUD.setDefaultMaskType(.None)
+                        SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
+                        // self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        
+                    } else {
+                        WISConfig.errorCode(error)
+                    }
                 }
+            } else {
+                // 如果同意方案时未对方案进行修改，则 plan description 和 estimate time 提交 nil
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.Approve, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                    if completedWithNoError {
+                        SVProgressHUD.setDefaultMaskType(.None)
+                        SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    } else {
+                        WISConfig.errorCode(error)
+                    }
+                })
             }
             break
-            
+ 
         case "recheckOperation":
-            WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
-                if completedWithNoError {
-                    SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
-                    // self.navigationController?.popViewControllerAnimated(true)
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                    
-                } else {
-                    WISConfig.errorCode(error)
+            
+            if taskPlanDescriptionIsModify || estimateDateIsModify {
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: estimateDatePicker.date, maintenancePlanDescription: taskPlanTextView.text, maintenancePlanParticipants: taskParticipants, taskImageInfo: self.imagesInfo, taskRating: nil) { (completedWithNoError, error) in
+                    if completedWithNoError {
+                        SVProgressHUD.setDefaultMaskType(.None)
+                        SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
+                        // self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        
+                    } else {
+                        WISConfig.errorCode(error)
+                    }
                 }
+            } else {
+                // 如果复审方案时未对方案进行修改，则 plan description 和 estimate time 提交 nil
+                WISDataManager.sharedInstance().maintenanceTaskOperationWithTaskID(currentTask?.taskID, remark: nil, operationType: MaintenanceTaskOperationType.ApplyForRecheck, taskReceiverName: nil, maintenancePlanEstimatedEndingTime: nil, maintenancePlanDescription: nil, maintenancePlanParticipants: taskParticipants, taskImageInfo: nil, taskRating: nil, andCompletionHandler: { (completedWithNoError, error) in
+                    if completedWithNoError {
+                        SVProgressHUD.setDefaultMaskType(.None)
+                        SVProgressHUD.showSuccessWithStatus(WISConfig.HUDString.success)
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    } else {
+                        WISConfig.errorCode(error)
+                    }
+                })
             }
             break
             
