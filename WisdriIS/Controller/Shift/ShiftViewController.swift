@@ -448,21 +448,19 @@ extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
         return 50
     }
    
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
-        let hideCalendar: (() -> Void)? = {
-        
-            let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
-            
-            if translation.y > 0 {
-//                self.calendarView.frame.origin.y = self.calendarView.frame.origin.y - 200
-                self.calendarViewHeightConstraint.constant = 300
-            } else if translation.y < 0 {
-//                self.calendarView.frame.origin.y = 98
-                self.calendarViewHeightConstraint.constant = 100
-            }
-        }
-        
-        Ruler.iPhoneVertical(hideCalendar, hideCalendar, nil, nil)
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        
+//        let hideCalendar: (() -> Void)? = {
+//        
+//            let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+//            
+//            if translation.y > 0 && self.calendarViewHeightConstraint.constant < 150 {
+//                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant + 150
+//            } else if translation.y < 0 && self.calendarViewHeightConstraint.constant > 150 {
+//                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant - 150
+//            }
+//        }
+//        
+//        Ruler.iPhoneVertical(hideCalendar, hideCalendar, nil, nil).value?()
+//    }
 }

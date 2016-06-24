@@ -9,6 +9,11 @@
 import Foundation
 //import Navi
 
+enum ValidateType: Int {
+    case Phone = 0
+    case Name
+}
+
 typealias CancelableTask = (cancel: Bool) -> Void
 
 extension String {
@@ -82,6 +87,34 @@ func cleanDiskCacheFolder() {
         }
         
     }
+}
+
+/// 字符串格式判断
+func validateFormat(validateString string: String, type: ValidateType) -> Bool {
+    
+    do {
+        let phonePattern = "^(\\d{3}-\\d{8}|\\d{3}-\\d{7}|\\d{4}-\\d{8}|\\d{4}-\\d{7}|1\\d{10}|\\d{8}|\\d{7})$"
+        let chineseCharacterPattern = "^[\\u4e00-\\u9fa5]{2,6}$"
+//        let mobilePattern = "^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$"
+        var regex = NSRegularExpression()
+        
+        switch type {
+            case .Name:
+                regex = try NSRegularExpression(pattern: chineseCharacterPattern, options: .CaseInsensitive)
+            case .Phone:
+                regex = try NSRegularExpression(pattern: phonePattern, options: .CaseInsensitive)
+        }
+        
+        let matches = regex.matchesInString(string, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, string.characters.count))
+        
+        return matches.count > 0
+        
+    }
+    catch {
+        print("Format Error")
+        return false
+    }
+    
 }
 
 extension UIImage {

@@ -92,19 +92,37 @@ class ProfileInfoViewController: UIViewController {
             
             if telCell.infoTextField.text?.Length > 0 {
                 telNumber = telCell.infoTextField.text!
-                // 格式判断待完善
-                wisUserForUpdate.telephoneNumber = telNumber
+                // 格式判断
+                if validateFormat(validateString: telNumber!, type: .Phone) {
+                    wisUserForUpdate.telephoneNumber = telNumber
+                } else {
+                    WISAlert.alertSorry(message: "固定电话号码格式有误", inViewController: self, withDismissAction: {
+                        telCell.infoTextField.becomeFirstResponder()
+                    })
+                    return
+                }
             } else {
-                telCell.infoTextField.becomeFirstResponder()
+                WISAlert.alertSorry(message: "请填入固定电话号码", inViewController: self, withDismissAction: {
+                        telCell.infoTextField.becomeFirstResponder()
+                    })
                 return
             }
             
-            if mobileCell.infoTextField.text?.Length == 11 {
+            if mobileCell.infoTextField.text?.Length > 0 {
                 mobileNumber = mobileCell.infoTextField.text!
-                // 格式判断待完善
-                wisUserForUpdate.cellPhoneNumber = mobileNumber
+                // 格式判断
+                if validateFormat(validateString: mobileNumber!, type: .Phone) {
+                    wisUserForUpdate.cellPhoneNumber = mobileNumber
+                } else {
+                    WISAlert.alertSorry(message: "移动电话号码格式有误", inViewController: self, withDismissAction: {
+                        mobileCell.infoTextField.becomeFirstResponder()
+                    })
+                    return
+                }
             } else {
-                mobileCell.infoTextField.becomeFirstResponder()
+                WISAlert.alertSorry(message: "请填入移动电话号码", inViewController: self, withDismissAction: {
+                        mobileCell.infoTextField.becomeFirstResponder()
+                    })
                 return
             }
             
@@ -116,10 +134,19 @@ class ProfileInfoViewController: UIViewController {
             
             if nameCell.infoTextField.text?.Length > 0 {
                 fullName = nameCell.infoTextField.text!
-                // 格式判断待完善
-                wisUserForUpdate.fullName = fullName
+                // 格式判断
+                if validateFormat(validateString: fullName!, type: .Name) {
+                    wisUserForUpdate.fullName = fullName
+                } else {
+                    WISAlert.alertSorry(message: "用户姓名格式有误", inViewController: self, withDismissAction: {
+                        nameCell.infoTextField.becomeFirstResponder()
+                    })
+                    return
+                }
             } else {
-                nameCell.infoTextField.becomeFirstResponder()
+                WISAlert.alertSorry(message: "请填入用户姓名", inViewController: self, withDismissAction: {
+                    nameCell.infoTextField.becomeFirstResponder()
+                })
                 return
             }
             

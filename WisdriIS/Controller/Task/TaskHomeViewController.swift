@@ -260,7 +260,7 @@ class TaskHomeViewController: BaseViewController {
     }
     */
 
-    /*
+    
     private func hideTabBar() {
         
         guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
@@ -273,7 +273,7 @@ class TaskHomeViewController: BaseViewController {
         let fHeight = screenRect.size.height
         
         UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.01)
+        UIView.setAnimationDuration(0.15)
         
         for view in tabBarController.view.subviews {
             if view.isKindOfClass(UITabBar) {
@@ -298,7 +298,7 @@ class TaskHomeViewController: BaseViewController {
         let fHeight = screenRect.size.height - 49
         
         UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.01)
+        UIView.setAnimationDuration(0.25)
         
         for view in tabBarController.view.subviews {
             if view.isKindOfClass(UITabBar) {
@@ -309,7 +309,7 @@ class TaskHomeViewController: BaseViewController {
         }
         UIView.commitAnimations()
     }
-    */
+ 
 }
 
 // MARK: - extension - PagingMenuControllerDelegate
@@ -351,13 +351,6 @@ extension TaskHomeViewController {
                 break
             }
             
-            guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
-                return
-            }
-            
-            let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
-            
-            tabBarController.tabBar.hidden = true
         }
     }
 }
@@ -366,18 +359,15 @@ extension TaskHomeViewController: LMDropdownViewDelegate {
     
     func dropdownViewWillShow(dropdownView: LMDropdownView!) {
         self.filterContentView?.prepareView()
+        hideTabBar()
     }
     
-    func dropdownViewDidHide(dropdownView: LMDropdownView!) {
-        
-        guard let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else {
-            return
+    func dropdownViewWillHide(dropdownView: LMDropdownView!) {
+        delay(0.2) {
+            self.showTabBar()
         }
-        
-        let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
-        
-        tabBarController.tabBar.hidden = false
     }
+    
 }
 
 
