@@ -307,8 +307,8 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
         
         switch section {
         case .InspectionDevice: return 20.0//0.001
-        case .InspectionDeviceType: return 0.001//10
-        case .InspectionResult: return 0.001//10
+        case .InspectionDeviceType: return CGFloat.min //10
+        case .InspectionResult: return CGFloat.min //10
         case .InspectionOperation: return showMoreInformation ? 20.0 : 5.0
         }
     }
@@ -590,8 +590,8 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             
                             if images.count > 0 {
                                 for image in images {
-                                    // set images name
-                                    imagesInDictionary["inspectionTask_image_" + String(image.hashValue)] = image
+                                    let rotatedImage = image.fixRotation()
+                                    imagesInDictionary["inspectionTask_image_" + String(image.hashValue)] = rotatedImage
                                 }
                             }
                             
@@ -659,31 +659,37 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                     return
                 }
                 
-                if let strongSelf = self {
-                    let viewController = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
-                    
-                    viewController.previewImages = imageFileInfos
-                    viewController.startIndex = index
-                    
-                    let transitionView = transitionView
-                    let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
-                    viewController.previewImageViewInitalFrame = frame
-                    viewController.bottomPreviewImage = image
-                    viewController.transitionView = transitionView
-                    
-                    strongSelf.view.endEditing(true)
-                    
-                    delay(0.3, work: { () -> Void in
-                        transitionView.alpha = 0
-                    })
-                    
-                    viewController.afterDismissAction = { [weak self] in
-                        transitionView.alpha = 1
-                        mediaPreviewWindow.hidden = true
-                        self!.view.window?.makeKeyAndVisible()
-                    }
+                let transitionView = transitionView
+                let viewController = UIStoryboard(name: "MediaPreview", bundle: nil).instantiateViewControllerWithIdentifier("MediaPreviewViewController") as! MediaPreviewViewController
+                
+                viewController.previewImages = imageFileInfos
+                viewController.startIndex = index
+                
+                let frame = transitionView.convertRect(transitionView.frame, toView: self?.view)
+                viewController.previewImageViewInitalFrame = frame
+                viewController.bottomPreviewImage = image
+                viewController.transitionView = transitionView
+                
+                self!.view.endEditing(true)
+                
+                delay(0.3, work: { () -> Void in
+                    transitionView.alpha = 0
+                })
+                
+//                delay(0) {
+//                    transitionView.alpha = 0 // 放到下一个 Runloop 避免太快消失产生闪烁
+//                }
+                
+                viewController.afterDismissAction = { [weak self] in
+                    transitionView.alpha = 1
+                    mediaPreviewWindow.hidden = true
+                    self?.view.window?.makeKeyAndVisible()
                 }
+                
+                mediaPreviewWindow.rootViewController = viewController
+                mediaPreviewWindow.makeKeyAndVisible()
             }
+            
             
         default:
             break
@@ -705,6 +711,7 @@ extension InspectionDetailViewController: UIImagePickerControllerDelegate, UINav
                     let cell = self.inspectionDetailTableView.cellForRowAtIndexPath(
                         NSIndexPath.init(forRow: InspectionAddResultRow.PickPhoto.rawValue,
                             inSection: Section.InspectionResult.rawValue)) as! InspectionPickPhotoCell
+                    
                     if cell.mediaImages.count <= cell.imageCountUpLimit - 1 {
                         cell.mediaImages.append(image)
                     }

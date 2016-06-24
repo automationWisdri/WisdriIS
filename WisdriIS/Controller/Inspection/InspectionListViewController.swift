@@ -246,7 +246,7 @@ class InspectionListViewController : BaseViewController {
         }
         
         let startDate = NSDate.init().add(0, months: 0, weeks: 0, days: -30, hours: 0, minutes: 0, seconds: 0, nanoseconds: 0)
-        let endDate = NSDate.init()
+        let endDate = NSDate.init().add(0, months: 0, weeks: 0, days: 1, hours: 0, minutes: 0, seconds: 0, nanoseconds: 0)
         
         WISDataManager.sharedInstance().updateHistoricalInspectionsInfoWithStartDate(startDate, endDate: endDate, recordNumberInPage: self.recordNumberInPage, pageIndex: self.currentPageIndex) { [weak self] (completionWithNoError, error, classNameOfUpdatedDataAsString, updatedData) -> Void in
             if completionWithNoError {

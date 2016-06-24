@@ -80,7 +80,12 @@ class InspectionPresentResultWithPhotoCell:InspectionDetailViewBaseCell {
             // self.inspectionImagesTitleLabel.font = UIFont.systemFontOfSize(15.0)
         } else {
             print("Totally \(model.imagesInfo.count) image(s)")
-            self.inspectionImageFileInfos = model.imagesInfo.allValues as! [WISFileInfo]
+            // self.inspectionImageFileInfos = model.imagesInfo.allValues as! [WISFileInfo]
+            self.inspectionImageFileInfos.removeAll()
+            for item in model.imagesInfo.allValues {
+                self.inspectionImageFileInfos.append((item as! WISFileInfo))
+            }
+            
             self.inspectionImagesCollectionView.hidden = false
             self.inspectionImagesTitleLabel.text = String.localizedStringWithFormat(NSLocalizedString("Totally %d images uploaded in this inspection task", comment:""), model.imagesInfo.count)
             self.inspectionImagesTitleLabel.textColor = UIColor.blackColor()

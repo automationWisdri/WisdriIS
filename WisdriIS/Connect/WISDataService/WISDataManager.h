@@ -376,33 +376,33 @@ typedef void (^WISInspectionTaskOperationHandler)(BOOL completedWithNoError, NSE
 /// 保存用户的图片 (当前APP使用者, 或更新了用户列表中的用户所产生的用户头像图片均应使用该函数保存)
 // 函数将图片数据保存在本地缓存, 并上传服务器
 - (NSURLSessionUploadTask *) storeImageOfUserWithUserName:(NSString *)userName
-                               images:(NSDictionary<NSString *,UIImage *> *)images
-              uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
-                    completionHandler:(WISSystemOperationHandler)handler;
+                                                   images:(NSDictionary<NSString *,UIImage *> *)images
+                                  uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
+                                        completionHandler:(WISSystemOperationHandler)handler;
 
 
 /// 获取用户的图片 (当前APP使用者, 或更新了用户列表中的用户所需的用户头像图片均应使用该函数获取)
 /// 图片数据来自本地缓存. 如果缓存中没有, 则从服务器下载并保存到缓存, 再从缓存获取. 函数仅会下载缓存中不存在的图片
 - (NSURLSessionDownloadTask *) obtainImageOfUserWithUserName:(NSString *)userName
-                            imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
-             downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
-                     completionHandler:(WISSystemOperationHandler)handler;
+                                                  imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
+                                   downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
+                                           completionHandler:(WISSystemOperationHandler)handler;
 
 
 // 保存维保任务单的图片
 // 函数将图片数据保存在本地缓存, 并上传服务器
 - (NSURLSessionUploadTask *) storeImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
-                                        images:(NSDictionary<NSString *,UIImage *> *)images
-                       uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
-                             completionHandler:(WISSystemOperationHandler)handler;
+                                                            images:(NSDictionary<NSString *,UIImage *> *)images
+                                           uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
+                                                 completionHandler:(WISSystemOperationHandler)handler;
 
 
 /// 获取维保任务单的图片
 /// 图片数据来自本地缓存. 如果缓存中没有, 则从服务器下载并保存到缓存, 再从缓存获取. 函数仅会下载缓存中不存在的图片
 - (NSURLSessionDownloadTask *) obtainImageOfMaintenanceTaskWithTaskID:(NSString *)taskID
-                                     imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
-                      downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
-                              completionHandler:(WISSystemOperationHandler)handler;
+                                                           imagesInfo:(NSDictionary<NSString *,WISFileInfo *> *)imagesInfo
+                                            downloadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
+                                                    completionHandler:(WISSystemOperationHandler)handler;
 
 
 - (NSURLSessionUploadTask *) uploadImageWithImages:(NSDictionary<NSString *, UIImage *> *)images

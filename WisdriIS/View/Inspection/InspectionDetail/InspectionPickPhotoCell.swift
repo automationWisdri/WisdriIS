@@ -186,8 +186,8 @@ extension InspectionPickPhotoCell: UICollectionViewDataSource, UICollectionViewD
                     viewController.completion = { [weak self] images, imageAssets in
                         for image in images {
                             self?.mediaImages.append(image)
-                            self?.imagesDictionary["task_image" + String(image.hash)] = image
-                            print(self?.imagesDictionary["task_image" + String(image.hash)])
+                            // self?.imagesDictionary["inspectionTask_image_" + String(image.hash)] = image
+                            // print(self?.imagesDictionary["inspectionTask_image_" + String(image.hash)])
                         }
                     }
                     

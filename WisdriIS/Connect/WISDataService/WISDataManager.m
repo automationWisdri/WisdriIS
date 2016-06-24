@@ -947,8 +947,6 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
     }
     
     return dataTask;
-    
-    
 }
 
 - (NSURLSessionDataTask *) updateCurrentClockStatusWithCompletionHandler:(WISSystemOperationHandler)handler {
@@ -3649,9 +3647,9 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
 #pragma mark - Image Operations for APP interface
 
 - (NSURLSessionUploadTask *) storeImageOfUserWithUserName:(NSString *)userName
-                               images:(NSDictionary<NSString *,UIImage *> *)images
-              uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
-                    completionHandler:(WISSystemOperationHandler)handler {
+                                                   images:(NSDictionary<NSString *,UIImage *> *)images
+                                  uploadProgressIndicator:(WISSystemDataTransmissionProgressIndicator)progress
+                                        completionHandler:(WISSystemOperationHandler)handler {
     return [self storeImageWithImages:images
      /// PROGRESS
      uploadProgressIndicator:progress

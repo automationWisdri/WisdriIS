@@ -385,9 +385,10 @@ extension SubmitPlanViewController: UIImagePickerControllerDelegate, UINavigatio
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
                     if mediaImages.count <= 5 {
+                        let rotatedImage = image.fixRotation()
                         mediaImages.append(image)
-                        let photoFileName = "plan_image_" + String(image.hash)
-                        self.imagesDictionary[photoFileName] = image
+                        let photoFileName = "plan_image_" + String(rotatedImage.hash)
+                        self.imagesDictionary[photoFileName] = rotatedImage
                     }
                 }
                 

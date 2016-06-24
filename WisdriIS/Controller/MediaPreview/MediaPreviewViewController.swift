@@ -205,7 +205,7 @@ class MediaPreviewViewController: UIViewController {
             
             let imagesInfo = [previewImage.fileName : previewImage]
             
-            WISDataManager.sharedInstance().obtainImageOfMaintenanceTaskWithTaskID(currentTask!.taskID, imagesInfo: imagesInfo, downloadProgressIndicator: { _ in
+            WISDataManager.sharedInstance().obtainImageOfMaintenanceTaskWithTaskID(currentTask?.taskID, imagesInfo: imagesInfo, downloadProgressIndicator: { _ in
                 }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
                     
                 if completedWithNoError {

@@ -128,9 +128,9 @@ class NewTaskViewController: BaseViewController {
         
         navigationItem.rightBarButtonItem = postButton
 
-        let cancleButton = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: #selector(NewTaskViewController.cancel(_:)))
+        let cancelButton = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: #selector(NewTaskViewController.cancel(_:)))
 
-        navigationItem.leftBarButtonItem = cancleButton
+        navigationItem.leftBarButtonItem = cancelButton
         self.view.userInteractionEnabled = true
         view.sendSubviewToBack(taskWhiteBGView)
         
@@ -296,7 +296,6 @@ class NewTaskViewController: BaseViewController {
     @objc private func cancel(sender: UIBarButtonItem) {
         
         messageTextView.resignFirstResponder()
-
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -611,10 +610,11 @@ extension NewTaskViewController: UIImagePickerControllerDelegate, UINavigationCo
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
                     if mediaImages.count <= 5 {
-                        mediaImages.append(image)
+                        let rotatedImage = image.fixRotation()
+                        mediaImages.append(rotatedImage)
                         
-                        let photoFileName = "task_image_" + String(image.hashValue)
-                        self.imagesDictionary[photoFileName] = image
+                        let photoFileName = "task_image_" + String(rotatedImage.hashValue)
+                        self.imagesDictionary[photoFileName] = rotatedImage
                     }
                 }
                 

@@ -16,6 +16,6 @@
 
 - (NSString *) toDateTimeString;
 
--(NSString *) toDateStringWithSeparator:(NSString *)separator;
+- (NSString *) toDateStringWithSeparator:(NSString *)separator;
 
 @end

@@ -342,6 +342,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                     || currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue] else {
                         return ProfileLessInfoCell()
                 }
+                // 屏蔽打卡选项 2016.06.24
+                return ProfileLessInfoCell()
                 
                 let cell = tableView.dequeueReusableCellWithIdentifier(profileLessInfoCellIdentifier) as! ProfileLessInfoCell
                 
@@ -422,7 +424,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             case InfoRow.Scan.rawValue:
                 if currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Engineer.rawValue]
                     || currentUser.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue] {
-                    return 60
+                    return CGFloat.min // 60 - 屏蔽打卡选项 2016.06.24
                 }
                 return CGFloat.min
                 
