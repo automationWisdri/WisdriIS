@@ -56,6 +56,7 @@ typedef NS_ENUM (NSUInteger, RequestType) {
     UpdateCurrentClockStatus,
     UpdateClockRecords,
     UpdateWorkShifts,
+    UpdateAttendanceRecords,
     
     SubmitClockAction,
 };

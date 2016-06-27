@@ -1150,7 +1150,7 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
                             }
                             
                             [[NSNotificationCenter defaultCenter]
-                             postNotificationName:WISSystemUpdateWorkShiftsSucceededNotification
+                             postNotificationName:WISSystemUpdateClockRecordsSucceededNotification
                              object:updatedData];
                             
                             if ([self.systemDataDelegate respondsToSelector:@selector(updateClockRecordsSucceeded)]) {
@@ -1303,6 +1303,162 @@ NSString *const networkRequestTokenFileName = @"networkRequestToken.userInfoArch
     return dataTask;
 }
 
+- (NSURLSessionDataTask *) updateAttendanceRecordsWithDate:(NSDate *)date
+                                         completionHandler:(WISSystemOperationHandler)handler {
+    NSDictionary * updateParams = nil;
+    NSURLSessionDataTask * dataTask = nil;
+    
+    if ([self.currentUser.userName isEqual: @""] || self.currentUser.userName == nil
+        || [self.networkRequestToken isEqual: @""] || self.networkRequestToken == nil) {
+        
+        NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeNoCurrentUserInfo andCallbackError:nil];
+        handler(FALSE, err, @"", nil);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WISSystemUpdateAttendanceRecordsFailedNotification
+                                                            object:(NSError *)err];
+        if ([self.systemDataDelegate respondsToSelector:@selector(updateAttendanceRecordsFailedWithError:)]) {
+            [self.systemDataDelegate updateAttendanceRecordsFailedWithError:err];
+        }
+        
+    } else {
+        updateParams = [NSDictionary dictionaryWithObjectsAndKeys:self.currentUser.userName, @"UserName",
+                        self.networkRequestToken, @"PassWord", nil];
+        
+        NSMutableArray<NSString *> *setting = [NSMutableArray array];
+        [setting addObject:[date toDateStringWithSeparator:@"/"]];
+        
+        dataTask = [self.networkService dataRequestWithRequestType:UpdateAttendanceRecords
+                                                            params:updateParams
+                                                     andUriSetting:setting
+        completionHandler:^(RequestType requestType, NSData *responsedData, NSError *error) {
+            if (!responsedData) {
+                NSLog(@"Update Attendance Records 请求异常，原因: %@", @"返回的数据为空");
+                
+                NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeResponsedNULLData andCallbackError:error];
+                handler(FALSE, err, @"", nil);
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:WISSystemUpdateAttendanceRecordsFailedNotification
+                                                                    object:(NSError *)err];
+                if ([self.systemDataDelegate respondsToSelector:@selector(updateAttendanceRecordsFailedWithError:)]) {
+                    [self.systemDataDelegate updateAttendanceRecordsFailedWithError:err];
+                }
+                
+            } else {
+                
+                NSError *parseError;
+                NSDictionary *parsedData = nil;
+                
+                parsedData = [NSJSONSerialization JSONObjectWithData:responsedData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&parseError];
+                
+                if (!parsedData || parseError) {
+                    NSLog(@"Update Attendance Records 操作解析内容失败，原因: %@", parseError);
+                    
+                    NSError *err = [self produceErrorObjectWithWISErrorCode:ErrorCodeIncorrectResponsedDataFormat andCallbackError:parseError];
+                    handler(FALSE, err, @"", nil);
+                    
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:WISSystemUpdateAttendanceRecordsFailedNotification
+                     object:(NSError *)err];
+                    
+                    if ([self.systemDataDelegate respondsToSelector:@selector(updateAttendanceRecordsFailedWithError:)]) {
+                        [self.systemDataDelegate updateAttendanceRecordsFailedWithError:err];
+                    }
+                    
+                } else {
+                    
+                    RequestResult result = (RequestResult)[parsedData[@"Result"] integerValue];
+                    NSError *err;
+                    
+                    NSMutableArray<WISAttendanceRecord *> *updatedData = [NSMutableArray array];
+                    
+                    switch (result) {
+                        case RequestSuccessful:
+                            if(parsedData[@"StaffStatusList"] && !((NSNull *)parsedData[@"StaffStatusList"] == [NSNull null])) {
+                                NSArray *arr = parsedData[@"StaffStatusList"];
+                                
+                                if (arr.count > 0) {
+                                    for (NSDictionary *attendanceRecord in arr) {
+                                        WISAttendanceRecord *record  = [[WISAttendanceRecord alloc] init];
+                                        record.attendanceStatus = (AttendanceStatus)[(NSString *)attendanceRecord[@"ClockState"] integerValue];
+                                        record.shift = (WorkShift)[(NSString *)attendanceRecord[@"Shift"] integerValue];
+                                        record.attendanceRecordDate = [date copy];
+                                        
+                                        WISUser *staff = [[WISUser alloc] init];
+                                        NSDictionary *user = (NSDictionary *)attendanceRecord[@"Staff"];
+                                        
+                                        if (user && !((NSNull *)user == [NSNull null])) {
+                                            staff.userName = ((NSNull*)user[@"UserName"] == [NSNull null]) ? @"" : (NSString *)user[@"UserName"];
+                                            staff.fullName = ((NSNull*)user[@"Name"] == [NSNull null]) ? @"" : (NSString *)user[@"Name"];
+                                            staff.roleCode = ((NSNull*)user[@"RoleCode"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleCode"];
+                                            staff.roleName = ((NSNull*)user[@"RoleName"] == [NSNull null]) ? @"" : (NSString *)user[@"RoleName"];
+                                            staff.cellPhoneNumber = ((NSNull*)user[@"MobilePhone"] == [NSNull null]) ? @"" : (NSString *)user[@"MobilePhone"];
+                                            staff.telephoneNumber = ((NSNull*)user[@"Telephone"] == [NSNull null]) ? @"" : (NSString *)user[@"Telephone"];
+                                            
+                                            /// IMAGES INFO
+                                            NSArray *imagesURL = (NSArray *)user[@"ImageURL"];
+                                            if (imagesURL && !((NSNull *)imagesURL == [NSNull null])) {
+                                                for (NSString *url in imagesURL) {
+                                                    WISFileInfo *imageInfo = [WISDataManager produceFileInfoWithFileRemoteURL:url];
+                                                    
+                                                    if (![staff.imagesInfo valueForKey:imageInfo.fileName]) {
+                                                        [staff.imagesInfo setValue:imageInfo forKey:imageInfo.fileName];
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                // do nothing, because WISUser initializer has done the initializing job.
+                                            }
+                                            
+                                            record.staff = staff;
+                                            
+                                            if (![self.users valueForKey:staff.userName])
+                                                [self.users setValue:staff forKey:staff.userName];
+                                        } else {
+                                            // do nothing, because WISAttendanceRecords initializer has done the initial job.
+                                        }
+                                        
+                                        [updatedData addObject:record];
+                                    }
+                                }
+                            }
+                            
+                            [updatedData sortWithOptions:NSSortConcurrent usingComparator:WISAttendanceRecord.arrayForwardSorterByStaffFullNameWithResult];
+                            
+                            [[NSNotificationCenter defaultCenter]
+                             postNotificationName:WISSystemUpdateAttendanceRecordsSucceededNotification
+                             object:updatedData];
+                            
+                            if ([self.systemDataDelegate respondsToSelector:@selector(updateAttendanceRecordsSucceeded)]) {
+                                [self.systemDataDelegate updateAttendanceRecordsSucceeded];
+                            }
+                            handler(YES, nil, NSStringFromClass([updatedData class]), updatedData);
+                            break;
+                            
+                        case RequestFailed:
+                            err = [self produceErrorObjectWithWISErrorCode:ErrorCodeInvalidOperation andCallbackError:nil];
+                            handler(FALSE, err, @"", nil);
+                            
+                            [[NSNotificationCenter defaultCenter]
+                             postNotificationName:WISSystemUpdateAttendanceRecordsFailedNotification
+                             object:(NSError *)err];
+                            
+                            if ([self.systemDataDelegate respondsToSelector:@selector(updateAttendanceRecordsFailedWithError:)]) {
+                                [self.systemDataDelegate updateAttendanceRecordsFailedWithError:err];
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+            }
+        }];
+    }
+    
+    return dataTask;
+}
 
 
 #pragma mark - Update Users Information

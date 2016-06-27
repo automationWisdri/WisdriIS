@@ -14,6 +14,7 @@ NSString *const WISSystemChangingPasswordResponsedNotification = @"WISSystemChan
 NSString *const WISSystemUpdateCurrentClockStatusResponsedNotification = @"WISSystemUpdateCurrentClockStatusResponsedNotification";
 NSString *const WISSystemUpdateClockRecordsResponsedNotification = @"WISSystemUpdateClockRecordsResponsedNotification";
 NSString *const WISSystemUpdateWorkShiftsResponsedNotification = @"WISSystemUpdateWorkShiftsResponsedNotification";
+NSString *const WISSystemUpdateAttendanceRecordsResponsedNotification = @"WISSystemUpdateAttendanceRecordsResponsedNotification";
 NSString *const WISSystemSubmitClockActionResponsedNotification = @"WISSystemSubmitClockActionResponsedNotification";
 
 NSString *const WISSystemUpdateCurrentUserDetailInfoResponsedNotification = @"WISSystemUpdateCurrentUserDetailInfoResponsedNotification";

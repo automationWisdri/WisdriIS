@@ -460,9 +460,6 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 // more settings on the cell
                 return cell
             }
-            
-        default:
-            return UITableViewCell()
         }
         
         return UITableViewCell()
@@ -540,9 +537,6 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
             switch row {
             case .Action: return InspectionColoredTitleCell.cellHeight
             }
-            
-        default:
-            return 0.0
         }
         return 0.0
     }

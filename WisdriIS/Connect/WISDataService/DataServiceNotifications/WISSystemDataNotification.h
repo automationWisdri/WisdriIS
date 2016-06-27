@@ -36,6 +36,9 @@ FOUNDATION_EXPORT NSString *const WISSystemUpdateClockRecordsFailedNotification;
 FOUNDATION_EXPORT NSString *const WISSystemUpdateWorkShiftsSucceededNotification;
 FOUNDATION_EXPORT NSString *const WISSystemUpdateWorkShiftsFailedNotification;
 
+FOUNDATION_EXPORT NSString *const WISSystemUpdateAttendanceRecordsSucceededNotification;
+FOUNDATION_EXPORT NSString *const WISSystemUpdateAttendanceRecordsFailedNotification;
+
 FOUNDATION_EXPORT NSString *const WISSystemSubmitClockActionSucceededNotification;
 FOUNDATION_EXPORT NSString *const WISSystemSubmitClockActionFailedNotification;
 

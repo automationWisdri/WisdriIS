@@ -32,6 +32,7 @@
 
 #import "WISCompany.h"
 #import "WISClockRecord.h"
+#import "WISAttendanceRecord.h"
 
 
 #import "WISFileStoreManager.h"
@@ -189,22 +190,6 @@ typedef NS_ENUM(NSInteger, ClockStatus) {
     /// 打卡 - 下班中
     ClockedOff = 2,
 };
-
-
-/**
- * @brief 由服务器定义的排班内容
- */
-typedef NS_ENUM(NSInteger, WorkShift) {
-    /// 未定义
-    UndefinedWorkShift = -1,
-    /// 白班
-    DayShift = 1,
-    /// 夜班
-    NightShift = 2,
-    /// 休息
-    OffDuty = 3,
-};
-
 
 /**
  * @brief WIS程序内定义的错误代码，对应的是NSError对象的code属性。
@@ -369,6 +354,9 @@ typedef void (^WISInspectionTaskOperationHandler)(BOOL completedWithNoError, NSE
 - (NSURLSessionDataTask *) updateWorkShiftsWithStartDate:(NSDate *)startDate
                                             recordNumber:(NSInteger)number
                                        completionHandler:(WISSystemOperationHandler)handler;
+
+- (NSURLSessionDataTask *) updateAttendanceRecordsWithDate:(NSDate *)date
+                                         completionHandler:(WISSystemOperationHandler)handler;
 
 
 #pragma mark - Image Storage and Obtaining Operations

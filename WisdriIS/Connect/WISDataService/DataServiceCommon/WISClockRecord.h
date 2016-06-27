@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, ClockAction) {
     ClockOff = 2,
 };
 
-@interface WISClockRecord : NSObject <NSCopying, NSCoding>
+@interface WISClockRecord : NSObject <NSCopying, NSSecureCoding>
 
 @property (readwrite) ClockAction clockAction;
 @property (readwrite, strong) NSDate *clockActionTime;

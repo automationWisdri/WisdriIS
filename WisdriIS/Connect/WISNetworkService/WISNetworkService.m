@@ -113,6 +113,8 @@
                                 @"UpdateCurrentClockStatus",
                                 @"UpdateClockRecords",
                                 @"UpdateWorkShifts",
+                                @"UpdateAttendanceRecords",
+                                
                                 @"SubmitClockAction",
                                 ];
         
@@ -147,6 +149,8 @@
                               self.commandStrings[UpdateCurrentClockStatus]:@"/User/GetClockStatus",
                               self.commandStrings[UpdateClockRecords]:@"/User/GetClockRecords",
                               self.commandStrings[UpdateWorkShifts]:@"/User/GetShifts",
+                              self.commandStrings[UpdateAttendanceRecords]:@"/User/GetMyStaffStatus",
+                              
                               self.commandStrings[SubmitClockAction]:@"/User/Clock",
                               };
         
@@ -261,6 +265,10 @@
             
         case UpdateWorkShifts:
             [path appendFormat:@"%@start=%@&num=%@", @"?", uriSettings[0], uriSettings[1]];
+            break;
+            
+        case UpdateAttendanceRecords:
+            [path appendFormat:@"%@date=%@", @"?", uriSettings[0]];
             break;
             
             ///
@@ -445,6 +453,14 @@
                         }
                         break;
                         
+                        /// 获取考勤信息
+                    case UpdateAttendanceRecords:
+                        [[NSNotificationCenter defaultCenter] postNotificationName:WISSystemUpdateAttendanceRecordsResponsedNotification                                                                object:(NSData *)responsedData];
+                        
+                        if ([self.opDelegate respondsToSelector:@selector(networkService:DidUpdateAttendanceRecordsAndResponseWithData:)]) {
+                            [self.opDelegate networkService:self DidUpdateAttendanceRecordsAndResponseWithData:responsedData];
+                        }
+                        break;
                         
                         ///
                         /// *** MAITENANCE TASK

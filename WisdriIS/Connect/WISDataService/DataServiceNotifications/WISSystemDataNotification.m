@@ -31,6 +31,9 @@ NSString *const WISSystemUpdateClockRecordsFailedNotification = @"WISSystemUpdat
 NSString *const WISSystemUpdateWorkShiftsSucceededNotification = @"WISSystemUpdateWorkShiftsSucceededNotification";
 NSString *const WISSystemUpdateWorkShiftsFailedNotification = @"WISSystemUpdateWorkShiftsFailedNotification";
 
+NSString *const WISSystemUpdateAttendanceRecordsSucceededNotification = @"WISSystemUpdateAttendanceRecordsSucceededNotification";
+NSString *const WISSystemUpdateAttendanceRecordsFailedNotification = @"WISSystemUpdateAttendanceRecordsFailedNotification";
+
 NSString *const WISSystemSubmitClockActionSucceededNotification = @"WISSystemSubmitClockActionSucceededNotification";
 NSString *const WISSystemSubmitClockActionFailedNotification = @"WISSystemSubmitClockActionFailedNotification";
 

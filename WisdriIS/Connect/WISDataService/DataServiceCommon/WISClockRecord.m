@@ -32,7 +32,7 @@ NSString *const clockActionTimeEncodingKey = @"clockActionTime";
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _clockAction = (ClockAction)[aDecoder decodeIntegerForKey:clockActionEncodingKey];
-        _clockActionTime = (NSDate *)[aDecoder decodeObjectForKey:clockActionTimeEncodingKey];
+        _clockActionTime = (NSDate *)[aDecoder decodeObjectOfClass:[NSDate class] forKey:clockActionTimeEncodingKey];
     }
     return self;
 }
@@ -40,6 +40,10 @@ NSString *const clockActionTimeEncodingKey = @"clockActionTime";
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:(NSInteger)self.clockAction forKey:clockActionEncodingKey ];
     [aCoder encodeObject:self.clockActionTime forKey:clockActionTimeEncodingKey];
+}
+
++ (BOOL) supportsSecureCoding {
+    return YES;
 }
 
 - (id) copyWithZone:(NSZone *)zone {

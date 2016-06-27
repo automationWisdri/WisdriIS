@@ -41,6 +41,9 @@
 - (void) updateWorkShiftsSucceeded;
 - (void) updateWorkShiftsFailedWithError:(NSError *) error;
 
+- (void) updateAttendanceRecordsSucceeded;
+- (void) updateAttendanceRecordsFailedWithError:(NSError *) error;
+
 - (void) submitClockActionSucceeded;
 - (void) submitClockActionFailedWithError:(NSError *) error;
 
@@ -83,6 +86,9 @@
 
 - (void) updateWorkShiftsSucceededWithResponsedData:(NSData *) responsedData;
 - (void) updateWorkShiftsFailedWithError:(NSError *) error andResponsedData:(NSData *) responsedData;
+
+- (void) updateAttendanceRecordsSucceededWithResponsedData:(NSData *) responsedData;
+- (void) updateAttendanceRecordsFailedWithError:(NSError *) error andResponsedData:(NSData *) responsedData;
 
 - (void) submitClockActionSucceededWithResponsedData:(NSData *) responsedData;
 - (void) submitClockActionFailedWithError:(NSError *) error andResponsedData:(NSData *) responsedData;

@@ -14,7 +14,7 @@
 
 @protocol WISSystemNetworkOperationDelegate <NSObject>
 
-@required
+@optional
 - (void) networkService: (id)sender DidSignInAndResponsedWithData: (NSData *)responsedData;
 - (void) networkService: (id)sender DidChangePasswordAndResponsedWithData: (NSData *)responsedData;
 
@@ -25,6 +25,7 @@
 - (void) networkService: (id)sender DidUpdateCurrentClockStatusAndResponseWithData: (NSData *)responsedData;
 - (void) networkService: (id)sender DidUpdateClockRecordsAndResponseWithData: (NSData *)responsedData;
 - (void) networkService: (id)sender DidUpdateWorkShiftsAndResponseWithData: (NSData *)responsedData;
+- (void) networkService: (id)sender DidUpdateAttendanceRecordsAndResponseWithData:(NSData *)responsedData;
 - (void) networkService: (id)sender DidSubmitClockActionAndResponseWithData: (NSData *)responsedData;
 
 

@@ -88,6 +88,7 @@
 		38A97CCE1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A97CCD1CFEE0D000E0EA53 /* TaskListFilterGroupContentView.xib */; };
 		38A97CD01CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A97CCF1CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift */; };
 		38B1F8E81CF9C59E0054F354 /* WISArchivingStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */; };
+		38D8AEE51D1FBDEB00F9381E /* WISAttendanceRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D8AEE41D1FBDEB00F9381E /* WISAttendanceRecord.m */; };
 		38E51E341CEC3F95003092DA /* InspectionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E331CEC3F95003092DA /* InspectionList.storyboard */; };
 		38E51E361CEC47AB003092DA /* InspectionHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */; };
 		38E51E3B1CEC811B003092DA /* InspectionResultShowSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */; };
@@ -343,6 +344,8 @@
 		38A97CCF1CFEE11200E0EA53 /* TaskListFilterGroupContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListFilterGroupContentView.swift; sourceTree = "<group>"; };
 		38B1F8E61CF9C59E0054F354 /* WISArchivingStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISArchivingStore.h; sourceTree = "<group>"; };
 		38B1F8E71CF9C59E0054F354 /* WISArchivingStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WISArchivingStore.m; sourceTree = "<group>"; };
+		38D8AEE31D1FBDEB00F9381E /* WISAttendanceRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WISAttendanceRecord.h; sourceTree = "<group>"; };
+		38D8AEE41D1FBDEB00F9381E /* WISAttendanceRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WISAttendanceRecord.m; sourceTree = "<group>"; };
 		38E51E331CEC3F95003092DA /* InspectionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionList.storyboard; sourceTree = "<group>"; };
 		38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionHomeViewController.swift; sourceTree = "<group>"; };
 		38E51E391CEC811B003092DA /* InspectionResultShowSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectionResultShowSelectionCell.xib; sourceTree = "<group>"; };
@@ -598,6 +601,8 @@
 				385C1DA61CE4BC9200F8E393 /* WISUser.h */,
 				385C1DA71CE4BC9200F8E393 /* WISUser.m */,
 				381480731CFBC72200E57C4E /* WISSorter.h */,
+				38D8AEE31D1FBDEB00F9381E /* WISAttendanceRecord.h */,
+				38D8AEE41D1FBDEB00F9381E /* WISAttendanceRecord.m */,
 			);
 			path = DataServiceCommon;
 			sourceTree = "<group>";
@@ -1621,6 +1626,7 @@
 				9F99A7681CC48AAA00E1F92D /* CodeScanViewController.swift in Sources */,
 				385C1DFE1CE4BC9200F8E393 /* WISInspectionDataManager.swift in Sources */,
 				9F055C741CE034690077184B /* ClockInfoCell.swift in Sources */,
+				38D8AEE51D1FBDEB00F9381E /* WISAttendanceRecord.m in Sources */,
 				9F7C4BCB1C8E6F1300652CDF /* MediaView.swift in Sources */,
 				9FEF50141C78A9B7001A7644 /* UITableView+WIS.swift in Sources */,
 				9F14B3421D0D57E7008C5F1B /* WISFPSLabel.swift in Sources */,
