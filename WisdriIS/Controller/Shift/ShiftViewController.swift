@@ -21,14 +21,25 @@ class ShiftViewController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     
     @IBOutlet weak var calendarViewHeightConstraint: NSLayoutConstraint!
+    private var shiftTableViewHeight: CGFloat?
     
-    private let cellIdentifier = "ClockInfoCell"
+    private let clockInfoCellIdentifier = "ClockInfoCell"
+    private let shiftInfoCellIdentifier = "ShiftCell"
 
     private var animationFinished = true
     
     private var selectedDay: DayView!
     
     private var clockRecords = [WISClockRecord]()
+    
+    private var attendanceRecords = [WISAttendanceRecord]()
+    private var attendanceRecordsDay = [WISAttendanceRecord]()
+    private var attendanceRecordsNight = [WISAttendanceRecord]()
+    private var attendanceRecordsOffDuty = [WISAttendanceRecord]()
+    
+    private var currentUser: WISUser?
+    private var showClockInfo = false
+    private var showShiftInfo = false
     
     private lazy var todayButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: NSLocalizedString("Today", comment: ""), style: .Plain, target: self, action: #selector(ShiftViewController.todayMonthView))
@@ -47,20 +58,43 @@ class ShiftViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        currentUser = WISDataManager.sharedInstance().currentUser
+        
+        if currentUser!.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Engineer.rawValue]
+            || currentUser!.roleCode == WISDataManager.sharedInstance().roleCodes[RoleCode.Technician.rawValue] {
+            showClockInfo = true
+            showShiftInfo = false
+        } else {
+            showShiftInfo = true
+            showClockInfo = false
+        }
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
         monthLabel.text = NSLocalizedString("Shift") + " ｜ " + CVDate(date: NSDate()).globalDescription
         // 增加了 TodayButton 后，Title 会往左偏移一点，后续待解决
         navigationItem.rightBarButtonItem = todayButton
-        shiftTableView.registerNib(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        shiftTableView.tableFooterView = UIView()
         
-        noRecords = clockRecords.isEmpty
+        if showClockInfo {
+            shiftTableView.registerNib(UINib(nibName: clockInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: clockInfoCellIdentifier)
+        }
+        if showShiftInfo {
+            shiftTableView.registerNib(UINib(nibName: shiftInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: shiftInfoCellIdentifier)
+        }
+        
+        shiftTableView.tableFooterView = UIView()
+        shiftTableViewHeight = shiftTableView.frame.size.height
         
         let now = NSDate()
-        getClockRecords(now, endDate: now)
+        
+        if showClockInfo {
+            getClockRecords(now, endDate: now)
+            noRecords = clockRecords.isEmpty
+        }
+        if showShiftInfo {
+            getAttendanceRecords(date: now)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -121,6 +155,46 @@ class ShiftViewController: UIViewController {
         }
     }
     
+    // 获取 date 当天下属工程师、电工的当班、打卡情况列表
+    private func getAttendanceRecords(date date: NSDate) {
+        SVProgressHUD.setDefaultMaskType(.None)
+        SVProgressHUD.show()
+        WISDataManager.sharedInstance().updateAttendanceRecordsWithDate(date) { (completedWithNoError, error, classNameOfDataAsString, data) in
+            if completedWithNoError {
+                
+                SVProgressHUD.dismiss()
+                let records = data as! Array<WISAttendanceRecord>
+                
+                self.attendanceRecords.removeAll()
+                self.attendanceRecordsDay.removeAll()
+                self.attendanceRecordsNight.removeAll()
+                self.attendanceRecordsOffDuty.removeAll()
+                
+                for record in records {
+                    
+                    switch record.shift {
+                    case .DayShift:
+                        self.attendanceRecordsDay.append(record)
+                    case .NightShift:
+                        self.attendanceRecordsNight.append(record)
+                    case .OffDuty:
+                        self.attendanceRecordsOffDuty.append(record)
+                    case .UndefinedWorkShift:
+                        self.attendanceRecords.append(record)
+                    }
+                    
+                }
+
+                self.shiftTableView.contentOffset = CGPoint()
+                self.shiftTableView.reloadData()
+                
+            } else {
+                WISConfig.errorCode(error)
+            }
+        }
+        
+    }
+    
     // Deprecated
     private func convertDateToDayView(date: NSDate) -> CVCalendarDayView {
         
@@ -160,9 +234,16 @@ extension ShiftViewController: CVCalendarViewDelegate {
     func didSelectDayView(dayView: CVCalendarDayView, animationDidFinish: Bool) {
 //        print("\(dayView.date.commonDescription) is selected!")
 
+        calendarView.updateConstraints()
         // 获取选择当天的打卡记录
         selectedDay = dayView
-        getClockRecords(selectedDay.date.convertedDate()!, endDate: selectedDay.date.convertedDate()!)
+        
+        if showClockInfo {
+            getClockRecords(selectedDay.date.convertedDate()!, endDate: selectedDay.date.convertedDate()!)
+        }
+        if showShiftInfo {
+            getAttendanceRecords(date: selectedDay.date.convertedDate()!)
+        }
         
         // 获取当月、去年、明年的排班记录
         // 十分丑陋的实现方式，待优化
@@ -406,61 +487,124 @@ extension ShiftViewController: CVCalendarViewAppearanceDelegate {
 
 extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
     
+    private enum Section: Int {
+        case Day
+        case Night
+        case OffDuty
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if showShiftInfo { return 3 }
+        else if showClockInfo { return 1 }
+        else { return 0 }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clockRecords.count
+        if showClockInfo { return clockRecords.count }
+        else if showShiftInfo {
+            switch section {
+            case Section.Day.rawValue:
+                return attendanceRecordsDay.count
+            case Section.Night.rawValue:
+                return attendanceRecordsNight.count
+            case Section.OffDuty.rawValue:
+                return attendanceRecordsOffDuty.count
+            default:
+                return 0
+            }
+        }
+        else { return 0 }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! ClockInfoCell
-        return cell
+        if showClockInfo {
+            let cell = tableView.dequeueReusableCellWithIdentifier(clockInfoCellIdentifier) as! ClockInfoCell
+            cell.bind(clockRecords[indexPath.row])
+            return cell
+        } else if showShiftInfo {
+            let cell = tableView.dequeueReusableCellWithIdentifier(shiftInfoCellIdentifier) as! ShiftCell
+            
+            switch indexPath.section {
+            case Section.Day.rawValue:
+                cell.bind(attendanceRecordsDay[indexPath.row])
+                return cell
+            case Section.Night.rawValue:
+                cell.bind(attendanceRecordsNight[indexPath.row])
+                return cell
+            case Section.OffDuty.rawValue:
+                cell.bind(attendanceRecordsOffDuty[indexPath.row])
+                return cell
+            default:
+                return UITableViewCell()
+            }
+
+        } else {
+            return UITableViewCell()
+        }
+        
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        guard let cell = cell as? ClockInfoCell else {
-            return
+        if showShiftInfo {
+            switch section {
+            case Section.Day.rawValue:
+                return "白班"
+            case Section.Night.rawValue:
+                return "夜班"
+            case Section.OffDuty.rawValue:
+                return "轮休"
+            default:
+                return EMPTY_STRING
+            }
+        } else {
+            return EMPTY_STRING
         }
         
-        let record = clockRecords[indexPath.row]
-
-        cell.infoLabel.text = record.clockActionTime.toDateTimeString()
-        
-        switch record.clockAction {
-        case .In:
-            cell.clockImageView.image = UIImage(named: "icon_clock_active")
-            cell.annotationLabel.text = NSLocalizedString("Clock in")
-        case .Off:
-            cell.clockImageView.image = UIImage(named: "icon_clock")
-            cell.annotationLabel.text = NSLocalizedString("Clock out")
-        default:
-            cell.clockImageView.image = UIImage(named: "icon_fault")
-            cell.annotationLabel.text = NSLocalizedString("Undefined")
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if showShiftInfo { return 30 }
+        else { return 0 }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if showShiftInfo {
+            let headerView = view as! UITableViewHeaderFooterView
+            headerView.tintColor = UIColor.wisGroupHeaderColor()
+            headerView.textLabel?.textColor = UIColor.grayColor()
+            headerView.textLabel?.font = UIFont.boldSystemFontOfSize(15)
         }
-        
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+        return 45
     }
-   
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        
-//        let hideCalendar: (() -> Void)? = {
-//        
-//            let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
-//            
-//            if translation.y > 0 && self.calendarViewHeightConstraint.constant < 150 {
-//                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant + 150
-//            } else if translation.y < 0 && self.calendarViewHeightConstraint.constant > 150 {
-//                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant - 150
-//            }
-//        }
-//        
-//        Ruler.iPhoneVertical(hideCalendar, hideCalendar, nil, nil).value?()
-//    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        guard showShiftInfo else {
+            return
+        }
+        
+        let updateCalendarLayout: (() -> Void)? = {
+        
+            let contentYOffset = scrollView.contentOffset.y
+            let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
+            
+            // 向下滑动时，调整 CalendarView 的高度
+            if translation.y < 0 && self.calendarViewHeightConstraint.constant > 150 {
+                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant - 151
+            }
+            
+            // 当上滑到顶部时，还原 CalendarView 的高度
+            if contentYOffset < 80 && self.calendarViewHeightConstraint.constant < 150 {
+                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant + 151
+            }
+            
+        }
+        // 在 3.5 和 4 寸屏上执行该动画
+        Ruler.iPhoneVertical(updateCalendarLayout, updateCalendarLayout, nil, nil).value?()
+    }
 }

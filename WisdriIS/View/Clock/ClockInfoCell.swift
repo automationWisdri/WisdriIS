@@ -25,4 +25,21 @@ class ClockInfoCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func bind(record: WISClockRecord) {
+        
+        infoLabel.text = record.clockActionTime.toDateTimeString()
+        
+        switch record.clockAction {
+        case .In:
+            clockImageView.image = UIImage(named: "icon_clock_active")
+            annotationLabel.text = NSLocalizedString("Clock in")
+        case .Off:
+            clockImageView.image = UIImage(named: "icon_clock")
+            annotationLabel.text = NSLocalizedString("Clock out")
+        default:
+            clockImageView.image = UIImage(named: "icon_fault")
+            annotationLabel.text = NSLocalizedString("Undefined")
+        }
+    }
+    
 }
