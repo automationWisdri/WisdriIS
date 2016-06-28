@@ -202,7 +202,32 @@ extension UIImage {
         let cgImage = CGBitmapContextCreateImage(context)!
         return UIImage(CGImage: cgImage)
     }
+    
+    func compress(imageQuality quality: CGFloat = 0.1) -> UIImage {
+        let compressedData = UIImageJPEGRepresentation(self, quality)
+        return UIImage.init(data: compressedData!)!
+    }
+    
+    func scaleToRatio(ratio: CGFloat = 0.5) -> UIImage {
+        return scaleToRatio(ratio, doScaleOperationForImageHeightLargerThan: MAX_THROTTLE_IMAGE_HEIGHT)
+    }
+    
+    func scaleToRatio(ratio: CGFloat = 0.5, doScaleOperationForImageHeightLargerThan height: CGFloat) -> UIImage {
+        if self.size.height <= height {
+            return self
+        }
+        
+        let image = self
+        UIGraphicsBeginImageContext(CGSizeMake(image.size.width * ratio, image.size.height * ratio))
+        image.drawInRect(CGRectMake(0, 0, image.size.width * ratio, image.size.height * ratio))
+        let scaledImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return scaledImage
+    }
 }
+
+let MAX_THROTTLE_IMAGE_HEIGHT: CGFloat = 736.0 // According to the width of the screen of iPhone 6s+
 
 // MARK: Message Image
 

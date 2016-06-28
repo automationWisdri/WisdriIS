@@ -74,8 +74,8 @@ class SubmitPlanViewController: BaseViewController {
     // 获取 PickUser 页面返回的用户数组，用于 “参与人员” TextView 的显示
     var taskParticipants = [WISUser]()
     
-    private var imagesDictionary = Dictionary<String, UIImage>()
-    private var taskImageInfo = Dictionary<String, WISFileInfo>()
+    private var imagesDictionary = [String: UIImage]()
+    private var taskImageInfo = [String: WISFileInfo]()
     
     // TextView related
     private let infoAboutThisPlan = NSLocalizedString("Maintenance plan about this Task...", comment: "")
@@ -210,6 +210,10 @@ class SubmitPlanViewController: BaseViewController {
             uploadingPlanDictionary[taskID!] = NSProgress()
             let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingStart.rawValue)
             NSNotificationCenter.defaultCenter().postNotification(notification)
+            
+            for image in self.mediaImages {
+                self.imagesDictionary["plan_image_" + String(image.hashValue)] = image
+            }
         }
         
         SVProgressHUD.setDefaultMaskType(.None)
@@ -217,13 +221,14 @@ class SubmitPlanViewController: BaseViewController {
         self.navigationController?.popViewControllerAnimated(true)
         
         WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
-            if self.mediaImages.count > 0 {
-                NSLog("Task \(self.taskID!)'s plan is uploading, progress is %.2f", progress.fractionCompleted)
-                // 发送上传进度的通知
-                uploadingPlanDictionary[self.taskID!] = progress
-                let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
-                NSNotificationCenter.defaultCenter().postNotification(notification)
-            }
+                if self.mediaImages.count > 0 {
+                    NSLog("Task \(self.taskID!)'s plan is uploading, progress is %.2f", progress.fractionCompleted)
+                    // 发送上传进度的通知
+                    uploadingPlanDictionary[self.taskID!] = progress
+                    let notification = NSNotification(name: MaintenancePlanUploadingNotification, object: UploadingState.UploadingPending.rawValue)
+                    NSNotificationCenter.defaultCenter().postNotification(notification)
+                }
+            
             }, completionHandler: { (completedWithNoError, error, classNameOfDataAsString, data) in
                 if completedWithNoError {
                     // 图片上传成功，获取图片信息，并提交维保方案
@@ -279,8 +284,6 @@ class SubmitPlanViewController: BaseViewController {
                     WISConfig.errorCode(error)
                 }
             })
-    
-    
     }
     
     private func submitPlanOperationCompletion(completedWithNoError: Bool, error: NSError?) {
@@ -322,8 +325,8 @@ class SubmitPlanViewController: BaseViewController {
                 
                 for image in images {
                     self?.mediaImages.append(image)
-                    let photoFileName = "plan_image_" + String(image.hash)
-                    self?.imagesDictionary[photoFileName] = image
+                    // let photoFileName = "plan_image_" + String(image.hash)
+                    // self?.imagesDictionary[photoFileName] = image
                 }
             }
         }
@@ -387,10 +390,10 @@ extension SubmitPlanViewController: UIImagePickerControllerDelegate, UINavigatio
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
                     if mediaImages.count <= 5 {
-                        let rotatedImage = image.fixRotation()
-                        mediaImages.append(image)
-                        let photoFileName = "plan_image_" + String(rotatedImage.hash)
-                        self.imagesDictionary[photoFileName] = rotatedImage
+                        let processedImage = image.fixRotation().scaleToRatio().compress()
+                        mediaImages.append(processedImage)
+                        // let photoFileName = "plan_image_" + String(image)
+                        // self.imagesDictionary[photoFileName] = image
                     }
                 }
                 
@@ -517,9 +520,9 @@ extension SubmitPlanViewController: UICollectionViewDataSource, UICollectionView
             
         case 0:
             
-            let imageToRemove = mediaImages[indexPath.item]
-            let photoFileName = "plan_image_" + String(imageToRemove.hash)
-            imagesDictionary.removeValueForKey(photoFileName)
+            // let imageToRemove = mediaImages[indexPath.item]
+            // let photoFileName = "plan_image_" + String(imageToRemove.hash)
+            // imagesDictionary.removeValueForKey(photoFileName)
             
             mediaImages.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])

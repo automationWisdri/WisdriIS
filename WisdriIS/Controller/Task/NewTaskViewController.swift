@@ -90,9 +90,9 @@ class NewTaskViewController: BaseViewController {
     }
     
     /// DataManager 查询任务相关图片获得的返回值
-    private var imagesDictionary = Dictionary<String, UIImage>()
+    private var imagesDictionary = [String: UIImage]()
     /// DataManager 新建任务时的图片信息
-    private var applicationFileInfo = Dictionary<String, WISFileInfo>()
+    private var applicationFileInfo = [String: WISFileInfo]()
     
     private let taskMediaAddCellID = "TaskMediaAddCell"
     private let taskMediaCellID = "TaskMediaCell"
@@ -207,8 +207,8 @@ class NewTaskViewController: BaseViewController {
                 for image in images {
                     self?.mediaImages.append(image)
                     
-                    let photoFileName = "task_image_" + String(image.hashValue)
-                    self?.imagesDictionary[photoFileName] = image
+                    // let photoFileName = "task_image_" + String(image.hashValue)
+                    // self?.imagesDictionary[photoFileName] = image
                 }
             }
         }
@@ -321,6 +321,10 @@ class NewTaskViewController: BaseViewController {
             let notification = NSNotification(name: MaintenanceTaskUploadingNotification, object: UploadingState.UploadingStart.rawValue)
             NSNotificationCenter.defaultCenter().postNotification(notification)
         
+            for image in mediaImages {
+                imagesDictionary["task_image_" + String(image.hashValue)] = image
+            }
+            
             WISDataManager.sharedInstance().storeImageOfMaintenanceTaskWithTaskID(nil, images: imagesDictionary, uploadProgressIndicator: { progress in
                 
                 NSLog("Task \(uploadingTaskKey)'s uploading progress is %.2f", progress.fractionCompleted)
@@ -457,9 +461,9 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
             
         case 0:
             
-            let imageToRemove = mediaImages[indexPath.item]
-            let photoFileName = "task_image_" + String(imageToRemove.hash)
-            imagesDictionary.removeValueForKey(photoFileName)
+            // let imageToRemove = mediaImages[indexPath.item]
+            // let photoFileName = "task_image_" + String(imageToRemove.hash)
+            // imagesDictionary.removeValueForKey(photoFileName)
             
             mediaImages.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -468,7 +472,7 @@ extension NewTaskViewController: UICollectionViewDataSource, UICollectionViewDel
 
             messageTextView.resignFirstResponder()
             
-            if mediaImages.count == 6 {
+            if mediaImages.count >= PickPhotosViewController.imagePickCountLimit {
                 WISAlert.alertSorry(message: NSLocalizedString("Task can only has 6 photos.", comment: ""), inViewController: self)
                 return
             }
@@ -609,12 +613,12 @@ extension NewTaskViewController: UIImagePickerControllerDelegate, UINavigationCo
                 
                 if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     
-                    if mediaImages.count <= 5 {
-                        let rotatedImage = image.fixRotation()
-                        mediaImages.append(rotatedImage)
+                    if mediaImages.count < PickPhotosViewController.imagePickCountLimit {
+                        let processedImage = image.fixRotation().scaleToRatio().compress()
+                        mediaImages.append(processedImage)
                         
-                        let photoFileName = "task_image_" + String(rotatedImage.hashValue)
-                        self.imagesDictionary[photoFileName] = rotatedImage
+                        // let photoFileName = "task_image_" + String(image.hashValue)
+                        // self.imagesDictionary[photoFileName] = image
                     }
                 }
                 

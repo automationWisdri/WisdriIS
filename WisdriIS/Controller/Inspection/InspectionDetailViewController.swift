@@ -580,12 +580,11 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                             let cellPickPhoto = tableView.cellForRowAtIndexPath(indexPath) as! InspectionPickPhotoCell
                             let images = cellPickPhoto.mediaImages
                             
-                            var imagesInDictionary = [String:UIImage]()
+                            var imagesInDictionary = [String: UIImage]()
                             
                             if images.count > 0 {
                                 for image in images {
-                                    let rotatedImage = image.fixRotation()
-                                    imagesInDictionary["inspectionTask_image_" + String(image.hashValue)] = rotatedImage
+                                    imagesInDictionary["inspectionTask_image_" + String(image.hashValue)] = image
                                 }
                             }
                             
@@ -670,9 +669,9 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                     transitionView.alpha = 0
                 })
                 
-//                delay(0) {
-//                    transitionView.alpha = 0 // 放到下一个 Runloop 避免太快消失产生闪烁
-//                }
+                delay(0) {
+                    transitionView.alpha = 0 // 放到下一个 Runloop 避免太快消失产生闪烁
+                }
                 
                 viewController.afterDismissAction = { [weak self] in
                     transitionView.alpha = 1
@@ -707,7 +706,8 @@ extension InspectionDetailViewController: UIImagePickerControllerDelegate, UINav
                             inSection: Section.InspectionResult.rawValue)) as! InspectionPickPhotoCell
                     
                     if cell.mediaImages.count <= cell.imageCountUpLimit - 1 {
-                        cell.mediaImages.append(image)
+                        let processedImage = image.fixRotation().scaleToRatio().compress()
+                        cell.mediaImages.append(processedImage)
                     }
                 }
                 
