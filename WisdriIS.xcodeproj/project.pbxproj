@@ -12,7 +12,6 @@
 		380499561CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380499551CF1EA6F00A51064 /* InspectionPresentResultWithPhotoCell.swift */; };
 		383DBEB11CF31201005DF4A6 /* WISPushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */; };
 		383DBEB31CF315AA005DF4A6 /* WISPushNotificationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */; };
-		385C1DDF1CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */; };
 		385C1DE01CE4BC9200F8E393 /* CodeScan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 385C1D871CE4BC9200F8E393 /* CodeScan.bundle */; };
 		385C1DE11CE4BC9200F8E393 /* LBXPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1D891CE4BC9200F8E393 /* LBXPermissions.swift */; };
 		385C1DE21CE4BC9200F8E393 /* LBXScanLineAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1D8A1CE4BC9200F8E393 /* LBXScanLineAnimation.swift */; };
@@ -80,6 +79,7 @@
 		385C1E501CE4BDCD00F8E393 /* InspectionPopoverContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */; };
 		385C1E511CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */; };
 		385C1E521CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */; };
+		387950F61D216BC5007B6E2C /* libGeTuiSdk-1.4.2-noidfa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 387950F51D216BC5007B6E2C /* libGeTuiSdk-1.4.2-noidfa.a */; };
 		38A5C0ED1CF33541008DBD48 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A5C0EC1CF33541008DBD48 /* NotificationListViewController.swift */; };
 		38A5C0EF1CF3356F008DBD48 /* NotificationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */; };
 		38A5C0F21CF3391F008DBD48 /* NotificationListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */; };
@@ -229,8 +229,6 @@
 		381480731CFBC72200E57C4E /* WISSorter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WISSorter.h; sourceTree = "<group>"; };
 		383DBEB01CF31201005DF4A6 /* WISPushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotification.swift; sourceTree = "<group>"; };
 		383DBEB21CF315AA005DF4A6 /* WISPushNotificationDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WISPushNotificationDataManager.swift; sourceTree = "<group>"; };
-		385C1D841CE4BC9200F8E393 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
-		385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.4.1.a"; sourceTree = "<group>"; };
 		385C1D871CE4BC9200F8E393 /* CodeScan.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CodeScan.bundle; sourceTree = "<group>"; };
 		385C1D891CE4BC9200F8E393 /* LBXPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBXPermissions.swift; sourceTree = "<group>"; };
 		385C1D8A1CE4BC9200F8E393 /* LBXScanLineAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBXScanLineAnimation.swift; sourceTree = "<group>"; };
@@ -335,6 +333,8 @@
 		385C1E4A1CE4BDCD00F8E393 /* InspectionPopoverContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionPopoverContentController.swift; sourceTree = "<group>"; };
 		385C1E4B1CE4BDCD00F8E393 /* InspectionUploadingQueue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InspectionUploadingQueue.storyboard; sourceTree = "<group>"; };
 		385C1E4C1CE4BDCD00F8E393 /* InspectionUploadingQueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectionUploadingQueueViewController.swift; sourceTree = "<group>"; };
+		387950F41D216BC5007B6E2C /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		387950F51D216BC5007B6E2C /* libGeTuiSdk-1.4.2-noidfa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.4.2-noidfa.a"; sourceTree = "<group>"; };
 		38A5C0EC1CF33541008DBD48 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListViewController.swift; sourceTree = "<group>"; };
 		38A5C0EE1CF3356F008DBD48 /* NotificationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationList.storyboard; sourceTree = "<group>"; };
 		38A5C0F11CF3391F008DBD48 /* NotificationListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationListCell.xib; sourceTree = "<group>"; };
@@ -493,9 +493,9 @@
 			files = (
 				9FD804161CB5F86E00932955 /* JavaScriptCore.framework in Frameworks */,
 				9FD804171CB5F86E00932955 /* MobileCoreServices.framework in Frameworks */,
+				387950F61D216BC5007B6E2C /* libGeTuiSdk-1.4.2-noidfa.a in Frameworks */,
 				9F9EF0B31C965EAE0001CCFB /* Security.framework in Frameworks */,
 				9F9EF0B11C965EA50001CCFB /* SystemConfiguration.framework in Frameworks */,
-				385C1DDF1CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a in Frameworks */,
 				9FD804101CB5F83900932955 /* AVFoundation.framework in Frameworks */,
 				9FD804111CB5F83900932955 /* CoreBluetooth.framework in Frameworks */,
 				9FD804121CB5F83900932955 /* CoreLocation.framework in Frameworks */,
@@ -512,7 +512,7 @@
 		385C1D821CE4BC9200F8E393 /* Connect */ = {
 			isa = PBXGroup;
 			children = (
-				385C1D831CE4BC9200F8E393 /* GtSdkLib */,
+				387950F31D216BC5007B6E2C /* GtSdkLib-noidfa */,
 				385C1D861CE4BC9200F8E393 /* SwiftScan */,
 				385C1D901CE4BC9200F8E393 /* WISDataService */,
 				385C1DC71CE4BC9200F8E393 /* WISInspectionDataService */,
@@ -520,15 +520,6 @@
 				385C1DDD1CE4BC9200F8E393 /* WISPushNotificationService */,
 			);
 			path = Connect;
-			sourceTree = "<group>";
-		};
-		385C1D831CE4BC9200F8E393 /* GtSdkLib */ = {
-			isa = PBXGroup;
-			children = (
-				385C1D841CE4BC9200F8E393 /* GeTuiSdk.h */,
-				385C1D851CE4BC9200F8E393 /* libGeTuiSdk-1.4.1.a */,
-			);
-			path = GtSdkLib;
 			sourceTree = "<group>";
 		};
 		385C1D861CE4BC9200F8E393 /* SwiftScan */ = {
@@ -794,6 +785,15 @@
 				38E51E351CEC47AB003092DA /* InspectionHomeViewController.swift */,
 			);
 			path = Inspection;
+			sourceTree = "<group>";
+		};
+		387950F31D216BC5007B6E2C /* GtSdkLib-noidfa */ = {
+			isa = PBXGroup;
+			children = (
+				387950F41D216BC5007B6E2C /* GeTuiSdk.h */,
+				387950F51D216BC5007B6E2C /* libGeTuiSdk-1.4.2-noidfa.a */,
+			);
+			path = "GtSdkLib-noidfa";
 			sourceTree = "<group>";
 		};
 		38A5C0EB1CF333B1008DBD48 /* Notification */ = {
@@ -1782,6 +1782,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WisdriIS/Connect/GtSdkLib",
+					"$(PROJECT_DIR)/WisdriIS/Connect/GtSdkLib-noidfa",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisdri.WisdriIndustrialService;
@@ -1805,6 +1806,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WisdriIS/Connect/GtSdkLib",
+					"$(PROJECT_DIR)/WisdriIS/Connect/GtSdkLib-noidfa",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wisdri.WisdriIndustrialService;
 				PRODUCT_NAME = "$(TARGET_NAME)";

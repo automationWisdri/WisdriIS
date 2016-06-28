@@ -60,10 +60,19 @@
 }
 
 - (instancetype) init {
+#if DEBUG
     return [self initWithDataHostName:[NSString stringWithFormat:@"http://120.27.145.72:9000"]
                     dataUriServerName:[NSString stringWithFormat:@"/MaintenanceService.svc"]
                          fileHostName:[NSString stringWithFormat:@"http://120.27.145.72:9000"]
                  andFileUriServerName:[NSString stringWithFormat:@"/MaintenanceService.svc"]];
+
+#else
+    return [self initWithDataHostName:[NSString stringWithFormat:@"http://120.27.145.72:9001"]
+                    dataUriServerName:[NSString stringWithFormat:@"/MaintenanceService.svc"]
+                         fileHostName:[NSString stringWithFormat:@"http://120.27.145.72:9001"]
+                 andFileUriServerName:[NSString stringWithFormat:@"/MaintenanceService.svc"]];
+    
+#endif
 }
 
 - (instancetype) initWithDataHostName:(NSString *)dataHostName

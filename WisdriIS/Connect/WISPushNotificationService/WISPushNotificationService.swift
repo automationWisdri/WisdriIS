@@ -16,10 +16,20 @@ let OnLineNotificationReceivedNotification = "OnLineNotificationReceivedNotifica
 //let kGtAppKey:String = "K4rRQSX3JF7Wxbr4enXEA3"
 //let kGtAppSecret:String = "midbPTq37v9jQmPAtuO7j6"
 
+
 /// contents below are parameters for AppName:WisdriIS, which is actually used by the server.
+#if DEBUG   // DEVELOPMENT Certificate
 let kGtAppId:String = "NimhmxOsRq830FWRlJrcM7"
 let kGtAppKey:String = "Zd4ul4XyWRAeDrddhwJFTA"
 let kGtAppSecret:String = "3KMPZCZ5z66NSE4y6nKtZ2"
+    
+#else       // DISTRIBUTION Certificate
+let kGtAppId:String = "RV4ZKChvOy697bNYobpv89"
+let kGtAppKey:String = "5QculXJRIh8EbHoJAYzs13"
+let kGtAppSecret:String = "PTjKGbN7VT6lC45YQuvzx"
+    
+#endif
+
 
 class WISPushNotificationService: NSObject, GeTuiSdkDelegate {
     

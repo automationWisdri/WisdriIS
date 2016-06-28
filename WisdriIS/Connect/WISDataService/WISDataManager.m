@@ -9,7 +9,6 @@
 #import "WISDataManager.h"
 
 
-
 NSString *const WISErrorDomain = @"WISErrorDomain";
 //NSDictionary *const WISRoleCodeDictionary = @{@"CTO":@"技术主管",
 //                                                     @"FactoryManager":@"厂级负责人",
