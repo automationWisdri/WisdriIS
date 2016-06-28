@@ -84,7 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             startStoryWithName("Task")
         } else if currentUser.roleCode == roleCodes[RoleCode.Engineer.rawValue]
             || currentUser.roleCode == roleCodes[RoleCode.Technician.rawValue] {
-            startStoryWithName("TaskAndInspection")
+            #if DEBUG
+                startStoryWithName("Main")
+            #else
+                startStoryWithName("TaskAndInspection")
+            #endif
         } else {
             startStoryWithName("Main")
         }
