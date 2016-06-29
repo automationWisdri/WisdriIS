@@ -683,7 +683,6 @@ extension InspectionDetailViewController:UITableViewDataSource, UITableViewDeleg
                 mediaPreviewWindow.makeKeyAndVisible()
             }
             
-            
         default:
             break
         }
