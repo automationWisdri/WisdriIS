@@ -21,7 +21,8 @@ class ShiftViewController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     
     @IBOutlet weak var calendarViewHeightConstraint: NSLayoutConstraint!
-    private var shiftTableViewHeight: CGFloat?
+//    private var shiftTableViewHeight: CGFloat?
+    private let shortenCalendarViewHeight: CGFloat = 151
     
     private let clockInfoCellIdentifier = "ClockInfoCell"
     private let shiftInfoCellIdentifier = "ShiftCell"
@@ -75,6 +76,9 @@ class ShiftViewController: UIViewController {
         monthLabel.text = NSLocalizedString("Shift") + " ｜ " + CVDate(date: NSDate()).globalDescription
         // 增加了 TodayButton 后，Title 会往左偏移一点，后续待解决
         navigationItem.rightBarButtonItem = todayButton
+        // SB 中 MenuView 在 CalendarView 的上方，系统调用 addSubview 时，后添加的 Subview 在更上层
+        // 为了后续调整 CalendarView bounds，把 MenuView 提前
+        view.bringSubviewToFront(menuView)
         
         if showClockInfo {
             shiftTableView.registerNib(UINib(nibName: clockInfoCellIdentifier, bundle: nil), forCellReuseIdentifier: clockInfoCellIdentifier)
@@ -84,7 +88,7 @@ class ShiftViewController: UIViewController {
         }
         
         shiftTableView.tableFooterView = UIView()
-        shiftTableViewHeight = shiftTableView.frame.size.height
+//        shiftTableViewHeight = shiftTableView.frame.size.height
         
         let now = NSDate()
         
@@ -234,7 +238,19 @@ extension ShiftViewController: CVCalendarViewDelegate {
     func didSelectDayView(dayView: CVCalendarDayView, animationDidFinish: Bool) {
 //        print("\(dayView.date.commonDescription) is selected!")
 
-        calendarView.updateConstraints()
+        // 保证重新选择 DayView 的时候，CalendarView 回到原始的尺寸和位置
+        if calendarView.bounds.origin.y != 0 {
+            calendarView.updateConstraints()
+            // 不知道为什么上面这句偶尔无法调整 CalendarView 的高度，强制加上如下的判断，很累赘，后续在找原因
+            if calendarViewHeightConstraint.constant < 150 {
+                calendarViewHeightConstraint.constant = calendarViewHeightConstraint.constant + shortenCalendarViewHeight
+            }
+            UIView.animateWithDuration(0.2, animations: {
+                self.calendarView.bounds.origin.y = 0
+                self.view.layoutIfNeeded()
+            })
+            
+        }
         // 获取选择当天的打卡记录
         selectedDay = dayView
         
@@ -589,18 +605,29 @@ extension ShiftViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let updateCalendarLayout: (() -> Void)? = {
-        
+            
             let contentYOffset = scrollView.contentOffset.y
             let translation = scrollView.panGestureRecognizer.translationInView(scrollView.superview)
             
+            let isCalendarViewHeightUpdated = self.calendarViewHeightConstraint.constant < 150
+            
             // 向下滑动时，调整 CalendarView 的高度
-            if translation.y < 0 && self.calendarViewHeightConstraint.constant > 150 {
-                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant - 151
+            if translation.y < 0 && !isCalendarViewHeightUpdated {
+                
+                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant - self.shortenCalendarViewHeight
+                UIView.animateWithDuration(0.2, animations: {
+                    self.calendarView.bounds.origin.y = self.shortenCalendarViewHeight
+                    self.view.layoutIfNeeded()
+                })
             }
             
             // 当上滑到顶部时，还原 CalendarView 的高度
-            if contentYOffset < 80 && self.calendarViewHeightConstraint.constant < 150 {
-                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant + 151
+            if translation.y > 0 && contentYOffset < 80 && isCalendarViewHeightUpdated {
+                self.calendarViewHeightConstraint.constant = self.calendarViewHeightConstraint.constant + self.shortenCalendarViewHeight
+                UIView.animateWithDuration(0.2, animations: {
+                    self.calendarView.bounds.origin.y = 0
+                    self.view.layoutIfNeeded()
+                })
             }
             
         }
