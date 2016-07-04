@@ -133,7 +133,7 @@ NSString * const defaultLocalImageStorageDirectoryKey = @"defaultLocalImageStora
 }
 
 
-- (UIImage *)imageForImageName:(NSString *)imageName {
+- (UIImage *)imageForImageName:(NSString * _Nonnull)imageName {
     UIImage *findedImage = nil;
     // If possible, get it from the dictionary
     if (imageName) {

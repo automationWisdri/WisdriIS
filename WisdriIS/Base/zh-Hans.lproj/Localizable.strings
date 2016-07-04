@@ -342,3 +342,9 @@
 "Finished Time" = "完成时间";
 
 "Expiration Time" = "逾期时间";
+
+"No more not-archived maintenance task" = "无更多待归档维保任务";
+
+"No more archived maintenance task" = "无更多已归档维保任务";
+
+"No more historical inspection task" = "无更多历史点检任务";

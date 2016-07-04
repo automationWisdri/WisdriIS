@@ -197,10 +197,10 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
-                self.groupTaskList(groupType)
-                self.sortTaskList()
+                // self.groupTaskList(groupType)
+                // self.sortTaskList()
                 
-                self.updateTableViewInfo()
+                // self.updateTableViewInfo()
                 if !silentMode {
                     WISConfig.errorCode(error)
                 }
@@ -222,13 +222,15 @@ class TaskListViewController: BaseViewController {
                     self.wisTasks.removeAll()
                 }
                 
-                for task in tasks {
-                    self.wisTasks.append(task)
+                if tasks.count > 0 {
+                    for task in tasks {
+                        self.wisTasks.append(task)
+                    }
+                    self.groupTaskList(groupType)
+                    self.sortTaskList()
+                    
+                    self.currentPageIndex += 1
                 }
-                self.groupTaskList(groupType)
-                self.sortTaskList()
-                
-                self.currentPageIndex += 1
                 
                 if self.taskTableView.mj_header.isRefreshing() {
                     self.taskTableView.mj_header.endRefreshing()
@@ -242,7 +244,18 @@ class TaskListViewController: BaseViewController {
                 
                 if !silentMode {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
+                    if tasks.count > 0 {
+                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Maintenance task list updated successfully", comment: ""))
+                    } else {
+                        switch taskType {
+                        case .NotArchived:
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("No more not-archived maintenance task", comment: ""))
+                        case .Archived:
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("No more archived maintenance task", comment: ""))
+                        default:
+                            break
+                        }
+                    }
                 }
                 
             } else {
@@ -254,10 +267,10 @@ class TaskListViewController: BaseViewController {
                         self.taskTableView.mj_footer.endRefreshing()
                     }
                 }
-                self.groupTaskList(groupType)
-                self.sortTaskList()
+                // self.groupTaskList(groupType)
+                // self.sortTaskList()
                 
-                self.updateTableViewInfo()
+                // self.updateTableViewInfo()
                 if !silentMode {
                     WISConfig.errorCode(error)
                 }

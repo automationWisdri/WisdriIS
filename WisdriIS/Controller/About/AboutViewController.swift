@@ -51,7 +51,12 @@ class AboutViewController: BaseViewController {
         let versionShortString = infoDictionary!["CFBundleShortVersionString"] as! String
         let buildString = infoDictionary!["CFBundleVersion"] as! String
         
-        let app_version = "Version: " + versionShortString + " (Build: " + buildString + ")"
+        var app_version = "Version: " + versionShortString + " (Build: " + buildString + ")"
+        
+        #if DEBUG
+            app_version += " - " + "Debug"
+        #endif
+        
         self.appVersionLabel.text = app_version
     }
 

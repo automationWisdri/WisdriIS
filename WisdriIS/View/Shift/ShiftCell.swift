@@ -34,7 +34,7 @@ class ShiftCell: UITableViewCell {
         case .AttendanceClocked:
             return "已打卡"
         case .AttendanceNormal:
-            return "打开正常"
+            return "打卡正常"
         case .AttendanceNotClocked:
             return "未打卡"
         case .NoAttendanceRecord:

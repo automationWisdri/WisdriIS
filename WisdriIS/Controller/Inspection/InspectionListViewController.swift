@@ -34,7 +34,7 @@ class InspectionListViewController : BaseViewController {
     var inspectionOperationEnabled = false
     
     // for inspection type: Historical
-    let recordNumberInPage: Int = 5
+    let recordNumberInPage: Int = 20
     var currentPageIndex = 1
     
     var groupType: InspectionListGroupType = .None
@@ -265,9 +265,9 @@ class InspectionListViewController : BaseViewController {
                         }
                         WISInspectionDataManager.sharedInstance().historicalInspectionTasks.append(task)
                     }
+                    
+                    self!.currentPageIndex += 1
                 }
-                
-                self!.currentPageIndex += 1
                 
                 if self!.inspectionTableView.mj_header.isRefreshing() {
                     self!.inspectionTableView.mj_header.endRefreshing()
@@ -281,7 +281,16 @@ class InspectionListViewController : BaseViewController {
                 
                 if !silentMode {
                     SVProgressHUD.setDefaultMaskType(.None)
-                    SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Historical inspection task list updated successfully", comment: ""))
+                    if inspectionTasks.count > 0 {
+                        SVProgressHUD.showSuccessWithStatus(NSLocalizedString("Historical inspection task list updated successfully", comment: ""))
+                    } else {
+                        switch inspectionType {
+                        case .Historical:
+                            SVProgressHUD.showSuccessWithStatus(NSLocalizedString("No more historical inspection task", comment: ""))
+                        default:
+                            break
+                        }
+                    }
                 }
                 
             } else {
@@ -293,7 +302,7 @@ class InspectionListViewController : BaseViewController {
                         self!.inspectionTableView.mj_footer.endRefreshing()
                     }
                 }
-                self!.updateTableViewInfo()
+                // self!.updateTableViewInfo()
                 
                 switch error.code {
                 case WISErrorCode.ErrorCodeResponsedNULLData.rawValue:
